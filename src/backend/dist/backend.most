@@ -1,0 +1,34 @@
+// Version: 1.0.0
+type Data__552063367<K, V> = {var count : Nat__93962160; kvs : [var ?(K, V)]};
+type Favorite__923089860 = {address : Text; pinnedAt : Int};
+type Internal__455405067<K, V> =
+  {children : [var ?Node__279997185<K, V>]; data : Data__552063367<K, V>};
+type Leaf__114713147<K, V> = {data : Data__552063367<K, V>};
+type List__716101829<T> =
+  {
+    var blockIndex : Nat__93962160;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__93962160
+  };
+type List__852723865<T> = List__716101829<T>;
+type Map__190625089<K, V> = Map__719753394<K, V>;
+type Map__246123559<K, V> = Map__190625089<K, V>;
+type Map__719753394<K, V> =
+  {var root : Node__279997185<K, V>; var size : Nat__93962160};
+type Nat__920180692 = Nat;
+type Nat__93962160 = Nat__920180692;
+type Node__279997185<K, V> =
+  {#internal : Internal__455405067<K, V>; #leaf : Leaf__114713147<K, V>};
+actor {
+  stable favoriteStore :
+    {
+      var root :
+        Node__279997185<Principal, List__852723865<Favorite__923089860>>;
+      var size : Nat__93962160
+    };
+  stable labelStore :
+    {
+      var root : Node__279997185<Principal, Map__246123559<Text, Text>>;
+      var size : Nat__93962160
+    }
+};

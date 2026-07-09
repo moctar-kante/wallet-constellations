@@ -1,0 +1,32 @@
+{
+  "overview": "Wallet Constellations is a live, single-page web app for visualizing ICP and ICRC token wallet transactions as interactive force-directed network graphs. Users can search any ICP wallet, explore connections, compare two wallets side by side, and see detailed stats — all without any login or backend dependency.",
+  "features": [
+    "Force-directed network graph visualization of ICP wallet transaction history",
+    "Support for ICP and all 62 ICRC tokens from ICPSwap (CHAT, ckBTC, ckETH, GOLDAO, etc.)",
+    "Wallet comparison mode: side-by-side graphs with shared counterparty highlighting",
+    "Shared counterparties panel and comparison stats with token portfolios and activity sparklines",
+    "Node identity badges for SNS, DEX, and known project canisters",
+    "Device-local node labeling (max 6 chars, pencil icon on hover)",
+    "Search history dropdown and breadcrumb navigation",
+    "Zoom/pan following cursor and pinch point, with +/- buttons",
+    "Dark/light mode toggle",
+    "Cluster collapse, mini-map, and whale detection for large networks",
+    "Copy address button and share link (URL pre-filled with address)",
+    "Activity sparklines, net flow summary, and whale highlighting per node",
+    "Fully frontend-only — all data fetched client-side, no login required"
+  ],
+  "category": "productivity",
+  "tags": [
+    "icp",
+    "blockchain",
+    "wallet",
+    "visualization",
+    "graph",
+    "icrc",
+    "defi",
+    "internet-computer",
+    "analytics",
+    "network"
+  ],
+  "last_updated": "2026-04-14T14:20:59.179Z"
+}

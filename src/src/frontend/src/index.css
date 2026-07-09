@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Space dark theme — always dark */
+    --background: 0.07 0.015 260;
+    --foreground: 0.94 0.01 240;
+    --card: 0.12 0.03 240;
+    --card-foreground: 0.94 0.01 240;
+    --popover: 0.14 0.04 235;
+    --popover-foreground: 0.94 0.01 240;
+    --primary: 0.77 0.13 220;
+    --primary-foreground: 0.07 0.015 260;
+    --secondary: 0.16 0.04 235;
+    --secondary-foreground: 0.72 0.04 235;
+    --muted: 0.15 0.035 238;
+    --muted-foreground: 0.6 0.04 235;
+    --accent: 0.76 0.15 65;
+    --accent-foreground: 0.07 0.015 260;
+    --destructive: 0.65 0.2 20;
+    --destructive-foreground: 0.94 0.01 240;
+    --border: 0.22 0.05 240;
+    --input: 0.18 0.04 240;
+    --ring: 0.77 0.13 220;
+
+    --chart-1: 0.77 0.13 220;
+    --chart-2: 0.83 0.18 155;
+    --chart-3: 0.76 0.15 65;
+    --chart-4: 0.65 0.2 20;
+    --chart-5: 0.7 0.15 280;
+
+    --sidebar: 0.1 0.025 240;
+    --sidebar-foreground: 0.94 0.01 240;
+    --sidebar-primary: 0.77 0.13 220;
+    --sidebar-primary-foreground: 0.07 0.015 260;
+    --sidebar-accent: 0.16 0.04 235;
+    --sidebar-accent-foreground: 0.94 0.01 240;
+    --sidebar-border: 0.22 0.05 240;
+    --sidebar-ring: 0.77 0.13 220;
+
+    /* Custom neon tokens */
+    --neon-blue: 0.77 0.13 220;
+    --neon-amber: 0.76 0.15 65;
+    --neon-green: 0.83 0.18 155;
+    --neon-red: 0.65 0.2 20;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background: radial-gradient(
+      ellipse at 20% 20%,
+      oklch(0.1 0.025 250) 0%,
+      oklch(0.07 0.015 260) 60%,
+      oklch(0.05 0.01 265) 100%
+    );
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--card));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--muted-foreground));
+  }
+}

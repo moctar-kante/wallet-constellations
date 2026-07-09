@@ -1,0 +1,38 @@
+type WalletLabel = 
+ record {
+   address: text;
+   walletLabel: text;
+ };
+type HttpRequestResult = 
+ record {
+   body: blob;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type HttpHeader = 
+ record {
+   name: text;
+   value: text;
+ };
+type Favorite = 
+ record {
+   address: text;
+   pinnedAt: int;
+ };
+service : {
+  addFavorite: (address: text) -> ();
+  getAllLabels: () -> (vec WalletLabel) query;
+  getFavorites: () -> (vec Favorite) query;
+  getLabel: (address: text) -> (opt text) query;
+  icexplorer_portfolio: (address: text) -> (text);
+  icexplorer_transform:
+   (record {
+      context: blob;
+      response: HttpRequestResult;
+    }) -> (HttpRequestResult) query;
+  icexplorer_txlist: (payload: text) -> (text);
+  ping: () -> (record {status: text;}) query;
+  removeFavorite: (address: text) -> ();
+  removeLabel: (address: text) -> ();
+  setLabel: (address: text, lbl: text) -> ();
+}
