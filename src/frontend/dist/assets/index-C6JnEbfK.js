@@ -10744,16 +10744,13 @@ async function loadConfig() {
   if (configCache) {
     return configCache;
   }
-  const backendCanisterId = define_process_env_default.CANISTER_ID_BACKEND;
+  const backendCanisterId = "rshnv-miaaa-aaaah-qqdva-cai";
   const envBaseUrl = define_process_env_default.BASE_URL || "/";
   const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
   try {
     const response = await fetch(`${baseUrl}env.json`);
     const config2 = await response.json();
-    if (!backendCanisterId && config2.backend_canister_id === "undefined") {
-      console.error("CANISTER_ID_BACKEND is not set");
-      throw new Error("CANISTER_ID_BACKEND is not set");
-    }
+    if (!backendCanisterId && config2.backend_canister_id === "undefined") ;
     const fullConfig = {
       backend_host: config2.backend_host === "undefined" ? void 0 : config2.backend_host,
       backend_canister_id: config2.backend_canister_id === "undefined" ? backendCanisterId : config2.backend_canister_id,
@@ -10765,10 +10762,6 @@ async function loadConfig() {
     configCache = fullConfig;
     return fullConfig;
   } catch {
-    if (!backendCanisterId) {
-      console.error("CANISTER_ID_BACKEND is not set");
-      throw new Error("CANISTER_ID_BACKEND is not set");
-    }
     const fallbackConfig = {
       backend_host: void 0,
       backend_canister_id: backendCanisterId,
@@ -11074,7 +11067,7 @@ function isPlainObject$2(o) {
 function hasObjectPrototype(o) {
   return Object.prototype.toString.call(o) === "[object Object]";
 }
-function sleep$1(timeout2) {
+function sleep$2(timeout2) {
   return new Promise((resolve) => {
     timeoutManager.setTimeout(resolve, timeout2);
   });
@@ -11394,7 +11387,7 @@ function createRetryer(config2) {
       }
       failureCount++;
       (_a3 = config2.onFail) == null ? void 0 : _a3.call(config2, failureCount, error);
-      sleep$1(delay).then(() => {
+      sleep$2(delay).then(() => {
         return canContinue() ? void 0 : pause();
       }).then(() => {
         if (isRetryCancelled) {
@@ -53982,13 +53975,13 @@ Timer.prototype = timer.prototype = {
     }
     this._call = callback;
     this._time = time2;
-    sleep();
+    sleep$1();
   },
   stop: function() {
     if (this._call) {
       this._call = null;
       this._time = Infinity;
-      sleep();
+      sleep$1();
     }
   }
 };
@@ -54034,9 +54027,9 @@ function nap() {
     }
   }
   taskTail = t02;
-  sleep(time2);
+  sleep$1(time2);
 }
-function sleep(time2) {
+function sleep$1(time2) {
   if (frame) return;
   if (timeout$1) timeout$1 = clearTimeout(timeout$1);
   var delay = time2 - clockNow;
@@ -57723,54 +57716,7 @@ function ConstellationGraph({
               lineHeight: 1.7
             },
             children: [
-              colorByLevel ? (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).map(
-                (color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  "div",
-                  {
-                    style: {
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                      marginBottom: 2
-                    },
-                    children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "div",
-                        {
-                          style: {
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            background: color2,
-                            flexShrink: 0,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 10,
-                            fontWeight: 700,
-                            color: "#fff",
-                            boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
-                            border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
-                          },
-                          children: i
-                        }
-                      ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "span",
-                        {
-                          style: {
-                            fontSize: 11,
-                            color: isDark ? "#a0b4c8" : "#1a1a2e",
-                            fontWeight: 500
-                          },
-                          children: i === 0 ? "Center" : `Depth ${i}`
-                        }
-                      )
-                    ]
-                  },
-                  i
-                )
-              ) : LEGEND_ITEMS.map((item) => {
+              LEGEND_ITEMS.map((item) => {
                 const swatchColor = isDark ? item.dark : item.light;
                 return /* @__PURE__ */ jsxRuntimeExports.jsxs(
                   "div",
@@ -57811,6 +57757,71 @@ function ConstellationGraph({
                 }
               )
             ]
+          }
+        ),
+        colorByLevel && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            "data-ocid": "graph.level_legend",
+            style: {
+              position: "absolute",
+              bottom: 10,
+              left: 150,
+              background: isDark ? "rgba(7,11,28,0.88)" : "rgba(255,255,255,0.92)",
+              border: isDark ? "1px solid rgba(40,60,120,0.5)" : "1px solid rgba(180,190,220,0.5)",
+              borderRadius: 7,
+              padding: "8px 12px",
+              fontSize: 10,
+              color: isDark ? "#7799cc" : "#334466",
+              zIndex: 10,
+              lineHeight: 1.7
+            },
+            children: (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).slice(0, 4).map((color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  marginBottom: 2
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      style: {
+                        width: 18,
+                        height: 18,
+                        borderRadius: "50%",
+                        background: color2,
+                        flexShrink: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 10,
+                        fontWeight: 700,
+                        color: "#fff",
+                        boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
+                        border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
+                      },
+                      children: i
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      style: {
+                        fontSize: 11,
+                        color: isDark ? "#a0b4c8" : "#1a1a2e",
+                        fontWeight: 500
+                      },
+                      children: i === 0 ? "Center" : `Depth ${i}`
+                    }
+                  )
+                ]
+              },
+              i
+            ))
           }
         ),
         editingLabel && editingLabel !== (nodeInfo == null ? void 0 : nodeInfo.node.id) && /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -57935,7 +57946,7 @@ function EmptyState({
     search: {
       icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-10 w-10 text-neon-blue" }),
       title: "Enter a Principal or Account ID",
-      desc: "Search for any ICP wallet to visualize its transaction network as an interactive constellation.",
+      desc: "Search for any ICP wallet to visualize its transaction network.",
       hint: null
     },
     empty: {
@@ -58161,18 +58172,27 @@ function IcrcDebugPanel({ debugState, onClose }) {
                       debugState.perToken.length,
                       " queried)"
                     ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: debugState.perToken.map((entry, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "div",
-                      {
-                        className: `flex gap-1 items-baseline ${entry.resultCount > 0 ? "text-neon-green" : entry.error ? "text-red-400" : "text-muted-foreground"}`,
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold min-w-[48px]", children: entry.symbol }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] opacity-70", children: entry.canisterId.slice(0, 8) }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-right", children: entry.resultCount > 0 ? `${entry.resultCount} tx (${entry.addressFormat})` : entry.error ? entry.error.slice(0, 20) : "0" })
-                        ]
-                      },
-                      i
-                    )) })
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: debugState.perToken.map((entry, i) => {
+                      const hasError = entry.resultCount === 0 && entry.error;
+                      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                        "div",
+                        {
+                          className: `flex gap-1 items-baseline ${entry.resultCount > 0 ? "text-neon-green" : hasError ? "text-red-400" : "text-muted-foreground"} ${hasError ? "flex-wrap" : ""}`,
+                          children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold min-w-[48px]", children: entry.symbol }),
+                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] opacity-70", children: entry.canisterId.slice(0, 8) }),
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(
+                              "span",
+                              {
+                                className: `text-right ${hasError ? "ml-auto basis-full text-left break-words" : "ml-auto"}`,
+                                children: entry.resultCount > 0 ? `${entry.resultCount} tx (${entry.addressFormat})` : hasError ? entry.error : "0"
+                              }
+                            )
+                          ]
+                        },
+                        i
+                      );
+                    }) })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-[10px] text-muted-foreground border-t border-border pt-2", children: [
                     "Updated: ",
@@ -63681,6 +63701,893 @@ function SelectScrollDownButton({
     }
   );
 }
+const LEDGER_API_BASE = "https://ledger-api.internetcomputer.org";
+const ICRC_API_BASE = "https://icrc-api.internetcomputer.org";
+let lastIcExplorerError = null;
+function getLastIcExplorerError() {
+  return lastIcExplorerError;
+}
+const DEFAULT_TX_LIMIT = 100;
+function e8sToIcp(val) {
+  const n2 = typeof val === "bigint" ? Number(val) : Number(val);
+  return n2 / 1e8;
+}
+function parseTimestamp(raw) {
+  if (!raw) return (/* @__PURE__ */ new Date()).toISOString();
+  if (typeof raw === "number") {
+    const asMs = raw > 1e15 ? Math.floor(raw / 1e6) : raw > 1e12 ? raw : raw * 1e3;
+    return new Date(asMs).toISOString();
+  }
+  if (typeof raw === "string" && /^\d{18,19}$/.test(raw)) {
+    return new Date(Math.floor(Number(raw) / 1e6)).toISOString();
+  }
+  return new Date(raw).toISOString();
+}
+function sha224(data) {
+  let h0 = 3238371032 | 0;
+  let h1 = 914150663 | 0;
+  let h2 = 812702999 | 0;
+  let h3 = 4144912697 | 0;
+  let h4 = 4290775857 | 0;
+  let h5 = 1750603025 | 0;
+  let h6 = 1694076839 | 0;
+  let h7 = 3204075428 | 0;
+  const K2 = [
+    1116352408,
+    1899447441,
+    3049323471,
+    3921009573,
+    961987163,
+    1508970993,
+    2453635748,
+    2870763221,
+    3624381080,
+    310598401,
+    607225278,
+    1426881987,
+    1925078388,
+    2162078206,
+    2614888103,
+    3248222580,
+    3835390401,
+    4022224774,
+    264347078,
+    604807628,
+    770255983,
+    1249150122,
+    1555081692,
+    1996064986,
+    2554220882,
+    2821834349,
+    2952996808,
+    3210313671,
+    3336571891,
+    3584528711,
+    113926993,
+    338241895,
+    666307205,
+    773529912,
+    1294757372,
+    1396182291,
+    1695183700,
+    1986661051,
+    2177026350,
+    2456956037,
+    2730485921,
+    2820302411,
+    3259730800,
+    3345764771,
+    3516065817,
+    3600352804,
+    4094571909,
+    275423344,
+    430227734,
+    506948616,
+    659060556,
+    883997877,
+    958139571,
+    1322822218,
+    1537002063,
+    1747873779,
+    1955562222,
+    2024104815,
+    2227730452,
+    2361852424,
+    2428436474,
+    2756734187,
+    3204031479,
+    3329325298
+  ];
+  const rotr2 = (x3, n2) => (x3 >>> n2 | x3 << 32 - n2) >>> 0;
+  const msgLen = data.length;
+  const bitLen2 = msgLen * 8;
+  const padLen = msgLen + 9 + 63 & -64;
+  const msg = new Uint8Array(padLen);
+  msg.set(data);
+  msg[msgLen] = 128;
+  const view = new DataView(msg.buffer);
+  view.setUint32(padLen - 4, bitLen2 >>> 0, false);
+  view.setUint32(padLen - 8, Math.floor(bitLen2 / 4294967296), false);
+  for (let i = 0; i < padLen; i += 64) {
+    const w2 = new Int32Array(64);
+    for (let j2 = 0; j2 < 16; j2++) {
+      w2[j2] = view.getInt32(i + j2 * 4, false);
+    }
+    for (let j2 = 16; j2 < 64; j2++) {
+      const s0 = rotr2(w2[j2 - 15] >>> 0, 7) ^ rotr2(w2[j2 - 15] >>> 0, 18) ^ w2[j2 - 15] >>> 0 >>> 3;
+      const s1 = rotr2(w2[j2 - 2] >>> 0, 17) ^ rotr2(w2[j2 - 2] >>> 0, 19) ^ w2[j2 - 2] >>> 0 >>> 10;
+      w2[j2] = w2[j2 - 16] + s0 + w2[j2 - 7] + s1 | 0;
+    }
+    let a2 = h0, b2 = h1, c2 = h2, d2 = h3, e3 = h4, f2 = h5, g2 = h6, h8 = h7;
+    for (let j2 = 0; j2 < 64; j2++) {
+      const S1 = rotr2(e3 >>> 0, 6) ^ rotr2(e3 >>> 0, 11) ^ rotr2(e3 >>> 0, 25);
+      const ch = e3 & f2 ^ ~e3 & g2 | 0;
+      const temp1 = h8 + S1 + ch + K2[j2] + w2[j2] | 0;
+      const S0 = rotr2(a2 >>> 0, 2) ^ rotr2(a2 >>> 0, 13) ^ rotr2(a2 >>> 0, 22);
+      const maj = a2 & b2 ^ a2 & c2 ^ b2 & c2 | 0;
+      const temp2 = S0 + maj | 0;
+      h8 = g2;
+      g2 = f2;
+      f2 = e3;
+      e3 = d2 + temp1 | 0;
+      d2 = c2;
+      c2 = b2;
+      b2 = a2;
+      a2 = temp1 + temp2 | 0;
+    }
+    h0 = h0 + a2 | 0;
+    h1 = h1 + b2 | 0;
+    h2 = h2 + c2 | 0;
+    h3 = h3 + d2 | 0;
+    h4 = h4 + e3 | 0;
+    h5 = h5 + f2 | 0;
+    h6 = h6 + g2 | 0;
+    h7 = h7 + h8 | 0;
+  }
+  const result = new Uint8Array(28);
+  const rv = new DataView(result.buffer);
+  rv.setUint32(0, h0 >>> 0, false);
+  rv.setUint32(4, h1 >>> 0, false);
+  rv.setUint32(8, h2 >>> 0, false);
+  rv.setUint32(12, h3 >>> 0, false);
+  rv.setUint32(16, h4 >>> 0, false);
+  rv.setUint32(20, h5 >>> 0, false);
+  rv.setUint32(24, h6 >>> 0, false);
+  return result;
+}
+function crc32(data) {
+  let crc = 4294967295;
+  const table = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c2 = i;
+    for (let j2 = 0; j2 < 8; j2++) c2 = c2 & 1 ? 3988292384 ^ c2 >>> 1 : c2 >>> 1;
+    table[i] = c2;
+  }
+  for (const byte of data) crc = table[(crc ^ byte) & 255] ^ crc >>> 8;
+  return (crc ^ 4294967295) >>> 0;
+}
+function principalToAccountIdentifier(input) {
+  const trimmed = input.trim();
+  if (/^[0-9a-fA-F]{64}$/.test(trimmed)) return trimmed.toLowerCase();
+  try {
+    const principal = Principal$1.fromText(trimmed);
+    const principalBytes = principal.toUint8Array();
+    const domainSep = new TextEncoder().encode("\naccount-id");
+    const subaccount = new Uint8Array(32);
+    const msg = new Uint8Array(
+      domainSep.length + principalBytes.length + subaccount.length
+    );
+    msg.set(domainSep, 0);
+    msg.set(principalBytes, domainSep.length);
+    msg.set(subaccount, domainSep.length + principalBytes.length);
+    const hash = sha224(msg);
+    const checksum = crc32(hash);
+    const checksumBytes = new Uint8Array(4);
+    new DataView(checksumBytes.buffer).setUint32(0, checksum, false);
+    const accountIdBytes = new Uint8Array(32);
+    accountIdBytes.set(checksumBytes, 0);
+    accountIdBytes.set(hash, 4);
+    return Array.from(accountIdBytes).map((b2) => b2.toString(16).padStart(2, "0")).join("");
+  } catch {
+    return null;
+  }
+}
+function principalAddressToHex(addr) {
+  if (!addr || addr === "minting-account" || addr === "burn-address")
+    return addr;
+  if (/^[0-9a-fA-F]{64}$/.test(addr.trim())) return addr.toLowerCase();
+  const hex2 = principalToAccountIdentifier(addr);
+  return hex2 ?? addr;
+}
+function extractOwner(val) {
+  if (!val) return "";
+  if (typeof val === "string") return val;
+  if (typeof val === "object") {
+    return String(val.owner ?? val.address ?? "");
+  }
+  return String(val);
+}
+function normalizeTransaction(raw) {
+  var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z;
+  try {
+    if ((raw == null ? void 0 : raw.from_account_identifier) !== void 0 || (raw == null ? void 0 : raw.to_account_identifier) !== void 0) {
+      const amount = raw.amount ? e8sToIcp(raw.amount) : 0;
+      return {
+        timestamp: parseTimestamp(raw.created_at ?? raw.timestamp),
+        from: String(raw.from_account_identifier ?? ""),
+        to: String(raw.to_account_identifier ?? ""),
+        amount,
+        blockIndex: Number(
+          raw.block_height ?? ((_a3 = raw.block_identifier) == null ? void 0 : _a3.index) ?? raw.block_index ?? 0
+        )
+      };
+    }
+    if ((_b3 = raw == null ? void 0 : raw.transaction) == null ? void 0 : _b3.operations) {
+      const ops = raw.transaction.operations;
+      const txOps = ops.filter(
+        (o) => o.type === "TRANSACTION" || o.type === "Transfer"
+      );
+      const feeOps = ops.filter((o) => o.type === "FEE" || o.type === "Fee");
+      if (txOps.length >= 2) {
+        const senderOp = txOps.find(
+          (o) => {
+            var _a4;
+            return String(((_a4 = o.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
+          }
+        );
+        const receiverOp = txOps.find(
+          (o) => {
+            var _a4;
+            return !String(((_a4 = o.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
+          }
+        );
+        if (senderOp && receiverOp) {
+          const amountRaw = Math.abs(
+            Number.parseFloat(((_c2 = receiverOp.amount) == null ? void 0 : _c2.value) ?? "0")
+          );
+          const decimals = ((_e2 = (_d2 = receiverOp.amount) == null ? void 0 : _d2.currency) == null ? void 0 : _e2.decimals) ?? 8;
+          return {
+            timestamp: parseTimestamp(raw.timestamp),
+            from: ((_f2 = senderOp.account) == null ? void 0 : _f2.address) ?? "",
+            to: ((_g2 = receiverOp.account) == null ? void 0 : _g2.address) ?? "",
+            amount: amountRaw / 10 ** decimals,
+            blockIndex: ((_h2 = raw.block_identifier) == null ? void 0 : _h2.index) ?? raw.block_index ?? 0
+          };
+        }
+      }
+      const nonFeeOps = ops.filter(
+        (o) => {
+          var _a4;
+          return !feeOps.includes(o) && ((_a4 = o.account) == null ? void 0 : _a4.address);
+        }
+      );
+      if (nonFeeOps.length >= 2) {
+        const amountRaw = Math.abs(
+          Number.parseFloat(((_i2 = nonFeeOps[0].amount) == null ? void 0 : _i2.value) ?? "0")
+        );
+        const decimals = ((_k = (_j2 = nonFeeOps[0].amount) == null ? void 0 : _j2.currency) == null ? void 0 : _k.decimals) ?? 8;
+        return {
+          timestamp: parseTimestamp(raw.timestamp),
+          from: ((_l = nonFeeOps[0].account) == null ? void 0 : _l.address) ?? "",
+          to: ((_m = nonFeeOps[1].account) == null ? void 0 : _m.address) ?? "",
+          amount: amountRaw / 10 ** decimals,
+          blockIndex: ((_n = raw.block_identifier) == null ? void 0 : _n.index) ?? raw.block_index ?? 0
+        };
+      }
+    }
+    if ((raw == null ? void 0 : raw.from) && (raw == null ? void 0 : raw.to)) {
+      let amount = 0;
+      if (typeof raw.amount === "object" && raw.amount !== null) {
+        amount = e8sToIcp(raw.amount.e8s ?? raw.amount.value ?? 0);
+      } else if (typeof raw.amount === "number" || typeof raw.amount === "string") {
+        const numAmt = Number(raw.amount);
+        amount = numAmt > 1e3 ? e8sToIcp(numAmt) : numAmt;
+      }
+      return {
+        timestamp: parseTimestamp(
+          raw.timestamp ?? raw.created_at_time ?? raw.date
+        ),
+        from: String(raw.from),
+        to: String(raw.to),
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? raw.blockIndex ?? 0)
+      };
+    }
+    const op = ((_o = raw == null ? void 0 : raw.transaction) == null ? void 0 : _o.operation) ?? ((_q = (_p = raw == null ? void 0 : raw.transaction) == null ? void 0 : _p.operations) == null ? void 0 : _q[0]);
+    const transfer = (op == null ? void 0 : op.Transfer) ?? (op == null ? void 0 : op.transfer) ?? ((_r = raw == null ? void 0 : raw.transaction) == null ? void 0 : _r.transfer);
+    if (transfer) {
+      const amountVal = ((_s = transfer.amount) == null ? void 0 : _s.e8s) ?? ((_t2 = transfer.amount) == null ? void 0 : _t2.value) ?? transfer.amount ?? 0;
+      return {
+        timestamp: parseTimestamp(
+          ((_v = (_u = raw == null ? void 0 : raw.transaction) == null ? void 0 : _u.created_at_time) == null ? void 0 : _v.timestamp_nanos) ?? (raw == null ? void 0 : raw.created_at_time) ?? (raw == null ? void 0 : raw.timestamp)
+        ),
+        from: String(
+          ((_w = transfer.from) == null ? void 0 : _w.address) ?? transfer.from ?? ((_x = raw == null ? void 0 : raw.transaction) == null ? void 0 : _x.from) ?? ""
+        ),
+        to: String(
+          ((_y = transfer.to) == null ? void 0 : _y.address) ?? transfer.to ?? ((_z = raw == null ? void 0 : raw.transaction) == null ? void 0 : _z.to) ?? ""
+        ),
+        amount: e8sToIcp(amountVal),
+        blockIndex: Number((raw == null ? void 0 : raw.id) ?? (raw == null ? void 0 : raw.block_index) ?? 0)
+      };
+    }
+  } catch {
+  }
+  return null;
+}
+function extractTransactionArray(data) {
+  var _a3, _b3, _c2;
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data == null ? void 0 : data.data)) return data.data;
+  if (Array.isArray(data == null ? void 0 : data.blocks)) return data.blocks;
+  if (Array.isArray(data == null ? void 0 : data.transactions)) return data.transactions;
+  if (Array.isArray((_a3 = data == null ? void 0 : data.data) == null ? void 0 : _a3.transactions)) return data.data.transactions;
+  if (Array.isArray((_b3 = data == null ? void 0 : data.data) == null ? void 0 : _b3.blocks)) return data.data.blocks;
+  if (Array.isArray((_c2 = data == null ? void 0 : data.data) == null ? void 0 : _c2.data)) return data.data.data;
+  if (Array.isArray(data == null ? void 0 : data.result)) return data.result;
+  return [];
+}
+async function fetchWalletTransactions(principal, proxyUrl, limit = DEFAULT_TX_LIMIT) {
+  if (!principal || principal.trim() === "") {
+    return { ok: false, error: "invalid" };
+  }
+  const accountId = principalToAccountIdentifier(principal.trim());
+  if (!accountId) {
+    return { ok: false, error: "invalid" };
+  }
+  const wkey = cacheKey("walletTxs", principal.trim(), accountId);
+  const cachedTxs = getCached(txCache, wkey);
+  if (cachedTxs) {
+    console.log(
+      `[ICP] Tx fetch: ${cachedTxs.length} txs (cached) for ${principal.trim()}`
+    );
+    return { ok: true, transactions: cachedTxs, accountIdentifier: accountId };
+  }
+  const base = proxyUrl ? proxyUrl.replace(/\/$/, "") : LEDGER_API_BASE;
+  const url = `${base}/accounts/${encodeURIComponent(accountId)}/transactions?limit=${limit}`;
+  let response;
+  try {
+    response = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(15e3)
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (err instanceof TypeError && (msg.toLowerCase().includes("failed to fetch") || msg.toLowerCase().includes("networkerror") || msg.toLowerCase().includes("network request failed"))) {
+      return { ok: false, error: "cors" };
+    }
+    return { ok: false, error: "network" };
+  }
+  if (!response.ok) {
+    return { ok: false, error: "http" };
+  }
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    return { ok: false, error: "parse" };
+  }
+  const rawList = extractTransactionArray(data);
+  const transactions = [];
+  for (const raw of rawList) {
+    const tx = normalizeTransaction(raw);
+    if (tx) transactions.push(tx);
+  }
+  if (transactions.length === 0 && rawList.length > 0) {
+    return { ok: false, error: "parse" };
+  }
+  if (transactions.length > 0) setCached(txCache, wkey, transactions);
+  return { ok: true, transactions, accountIdentifier: accountId };
+}
+async function checkExplorerReachable() {
+  try {
+    const r2 = await fetch(`${LEDGER_API_BASE}/`, {
+      method: "HEAD",
+      signal: AbortSignal.timeout(5e3)
+    });
+    return r2.status < 500;
+  } catch {
+    try {
+      const r2 = await fetch(LEDGER_API_BASE, {
+        signal: AbortSignal.timeout(5e3)
+      });
+      return r2.status < 500;
+    } catch {
+      return false;
+    }
+  }
+}
+async function checkIcExplorerReachable() {
+  try {
+    const r2 = await fetch(`${ICRC_API_BASE}/api/v1/ledgers?limit=1`, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(8e3)
+    });
+    if (!r2.ok) {
+      lastIcExplorerError = `HTTP ${r2.status} ${r2.statusText}`;
+      console.warn(
+        `[ICRC] reachability probe failed: HTTP ${r2.status} ${r2.statusText}`
+      );
+      return false;
+    }
+    const data = await r2.json();
+    const list = extractTransactionArray(data);
+    if (!Array.isArray(list)) {
+      lastIcExplorerError = "unexpected response shape";
+      console.warn(
+        "[ICRC] reachability probe failed: unexpected response shape",
+        data
+      );
+      return false;
+    }
+    lastIcExplorerError = null;
+    return true;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    lastIcExplorerError = msg;
+    console.warn("[ICRC] reachability probe failed:", err);
+    return false;
+  }
+}
+function testParser() {
+  try {
+    const sample = [
+      {
+        block_height: "1",
+        from_account_identifier: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00",
+        to_account_identifier: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00",
+        amount: "100000000",
+        created_at: 17e8,
+        transfer_type: "send"
+      }
+    ];
+    for (const r2 of sample) {
+      const tx = normalizeTransaction(r2);
+      if (!tx) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+const CACHE_TTL_MS = 5 * 60 * 1e3;
+const LEDGERS_PAGE_SIZE = 100;
+const LEDGERS_MAX_PAGES = 20;
+const TX_FETCH_BATCH_SIZE = 8;
+const TX_BATCH_DELAY_MS = 150;
+const tokenListCache = /* @__PURE__ */ new Map();
+const txCache = /* @__PURE__ */ new Map();
+function cacheKey(...parts) {
+  return parts.filter(Boolean).join("|").toLowerCase();
+}
+function getCached(cache2, key) {
+  const entry = cache2.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.fetchedAt > CACHE_TTL_MS) {
+    cache2.delete(key);
+    return null;
+  }
+  return entry.value;
+}
+function setCached(cache2, key, value) {
+  if (value === null || value === void 0) return;
+  cache2.set(key, { value, fetchedAt: Date.now() });
+}
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+function parseLedgerMetadata(item) {
+  const canisterId = String(
+    item.ledger_canister_id ?? item.canister_id ?? item.id ?? ""
+  ).trim();
+  let symbol = "";
+  let decimals = null;
+  const unwrap2 = (val) => {
+    if (val === null || val === void 0) return "";
+    if (typeof val === "string" || typeof val === "number") return String(val);
+    const wrapped = val.Text ?? val.text ?? val.value ?? val.Value ?? val.string ?? val.str;
+    if (wrapped !== void 0) return String(wrapped);
+    return String(val);
+  };
+  const clean2 = (raw) => {
+    let s2 = String(raw ?? "").trim();
+    if (s2.startsWith('"') && s2.endsWith('"') || s2.startsWith("'") && s2.endsWith("'")) {
+      s2 = s2.slice(1, -1).trim();
+    }
+    return s2;
+  };
+  const meta = item.icrc1_metadata ?? item.metadata ?? item.meta;
+  if (meta !== null && typeof meta === "object" && !Array.isArray(meta)) {
+    const symbolVal = meta.icrc1_symbol ?? meta["icrc1:symbol"] ?? meta.symbol ?? meta.Symbol;
+    if (symbolVal !== void 0) symbol = clean2(unwrap2(symbolVal));
+    const decVal = meta.icrc1_decimals ?? meta["icrc1:decimals"] ?? meta.decimals ?? meta.Decimals;
+    if (decVal !== void 0) {
+      const parsed = Number(unwrap2(decVal));
+      if (!Number.isNaN(parsed)) decimals = parsed;
+    }
+  }
+  if (!symbol || decimals === null) {
+    if (Array.isArray(meta)) {
+      for (const entry of meta) {
+        const key = String((entry == null ? void 0 : entry.key) ?? "").toLowerCase();
+        const val = entry == null ? void 0 : entry.val;
+        if (!val) continue;
+        if ((key === "icrc1:symbol" || key === "icrc1_symbol" || key === "symbol") && !symbol) {
+          symbol = clean2(unwrap2(val));
+        } else if ((key === "icrc1:decimals" || key === "icrc1_decimals" || key === "decimals") && decimals === null) {
+          const parsed = Number(unwrap2(val));
+          if (!Number.isNaN(parsed)) decimals = parsed;
+        }
+      }
+    }
+  }
+  if (!symbol) {
+    const flat = item.symbol ?? item.token_symbol ?? item.icrc1_symbol ?? item.ticker ?? item.name ?? "";
+    symbol = clean2(String(flat));
+  }
+  if (decimals === null) {
+    const d2 = Number(item.decimals ?? item.icrc1_decimals ?? 8);
+    decimals = Number.isNaN(d2) ? 8 : d2;
+  }
+  if (!symbol) symbol = "UNKNOWN";
+  return { canisterId, symbol, decimals };
+}
+async function fetchIcrcTokenList(principal, accountId) {
+  const p2 = (principal == null ? void 0 : principal.trim()) || "";
+  const a2 = (accountId == null ? void 0 : accountId.trim()) || "";
+  const key = cacheKey("tokenlist", p2, a2);
+  const cached = getCached(tokenListCache, key);
+  if (cached) {
+    console.log(`[ICRC] Token list: ${cached.length} ledgers (cached)`);
+    return cached;
+  }
+  const allTokens = [];
+  let offset2 = 0;
+  let fetchError = null;
+  for (let page = 0; page < LEDGERS_MAX_PAGES; page++) {
+    const url = `${ICRC_API_BASE}/api/v1/ledgers?limit=${LEDGERS_PAGE_SIZE}&offset=${offset2}`;
+    let res;
+    try {
+      res = await fetch(url, {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(15e3)
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      fetchError = `fetch error at offset ${offset2}: ${msg}`;
+      console.error(
+        `[ICRC] /api/v1/ledgers fetch failed at offset ${offset2}:`,
+        err
+      );
+      break;
+    }
+    if (!res.ok) {
+      fetchError = `HTTP ${res.status} ${res.statusText} at offset ${offset2}`;
+      console.error(
+        `[ICRC] /api/v1/ledgers returned HTTP ${res.status} ${res.statusText} at offset ${offset2}`
+      );
+      break;
+    }
+    let data;
+    try {
+      data = await res.json();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      fetchError = `JSON parse error at offset ${offset2}: ${msg}`;
+      console.error(
+        `[ICRC] /api/v1/ledgers JSON parse failed at offset ${offset2}:`,
+        err
+      );
+      break;
+    }
+    const list = extractTransactionArray(data);
+    if (!Array.isArray(list) || list.length === 0) {
+      break;
+    }
+    for (const item of list) {
+      const { canisterId, symbol, decimals } = parseLedgerMetadata(item);
+      if (!canisterId) continue;
+      allTokens.push({ canisterId, symbol, decimals });
+    }
+    if (list.length < LEDGERS_PAGE_SIZE) break;
+    offset2 += LEDGERS_PAGE_SIZE;
+  }
+  console.log(
+    `[ICRC] Token list: ${allTokens.length} ledgers (fresh) for ${p2 || a2}${fetchError ? ` (last error: ${fetchError})` : ""}`
+  );
+  if (allTokens.length > 0) setCached(tokenListCache, key, allTokens);
+  return allTokens;
+}
+function normalizeIcrcTransaction(raw, decimals, symbol) {
+  var _a3, _b3, _c2, _d2, _e2, _f2;
+  try {
+    if (raw.from_owner !== void 0 || raw.to_owner !== void 0) {
+      const kind = String(raw.kind ?? "");
+      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
+      const blockIndex = Number(raw.index ?? raw.block_index ?? 0);
+      const timestamp = parseTimestamp(raw.timestamp);
+      if (kind === "mint") {
+        return {
+          timestamp,
+          from: "minting-account",
+          to: principalAddressToHex(
+            extractOwner(raw.to_owner ?? raw.to_account)
+          ),
+          amount,
+          blockIndex,
+          token: symbol,
+          decimals
+        };
+      }
+      if (kind === "burn") {
+        return {
+          timestamp,
+          from: principalAddressToHex(
+            extractOwner(raw.from_owner ?? raw.from_account)
+          ),
+          to: "burn-address",
+          amount,
+          blockIndex,
+          token: symbol,
+          decimals
+        };
+      }
+      return {
+        timestamp,
+        from: principalAddressToHex(
+          extractOwner(raw.from_owner ?? raw.from_account)
+        ),
+        to: principalAddressToHex(extractOwner(raw.to_owner ?? raw.to_account)),
+        amount,
+        blockIndex,
+        token: symbol,
+        decimals
+      };
+    }
+    const tx = raw == null ? void 0 : raw.transaction;
+    if (!tx) return null;
+    if (tx.transfer) {
+      const from = principalAddressToHex(
+        extractOwner(((_a3 = tx.transfer.from) == null ? void 0 : _a3.owner) ?? tx.transfer.from)
+      );
+      const to = principalAddressToHex(
+        extractOwner(((_b3 = tx.transfer.to) == null ? void 0 : _b3.owner) ?? tx.transfer.to)
+      );
+      const amount = Number(tx.transfer.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from,
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals
+      };
+    }
+    if (tx.mint) {
+      const to = principalAddressToHex(
+        extractOwner(((_c2 = tx.mint.to) == null ? void 0 : _c2.owner) ?? tx.mint.to)
+      );
+      const amount = Number(tx.mint.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from: "minting-account",
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals
+      };
+    }
+    if (tx.burn) {
+      const from = principalAddressToHex(
+        extractOwner(((_d2 = tx.burn.from) == null ? void 0 : _d2.owner) ?? tx.burn.from)
+      );
+      const amount = Number(tx.burn.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from,
+        to: "burn-address",
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals
+      };
+    }
+    if (raw.from !== void 0 && raw.to !== void 0) {
+      const from = principalAddressToHex(
+        extractOwner(((_e2 = raw.from) == null ? void 0 : _e2.owner) ?? raw.from)
+      );
+      const to = principalAddressToHex(extractOwner(((_f2 = raw.to) == null ? void 0 : _f2.owner) ?? raw.to));
+      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(raw.timestamp ?? raw.created_at),
+        from,
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals
+      };
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(
+      `[ICRC] normalizeIcrcTransaction failed for ${symbol}: ${msg}`
+    );
+    return null;
+  }
+  return null;
+}
+async function fetchLedgerTxs(canisterId, accountId, limit, symbol, decimals, addressFormat) {
+  const urlAccountId = accountId;
+  const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(urlAccountId)}/transactions?limit=${limit}`;
+  try {
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(15e3)
+    });
+    if (!res.ok) {
+      const err = `HTTP ${res.status} ${res.statusText}`;
+      console.warn(
+        `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: ${err}`
+      );
+      return { txs: [], httpStatus: res.status, error: err };
+    }
+    const data = await res.json();
+    const rawList = extractTransactionArray(data);
+    if (rawList.length === 0) {
+      console.log(
+        `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: 0 txs`
+      );
+      return { txs: [], httpStatus: res.status, error: null };
+    }
+    const txs = [];
+    for (const raw of rawList) {
+      const tx = normalizeIcrcTransaction(raw, decimals, symbol);
+      if (tx) txs.push(tx);
+    }
+    console.log(
+      `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: ${txs.length} txs`
+    );
+    return { txs, httpStatus: res.status, error: null };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(
+      `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)} fetch error: ${msg}`,
+      err
+    );
+    return { txs: [], httpStatus: null, error: msg };
+  }
+}
+async function fetchIcrcTransactions(address, limit = DEFAULT_TX_LIMIT, debugEntries, originalPrincipal) {
+  const addr = address.trim();
+  if (!addr) return [];
+  const isHex = /^[0-9a-fA-F]{64}$/.test(addr);
+  const principal = isHex ? (originalPrincipal == null ? void 0 : originalPrincipal.trim()) || "" : addr;
+  const hexAccountId = isHex ? addr : principalToAccountIdentifier(addr) ?? "";
+  const key = cacheKey("txs", principal, hexAccountId);
+  const cached = getCached(txCache, key);
+  if (cached) {
+    console.log(`[ICRC] Tx fetch: ${cached.length} txs (cached)`);
+    if (debugEntries) {
+      const byToken = /* @__PURE__ */ new Map();
+      for (const tx of cached) {
+        const sym = tx.token || "ICP";
+        const entry = byToken.get(sym);
+        if (entry) entry.count += 1;
+        else byToken.set(sym, { count: 1, canisterId: "" });
+      }
+      for (const [sym, info] of byToken) {
+        debugEntries.push({
+          symbol: sym,
+          canisterId: info.canisterId || sym,
+          resultCount: info.count,
+          addressFormat: "none"
+        });
+      }
+    }
+    return cached;
+  }
+  const tokenList = await fetchIcrcTokenList(principal, hexAccountId);
+  if (tokenList.length === 0) {
+    console.warn(
+      `[ICRC] No ledgers available from token list for ${principal || hexAccountId}`
+    );
+    if (debugEntries) {
+      debugEntries.push({
+        symbol: "ICRC",
+        canisterId: principal || hexAccountId || "",
+        resultCount: 0,
+        addressFormat: "none",
+        error: "no ledgers available from token list"
+      });
+    }
+    return [];
+  }
+  console.log(
+    `[ICRC] Querying ${tokenList.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`
+  );
+  const allTxs = [];
+  let totalQueried = 0;
+  let totalWithResults = 0;
+  let totalErrored = 0;
+  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
+    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
+    const batchResults = await Promise.all(
+      batch.map(async (token) => {
+        totalQueried += 1;
+        const { canisterId, symbol, decimals } = token;
+        let result = {
+          txs: [],
+          httpStatus: null,
+          error: null
+        };
+        let usedFormat = "principal";
+        if (principal) {
+          result = await fetchLedgerTxs(
+            canisterId,
+            principal,
+            limit,
+            symbol,
+            decimals,
+            "principal"
+          );
+        }
+        if (result.txs.length === 0 && hexAccountId) {
+          const altResult = await fetchLedgerTxs(
+            canisterId,
+            hexAccountId,
+            limit,
+            symbol,
+            decimals,
+            "hex"
+          );
+          if (altResult.txs.length > 0) {
+            result = altResult;
+            usedFormat = "hex";
+          } else if (altResult.error && !result.error) {
+            result.error = altResult.error;
+            result.httpStatus = altResult.httpStatus;
+          }
+        }
+        if (debugEntries) {
+          debugEntries.push({
+            symbol,
+            canisterId,
+            resultCount: result.txs.length,
+            addressFormat: result.txs.length > 0 ? usedFormat : "none",
+            error: result.error ?? void 0,
+            httpStatus: result.httpStatus ?? void 0
+          });
+        }
+        if (result.txs.length > 0) totalWithResults += 1;
+        if (result.error) totalErrored += 1;
+        return result.txs;
+      })
+    );
+    for (const txs of batchResults) {
+      for (const tx of txs) allTxs.push(tx);
+    }
+    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
+      await sleep(TX_BATCH_DELAY_MS);
+    }
+  }
+  console.log(
+    `[ICRC] Tx fetch complete: ${allTxs.length} txs across ${totalWithResults}/${totalQueried} ledgers (${totalErrored} errored) for ${principal || hexAccountId}`
+  );
+  if (debugEntries) {
+    debugEntries.push({
+      symbol: "__SUMMARY__",
+      canisterId: principal || hexAccountId || "",
+      resultCount: allTxs.length,
+      addressFormat: "none",
+      error: totalErrored > 0 ? `${totalQueried} queried, ${totalWithResults} with results, ${totalErrored} errored` : void 0
+    });
+  }
+  if (allTxs.length > 0) setCached(txCache, key, allTxs);
+  return allTxs;
+}
 const COLORS = {
   user: "#94A3B8",
   sns: "#3FE08C",
@@ -63915,6 +64822,18 @@ const KNOWN_CANISTERS = [
 const CANISTER_MAP = new Map(
   KNOWN_CANISTERS.map((c2) => [c2.id.toLowerCase(), c2])
 );
+const CANISTER_MAP_BY_HEX = /* @__PURE__ */ new Map();
+for (const c2 of KNOWN_CANISTERS) {
+  const hex2 = principalToAccountIdentifier(c2.id);
+  if (hex2) CANISTER_MAP_BY_HEX.set(hex2.toLowerCase(), c2);
+}
+function toCanonicalId(id2) {
+  const lower2 = id2.toLowerCase().trim();
+  if (CANISTER_MAP.has(lower2)) return lower2;
+  const hexEntry = CANISTER_MAP_BY_HEX.get(lower2);
+  if (hexEntry) return hexEntry.id.toLowerCase();
+  return lower2;
+}
 const SNS_TOKENS = {
   CHAT: "OpenChat",
   KINIC: "Kinic",
@@ -63932,13 +64851,23 @@ const SNS_TOKENS = {
   FUNNAI: "Funnai"
 };
 function getNodeIdentity(id2, _transactions) {
-  const entry = CANISTER_MAP.get(id2.toLowerCase().trim());
+  const lower2 = id2.toLowerCase().trim();
+  const entry = CANISTER_MAP.get(lower2);
   if (entry) {
     return {
       type: entry.type,
       label: entry.name,
       icon: entry.icon,
       ringColor: entry.ringColor
+    };
+  }
+  const hexEntry = CANISTER_MAP_BY_HEX.get(lower2);
+  if (hexEntry) {
+    return {
+      type: hexEntry.type,
+      label: hexEntry.name,
+      icon: hexEntry.icon,
+      ringColor: hexEntry.ringColor
     };
   }
   const idTrimmed = id2.trim();
@@ -63976,8 +64905,8 @@ function buildEdgeFromTx(acctLower, displayIdLower, displayId, tx, edgeMap) {
   const isTo = toLower === acctLower || toLower === displayIdLower;
   const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
   if (!counterparty) return null;
-  const counterpartyLower = counterparty.toLowerCase();
-  const edgeKey = [acctLower, counterpartyLower].sort().join("|");
+  const counterpartyLower = toCanonicalId(counterparty);
+  const edgeKey = [toCanonicalId(acctLower), counterpartyLower].sort().join("|");
   const token = tx.token ?? "ICP";
   const isIcp = token === "ICP";
   const existing = edgeMap.get(edgeKey);
@@ -64108,9 +65037,9 @@ function buildGraph(displayId, accountIdentifier, transactions, maxCounterpartie
   };
   const counterpartyNodes = sortedCounterparties.map((id2) => {
     const original = transactions.find(
-      (t2) => t2.from.toLowerCase() === id2 || t2.to.toLowerCase() === id2
+      (t2) => toCanonicalId(t2.from) === id2 || toCanonicalId(t2.to) === id2
     );
-    const originalId = original ? original.from.toLowerCase() === id2 ? original.from : original.to : id2;
+    const originalId = original ? toCanonicalId(original.from) === id2 ? original.from : original.to : id2;
     return {
       id: originalId,
       isCenter: false,
@@ -64124,7 +65053,7 @@ function buildGraph(displayId, accountIdentifier, transactions, maxCounterpartie
     (n2) => enrichNode(n2, transactions, allAddresses, savedAddresses)
   );
   const edges = [...edgeMap.values()].filter(
-    (e3) => allowedSet.has(e3.source.toLowerCase()) || allowedSet.has(e3.target.toLowerCase())
+    (e3) => allowedSet.has(toCanonicalId(e3.source)) || allowedSet.has(toCanonicalId(e3.target))
   ).map(({ counterpartyId: _cid, ...rest }) => enrichEdge(rest));
   return { nodes, edges };
 }
@@ -64139,7 +65068,7 @@ function processTransactionsForDepth(txs, acctLower, displayIdLower, existingNod
     const isTo = toLower === acctLower || toLower === displayIdLower;
     const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
     if (!counterparty) continue;
-    const cpLower = counterparty.toLowerCase();
+    const cpLower = toCanonicalId(counterparty);
     if (skipExisting && existingNodes.has(cpLower)) continue;
     const token = tx.token ?? "ICP";
     const isIcp = token === "ICP";
@@ -64175,8 +65104,8 @@ function processTransactionsForDepth(txs, acctLower, displayIdLower, existingNod
 }
 function addCrossEdges(allTxs, allNodes, allEdges) {
   for (const tx of allTxs) {
-    const fromLower = tx.from.toLowerCase();
-    const toLower = tx.to.toLowerCase();
+    const fromLower = toCanonicalId(tx.from);
+    const toLower = toCanonicalId(tx.to);
     if (fromLower === toLower) continue;
     const fromNode = allNodes.get(fromLower);
     const toNode = allNodes.get(toLower);
@@ -64225,7 +65154,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
   const savedAddresses = getSavedAddresses();
   const centerIdLower = center2.accountId.toLowerCase();
   const centerDisplayIdLower = center2.displayId.toLowerCase();
-  allNodes.set(center2.displayId.toLowerCase(), {
+  allNodes.set(toCanonicalId(center2.displayId), {
     id: center2.displayId,
     isCenter: true,
     txCount: center2.transactions.length,
@@ -64262,7 +65191,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
       depth: 1
     });
     allEdges.set(
-      `${center2.displayId.toLowerCase()}|${cpLower}`,
+      `${toCanonicalId(center2.displayId)}|${cpLower}`,
       enrichEdge({
         source: center2.displayId,
         target: edgeInfo.counterpartyId,
@@ -64278,7 +65207,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
     );
   }
   for (const d1Fetch of depth1Fetches) {
-    if (!allNodes.has(d1Fetch.nodeId.toLowerCase())) continue;
+    if (!allNodes.has(toCanonicalId(d1Fetch.nodeId))) continue;
     const d1AcctLower = d1Fetch.accountId.toLowerCase();
     const d1DisplayIdLower = d1Fetch.nodeId.toLowerCase();
     const { txCount: d2TxCount, edgeData: d2EdgeData } = processTransactionsForDepth(
@@ -64289,7 +65218,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
       true
     );
     const top3 = [...d2TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, 3);
-    const d1Node = allNodes.get(d1Fetch.nodeId.toLowerCase());
+    const d1Node = allNodes.get(toCanonicalId(d1Fetch.nodeId));
     for (const [cpLower] of top3) {
       if (allNodes.has(cpLower)) continue;
       const edgeInfo = d2EdgeData.get(cpLower);
@@ -64301,7 +65230,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
         depth: 2
       });
       allEdges.set(
-        `${d1Node.id.toLowerCase()}|${cpLower}`,
+        `${toCanonicalId(d1Node.id)}|${cpLower}`,
         enrichEdge({
           source: d1Node.id,
           target: edgeInfo.counterpartyId,
@@ -64318,7 +65247,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
     }
   }
   for (const d2Fetch of depth2Fetches) {
-    if (!allNodes.has(d2Fetch.nodeId.toLowerCase())) continue;
+    if (!allNodes.has(toCanonicalId(d2Fetch.nodeId))) continue;
     const d2AcctLower = d2Fetch.accountId.toLowerCase();
     const d2DisplayIdLower = d2Fetch.nodeId.toLowerCase();
     const { txCount: d3TxCount, edgeData: d3EdgeData } = processTransactionsForDepth(
@@ -64329,7 +65258,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
       true
     );
     const top2 = [...d3TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, 2);
-    const d2Node = allNodes.get(d2Fetch.nodeId.toLowerCase());
+    const d2Node = allNodes.get(toCanonicalId(d2Fetch.nodeId));
     for (const [cpLower] of top2) {
       if (allNodes.has(cpLower)) continue;
       const edgeInfo = d3EdgeData.get(cpLower);
@@ -64341,7 +65270,7 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
         depth: 3
       });
       allEdges.set(
-        `${d2Node.id.toLowerCase()}|${cpLower}`,
+        `${toCanonicalId(d2Node.id)}|${cpLower}`,
         enrichEdge({
           source: d2Node.id,
           target: edgeInfo.counterpartyId,
@@ -64724,972 +65653,6 @@ function OverviewPanel({
     ] })
   ] });
 }
-const WalletLabel = Record({
-  "address": Text$1,
-  "walletLabel": Text$1
-});
-const Favorite = Record({
-  "address": Text$1,
-  "pinnedAt": Int
-});
-const HttpHeader = Record({ "value": Text$1, "name": Text$1 });
-const HttpRequestResult = Record({
-  "status": Nat,
-  "body": Vec(Nat8),
-  "headers": Vec(HttpHeader)
-});
-Service({
-  "addFavorite": Func([Text$1], [], []),
-  "getAllLabels": Func([], [Vec(WalletLabel)], ["query"]),
-  "getFavorites": Func([], [Vec(Favorite)], ["query"]),
-  "getLabel": Func([Text$1], [Opt(Text$1)], ["query"]),
-  "icexplorer_portfolio": Func([Text$1], [Text$1], []),
-  "icexplorer_transform": Func(
-    [
-      Record({
-        "context": Vec(Nat8),
-        "response": HttpRequestResult
-      })
-    ],
-    [HttpRequestResult],
-    ["query"]
-  ),
-  "icexplorer_txlist": Func([Text$1], [Text$1], []),
-  "ping": Func([], [Record({ "status": Text$1 })], ["query"]),
-  "removeFavorite": Func([Text$1], [], []),
-  "removeLabel": Func([Text$1], [], []),
-  "setLabel": Func([Text$1, Text$1], [], [])
-});
-const idlFactory = ({ IDL: IDL2 }) => {
-  const WalletLabel2 = IDL2.Record({
-    "address": IDL2.Text,
-    "walletLabel": IDL2.Text
-  });
-  const Favorite2 = IDL2.Record({ "address": IDL2.Text, "pinnedAt": IDL2.Int });
-  const HttpHeader2 = IDL2.Record({ "value": IDL2.Text, "name": IDL2.Text });
-  const HttpRequestResult2 = IDL2.Record({
-    "status": IDL2.Nat,
-    "body": IDL2.Vec(IDL2.Nat8),
-    "headers": IDL2.Vec(HttpHeader2)
-  });
-  return IDL2.Service({
-    "addFavorite": IDL2.Func([IDL2.Text], [], []),
-    "getAllLabels": IDL2.Func([], [IDL2.Vec(WalletLabel2)], ["query"]),
-    "getFavorites": IDL2.Func([], [IDL2.Vec(Favorite2)], ["query"]),
-    "getLabel": IDL2.Func([IDL2.Text], [IDL2.Opt(IDL2.Text)], ["query"]),
-    "icexplorer_portfolio": IDL2.Func([IDL2.Text], [IDL2.Text], []),
-    "icexplorer_transform": IDL2.Func(
-      [
-        IDL2.Record({
-          "context": IDL2.Vec(IDL2.Nat8),
-          "response": HttpRequestResult2
-        })
-      ],
-      [HttpRequestResult2],
-      ["query"]
-    ),
-    "icexplorer_txlist": IDL2.Func([IDL2.Text], [IDL2.Text], []),
-    "ping": IDL2.Func([], [IDL2.Record({ "status": IDL2.Text })], ["query"]),
-    "removeFavorite": IDL2.Func([IDL2.Text], [], []),
-    "removeLabel": IDL2.Func([IDL2.Text], [], []),
-    "setLabel": IDL2.Func([IDL2.Text, IDL2.Text], [], [])
-  });
-};
-class ExternalBlob {
-  constructor(directURL, blob) {
-    __publicField(this, "_blob");
-    __publicField(this, "directURL");
-    __publicField(this, "contentType");
-    __publicField(this, "filename");
-    __publicField(this, "onProgress");
-    if (blob) {
-      this._blob = blob;
-    }
-    this.directURL = directURL;
-  }
-  static fromURL(url) {
-    return new ExternalBlob(url, null);
-  }
-  static fromBytes(blob, contentType, filename) {
-    const url = URL.createObjectURL(new Blob([new Uint8Array(blob)], {
-      type: (contentType == null ? void 0 : contentType.trim()) || "application/octet-stream"
-    }));
-    const externalBlob = new ExternalBlob(url, blob);
-    if (contentType == null ? void 0 : contentType.trim()) {
-      externalBlob.contentType = contentType.trim();
-    }
-    if (filename == null ? void 0 : filename.trim()) {
-      externalBlob.filename = filename.trim();
-    }
-    return externalBlob;
-  }
-  async getBytes() {
-    if (this._blob) {
-      return this._blob;
-    }
-    const response = await fetch(this.directURL);
-    const blob = await response.blob();
-    this._blob = new Uint8Array(await blob.arrayBuffer());
-    return this._blob;
-  }
-  getDirectURL() {
-    return this.directURL;
-  }
-  withUploadProgress(onProgress) {
-    this.onProgress = onProgress;
-    return this;
-  }
-}
-new TextEncoder().encode("icfs-chunk/");
-new TextEncoder().encode("icfs-metadata/");
-new TextEncoder().encode("ynode/");
-class Backend {
-  constructor(actor, _uploadFile, _downloadFile, processError) {
-    this.actor = actor;
-    this._uploadFile = _uploadFile;
-    this._downloadFile = _downloadFile;
-    this.processError = processError;
-  }
-  async addFavorite(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.addFavorite(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.addFavorite(arg0);
-      return result;
-    }
-  }
-  async getAllLabels() {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getAllLabels();
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getAllLabels();
-      return result;
-    }
-  }
-  async getFavorites() {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getFavorites();
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getFavorites();
-      return result;
-    }
-  }
-  async getLabel(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getLabel(arg0);
-        return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getLabel(arg0);
-      return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async icexplorer_portfolio(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.icexplorer_portfolio(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.icexplorer_portfolio(arg0);
-      return result;
-    }
-  }
-  async icexplorer_transform(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.icexplorer_transform(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.icexplorer_transform(arg0);
-      return result;
-    }
-  }
-  async icexplorer_txlist(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.icexplorer_txlist(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.icexplorer_txlist(arg0);
-      return result;
-    }
-  }
-  async ping() {
-    if (this.processError) {
-      try {
-        const result = await this.actor.ping();
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.ping();
-      return result;
-    }
-  }
-  async removeFavorite(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.removeFavorite(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.removeFavorite(arg0);
-      return result;
-    }
-  }
-  async removeLabel(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.removeLabel(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.removeLabel(arg0);
-      return result;
-    }
-  }
-  async setLabel(arg0, arg1) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.setLabel(arg0, arg1);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.setLabel(arg0, arg1);
-      return result;
-    }
-  }
-}
-function from_candid_opt_n1(_uploadFile, _downloadFile, value) {
-  return value.length === 0 ? null : value[0];
-}
-function createActor(canisterId, _uploadFile, _downloadFile, options = {}) {
-  const agent = options.agent || HttpAgent.createSync({
-    ...options.agentOptions
-  });
-  if (options.agent && options.agentOptions) {
-    console.warn("Detected both agent and agentOptions passed to createActor. Ignoring agentOptions and proceeding with the provided agent.");
-  }
-  const actor = Actor.createActor(idlFactory, {
-    agent,
-    canisterId,
-    ...options.actorOptions
-  });
-  return new Backend(actor, _uploadFile, _downloadFile, options.processError);
-}
-const __vite_import_meta_env__$1 = {};
-const LEDGER_API_BASE = "https://ledger-api.internetcomputer.org";
-const BACKEND_CANISTER_ID$1 = (__vite_import_meta_env__$1 == null ? void 0 : __vite_import_meta_env__$1.CANISTER_ID_BACKEND) ?? "aaaaa-aa";
-function noopUpload$1(_file) {
-  return Promise.resolve(new Uint8Array());
-}
-function noopDownload$1(_file) {
-  return Promise.resolve(ExternalBlob.fromURL(""));
-}
-let anonymousActor = null;
-function getBackendActor() {
-  if (!anonymousActor) {
-    try {
-      anonymousActor = createActor(
-        BACKEND_CANISTER_ID$1,
-        noopUpload$1,
-        noopDownload$1
-      );
-    } catch (err) {
-      console.warn(
-        "[IC Explorer] Failed to build anonymous backend actor:",
-        err
-      );
-      return null;
-    }
-  }
-  return anonymousActor;
-}
-const DEFAULT_TX_LIMIT = 100;
-function e8sToIcp(val) {
-  const n2 = typeof val === "bigint" ? Number(val) : Number(val);
-  return n2 / 1e8;
-}
-function parseTimestamp(raw) {
-  if (!raw) return (/* @__PURE__ */ new Date()).toISOString();
-  if (typeof raw === "number") {
-    const asMs = raw > 1e15 ? Math.floor(raw / 1e6) : raw > 1e12 ? raw : raw * 1e3;
-    return new Date(asMs).toISOString();
-  }
-  if (typeof raw === "string" && /^\d{18,19}$/.test(raw)) {
-    return new Date(Math.floor(Number(raw) / 1e6)).toISOString();
-  }
-  return new Date(raw).toISOString();
-}
-function sha224(data) {
-  let h0 = 3238371032 | 0;
-  let h1 = 914150663 | 0;
-  let h2 = 812702999 | 0;
-  let h3 = 4144912697 | 0;
-  let h4 = 4290775857 | 0;
-  let h5 = 1750603025 | 0;
-  let h6 = 1694076839 | 0;
-  let h7 = 3204075428 | 0;
-  const K2 = [
-    1116352408,
-    1899447441,
-    3049323471,
-    3921009573,
-    961987163,
-    1508970993,
-    2453635748,
-    2870763221,
-    3624381080,
-    310598401,
-    607225278,
-    1426881987,
-    1925078388,
-    2162078206,
-    2614888103,
-    3248222580,
-    3835390401,
-    4022224774,
-    264347078,
-    604807628,
-    770255983,
-    1249150122,
-    1555081692,
-    1996064986,
-    2554220882,
-    2821834349,
-    2952996808,
-    3210313671,
-    3336571891,
-    3584528711,
-    113926993,
-    338241895,
-    666307205,
-    773529912,
-    1294757372,
-    1396182291,
-    1695183700,
-    1986661051,
-    2177026350,
-    2456956037,
-    2730485921,
-    2820302411,
-    3259730800,
-    3345764771,
-    3516065817,
-    3600352804,
-    4094571909,
-    275423344,
-    430227734,
-    506948616,
-    659060556,
-    883997877,
-    958139571,
-    1322822218,
-    1537002063,
-    1747873779,
-    1955562222,
-    2024104815,
-    2227730452,
-    2361852424,
-    2428436474,
-    2756734187,
-    3204031479,
-    3329325298
-  ];
-  const rotr2 = (x3, n2) => (x3 >>> n2 | x3 << 32 - n2) >>> 0;
-  const msgLen = data.length;
-  const bitLen2 = msgLen * 8;
-  const padLen = msgLen + 9 + 63 & -64;
-  const msg = new Uint8Array(padLen);
-  msg.set(data);
-  msg[msgLen] = 128;
-  const view = new DataView(msg.buffer);
-  view.setUint32(padLen - 4, bitLen2 >>> 0, false);
-  view.setUint32(padLen - 8, Math.floor(bitLen2 / 4294967296), false);
-  for (let i = 0; i < padLen; i += 64) {
-    const w2 = new Int32Array(64);
-    for (let j2 = 0; j2 < 16; j2++) {
-      w2[j2] = view.getInt32(i + j2 * 4, false);
-    }
-    for (let j2 = 16; j2 < 64; j2++) {
-      const s0 = rotr2(w2[j2 - 15] >>> 0, 7) ^ rotr2(w2[j2 - 15] >>> 0, 18) ^ w2[j2 - 15] >>> 0 >>> 3;
-      const s1 = rotr2(w2[j2 - 2] >>> 0, 17) ^ rotr2(w2[j2 - 2] >>> 0, 19) ^ w2[j2 - 2] >>> 0 >>> 10;
-      w2[j2] = w2[j2 - 16] + s0 + w2[j2 - 7] + s1 | 0;
-    }
-    let a2 = h0, b2 = h1, c2 = h2, d2 = h3, e3 = h4, f2 = h5, g2 = h6, h8 = h7;
-    for (let j2 = 0; j2 < 64; j2++) {
-      const S1 = rotr2(e3 >>> 0, 6) ^ rotr2(e3 >>> 0, 11) ^ rotr2(e3 >>> 0, 25);
-      const ch = e3 & f2 ^ ~e3 & g2 | 0;
-      const temp1 = h8 + S1 + ch + K2[j2] + w2[j2] | 0;
-      const S0 = rotr2(a2 >>> 0, 2) ^ rotr2(a2 >>> 0, 13) ^ rotr2(a2 >>> 0, 22);
-      const maj = a2 & b2 ^ a2 & c2 ^ b2 & c2 | 0;
-      const temp2 = S0 + maj | 0;
-      h8 = g2;
-      g2 = f2;
-      f2 = e3;
-      e3 = d2 + temp1 | 0;
-      d2 = c2;
-      c2 = b2;
-      b2 = a2;
-      a2 = temp1 + temp2 | 0;
-    }
-    h0 = h0 + a2 | 0;
-    h1 = h1 + b2 | 0;
-    h2 = h2 + c2 | 0;
-    h3 = h3 + d2 | 0;
-    h4 = h4 + e3 | 0;
-    h5 = h5 + f2 | 0;
-    h6 = h6 + g2 | 0;
-    h7 = h7 + h8 | 0;
-  }
-  const result = new Uint8Array(28);
-  const rv = new DataView(result.buffer);
-  rv.setUint32(0, h0 >>> 0, false);
-  rv.setUint32(4, h1 >>> 0, false);
-  rv.setUint32(8, h2 >>> 0, false);
-  rv.setUint32(12, h3 >>> 0, false);
-  rv.setUint32(16, h4 >>> 0, false);
-  rv.setUint32(20, h5 >>> 0, false);
-  rv.setUint32(24, h6 >>> 0, false);
-  return result;
-}
-function crc32(data) {
-  let crc = 4294967295;
-  const table = new Uint32Array(256);
-  for (let i = 0; i < 256; i++) {
-    let c2 = i;
-    for (let j2 = 0; j2 < 8; j2++) c2 = c2 & 1 ? 3988292384 ^ c2 >>> 1 : c2 >>> 1;
-    table[i] = c2;
-  }
-  for (const byte of data) crc = table[(crc ^ byte) & 255] ^ crc >>> 8;
-  return (crc ^ 4294967295) >>> 0;
-}
-function principalToAccountIdentifier(input) {
-  const trimmed = input.trim();
-  if (/^[0-9a-fA-F]{64}$/.test(trimmed)) return trimmed.toLowerCase();
-  try {
-    const principal = Principal$1.fromText(trimmed);
-    const principalBytes = principal.toUint8Array();
-    const domainSep = new TextEncoder().encode("\naccount-id");
-    const subaccount = new Uint8Array(32);
-    const msg = new Uint8Array(
-      domainSep.length + principalBytes.length + subaccount.length
-    );
-    msg.set(domainSep, 0);
-    msg.set(principalBytes, domainSep.length);
-    msg.set(subaccount, domainSep.length + principalBytes.length);
-    const hash = sha224(msg);
-    const checksum = crc32(hash);
-    const checksumBytes = new Uint8Array(4);
-    new DataView(checksumBytes.buffer).setUint32(0, checksum, false);
-    const accountIdBytes = new Uint8Array(32);
-    accountIdBytes.set(checksumBytes, 0);
-    accountIdBytes.set(hash, 4);
-    return Array.from(accountIdBytes).map((b2) => b2.toString(16).padStart(2, "0")).join("");
-  } catch {
-    return null;
-  }
-}
-function normalizeTransaction(raw) {
-  var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z;
-  try {
-    if ((raw == null ? void 0 : raw.from_account_identifier) !== void 0 || (raw == null ? void 0 : raw.to_account_identifier) !== void 0) {
-      const amount = raw.amount ? e8sToIcp(raw.amount) : 0;
-      return {
-        timestamp: parseTimestamp(raw.created_at ?? raw.timestamp),
-        from: String(raw.from_account_identifier ?? ""),
-        to: String(raw.to_account_identifier ?? ""),
-        amount,
-        blockIndex: Number(
-          raw.block_height ?? ((_a3 = raw.block_identifier) == null ? void 0 : _a3.index) ?? raw.block_index ?? 0
-        )
-      };
-    }
-    if ((_b3 = raw == null ? void 0 : raw.transaction) == null ? void 0 : _b3.operations) {
-      const ops = raw.transaction.operations;
-      const txOps = ops.filter(
-        (o) => o.type === "TRANSACTION" || o.type === "Transfer"
-      );
-      const feeOps = ops.filter((o) => o.type === "FEE" || o.type === "Fee");
-      if (txOps.length >= 2) {
-        const senderOp = txOps.find(
-          (o) => {
-            var _a4;
-            return String(((_a4 = o.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
-          }
-        );
-        const receiverOp = txOps.find(
-          (o) => {
-            var _a4;
-            return !String(((_a4 = o.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
-          }
-        );
-        if (senderOp && receiverOp) {
-          const amountRaw = Math.abs(
-            Number.parseFloat(((_c2 = receiverOp.amount) == null ? void 0 : _c2.value) ?? "0")
-          );
-          const decimals = ((_e2 = (_d2 = receiverOp.amount) == null ? void 0 : _d2.currency) == null ? void 0 : _e2.decimals) ?? 8;
-          return {
-            timestamp: parseTimestamp(raw.timestamp),
-            from: ((_f2 = senderOp.account) == null ? void 0 : _f2.address) ?? "",
-            to: ((_g2 = receiverOp.account) == null ? void 0 : _g2.address) ?? "",
-            amount: amountRaw / 10 ** decimals,
-            blockIndex: ((_h2 = raw.block_identifier) == null ? void 0 : _h2.index) ?? raw.block_index ?? 0
-          };
-        }
-      }
-      const nonFeeOps = ops.filter(
-        (o) => {
-          var _a4;
-          return !feeOps.includes(o) && ((_a4 = o.account) == null ? void 0 : _a4.address);
-        }
-      );
-      if (nonFeeOps.length >= 2) {
-        const amountRaw = Math.abs(
-          Number.parseFloat(((_i2 = nonFeeOps[0].amount) == null ? void 0 : _i2.value) ?? "0")
-        );
-        const decimals = ((_k = (_j2 = nonFeeOps[0].amount) == null ? void 0 : _j2.currency) == null ? void 0 : _k.decimals) ?? 8;
-        return {
-          timestamp: parseTimestamp(raw.timestamp),
-          from: ((_l = nonFeeOps[0].account) == null ? void 0 : _l.address) ?? "",
-          to: ((_m = nonFeeOps[1].account) == null ? void 0 : _m.address) ?? "",
-          amount: amountRaw / 10 ** decimals,
-          blockIndex: ((_n = raw.block_identifier) == null ? void 0 : _n.index) ?? raw.block_index ?? 0
-        };
-      }
-    }
-    if ((raw == null ? void 0 : raw.from) && (raw == null ? void 0 : raw.to)) {
-      let amount = 0;
-      if (typeof raw.amount === "object" && raw.amount !== null) {
-        amount = e8sToIcp(raw.amount.e8s ?? raw.amount.value ?? 0);
-      } else if (typeof raw.amount === "number" || typeof raw.amount === "string") {
-        const numAmt = Number(raw.amount);
-        amount = numAmt > 1e3 ? e8sToIcp(numAmt) : numAmt;
-      }
-      return {
-        timestamp: parseTimestamp(
-          raw.timestamp ?? raw.created_at_time ?? raw.date
-        ),
-        from: String(raw.from),
-        to: String(raw.to),
-        amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? raw.blockIndex ?? 0)
-      };
-    }
-    const op = ((_o = raw == null ? void 0 : raw.transaction) == null ? void 0 : _o.operation) ?? ((_q = (_p = raw == null ? void 0 : raw.transaction) == null ? void 0 : _p.operations) == null ? void 0 : _q[0]);
-    const transfer = (op == null ? void 0 : op.Transfer) ?? (op == null ? void 0 : op.transfer) ?? ((_r = raw == null ? void 0 : raw.transaction) == null ? void 0 : _r.transfer);
-    if (transfer) {
-      const amountVal = ((_s = transfer.amount) == null ? void 0 : _s.e8s) ?? ((_t2 = transfer.amount) == null ? void 0 : _t2.value) ?? transfer.amount ?? 0;
-      return {
-        timestamp: parseTimestamp(
-          ((_v = (_u = raw == null ? void 0 : raw.transaction) == null ? void 0 : _u.created_at_time) == null ? void 0 : _v.timestamp_nanos) ?? (raw == null ? void 0 : raw.created_at_time) ?? (raw == null ? void 0 : raw.timestamp)
-        ),
-        from: String(
-          ((_w = transfer.from) == null ? void 0 : _w.address) ?? transfer.from ?? ((_x = raw == null ? void 0 : raw.transaction) == null ? void 0 : _x.from) ?? ""
-        ),
-        to: String(
-          ((_y = transfer.to) == null ? void 0 : _y.address) ?? transfer.to ?? ((_z = raw == null ? void 0 : raw.transaction) == null ? void 0 : _z.to) ?? ""
-        ),
-        amount: e8sToIcp(amountVal),
-        blockIndex: Number((raw == null ? void 0 : raw.id) ?? (raw == null ? void 0 : raw.block_index) ?? 0)
-      };
-    }
-  } catch {
-  }
-  return null;
-}
-function extractTransactionArray(data) {
-  var _a3, _b3, _c2;
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data == null ? void 0 : data.data)) return data.data;
-  if (Array.isArray(data == null ? void 0 : data.blocks)) return data.blocks;
-  if (Array.isArray(data == null ? void 0 : data.transactions)) return data.transactions;
-  if (Array.isArray((_a3 = data == null ? void 0 : data.data) == null ? void 0 : _a3.transactions)) return data.data.transactions;
-  if (Array.isArray((_b3 = data == null ? void 0 : data.data) == null ? void 0 : _b3.blocks)) return data.data.blocks;
-  if (Array.isArray((_c2 = data == null ? void 0 : data.data) == null ? void 0 : _c2.data)) return data.data.data;
-  if (Array.isArray(data == null ? void 0 : data.result)) return data.result;
-  return [];
-}
-async function fetchWalletTransactions(principal, proxyUrl, limit = DEFAULT_TX_LIMIT) {
-  if (!principal || principal.trim() === "") {
-    return { ok: false, error: "invalid" };
-  }
-  const accountId = principalToAccountIdentifier(principal.trim());
-  if (!accountId) {
-    return { ok: false, error: "invalid" };
-  }
-  const base = proxyUrl ? proxyUrl.replace(/\/$/, "") : LEDGER_API_BASE;
-  const url = `${base}/accounts/${encodeURIComponent(accountId)}/transactions?limit=${limit}`;
-  let response;
-  try {
-    response = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(15e3)
-    });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (err instanceof TypeError && (msg.toLowerCase().includes("failed to fetch") || msg.toLowerCase().includes("networkerror") || msg.toLowerCase().includes("network request failed"))) {
-      return { ok: false, error: "cors" };
-    }
-    return { ok: false, error: "network" };
-  }
-  if (!response.ok) {
-    return { ok: false, error: "http" };
-  }
-  let data;
-  try {
-    data = await response.json();
-  } catch {
-    return { ok: false, error: "parse" };
-  }
-  const rawList = extractTransactionArray(data);
-  const transactions = [];
-  for (const raw of rawList) {
-    const tx = normalizeTransaction(raw);
-    if (tx) transactions.push(tx);
-  }
-  if (transactions.length === 0 && rawList.length > 0) {
-    return { ok: false, error: "parse" };
-  }
-  return { ok: true, transactions, accountIdentifier: accountId };
-}
-async function checkExplorerReachable() {
-  try {
-    const r2 = await fetch(`${LEDGER_API_BASE}/`, {
-      method: "HEAD",
-      signal: AbortSignal.timeout(5e3)
-    });
-    return r2.status < 500;
-  } catch {
-    try {
-      const r2 = await fetch(LEDGER_API_BASE, {
-        signal: AbortSignal.timeout(5e3)
-      });
-      return r2.status < 500;
-    } catch {
-      return false;
-    }
-  }
-}
-async function checkIcExplorerReachable() {
-  const actor = getBackendActor();
-  if (!actor) return false;
-  try {
-    const raw = await actor.icexplorer_portfolio("rrkah-fqaaa-aaaaa-aaaaq-cai");
-    if (!raw) return false;
-    JSON.parse(raw);
-    return true;
-  } catch (err) {
-    console.warn("[IC Explorer] reachability probe failed:", err);
-    return false;
-  }
-}
-function testParser() {
-  try {
-    const sample = [
-      {
-        block_height: "1",
-        from_account_identifier: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00",
-        to_account_identifier: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00",
-        amount: "100000000",
-        created_at: 17e8,
-        transfer_type: "send"
-      }
-    ];
-    for (const r2 of sample) {
-      const tx = normalizeTransaction(r2);
-      if (!tx) return false;
-    }
-    return true;
-  } catch {
-    return false;
-  }
-}
-const IC_EXPLORER_SUCCESS_CODE = 600;
-const CACHE_TTL_MS = 5 * 60 * 1e3;
-const TX_MAX_PAGES = 5;
-const TX_PAGE_SIZE = 100;
-const portfolioCache = /* @__PURE__ */ new Map();
-const txCache = /* @__PURE__ */ new Map();
-function cacheKey(...parts) {
-  return parts.filter(Boolean).join("|").toLowerCase();
-}
-function getCached(cache2, key) {
-  const entry = cache2.get(key);
-  if (!entry) return null;
-  if (Date.now() - entry.fetchedAt > CACHE_TTL_MS) {
-    cache2.delete(key);
-    return null;
-  }
-  return entry.value;
-}
-function setCached(cache2, key, value) {
-  if (value === null || value === void 0) return;
-  cache2.set(key, { value, fetchedAt: Date.now() });
-}
-function buildIcExplorerBody(principal, accountId, page, size2, extra) {
-  const body = { page, size: size2, isDesc: true };
-  if (principal) body.principal = principal;
-  if (accountId) body.accountId = accountId;
-  return body;
-}
-async function postIcExplorer(path, body) {
-  const actor = getBackendActor();
-  if (!actor) {
-    console.warn(`[IC Explorer] ${path} no backend actor available`);
-    return { data: null, httpStatus: null, error: "no backend actor" };
-  }
-  try {
-    let rawBody;
-    if (path === "/api/holder/user") {
-      const address = String(body.principal ?? body.accountId ?? "");
-      rawBody = await actor.icexplorer_portfolio(address);
-    } else if (path === "/api/tx/list") {
-      rawBody = await actor.icexplorer_txlist(JSON.stringify(body));
-    } else {
-      console.warn(`[IC Explorer] unsupported proxied path: ${path}`);
-      return {
-        data: null,
-        httpStatus: null,
-        error: `unsupported path ${path}`
-      };
-    }
-    const json = JSON.parse(rawBody);
-    if ((json == null ? void 0 : json.statusCode) !== IC_EXPLORER_SUCCESS_CODE) {
-      console.warn(
-        `[IC Explorer] ${path} non-success statusCode: ${json == null ? void 0 : json.statusCode}`
-      );
-      return {
-        data: null,
-        httpStatus: (json == null ? void 0 : json.statusCode) ?? null,
-        error: `statusCode ${json == null ? void 0 : json.statusCode}`
-      };
-    }
-    return {
-      data: (json == null ? void 0 : json.data) ?? null,
-      httpStatus: json.statusCode,
-      error: null
-    };
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.warn(`[IC Explorer] ${path} proxy error: ${msg}`);
-    return {
-      data: null,
-      httpStatus: null,
-      error: `Proxy error: ${msg}`
-    };
-  }
-}
-async function fetchIcrcTokenList(principal, accountId) {
-  const p2 = (principal == null ? void 0 : principal.trim()) || "";
-  const a2 = (accountId == null ? void 0 : accountId.trim()) || "";
-  if (!p2 && !a2) return [];
-  const key = cacheKey(p2, a2);
-  const cached = getCached(portfolioCache, key);
-  if (cached) {
-    console.log(`[IC Explorer] Portfolio: ${cached.length} tokens (cached)`);
-    return cached;
-  }
-  const body = buildIcExplorerBody(p2 || void 0, a2 || void 0, 1, 100);
-  const { data, error } = await postIcExplorer(
-    "/api/holder/user",
-    body
-  );
-  if (!data || !Array.isArray(data.list)) {
-    console.warn(
-      `[IC Explorer] /api/holder/user returned no list for ${p2 || a2}${error ? ` — ${error}` : ""}`
-    );
-    return [];
-  }
-  const tokens = [];
-  for (const item of data.list) {
-    const canisterId = String(item.ledgerId ?? "").trim();
-    const symbol = String(item.symbol ?? "").trim();
-    const decimals = typeof item.tokenDecimal === "number" ? item.tokenDecimal : Number(item.tokenDecimal ?? 8);
-    if (!canisterId || !symbol || Number.isNaN(decimals)) continue;
-    tokens.push({ canisterId, symbol, decimals });
-  }
-  console.log(
-    `[IC Explorer] Portfolio: ${tokens.length} tokens (fresh) for ${p2 || a2}`
-  );
-  if (tokens.length > 0) setCached(portfolioCache, key, tokens);
-  return tokens;
-}
-function normalizeIcExplorerTx(raw) {
-  try {
-    const timestamp = parseTimestamp(raw.token0TxTime);
-    const from = String(
-      raw.fromOwner || raw.fromAccountId || raw.fromAccountTextual || ""
-    );
-    const to = String(
-      raw.toOwner || raw.toAccountId || raw.toAccountTextual || ""
-    );
-    if (!from && !to) return null;
-    const decimals = typeof raw.token0Decimal === "number" ? raw.token0Decimal : Number(raw.token0Decimal ?? 8);
-    const amountRaw = Number(raw.token0Amount ?? 0);
-    const amount = Number.isNaN(amountRaw) ? 0 : amountRaw;
-    const blockIndex = Number(raw.token0TxIndex ?? 0);
-    const token = String(raw.token0Symbol || "ICP").trim() || "ICP";
-    const canisterId = String(raw.token0LedgerId ?? "").trim();
-    const phantomTag = token !== "ICP" ? token : canisterId;
-    const mintId = phantomTag ? `mint:${phantomTag}` : "minting-account";
-    const burnId = phantomTag ? `burn:${phantomTag}` : "burn-address";
-    return {
-      timestamp,
-      from: from || mintId,
-      to: to || burnId,
-      amount,
-      blockIndex: Number.isNaN(blockIndex) ? 0 : blockIndex,
-      token,
-      decimals: Number.isNaN(decimals) ? 8 : decimals
-    };
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error(`[IC Explorer] normalizeIcExplorerTx failed: ${msg}`);
-    return null;
-  }
-}
-async function fetchIcrcTransactions(address, limit = DEFAULT_TX_LIMIT, debugEntries, originalPrincipal) {
-  const addr = address.trim();
-  if (!addr) return [];
-  const isHex = /^[0-9a-fA-F]{64}$/.test(addr);
-  const principal = isHex ? (originalPrincipal == null ? void 0 : originalPrincipal.trim()) || "" : addr;
-  const accountId = isHex ? addr : principalToAccountIdentifier(addr) ?? "";
-  const key = cacheKey(principal, accountId);
-  const cached = getCached(txCache, key);
-  if (cached) {
-    console.log(`[IC Explorer] Tx list: ${cached.length} txs (cached)`);
-    if (debugEntries) {
-      const byToken = /* @__PURE__ */ new Map();
-      for (const tx of cached) {
-        const sym = tx.token || "ICP";
-        const entry = byToken.get(sym);
-        if (entry) entry.count += 1;
-        else byToken.set(sym, { count: 1, canisterId: "" });
-      }
-      for (const [sym, info] of byToken) {
-        debugEntries.push({
-          symbol: sym,
-          canisterId: info.canisterId || sym,
-          resultCount: info.count,
-          addressFormat: "none",
-          httpStatus: IC_EXPLORER_SUCCESS_CODE
-        });
-      }
-    }
-    return cached;
-  }
-  const size2 = Math.min(limit, TX_PAGE_SIZE) || TX_PAGE_SIZE;
-  const maxPages = Math.min(TX_MAX_PAGES, Math.max(1, Math.ceil(limit / size2)));
-  const allTxs = [];
-  const perTokenCount = /* @__PURE__ */ new Map();
-  const perTokenLedger = /* @__PURE__ */ new Map();
-  let httpStatus = null;
-  let fetchError = null;
-  for (let page = 1; page <= maxPages; page++) {
-    const body = buildIcExplorerBody(
-      principal || void 0,
-      accountId || void 0,
-      page,
-      size2
-    );
-    const {
-      data,
-      httpStatus: status,
-      error
-    } = await postIcExplorer("/api/tx/list", body);
-    if (status !== null) httpStatus = status;
-    if (error) fetchError = error;
-    if (!data || !Array.isArray(data.list)) break;
-    for (const raw of data.list) {
-      const tx = normalizeIcExplorerTx(raw);
-      if (!tx) continue;
-      allTxs.push(tx);
-      const sym = tx.token || "ICP";
-      perTokenCount.set(sym, (perTokenCount.get(sym) ?? 0) + 1);
-      const ledgerId = String(raw.token0LedgerId ?? "");
-      if (ledgerId && !perTokenLedger.has(sym))
-        perTokenLedger.set(sym, ledgerId);
-    }
-    const pages = data.pages ?? 1;
-    if (page >= pages) break;
-    if (data.list.length < size2) break;
-  }
-  console.log(
-    `[IC Explorer] Tx list: ${allTxs.length} txs across ${perTokenCount.size} tokens for ${principal || accountId}${fetchError ? ` (last error: ${fetchError})` : ""}`
-  );
-  if (debugEntries) {
-    for (const [sym, count2] of perTokenCount) {
-      debugEntries.push({
-        symbol: sym,
-        canisterId: perTokenLedger.get(sym) || sym,
-        resultCount: count2,
-        addressFormat: "none",
-        httpStatus: httpStatus ?? void 0,
-        // Surface the last fetch error on every token row so the Shift+D panel
-        // shows it even when some txs were fetched before the failure.
-        error: fetchError ?? void 0
-      });
-    }
-    if (perTokenCount.size === 0 && fetchError) {
-      debugEntries.push({
-        symbol: "ICRC",
-        canisterId: principal || accountId || "",
-        resultCount: 0,
-        addressFormat: "none",
-        httpStatus: httpStatus ?? void 0,
-        error: fetchError
-      });
-    }
-  }
-  if (allTxs.length > 0) setCached(txCache, key, allTxs);
-  return allTxs;
-}
 const DEFAULT_MAX_COUNTERPARTIES = 20;
 const HISTORY_KEY = "icpath_search_history";
 const LABELS_KEY$1 = "wallet-labels";
@@ -65753,7 +65716,12 @@ function useWallet() {
   const [txLimit, setTxLimit] = reactExports.useState(DEFAULT_TX_LIMIT);
   const [loading, setLoading] = reactExports.useState(false);
   const [errorType, setErrorType] = reactExports.useState(null);
-  const [rawTransactions, setRawTransactions] = reactExports.useState([]);
+  const [icpTransactions, setIcpTransactions] = reactExports.useState([]);
+  const [icrcTransactions, setIcrcTransactions] = reactExports.useState([]);
+  const rawTransactions = reactExports.useMemo(
+    () => [...icpTransactions, ...icrcTransactions],
+    [icpTransactions, icrcTransactions]
+  );
   const [accountIdentifier, setAccountIdentifier] = reactExports.useState("");
   const [proxyUrl, setProxyUrl] = reactExports.useState("");
   const [graphDepth, setGraphDepth] = reactExports.useState(1);
@@ -65790,7 +65758,8 @@ function useWallet() {
   const loadPrincipal = reactExports.useCallback(async (principal) => {
     setLoading(true);
     setErrorType(null);
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
@@ -65807,7 +65776,7 @@ function useWallet() {
       console.log(
         `[ICP] Loaded ${result.transactions.length} transactions, accountId=${acctId}`
       );
-      setRawTransactions(result.transactions);
+      setIcpTransactions(result.transactions);
       setAccountIdentifier(acctId);
       if (result.transactions.length === 0) {
         setErrorType("empty");
@@ -65824,7 +65793,7 @@ function useWallet() {
           );
           const debugEntries = [];
           const allIcrcTxs = await fetchIcrcTransactions(
-            acctId,
+            principal.trim(),
             txLimitRef.current,
             debugModeRef.current ? debugEntries : void 0,
             principal.trim()
@@ -65834,10 +65803,10 @@ function useWallet() {
             `[ICRC] Merging: ICP=${icpTxCount}, ICRC_total=${allIcrcTxs.length}, combined=${icpTxCount + allIcrcTxs.length}`
           );
           if (allIcrcTxs.length > 0) {
-            setRawTransactions((prev) => {
+            setIcrcTransactions((prev) => {
               const merged = [...prev, ...allIcrcTxs];
               console.log(
-                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} ICP txs → ${merged.length} total`
+                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} prior ICRC txs → ${merged.length} total`
               );
               if (debugModeRef.current) {
                 window.__ICRC_DEBUG = {
@@ -65847,7 +65816,7 @@ function useWallet() {
                   perToken: debugEntries,
                   icpTxCount,
                   icrcTotalTxCount: allIcrcTxs.length,
-                  mergedTxCount: merged.length,
+                  mergedTxCount: icpTxCount + merged.length,
                   icrcCounterpartyCount: 0,
                   // updated by graph builder
                   icrcUnconditionalCount: 0,
@@ -65927,7 +65896,8 @@ function useWallet() {
     icrcCancelledRef.current = true;
     setHistoryStack([]);
     setCurrentPrincipal("");
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setErrorType(null);
     setLoading(false);
@@ -65970,7 +65940,7 @@ function useWallet() {
     [rawTransactions, timeRange]
   );
   reactExports.useEffect(() => {
-    if (!accountIdentifier || rawTransactions.length === 0 || graphDepth === 1) {
+    if (!accountIdentifier || icpTransactions.length === 0 || graphDepth === 1) {
       setDepth1Fetches([]);
       setDepth2Fetches([]);
       return;
@@ -65978,14 +65948,20 @@ function useWallet() {
     let cancelled = false;
     const cancelledRef = { current: false };
     setDepthLoading(true);
+    const top5 = getTopCounterparties(
+      accountIdentifier,
+      icpTransactions,
+      5,
+      currentPrincipal
+    );
+    const existingIds = /* @__PURE__ */ new Set([
+      accountIdentifier.toLowerCase(),
+      ...top5.map((cp) => cp.address.toLowerCase())
+    ]);
     (async () => {
-      const top5 = getTopCounterparties(
-        accountIdentifier,
-        rawTransactions,
-        5,
-        currentPrincipal
-      );
-      const d1Results = await Promise.all(
+      const d1Results = [];
+      const d2Results = [];
+      await Promise.all(
         top5.map(async (cp) => {
           const icpRes = await fetchWalletTransactions(
             cp.address,
@@ -66011,78 +65987,69 @@ function useWallet() {
           console.log(
             `[Depth-1] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`
           );
-          return {
+          const d1Result = {
             nodeId: cp.address,
             accountId: acctId,
             transactions: allTxs
           };
+          d1Results.push(d1Result);
+          if (graphDepth === 3 && allTxs.length > 0) {
+            const cpList = getTopCounterparties(acctId, allTxs, 3);
+            const localD2Targets = [];
+            for (const d2cp of cpList) {
+              const cpLower = d2cp.address.toLowerCase();
+              if (!existingIds.has(cpLower)) {
+                existingIds.add(cpLower);
+                localD2Targets.push({
+                  address: d2cp.address,
+                  accountId: acctId
+                });
+              }
+            }
+            await Promise.all(
+              localD2Targets.map(async ({ address }) => {
+                if (cancelled) return;
+                const [icpRes2, icrcTxs2] = await Promise.all([
+                  fetchWalletTransactions(
+                    address,
+                    proxyUrlRef.current || void 0,
+                    txLimitRef.current
+                  ),
+                  cancelled ? Promise.resolve([]) : fetchAllIcrcForAddress(
+                    address,
+                    txLimitRef.current,
+                    cancelledRef,
+                    void 0,
+                    currentPrincipal
+                  ).catch(() => [])
+                ]);
+                if (cancelled) return;
+                const icpTxs2 = icpRes2.ok ? icpRes2.transactions : [];
+                const acctId2 = icpRes2.ok ? icpRes2.accountIdentifier ?? address : address;
+                const allTxs2 = [...icpTxs2, ...icrcTxs2];
+                console.log(
+                  `[Depth-2] ${address.slice(0, 12)}: ICP=${icpTxs2.length}, ICRC=${icrcTxs2.length}, total=${allTxs2.length}`
+                );
+                d2Results.push({
+                  nodeId: address,
+                  accountId: acctId2,
+                  transactions: allTxs2
+                });
+              })
+            );
+          }
         })
       );
       if (cancelled) return;
-      cancelledRef.current = false;
       setDepth1Fetches(d1Results);
-      if (graphDepth === 3) {
-        const existingIds = /* @__PURE__ */ new Set([
-          accountIdentifier.toLowerCase(),
-          ...top5.map((cp) => cp.address.toLowerCase())
-        ]);
-        const d2Promises = [];
-        for (const d1 of d1Results) {
-          if (d1.transactions.length === 0) continue;
-          const cpList = getTopCounterparties(d1.accountId, d1.transactions, 3);
-          for (const cp of cpList) {
-            const cpLower = cp.address.toLowerCase();
-            if (!existingIds.has(cpLower)) {
-              existingIds.add(cpLower);
-              d2Promises.push(
-                (async () => {
-                  const icpRes = await fetchWalletTransactions(
-                    cp.address,
-                    proxyUrlRef.current || void 0,
-                    txLimitRef.current
-                  );
-                  const icpTxs = icpRes.ok ? icpRes.transactions : [];
-                  const acctId = icpRes.ok ? icpRes.accountIdentifier ?? cp.address : cp.address;
-                  let icrcTxs = [];
-                  if (!cancelled) {
-                    try {
-                      icrcTxs = await fetchAllIcrcForAddress(
-                        cp.address,
-                        txLimitRef.current,
-                        cancelledRef,
-                        void 0,
-                        currentPrincipal
-                      );
-                    } catch {
-                    }
-                  }
-                  const allTxs = [...icpTxs, ...icrcTxs];
-                  console.log(
-                    `[Depth-2] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`
-                  );
-                  return {
-                    nodeId: cp.address,
-                    accountId: acctId,
-                    transactions: allTxs
-                  };
-                })()
-              );
-            }
-          }
-        }
-        const d2Results = await Promise.all(d2Promises);
-        if (cancelled) return;
-        setDepth2Fetches(d2Results);
-      } else {
-        setDepth2Fetches([]);
-      }
+      setDepth2Fetches(d2Results);
       if (!cancelled) setDepthLoading(false);
     })();
     return () => {
       cancelled = true;
       cancelledRef.current = true;
     };
-  }, [accountIdentifier, rawTransactions, graphDepth]);
+  }, [accountIdentifier, icpTransactions, graphDepth]);
   const walletData = reactExports.useMemo(() => {
     console.log(
       `[Graph] walletData memo: principal=${currentPrincipal.slice(0, 12)}, rawTx=${rawTransactions.length}, acctId=${accountIdentifier.slice(0, 12)}`
@@ -66391,6 +66358,7 @@ function StatusPanel() {
   const [explorerStatus, setExplorerStatus] = reactExports.useState("checking");
   const [parserStatus, setParserStatus] = reactExports.useState("checking");
   const [icExplorerStatus, setIcExplorerStatus] = reactExports.useState("checking");
+  const [icExplorerError, setIcExplorerError] = reactExports.useState(null);
   reactExports.useEffect(() => {
     setExplorerStatus("checking");
     checkExplorerReachable().then(
@@ -66399,23 +66367,37 @@ function StatusPanel() {
   }, []);
   reactExports.useEffect(() => {
     setIcExplorerStatus("checking");
-    checkIcExplorerReachable().then(
-      (ok) => setIcExplorerStatus(ok ? "ok" : "error")
-    );
+    checkIcExplorerReachable().then((ok) => {
+      setIcExplorerStatus(ok ? "ok" : "error");
+      setIcExplorerError(ok ? null : getLastIcExplorerError());
+    });
   }, []);
   reactExports.useEffect(() => {
     setParserStatus(testParser() ? "ok" : "error");
   }, []);
   const rows = [
-    { label: "Explorer", status: explorerStatus },
-    { label: "IC Explorer", status: icExplorerStatus },
-    { label: "Parser", status: parserStatus }
+    { label: "Explorer", status: explorerStatus, error: null },
+    {
+      label: "IC Explorer",
+      status: icExplorerStatus,
+      error: icExplorerError
+    },
+    { label: "Parser", status: parserStatus, error: null }
   ];
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-3 flex-wrap", "data-ocid": "wallet.panel", children: rows.map((row, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
     i > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-border text-xs select-none mr-1.5", children: "|" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(StatusDot, { status: row.status }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: row.label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-xs font-medium ${statusColor(row.status)}`, children: statusLabel(row.status) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-xs font-medium ${statusColor(row.status)}`, children: statusLabel(row.status) }),
+    row.error && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "span",
+      {
+        className: "text-[10px] text-neon-red/80 max-w-[180px] truncate",
+        title: row.error,
+        "data-ocid": "wallet.ic_explorer.error_state",
+        children: row.error
+      }
+    )
   ] }, row.label)) });
 }
 function relativeTime(ts) {
@@ -67572,6 +67554,304 @@ function WalletComparisonView({
     ) })
   ] });
 }
+const WalletLabel = Record({
+  "address": Text$1,
+  "walletLabel": Text$1
+});
+const Favorite = Record({
+  "address": Text$1,
+  "pinnedAt": Int
+});
+const HttpHeader = Record({ "value": Text$1, "name": Text$1 });
+const HttpRequestResult = Record({
+  "status": Nat,
+  "body": Vec(Nat8),
+  "headers": Vec(HttpHeader)
+});
+Service({
+  "addFavorite": Func([Text$1], [], []),
+  "getAllLabels": Func([], [Vec(WalletLabel)], ["query"]),
+  "getFavorites": Func([], [Vec(Favorite)], ["query"]),
+  "getLabel": Func([Text$1], [Opt(Text$1)], ["query"]),
+  "icexplorer_portfolio": Func([Text$1], [Text$1], []),
+  "icexplorer_transform": Func(
+    [
+      Record({
+        "context": Vec(Nat8),
+        "response": HttpRequestResult
+      })
+    ],
+    [HttpRequestResult],
+    ["query"]
+  ),
+  "icexplorer_txlist": Func([Text$1], [Text$1], []),
+  "ping": Func([], [Record({ "status": Text$1 })], ["query"]),
+  "removeFavorite": Func([Text$1], [], []),
+  "removeLabel": Func([Text$1], [], []),
+  "setLabel": Func([Text$1, Text$1], [], [])
+});
+const idlFactory = ({ IDL: IDL2 }) => {
+  const WalletLabel2 = IDL2.Record({
+    "address": IDL2.Text,
+    "walletLabel": IDL2.Text
+  });
+  const Favorite2 = IDL2.Record({ "address": IDL2.Text, "pinnedAt": IDL2.Int });
+  const HttpHeader2 = IDL2.Record({ "value": IDL2.Text, "name": IDL2.Text });
+  const HttpRequestResult2 = IDL2.Record({
+    "status": IDL2.Nat,
+    "body": IDL2.Vec(IDL2.Nat8),
+    "headers": IDL2.Vec(HttpHeader2)
+  });
+  return IDL2.Service({
+    "addFavorite": IDL2.Func([IDL2.Text], [], []),
+    "getAllLabels": IDL2.Func([], [IDL2.Vec(WalletLabel2)], ["query"]),
+    "getFavorites": IDL2.Func([], [IDL2.Vec(Favorite2)], ["query"]),
+    "getLabel": IDL2.Func([IDL2.Text], [IDL2.Opt(IDL2.Text)], ["query"]),
+    "icexplorer_portfolio": IDL2.Func([IDL2.Text], [IDL2.Text], []),
+    "icexplorer_transform": IDL2.Func(
+      [
+        IDL2.Record({
+          "context": IDL2.Vec(IDL2.Nat8),
+          "response": HttpRequestResult2
+        })
+      ],
+      [HttpRequestResult2],
+      ["query"]
+    ),
+    "icexplorer_txlist": IDL2.Func([IDL2.Text], [IDL2.Text], []),
+    "ping": IDL2.Func([], [IDL2.Record({ "status": IDL2.Text })], ["query"]),
+    "removeFavorite": IDL2.Func([IDL2.Text], [], []),
+    "removeLabel": IDL2.Func([IDL2.Text], [], []),
+    "setLabel": IDL2.Func([IDL2.Text, IDL2.Text], [], [])
+  });
+};
+class ExternalBlob {
+  constructor(directURL, blob) {
+    __publicField(this, "_blob");
+    __publicField(this, "directURL");
+    __publicField(this, "contentType");
+    __publicField(this, "filename");
+    __publicField(this, "onProgress");
+    if (blob) {
+      this._blob = blob;
+    }
+    this.directURL = directURL;
+  }
+  static fromURL(url) {
+    return new ExternalBlob(url, null);
+  }
+  static fromBytes(blob, contentType, filename) {
+    const url = URL.createObjectURL(new Blob([new Uint8Array(blob)], {
+      type: (contentType == null ? void 0 : contentType.trim()) || "application/octet-stream"
+    }));
+    const externalBlob = new ExternalBlob(url, blob);
+    if (contentType == null ? void 0 : contentType.trim()) {
+      externalBlob.contentType = contentType.trim();
+    }
+    if (filename == null ? void 0 : filename.trim()) {
+      externalBlob.filename = filename.trim();
+    }
+    return externalBlob;
+  }
+  async getBytes() {
+    if (this._blob) {
+      return this._blob;
+    }
+    const response = await fetch(this.directURL);
+    const blob = await response.blob();
+    this._blob = new Uint8Array(await blob.arrayBuffer());
+    return this._blob;
+  }
+  getDirectURL() {
+    return this.directURL;
+  }
+  withUploadProgress(onProgress) {
+    this.onProgress = onProgress;
+    return this;
+  }
+}
+new TextEncoder().encode("icfs-chunk/");
+new TextEncoder().encode("icfs-metadata/");
+new TextEncoder().encode("ynode/");
+class Backend {
+  constructor(actor, _uploadFile, _downloadFile, processError) {
+    this.actor = actor;
+    this._uploadFile = _uploadFile;
+    this._downloadFile = _downloadFile;
+    this.processError = processError;
+  }
+  async addFavorite(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.addFavorite(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.addFavorite(arg0);
+      return result;
+    }
+  }
+  async getAllLabels() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getAllLabels();
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getAllLabels();
+      return result;
+    }
+  }
+  async getFavorites() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getFavorites();
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getFavorites();
+      return result;
+    }
+  }
+  async getLabel(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getLabel(arg0);
+        return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getLabel(arg0);
+      return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async icexplorer_portfolio(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.icexplorer_portfolio(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.icexplorer_portfolio(arg0);
+      return result;
+    }
+  }
+  async icexplorer_transform(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.icexplorer_transform(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.icexplorer_transform(arg0);
+      return result;
+    }
+  }
+  async icexplorer_txlist(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.icexplorer_txlist(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.icexplorer_txlist(arg0);
+      return result;
+    }
+  }
+  async ping() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.ping();
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.ping();
+      return result;
+    }
+  }
+  async removeFavorite(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.removeFavorite(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.removeFavorite(arg0);
+      return result;
+    }
+  }
+  async removeLabel(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.removeLabel(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.removeLabel(arg0);
+      return result;
+    }
+  }
+  async setLabel(arg0, arg1) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.setLabel(arg0, arg1);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.setLabel(arg0, arg1);
+      return result;
+    }
+  }
+}
+function from_candid_opt_n1(_uploadFile, _downloadFile, value) {
+  return value.length === 0 ? null : value[0];
+}
+function createActor(canisterId, _uploadFile, _downloadFile, options = {}) {
+  const agent = options.agent || HttpAgent.createSync({
+    ...options.agentOptions
+  });
+  if (options.agent && options.agentOptions) {
+    console.warn("Detected both agent and agentOptions passed to createActor. Ignoring agentOptions and proceeding with the provided agent.");
+  }
+  const actor = Actor.createActor(idlFactory, {
+    agent,
+    canisterId,
+    ...options.actorOptions
+  });
+  return new Backend(actor, _uploadFile, _downloadFile, options.processError);
+}
 const __vite_import_meta_env__ = {};
 const II_URL = (__vite_import_meta_env__ == null ? void 0 : __vite_import_meta_env__.II_URL) ?? "https://identity.internetcomputer.org/";
 const BACKEND_CANISTER_ID = (__vite_import_meta_env__ == null ? void 0 : __vite_import_meta_env__.CANISTER_ID_BACKEND) ?? "aaaaa-aa";
@@ -68127,6 +68407,8 @@ function App() {
     isLoading: authLoading
   } = useAuth();
   const userData = useUserData(isLoggedIn, actor);
+  reactExports.useEffect(() => {
+  }, [actor]);
   const {
     historyStack,
     currentPrincipal,
@@ -68287,9 +68569,9 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-bold text-foreground mb-1", children: "Enter Principal ID or Account ID" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: "Visualize ICP wallet transaction networks as interactive constellations" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {}) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col lg:flex-row gap-4", children: [
-        (hasData || loading) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full lg:w-72 shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end order-3 lg:order-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col lg:flex-row gap-4 order-1 lg:order-none", children: [
+        (hasData || loading) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full lg:w-72 shrink-0 order-1 lg:order-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           OverviewPanel,
           {
             principal: currentPrincipal,
@@ -68302,7 +68584,7 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: "flex-1 relative",
+            className: "flex-1 relative order-2 lg:order-none",
             style: { minHeight: "520px", height: "520px" },
             children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
@@ -68355,7 +68637,7 @@ function App() {
           }
         )
       ] }),
-      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border order-2 lg:order-none", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "text-sm font-semibold", children: [
           "Recent Transactions",
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-2 text-xs font-normal text-muted-foreground", children: [
@@ -68373,7 +68655,7 @@ function App() {
           }
         ) })
       ] }),
-      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4", children: [
+      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 order-4 lg:order-none", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Daily Transaction Activity" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(

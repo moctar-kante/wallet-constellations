@@ -1,65 +1,45 @@
 import { Principal } from "@dfinity/principal";
-import { ExternalBlob, createActor } from "../backend";
 import type { backendInterface } from "../backend.d";
 import type { ExplorerError, Transaction } from "../types";
 
 const LEDGER_API_BASE = "https://ledger-api.internetcomputer.org";
-// IC Explorer aggregated API — single source for non-ICP token data.
-// Replaces the brute-force per-ledger ICRC registry pipeline.
-// Browser fetch to this host is CORS-blocked, so all IC Explorer calls are
-// proxied through the backend canister (icexplorer_portfolio / icexplorer_txlist).
+// DFINITY official ICRC API — called directly from the browser. Replaces the
+// broken IC Explorer proxy (open-api.icexplorer.io via backend canister).
+// ICP transactions still come from the official ledger API via
+// fetchWalletTransactions (unchanged). The DFINITY ICRC API is authoritative
+// for ICRC token data.
+const ICRC_API_BASE = "https://icrc-api.internetcomputer.org";
 
-// ── Backend actor accessor ───────────────────────────────────────────────────
+// ── Backend actor accessor (legacy no-op) ───────────────────────────────────
 //
-// explorerService is a plain module (not a hook), so it cannot call useAuth().
-// The IC Explorer proxy methods (icexplorer_portfolio / icexplorer_txlist) are
-// public canister methods that work with an anonymous agent, so we lazily build
-// an anonymous actor using the SAME createActor factory exported from
-// @/backend (no second factory). The React layer may override this with the
-// authenticated actor via setBackendActor() so logged-in users route proxy
-// calls through their identity.
-const BACKEND_CANISTER_ID =
-  (import.meta as { env?: Record<string, string> }).env?.CANISTER_ID_BACKEND ??
-  "aaaaa-aa";
+// ICRC fetching is now entirely frontend-only (direct browser fetch to
+// icrc-api.internetcomputer.org). setBackendActor() is kept as a no-op stub
+// so useWallet.ts and App.tsx — which still call it — do not break. The
+// injected actor is accepted but never used for ICRC.
 
-function noopUpload(_file: ExternalBlob): Promise<Uint8Array> {
-  return Promise.resolve(new Uint8Array());
-}
-function noopDownload(_file: Uint8Array): Promise<ExternalBlob> {
-  return Promise.resolve(ExternalBlob.fromURL(""));
-}
+// Last error reason captured by the ICRC API reachability probe. Read by
+// StatusPanel (via getLastIcExplorerError) to surface the actual reject reason
+// next to the status dot. Reset to null on a successful probe.
+let lastIcExplorerError: string | null = null;
 
-let injectedActor: backendInterface | null = null;
-let anonymousActor: backendInterface | null = null;
-
-function getBackendActor(): backendInterface | null {
-  if (injectedActor) return injectedActor;
-  if (!anonymousActor) {
-    try {
-      anonymousActor = createActor(
-        BACKEND_CANISTER_ID,
-        noopUpload,
-        noopDownload,
-      );
-    } catch (err) {
-      console.warn(
-        "[IC Explorer] Failed to build anonymous backend actor:",
-        err,
-      );
-      return null;
-    }
-  }
-  return anonymousActor;
+/**
+ * Returns the last error reason captured by checkIcExplorerReachable(), or
+ * null if the last probe succeeded. The string is the raw reason: the caught
+ * error message or HTTP status text from the DFINITY ICRC API.
+ */
+export function getLastIcExplorerError(): string | null {
+  return lastIcExplorerError;
 }
 
 /**
- * Inject the authenticated backend actor (from useAuth) so IC Explorer proxy
- * calls route through the user's identity when logged in. When not called, or
- * called with null, the service falls back to an anonymous actor for the
- * public proxy methods.
+ * Inject the authenticated backend actor (from useAuth). Kept for backward
+ * compatibility — useWallet.ts and App.tsx call this. ICRC fetching is now
+ * frontend-only, so this is a no-op that merely stores the actor without
+ * using it. The signature is preserved so existing import lines do not break.
  */
-export function setBackendActor(actor: backendInterface | null): void {
-  injectedActor = actor;
+export function setBackendActor(_actor: backendInterface | null): void {
+  // No-op: ICRC fetching is frontend-only. Signature preserved for
+  // backward compatibility with useWallet.ts and App.tsx callers.
 }
 
 export const DEFAULT_TX_LIMIT = 100;
@@ -223,6 +203,33 @@ export function principalToAccountIdentifier(input: string): string | null {
   }
 }
 
+// Convert a principal-format address to a hex account ID. Returns the original
+// string if it's already a hex account ID or not a valid principal. Used to
+// normalize ICRC from/to addresses so they merge into the same graph edges as
+// ICP transactions (which use hex account identifiers).
+function principalAddressToHex(addr: string): string {
+  if (!addr || addr === "minting-account" || addr === "burn-address")
+    return addr;
+  // Already a 64-char hex account ID
+  if (/^[0-9a-fA-F]{64}$/.test(addr.trim())) return addr.toLowerCase();
+  // Try to convert principal to hex account ID
+  const hex = principalToAccountIdentifier(addr);
+  return hex ?? addr;
+}
+
+// Safely extract a principal string from a value that may be a plain string
+// or an object like { owner: "principal-id", subaccount: [...] }. The ICRC
+// API returns from/to owners in either shape depending on the ledger.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extractOwner(val: any): string {
+  if (!val) return "";
+  if (typeof val === "string") return val;
+  if (typeof val === "object") {
+    return String(val.owner ?? val.address ?? "");
+  }
+  return String(val);
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function normalizeTransaction(raw: any): Transaction | null {
   try {
@@ -341,7 +348,6 @@ export function normalizeTransaction(raw: any): Transaction | null {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function extractTransactionArray(data: any): any[] {
   if (Array.isArray(data)) return data;
   if (Array.isArray(data?.data)) return data.data;
@@ -370,6 +376,18 @@ export async function fetchWalletTransactions(
   const accountId = principalToAccountIdentifier(principal.trim());
   if (!accountId) {
     return { ok: false, error: "invalid" };
+  }
+
+  // Cache lookup: reuse the shared txCache Map with a distinct 'walletTxs'
+  // prefix so ICP-ledger responses are cached the same way fetchIcrcTransactions
+  // caches ICRC responses (5-min TTL via CACHE_TTL_MS, non-empty results only).
+  const wkey = cacheKey("walletTxs", principal.trim(), accountId);
+  const cachedTxs = getCached(txCache, wkey);
+  if (cachedTxs) {
+    console.log(
+      `[ICP] Tx fetch: ${cachedTxs.length} txs (cached) for ${principal.trim()}`,
+    );
+    return { ok: true, transactions: cachedTxs, accountIdentifier: accountId };
   }
 
   const base = proxyUrl ? proxyUrl.replace(/\/$/, "") : LEDGER_API_BASE;
@@ -416,6 +434,10 @@ export async function fetchWalletTransactions(
     return { ok: false, error: "parse" };
   }
 
+  // Cache non-empty results only — matches fetchIcrcTransactions behavior
+  // (line 1207: never cache empty/failed responses, let next search retry fresh).
+  if (transactions.length > 0) setCached(txCache, wkey, transactions);
+
   return { ok: true, transactions, accountIdentifier: accountId };
 }
 
@@ -439,25 +461,43 @@ export async function checkExplorerReachable(): Promise<boolean> {
 }
 
 /**
- * Reachability probe for the IC Explorer proxy (via the backend canister).
- * Issues a lightweight portfolio call for a well-known test address and
- * considers the proxy reachable if the backend actor resolves and returns a
- * parseable response (regardless of success code — we only need to confirm the
- * round-trip works). Returns false if no actor is available or the call throws.
+ * Reachability probe for the DFINITY ICRC API (icrc-api.internetcomputer.org).
+ * Repurposed from the old IC Explorer proxy probe — now pings the official
+ * ICRC ledgers endpoint with limit=1 to confirm the API is reachable and
+ * returning valid JSON. Returns false and sets lastIcExplorerError on any
+ * failure (network, HTTP, parse). StatusPanel reads getLastIcExplorerError()
+ * to surface the reason next to the status dot.
  */
 export async function checkIcExplorerReachable(): Promise<boolean> {
-  const actor = getBackendActor();
-  if (!actor) return false;
   try {
-    // NNS Governance canister — a stable, always-existent address that IC
-    // Explorer indexes. We only care that the proxy round-trips, not the
-    // portfolio contents.
-    const raw = await actor.icexplorer_portfolio("rrkah-fqaaa-aaaaa-aaaaq-cai");
-    if (!raw) return false;
-    JSON.parse(raw); // throws on non-JSON
+    const r = await fetch(`${ICRC_API_BASE}/api/v1/ledgers?limit=1`, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!r.ok) {
+      lastIcExplorerError = `HTTP ${r.status} ${r.statusText}`;
+      console.warn(
+        `[ICRC] reachability probe failed: HTTP ${r.status} ${r.statusText}`,
+      );
+      return false;
+    }
+    const data = await r.json();
+    // Confirm the response is shaped like a ledgers list (array or {data: [...]}).
+    const list = extractTransactionArray(data);
+    if (!Array.isArray(list)) {
+      lastIcExplorerError = "unexpected response shape";
+      console.warn(
+        "[ICRC] reachability probe failed: unexpected response shape",
+        data,
+      );
+      return false;
+    }
+    lastIcExplorerError = null;
     return true;
   } catch (err) {
-    console.warn("[IC Explorer] reachability probe failed:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    lastIcExplorerError = msg;
+    console.warn("[ICRC] reachability probe failed:", err);
     return false;
   }
 }
@@ -486,17 +526,18 @@ export function testParser(): boolean {
   }
 }
 
-// ── IC Explorer multi-token support ───────────────────────────────────────────
+// ── ICRC multi-token support (DFINITY official ICRC API) ──────────────────────
 //
-// The brute-force "query all 300+ ledgers" pipeline has been replaced with IC
-// Explorer's aggregated API (https://open-api.icexplorer.io). Two endpoints
-// cover the entire non-ICP token feed in ONE call each:
+// ICRC token data now comes directly from icrc-api.internetcomputer.org via
+// browser fetch (no backend proxy). Two endpoints cover the full non-ICP feed:
 //
-//   POST /api/holder/user  — wallet's full token portfolio (holdings)
-//   POST /api/tx/list      — full cross-token transaction history (paginated)
+//   GET /api/v1/ledgers?limit=100&offset=N  — full ledger registry (300+ tokens)
+//   GET /api/v1/ledgers/{canisterId}/accounts/{accountId}/transactions
+//                                            — per-ledger tx history
 //
 // ICP transactions still come from the official ledger API via
-// fetchWalletTransactions (unchanged). IC Explorer is authoritative for ICRC.
+// fetchWalletTransactions (unchanged). The DFINITY ICRC API is authoritative
+// for ICRC.
 
 export interface IcrcTokenInfo {
   canisterId: string;
@@ -514,18 +555,19 @@ export interface IcrcFetchDebugEntry {
   httpStatus?: number;
 }
 
-const IC_EXPLORER_SUCCESS_CODE = 600;
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5-minute TTL on portfolio + tx responses
-const TX_MAX_PAGES = 5; // cap pagination at 5 pages × size to bound latency
-const TX_PAGE_SIZE = 100;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5-minute TTL on token list + tx responses
+const LEDGERS_PAGE_SIZE = 100; // API hard cap per page
+const LEDGERS_MAX_PAGES = 20; // safety cap: 20 × 100 = 2000 ledgers
+const TX_FETCH_BATCH_SIZE = 8; // process 8 ledgers at a time to avoid rate limits
+const TX_BATCH_DELAY_MS = 150; // short delay between batches (100-200ms)
 
 interface CacheEntry<T> {
   value: T;
   fetchedAt: number;
 }
 
-// Address-keyed caches for portfolio + transaction responses.
-const portfolioCache = new Map<string, CacheEntry<IcrcTokenInfo[]>>();
+// Address-keyed caches for token list + per-ledger transaction responses.
+const tokenListCache = new Map<string, CacheEntry<IcrcTokenInfo[]>>();
 const txCache = new Map<string, CacheEntry<Transaction[]>>();
 
 function cacheKey(...parts: string[]): string {
@@ -554,120 +596,140 @@ function setCached<T>(
   cache.set(key, { value, fetchedAt: Date.now() });
 }
 
-// Build the request body for IC Explorer endpoints. The API accepts principal,
-// accountId, or accountTextual — we pass whichever identifiers we have so it
-// can resolve the wallet regardless of input format.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildIcExplorerBody(
-  principal: string | undefined,
-  accountId: string | undefined,
-  page: number,
-  size: number,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  extra?: Record<string, any>,
-): Record<string, unknown> {
-  const body: Record<string, unknown> = { page, size, isDesc: true };
-  if (principal) body.principal = principal;
-  if (accountId) body.accountId = accountId;
-  if (extra) Object.assign(body, extra);
-  return body;
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// POST helper for IC Explorer. Proxied through the backend canister to bypass
-// browser CORS — the backend exposes icexplorer_portfolio (POST /api/holder/user)
-// and icexplorer_txlist (POST /api/tx/list), each returning the raw IC Explorer
-// JSON body as a string. Returns the parsed JSON `data` payload on statusCode
-// 600, or null on any other status / fetch failure. Never throws — callers fall
-// back to empty results so the graph still renders ICP-only.
+// Parse token metadata from the ICRC API ledger response. The DFINITY
+// /api/v1/ledgers and /api/v2/ledgers endpoints return icrc1_metadata as a
+// PLAIN OBJECT mapping key -> string value, e.g.:
+//   { icrc1_symbol: "CKBTC", icrc1_decimals: "8", icrc1_name: "ckBTC", ... }
+// The per-ledger metadata endpoint instead returns an ARRAY of {key, val}
+// pairs where val is a Candid variant ({ Text: "CKBTC" } / { Nat: "8" }).
+// This parser handles BOTH shapes plus flat top-level fallbacks so the real
+// symbol is resolved instead of UNKNOWN.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function postIcExplorer<T = any>(
-  path: string,
-  body: Record<string, unknown>,
-): Promise<{
-  data: T | null;
-  httpStatus: number | null;
-  error: string | null;
-}> {
-  const actor = getBackendActor();
-  if (!actor) {
-    console.warn(`[IC Explorer] ${path} no backend actor available`);
-    return { data: null, httpStatus: null, error: "no backend actor" };
-  }
-
-  try {
-    let rawBody: string;
-    if (path === "/api/holder/user") {
-      // Portfolio endpoint: backend takes the address string and rebuilds the
-      // request body server-side. Pass the principal/accountId we have so the
-      // backend can resolve the wallet.
-      const address = String(body.principal ?? body.accountId ?? "");
-      rawBody = await actor.icexplorer_portfolio(address);
-    } else if (path === "/api/tx/list") {
-      // Tx-list endpoint: backend takes the full JSON request body as a string.
-      rawBody = await actor.icexplorer_txlist(JSON.stringify(body));
-    } else {
-      console.warn(`[IC Explorer] unsupported proxied path: ${path}`);
-      return {
-        data: null,
-        httpStatus: null,
-        error: `unsupported path ${path}`,
-      };
-    }
-
-    const json = JSON.parse(rawBody);
-    if (json?.statusCode !== IC_EXPLORER_SUCCESS_CODE) {
-      console.warn(
-        `[IC Explorer] ${path} non-success statusCode: ${json?.statusCode}`,
-      );
-      return {
-        data: null,
-        httpStatus: json?.statusCode ?? null,
-        error: `statusCode ${json?.statusCode}`,
-      };
-    }
-    return {
-      data: (json?.data ?? null) as T,
-      httpStatus: json.statusCode,
-      error: null,
-    };
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.warn(`[IC Explorer] ${path} proxy error: ${msg}`);
-    return {
-      data: null,
-      httpStatus: null,
-      error: `Proxy error: ${msg}`,
-    };
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface HolderUserItem {
-  ledgerId: string;
+function parseLedgerMetadata(item: any): {
+  canisterId: string;
   symbol: string;
-  amount: string | number;
-  tokenDecimal: number;
-  valueUSD?: number;
-  owner?: string;
-  subaccount?: unknown;
-  accountId?: string;
-  alias?: string;
-  snapshotTime?: string | number;
-  totalSupply?: string | number;
-}
+  decimals: number;
+} {
+  const canisterId = String(
+    item.ledger_canister_id ?? item.canister_id ?? item.id ?? "",
+  ).trim();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface HolderUserData {
-  list?: HolderUserItem[];
+  let symbol = "";
+  let decimals: number | null = null;
+
+  // Unwrap a Candid variant value ({Text:"X"}, {Nat:"8"}, {text:...}) or
+  // return the value as-is if it is already a primitive. Handles plain
+  // strings, numbers, and the common variant wrappers of any casing.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const unwrap = (val: any): string => {
+    if (val === null || val === undefined) return "";
+    if (typeof val === "string" || typeof val === "number") return String(val);
+    // Candid variant wrappers: { Text: "X" }, { text: "x" }, { value: ... }
+    const wrapped =
+      val.Text ?? val.text ?? val.value ?? val.Value ?? val.string ?? val.str;
+    if (wrapped !== undefined) return String(wrapped);
+    // Last resort: stringify and strip JSON noise.
+    return String(val);
+  };
+
+  // Strip surrounding whitespace and matching quotes ("X" / 'X') so a value
+  // like "\"CKBTC\"" or " CKBTC " normalizes to "CKBTC".
+  const clean = (raw: string): string => {
+    let s = String(raw ?? "").trim();
+    if (
+      (s.startsWith('"') && s.endsWith('"')) ||
+      (s.startsWith("'") && s.endsWith("'"))
+    ) {
+      s = s.slice(1, -1).trim();
+    }
+    return s;
+  };
+
+  const meta: any = item.icrc1_metadata ?? item.metadata ?? item.meta;
+
+  // Shape A — metadata is a PLAIN OBJECT (DFINITY /api/v1|v2/ledgers shape):
+  //   { icrc1_symbol: "CKBTC", icrc1_decimals: "8", icrc1_name: "ckBTC" }
+  // Keys may use the "icrc1:" colon form or the underscore form; values are
+  // plain strings (or occasionally variant-wrapped).
+  if (meta !== null && typeof meta === "object" && !Array.isArray(meta)) {
+    const symbolVal =
+      meta.icrc1_symbol ?? meta["icrc1:symbol"] ?? meta.symbol ?? meta.Symbol;
+    if (symbolVal !== undefined) symbol = clean(unwrap(symbolVal));
+
+    const decVal =
+      meta.icrc1_decimals ??
+      meta["icrc1:decimals"] ??
+      meta.decimals ??
+      meta.Decimals;
+    if (decVal !== undefined) {
+      const parsed = Number(unwrap(decVal));
+      if (!Number.isNaN(parsed)) decimals = parsed;
+    }
+  }
+
+  // Shape B — metadata is an ARRAY of {key, val} pairs (per-ledger endpoint
+  // shape). val may be a Candid variant ({Text:"X"}, {Nat:"8"}) OR a plain
+  // string. Match the "icrc1:symbol" / "icrc1:decimals" keys case-insensitively
+  // against the colon form, and also accept the underscore form.
+  if (!symbol || decimals === null) {
+    if (Array.isArray(meta)) {
+      for (const entry of meta) {
+        const key = String(entry?.key ?? "").toLowerCase();
+        const val = entry?.val;
+        if (!val) continue;
+        if (
+          (key === "icrc1:symbol" ||
+            key === "icrc1_symbol" ||
+            key === "symbol") &&
+          !symbol
+        ) {
+          symbol = clean(unwrap(val));
+        } else if (
+          (key === "icrc1:decimals" ||
+            key === "icrc1_decimals" ||
+            key === "decimals") &&
+          decimals === null
+        ) {
+          const parsed = Number(unwrap(val));
+          if (!Number.isNaN(parsed)) decimals = parsed;
+        }
+      }
+    }
+  }
+
+  // Shape C — flat top-level fallback fields on the ledger object itself.
+  if (!symbol) {
+    const flat =
+      item.symbol ??
+      item.token_symbol ??
+      item.icrc1_symbol ??
+      item.ticker ??
+      item.name ??
+      "";
+    symbol = clean(String(flat));
+  }
+  if (decimals === null) {
+    const d = Number(item.decimals ?? item.icrc1_decimals ?? 8);
+    decimals = Number.isNaN(d) ? 8 : d;
+  }
+
+  // UNKNOWN only as an absolute last resort.
+  if (!symbol) symbol = "UNKNOWN";
+
+  return { canisterId, symbol, decimals };
 }
 
 /**
- * Fetch a wallet's full token portfolio from IC Explorer's /api/holder/user in
- * a single call. Returns the holdings normalized to IcrcTokenInfo[]. Replaces
- * the old brute-force pagination of /api/v1/ledgers.
- *
+ * Fetch the full ICRC ledger registry from the DFINITY ICRC API, paginating
+ * through ALL ledgers (300+) using limit=100 and offset. Does NOT use
+ * sort_by=-block_height (unsupported parameter that caused prior failures).
  * Signature kept compatible: both params optional, returns IcrcTokenInfo[].
- * Callers (useWallet, comparisonService) now pass the wallet identifier.
+ * Callers (useWallet, comparisonService) pass the wallet identifier for
+ * cache keying.
  */
 export async function fetchIcrcTokenList(
   principal?: string,
@@ -675,143 +737,308 @@ export async function fetchIcrcTokenList(
 ): Promise<IcrcTokenInfo[]> {
   const p = principal?.trim() || "";
   const a = accountId?.trim() || "";
-  if (!p && !a) return [];
+  const key = cacheKey("tokenlist", p, a);
 
-  const key = cacheKey(p, a);
-  const cached = getCached(portfolioCache, key);
+  const cached = getCached(tokenListCache, key);
   if (cached) {
-    console.log(`[IC Explorer] Portfolio: ${cached.length} tokens (cached)`);
+    console.log(`[ICRC] Token list: ${cached.length} ledgers (cached)`);
     return cached;
   }
 
-  const body = buildIcExplorerBody(p || undefined, a || undefined, 1, 100);
-  const { data, error } = await postIcExplorer<HolderUserData>(
-    "/api/holder/user",
-    body,
-  );
+  const allTokens: IcrcTokenInfo[] = [];
+  let offset = 0;
+  let fetchError: string | null = null;
 
-  if (!data || !Array.isArray(data.list)) {
-    // Surface the labeled error (CORS / network / HTTP / parse) on the console
-    // so it's visible alongside the Shift+D panel. fetchIcrcTokenList has no
-    // debugEntries param, so the console is the only channel here.
-    console.warn(
-      `[IC Explorer] /api/holder/user returned no list for ${p || a}${error ? ` — ${error}` : ""}`,
-    );
-    return [];
-  }
+  for (let page = 0; page < LEDGERS_MAX_PAGES; page++) {
+    const url = `${ICRC_API_BASE}/api/v1/ledgers?limit=${LEDGERS_PAGE_SIZE}&offset=${offset}`;
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(15000),
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      fetchError = `fetch error at offset ${offset}: ${msg}`;
+      console.error(
+        `[ICRC] /api/v1/ledgers fetch failed at offset ${offset}:`,
+        err,
+      );
+      break;
+    }
 
-  const tokens: IcrcTokenInfo[] = [];
-  for (const item of data.list) {
-    const canisterId = String(item.ledgerId ?? "").trim();
-    const symbol = String(item.symbol ?? "").trim();
-    const decimals =
-      typeof item.tokenDecimal === "number"
-        ? item.tokenDecimal
-        : Number(item.tokenDecimal ?? 8);
-    if (!canisterId || !symbol || Number.isNaN(decimals)) continue;
-    tokens.push({ canisterId, symbol, decimals });
+    if (!res.ok) {
+      fetchError = `HTTP ${res.status} ${res.statusText} at offset ${offset}`;
+      console.error(
+        `[ICRC] /api/v1/ledgers returned HTTP ${res.status} ${res.statusText} at offset ${offset}`,
+      );
+      break;
+    }
+
+    let data: unknown;
+    try {
+      data = await res.json();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      fetchError = `JSON parse error at offset ${offset}: ${msg}`;
+      console.error(
+        `[ICRC] /api/v1/ledgers JSON parse failed at offset ${offset}:`,
+        err,
+      );
+      break;
+    }
+
+    const list = extractTransactionArray(data);
+    if (!Array.isArray(list) || list.length === 0) {
+      // No more ledgers — end of pagination.
+      break;
+    }
+
+    for (const item of list) {
+      const { canisterId, symbol, decimals } = parseLedgerMetadata(item);
+      if (!canisterId) continue;
+      allTokens.push({ canisterId, symbol, decimals });
+    }
+
+    // If the page returned fewer than the page size, we've reached the end.
+    if (list.length < LEDGERS_PAGE_SIZE) break;
+    offset += LEDGERS_PAGE_SIZE;
   }
 
   console.log(
-    `[IC Explorer] Portfolio: ${tokens.length} tokens (fresh) for ${p || a}`,
+    `[ICRC] Token list: ${allTokens.length} ledgers (fresh) for ${p || a}${fetchError ? ` (last error: ${fetchError})` : ""}`,
   );
+
   // Never cache empty/failed responses — let the next search retry fresh.
-  if (tokens.length > 0) setCached(portfolioCache, key, tokens);
-  return tokens;
+  if (allTokens.length > 0) setCached(tokenListCache, key, allTokens);
+  return allTokens;
 }
 
+// Normalize a single ICRC transaction from the DFINITY API into the stable
+// Transaction interface. Handles flat format ({ kind, amount, from_owner,
+// to_owner, from_account, to_account, timestamp }) and nested format
+// ({ transaction: { transfer/mint/burn, timestamp } }). Applies decimal
+// division ONCE by 10^decimals (the API returns raw amounts). Converts
+// from/to to hex account IDs so they merge into the same graph edges as ICP
+// transactions. Tags the token field so graphBuilder identifies it as ICRC.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface TxListItem {
-  category?: string;
-  op?: string;
-  fromOwner?: string;
-  fromAccountId?: string;
-  fromAccountTextual?: string;
-  toOwner?: string;
-  toAccountId?: string;
-  toAccountTextual?: string;
-  token0LedgerId?: string;
-  token0Amount?: string | number;
-  token0Decimal?: number;
-  token0Symbol?: string;
-  token0TxTime?: string | number;
-  token0TxIndex?: number;
-  token0TxHash?: string;
-  token1LedgerId?: string;
-  token1Amount?: string | number;
-  token1Decimal?: number;
-  token1Symbol?: string;
-  token1TxTime?: string | number;
-  token1TxIndex?: number;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface TxListData {
-  pageNum?: number;
-  pageSize?: number;
-  size?: number;
-  pages?: number;
-  total?: number;
-  list?: TxListItem[];
-}
-
-// Map a single IC Explorer tx-list item to the stable Transaction interface.
-// timestamp = token0TxTime (ms epoch), from = fromOwner||fromAccountId,
-// to = toOwner||toAccountId, amount = token0Amount, blockIndex = token0TxIndex,
-// token = token0Symbol||'ICP', decimals = token0Decimal.
-function normalizeIcExplorerTx(raw: TxListItem): Transaction | null {
+function normalizeIcrcTransaction(
+  raw: any,
+  decimals: number,
+  symbol: string,
+): Transaction | null {
   try {
-    const timestamp = parseTimestamp(raw.token0TxTime);
-    const from = String(
-      raw.fromOwner || raw.fromAccountId || raw.fromAccountTextual || "",
-    );
-    const to = String(
-      raw.toOwner || raw.toAccountId || raw.toAccountTextual || "",
-    );
-    if (!from && !to) return null;
+    // Flat format: { index, kind, amount, from_owner, to_owner, from_account,
+    // to_account, timestamp }. from_owner / to_owner may be a plain string OR
+    // an object { owner: "...", subaccount: [...] }.
+    if (raw.from_owner !== undefined || raw.to_owner !== undefined) {
+      const kind = String(raw.kind ?? "");
+      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
+      const blockIndex = Number(raw.index ?? raw.block_index ?? 0);
+      const timestamp = parseTimestamp(raw.timestamp);
 
-    const decimals =
-      typeof raw.token0Decimal === "number"
-        ? raw.token0Decimal
-        : Number(raw.token0Decimal ?? 8);
-    // IC Explorer API returns token0Amount already in human-readable form.
-    // Do NOT divide again by 10^decimals — that produces ~2.6e-19 (effectively zero).
-    const amountRaw = Number(raw.token0Amount ?? 0);
-    const amount = Number.isNaN(amountRaw) ? 0 : amountRaw;
-    const blockIndex = Number(raw.token0TxIndex ?? 0);
-    const token = String(raw.token0Symbol || "ICP").trim() || "ICP";
-    const canisterId = String(raw.token0LedgerId ?? "").trim();
-    // Token-specific phantom identifiers so mint/burn nodes don't all collapse
-    // into one misleading node. Prefer symbol, fall back to canister id.
-    const phantomTag = token !== "ICP" ? token : canisterId;
-    const mintId = phantomTag ? `mint:${phantomTag}` : "minting-account";
-    const burnId = phantomTag ? `burn:${phantomTag}` : "burn-address";
+      if (kind === "mint") {
+        return {
+          timestamp,
+          from: "minting-account",
+          to: principalAddressToHex(
+            extractOwner(raw.to_owner ?? raw.to_account),
+          ),
+          amount,
+          blockIndex,
+          token: symbol,
+          decimals,
+        };
+      }
+      if (kind === "burn") {
+        return {
+          timestamp,
+          from: principalAddressToHex(
+            extractOwner(raw.from_owner ?? raw.from_account),
+          ),
+          to: "burn-address",
+          amount,
+          blockIndex,
+          token: symbol,
+          decimals,
+        };
+      }
+      // transfer (default)
+      return {
+        timestamp,
+        from: principalAddressToHex(
+          extractOwner(raw.from_owner ?? raw.from_account),
+        ),
+        to: principalAddressToHex(extractOwner(raw.to_owner ?? raw.to_account)),
+        amount,
+        blockIndex,
+        token: symbol,
+        decimals,
+      };
+    }
 
-    return {
-      timestamp,
-      from: from || mintId,
-      to: to || burnId,
-      amount,
-      blockIndex: Number.isNaN(blockIndex) ? 0 : blockIndex,
-      token,
-      decimals: Number.isNaN(decimals) ? 8 : decimals,
-    };
+    // Nested format: { transaction: { transfer/mint/burn, timestamp } }
+    const tx = raw?.transaction;
+    if (!tx) return null;
+
+    if (tx.transfer) {
+      const from = principalAddressToHex(
+        extractOwner(tx.transfer.from?.owner ?? tx.transfer.from),
+      );
+      const to = principalAddressToHex(
+        extractOwner(tx.transfer.to?.owner ?? tx.transfer.to),
+      );
+      const amount = Number(tx.transfer.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from,
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals,
+      };
+    }
+
+    if (tx.mint) {
+      const to = principalAddressToHex(
+        extractOwner(tx.mint.to?.owner ?? tx.mint.to),
+      );
+      const amount = Number(tx.mint.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from: "minting-account",
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals,
+      };
+    }
+
+    if (tx.burn) {
+      const from = principalAddressToHex(
+        extractOwner(tx.burn.from?.owner ?? tx.burn.from),
+      );
+      const amount = Number(tx.burn.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from,
+        to: "burn-address",
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals,
+      };
+    }
+
+    if (raw.from !== undefined && raw.to !== undefined) {
+      const from = principalAddressToHex(
+        extractOwner(raw.from?.owner ?? raw.from),
+      );
+      const to = principalAddressToHex(extractOwner(raw.to?.owner ?? raw.to));
+      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(raw.timestamp ?? raw.created_at),
+        from,
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
+        token: symbol,
+        decimals,
+      };
+    }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error(`[IC Explorer] normalizeIcExplorerTx failed: ${msg}`);
+    console.error(
+      `[ICRC] normalizeIcrcTransaction failed for ${symbol}: ${msg}`,
+    );
     return null;
+  }
+  return null;
+}
+
+// Fetch transactions for a single ledger/account pair. The accountId is
+// placed into the URL in the form indicated by addressFormat:
+//   - "principal": accountId is the principal TEXT (e.g. "yc3yb-oqaaa-aaaag-qc4ga-cai")
+//   - "hex":       accountId is the 64-char hex account identifier
+// The DFINITY ICRC API accepts either form as the {accountId} path segment.
+// Returns { txs, httpStatus, error }. Never throws — errors are captured and
+// surfaced via the returned error string so the caller can log them to console
+// AND the diagnostics panel.
+async function fetchLedgerTxs(
+  canisterId: string,
+  accountId: string,
+  limit: number,
+  symbol: string,
+  decimals: number,
+  addressFormat: "principal" | "hex",
+): Promise<{
+  txs: Transaction[];
+  httpStatus: number | null;
+  error: string | null;
+}> {
+  // The accountId is already in the requested form; embed it directly. The
+  // addressFormat only governs which form the caller supplied and is echoed
+  // in log lines for diagnostics.
+  const urlAccountId = accountId;
+  const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(urlAccountId)}/transactions?limit=${limit}`;
+  try {
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) {
+      const err = `HTTP ${res.status} ${res.statusText}`;
+      console.warn(
+        `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: ${err}`,
+      );
+      return { txs: [], httpStatus: res.status, error: err };
+    }
+    const data = await res.json();
+    const rawList = extractTransactionArray(data);
+    if (rawList.length === 0) {
+      console.log(
+        `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: 0 txs`,
+      );
+      return { txs: [], httpStatus: res.status, error: null };
+    }
+    const txs: Transaction[] = [];
+    for (const raw of rawList) {
+      const tx = normalizeIcrcTransaction(raw, decimals, symbol);
+      if (tx) txs.push(tx);
+    }
+    console.log(
+      `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: ${txs.length} txs`,
+    );
+    return { txs, httpStatus: res.status, error: null };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(
+      `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)} fetch error: ${msg}`,
+      err,
+    );
+    return { txs: [], httpStatus: null, error: msg };
   }
 }
 
 /**
- * Fetch a wallet's full cross-token transaction history (ICP + ICRC) from IC
- * Explorer's /api/tx/list in a single paginated call. Replaces the old
- * per-ledger fetchIcrcTransactions loop.
+ * Fetch a wallet's full ICRC transaction history from the DFINITY ICRC API.
+ * Iterates over ALL ledgers from fetchIcrcTokenList, batching 8 ledgers at a
+ * time with short delays between batches to avoid rate limiting. For each
+ * ledger, tries BOTH account formats: the principal TEXT first (the DFINITY
+ * ICRC API resolves principal-text account ids directly), and if that
+ * returns no results, the hex account identifier as a genuine fallback. The
+ * two attempts use genuinely different address forms. Every fetch error is
+ * logged to console with full context (ledger, account format, error) AND
+ * surfaced in the Shift+D diagnostics panel via debugEntries.
  *
- * Signature changed to be wallet-scoped: the first arg is now the wallet
- * address (principal or hex account id), not a canister id. Optional limit
- * caps the total txs fetched (paginated up to TX_MAX_PAGES). debugEntries, if
- * provided, is populated with one entry per token symbol seen.
+ * Signature kept compatible with useWallet.ts and comparisonService.ts:
+ *   fetchIcrcTransactions(address, limit?, debugEntries?, originalPrincipal?)
+ * The first arg is the wallet address (principal text or hex account id).
+ * When it is a principal text, it is used as the primary fetch; when it is a
+ * hex account id, originalPrincipal (if provided) is used as the primary
+ * fetch and the hex id is the fallback.
  */
 export async function fetchIcrcTransactions(
   address: string,
@@ -822,15 +1049,17 @@ export async function fetchIcrcTransactions(
   const addr = address.trim();
   if (!addr) return [];
 
-  // Resolve principal vs hex account id for the request body.
+  // Resolve principal vs hex account id for the request.
   const isHex = /^[0-9a-fA-F]{64}$/.test(addr);
   const principal = isHex ? originalPrincipal?.trim() || "" : addr;
-  const accountId = isHex ? addr : (principalToAccountIdentifier(addr) ?? "");
+  const hexAccountId = isHex
+    ? addr
+    : (principalToAccountIdentifier(addr) ?? "");
 
-  const key = cacheKey(principal, accountId);
+  const key = cacheKey("txs", principal, hexAccountId);
   const cached = getCached(txCache, key);
   if (cached) {
-    console.log(`[IC Explorer] Tx list: ${cached.length} txs (cached)`);
+    console.log(`[ICRC] Tx fetch: ${cached.length} txs (cached)`);
     if (debugEntries) {
       // Re-derive per-token counts from cached txs for the debug panel.
       const byToken = new Map<string, { count: number; canisterId: string }>();
@@ -846,82 +1075,148 @@ export async function fetchIcrcTransactions(
           canisterId: info.canisterId || sym,
           resultCount: info.count,
           addressFormat: "none",
-          httpStatus: IC_EXPLORER_SUCCESS_CODE,
         });
       }
     }
     return cached;
   }
 
-  const size = Math.min(limit, TX_PAGE_SIZE) || TX_PAGE_SIZE;
-  const maxPages = Math.min(TX_MAX_PAGES, Math.max(1, Math.ceil(limit / size)));
-  const allTxs: Transaction[] = [];
-  const perTokenCount = new Map<string, number>();
-  const perTokenLedger = new Map<string, string>();
-  let httpStatus: number | null = null;
-  let fetchError: string | null = null;
-
-  for (let page = 1; page <= maxPages; page++) {
-    const body = buildIcExplorerBody(
-      principal || undefined,
-      accountId || undefined,
-      page,
-      size,
+  // 1) Fetch the full ledger registry (all 300+ ICRC tokens).
+  const tokenList = await fetchIcrcTokenList(principal, hexAccountId);
+  if (tokenList.length === 0) {
+    console.warn(
+      `[ICRC] No ledgers available from token list for ${principal || hexAccountId}`,
     );
-    const {
-      data,
-      httpStatus: status,
-      error,
-    } = await postIcExplorer<TxListData>("/api/tx/list", body);
-    if (status !== null) httpStatus = status;
-    if (error) fetchError = error;
-    if (!data || !Array.isArray(data.list)) break;
-
-    for (const raw of data.list) {
-      const tx = normalizeIcExplorerTx(raw);
-      if (!tx) continue;
-      allTxs.push(tx);
-      const sym = tx.token || "ICP";
-      perTokenCount.set(sym, (perTokenCount.get(sym) ?? 0) + 1);
-      const ledgerId = String(raw.token0LedgerId ?? "");
-      if (ledgerId && !perTokenLedger.has(sym))
-        perTokenLedger.set(sym, ledgerId);
+    if (debugEntries) {
+      debugEntries.push({
+        symbol: "ICRC",
+        canisterId: principal || hexAccountId || "",
+        resultCount: 0,
+        addressFormat: "none",
+        error: "no ledgers available from token list",
+      });
     }
-
-    const pages = data.pages ?? 1;
-    if (page >= pages) break;
-    if (data.list.length < size) break;
+    return [];
   }
 
   console.log(
-    `[IC Explorer] Tx list: ${allTxs.length} txs across ${perTokenCount.size} tokens for ${principal || accountId}${fetchError ? ` (last error: ${fetchError})` : ""}`,
+    `[ICRC] Querying ${tokenList.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`,
   );
 
+  const allTxs: Transaction[] = [];
+  let totalQueried = 0;
+  let totalWithResults = 0;
+  let totalErrored = 0;
+
+  // 2) Batch through all ledgers, TX_FETCH_BATCH_SIZE at a time, with short
+  //    delays between batches to avoid rate limiting.
+  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
+    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
+
+    // Process each ledger in the batch in parallel.
+    const batchResults = await Promise.all(
+      batch.map(async (token) => {
+        totalQueried += 1;
+        const { canisterId, symbol, decimals } = token;
+
+        // Try BOTH account formats, principal text FIRST (the DFINITY ICRC
+        // API resolves principal-text account ids directly), then fall back
+        // to the hex account identifier only if the principal attempt
+        // returned no results. The two attempts use genuinely different
+        // address forms so the fallback is a real second try, not a no-op.
+        let result = {
+          txs: [] as Transaction[],
+          httpStatus: null as number | null,
+          error: null as string | null,
+        };
+        let usedFormat: "principal" | "hex" = "principal";
+
+        // Primary attempt: principal text (e.g. "yc3yb-oqaaa-aaaag-qc4ga-cai").
+        if (principal) {
+          result = await fetchLedgerTxs(
+            canisterId,
+            principal,
+            limit,
+            symbol,
+            decimals,
+            "principal",
+          );
+        }
+
+        // Fallback: if the principal attempt returned no results AND a hex
+        // account id is available, retry with the hex account identifier. The
+        // two address forms (principal text vs 64-char hex) are genuinely
+        // different strings, so this is a real alternate attempt — NOT a no-op.
+        // The previous guard compared principalDerivedHex !== hexAccountId, but
+        // hexAccountId is itself derived from the same principal, so the two
+        // were always identical and the fallback never ran. Removed that guard.
+        if (result.txs.length === 0 && hexAccountId) {
+          const altResult = await fetchLedgerTxs(
+            canisterId,
+            hexAccountId,
+            limit,
+            symbol,
+            decimals,
+            "hex",
+          );
+          if (altResult.txs.length > 0) {
+            result = altResult;
+            usedFormat = "hex";
+          } else if (altResult.error && !result.error) {
+            // Preserve the error from the alternate attempt if the
+            // principal attempt had no error (e.g. principal returned 0
+            // txs cleanly but hex attempt errored).
+            result.error = altResult.error;
+            result.httpStatus = altResult.httpStatus;
+          }
+        }
+
+        // Populate the debug entry for this token with full context.
+        if (debugEntries) {
+          debugEntries.push({
+            symbol,
+            canisterId,
+            resultCount: result.txs.length,
+            addressFormat: result.txs.length > 0 ? usedFormat : "none",
+            error: result.error ?? undefined,
+            httpStatus: result.httpStatus ?? undefined,
+          });
+        }
+
+        if (result.txs.length > 0) totalWithResults += 1;
+        if (result.error) totalErrored += 1;
+
+        return result.txs;
+      }),
+    );
+
+    for (const txs of batchResults) {
+      for (const tx of txs) allTxs.push(tx);
+    }
+
+    // Short delay between batches to avoid rate limiting (skip after the
+    // last batch).
+    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
+      await sleep(TX_BATCH_DELAY_MS);
+    }
+  }
+
+  console.log(
+    `[ICRC] Tx fetch complete: ${allTxs.length} txs across ${totalWithResults}/${totalQueried} ledgers (${totalErrored} errored) for ${principal || hexAccountId}`,
+  );
+
+  // Summary debug entry showing totals: queried, with results, errored.
   if (debugEntries) {
-    for (const [sym, count] of perTokenCount) {
-      debugEntries.push({
-        symbol: sym,
-        canisterId: perTokenLedger.get(sym) || sym,
-        resultCount: count,
-        addressFormat: "none",
-        httpStatus: httpStatus ?? undefined,
-        // Surface the last fetch error on every token row so the Shift+D panel
-        // shows it even when some txs were fetched before the failure.
-        error: fetchError ?? undefined,
-      });
-    }
-    // If the entire fetch failed (no tokens seen), still emit one debug row so
-    // the diagnostics panel surfaces the error (CORS / network / HTTP / parse).
-    if (perTokenCount.size === 0 && fetchError) {
-      debugEntries.push({
-        symbol: "ICRC",
-        canisterId: principal || accountId || "",
-        resultCount: 0,
-        addressFormat: "none",
-        httpStatus: httpStatus ?? undefined,
-        error: fetchError,
-      });
-    }
+    debugEntries.push({
+      symbol: "__SUMMARY__",
+      canisterId: principal || hexAccountId || "",
+      resultCount: allTxs.length,
+      addressFormat: "none",
+      error:
+        totalErrored > 0
+          ? `${totalQueried} queried, ${totalWithResults} with results, ${totalErrored} errored`
+          : undefined,
+    });
   }
 
   // Never cache empty/failed responses — let the next search retry fresh.

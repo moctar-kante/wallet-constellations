@@ -131,7 +131,17 @@ export function useWallet() {
   const [txLimit, setTxLimit] = useState(DEFAULT_TX_LIMIT);
   const [loading, setLoading] = useState(false);
   const [errorType, setErrorType] = useState<ExplorerError | null>(null);
-  const [rawTransactions, setRawTransactions] = useState<Transaction[]>([]);
+  // Split raw transactions into ICP-ledger and ICRC-merge buckets so the
+  // depth-1/2 effect can depend on icpTransactions (the ICP-ledger set that
+  // drives counterparty selection) WITHOUT retriggering when the ICRC merge
+  // appends to icrcTransactions. The combined rawTransactions is derived via
+  // useMemo below for consumers that need the merged list.
+  const [icpTransactions, setIcpTransactions] = useState<Transaction[]>([]);
+  const [icrcTransactions, setIcrcTransactions] = useState<Transaction[]>([]);
+  const rawTransactions = useMemo(
+    () => [...icpTransactions, ...icrcTransactions],
+    [icpTransactions, icrcTransactions],
+  );
   const [accountIdentifier, setAccountIdentifier] = useState("");
   const [proxyUrl, setProxyUrl] = useState("");
   const [graphDepth, setGraphDepth] = useState<1 | 2 | 3>(1);
@@ -175,7 +185,8 @@ export function useWallet() {
   const loadPrincipal = useCallback(async (principal: string) => {
     setLoading(true);
     setErrorType(null);
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
@@ -194,7 +205,7 @@ export function useWallet() {
       console.log(
         `[ICP] Loaded ${result.transactions.length} transactions, accountId=${acctId}`,
       );
-      setRawTransactions(result.transactions);
+      setIcpTransactions(result.transactions);
       setAccountIdentifier(acctId);
       if (result.transactions.length === 0) {
         setErrorType("empty");
@@ -221,8 +232,13 @@ export function useWallet() {
           //    ICRC txs for the wallet in a single paginated request — no
           //    per-token iteration needed.
           const debugEntries: IcrcFetchDebugEntry[] = [];
+          // Pass the principal TEXT as the primary address so the ICRC API
+          // is queried with the principal form first; fetchIcrcTransactions
+          // falls back to the hex account id only if that returns nothing.
+          // The original principal is also passed as the fourth arg so the
+          // hex-input code path still has it for resolution.
           const allIcrcTxs = await fetchIcrcTransactions(
-            acctId,
+            principal.trim(),
             txLimitRef.current,
             debugModeRef.current ? debugEntries : undefined,
             principal.trim(),
@@ -234,10 +250,10 @@ export function useWallet() {
           );
 
           if (allIcrcTxs.length > 0) {
-            setRawTransactions((prev) => {
+            setIcrcTransactions((prev) => {
               const merged = [...prev, ...allIcrcTxs];
               console.log(
-                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} ICP txs → ${merged.length} total`,
+                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} prior ICRC txs → ${merged.length} total`,
               );
 
               // Write to debug object if debug mode is active
@@ -249,7 +265,7 @@ export function useWallet() {
                   perToken: debugEntries,
                   icpTxCount,
                   icrcTotalTxCount: allIcrcTxs.length,
-                  mergedTxCount: merged.length,
+                  mergedTxCount: icpTxCount + merged.length,
                   icrcCounterpartyCount: 0, // updated by graph builder
                   icrcUnconditionalCount: 0,
                   lastUpdated: new Date().toISOString(),
@@ -336,7 +352,8 @@ export function useWallet() {
     icrcCancelledRef.current = true;
     setHistoryStack([]);
     setCurrentPrincipal("");
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setErrorType(null);
     setLoading(false);
@@ -390,7 +407,7 @@ export function useWallet() {
   useEffect(() => {
     if (
       !accountIdentifier ||
-      rawTransactions.length === 0 ||
+      icpTransactions.length === 0 ||
       graphDepth === 1
     ) {
       setDepth1Fetches([]);
@@ -402,16 +419,33 @@ export function useWallet() {
     const cancelledRef = { current: false };
     setDepthLoading(true);
 
-    (async () => {
-      const top5 = getTopCounterparties(
-        accountIdentifier,
-        rawTransactions,
-        5,
-        currentPrincipal,
-      );
+    // Shared dedup set for depth-2 targets. Initialized atomically with the
+    // root account + the top-5 depth-1 counterparties BEFORE any depth-1
+    // fetches start, so each depth-1 callback can add its own depth-2 targets
+    // as it resolves without re-fetching targets already claimed by an
+    // earlier-resolving depth-1 counterparty.
+    const top5 = getTopCounterparties(
+      accountIdentifier,
+      icpTransactions,
+      5,
+      currentPrincipal,
+    );
+    const existingIds = new Set<string>([
+      accountIdentifier.toLowerCase(),
+      ...top5.map((cp) => cp.address.toLowerCase()),
+    ]);
 
-      // Fetch ICP + ICRC for each depth-1 counterparty
-      const d1Results = await Promise.all(
+    (async () => {
+      const d1Results: DepthFetch[] = [];
+      const d2Results: DepthFetch[] = [];
+
+      // Fetch ICP + ICRC for each depth-1 counterparty. When graphDepth === 3,
+      // each depth-1 callback kicks off its OWN depth-2 fetches immediately
+      // after its depth-1 fetch resolves (instead of waiting for all depth-1
+      // fetches to finish). The shared existingIds Set is mutated atomically
+      // per depth-1 result so later-resolving counterparties skip targets
+      // already claimed by earlier-resolving ones.
+      await Promise.all(
         top5.map(async (cp) => {
           const icpRes = await fetchWalletTransactions(
             cp.address,
@@ -445,80 +479,76 @@ export function useWallet() {
             `[Depth-1] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`,
           );
 
-          return {
+          const d1Result: DepthFetch = {
             nodeId: cp.address,
             accountId: acctId,
             transactions: allTxs,
           };
-        }),
-      );
+          d1Results.push(d1Result);
 
-      if (cancelled) return;
-      cancelledRef.current = false;
-      setDepth1Fetches(d1Results);
+          // Kick off depth-2 fetches for this counterparty immediately, using
+          // the shared existingIds Set for cross-counterparty dedup.
+          if (graphDepth === 3 && allTxs.length > 0) {
+            const cpList = getTopCounterparties(acctId, allTxs, 3);
+            const localD2Targets: { address: string; accountId: string }[] = [];
+            for (const d2cp of cpList) {
+              const cpLower = d2cp.address.toLowerCase();
+              if (!existingIds.has(cpLower)) {
+                existingIds.add(cpLower);
+                localD2Targets.push({
+                  address: d2cp.address,
+                  accountId: acctId,
+                });
+              }
+            }
 
-      if (graphDepth === 3) {
-        const existingIds = new Set<string>([
-          accountIdentifier.toLowerCase(),
-          ...top5.map((cp) => cp.address.toLowerCase()),
-        ]);
-        const d2Promises: Promise<DepthFetch>[] = [];
-        for (const d1 of d1Results) {
-          if (d1.transactions.length === 0) continue;
-          const cpList = getTopCounterparties(d1.accountId, d1.transactions, 3);
-          for (const cp of cpList) {
-            const cpLower = cp.address.toLowerCase();
-            if (!existingIds.has(cpLower)) {
-              existingIds.add(cpLower);
-              d2Promises.push(
-                (async () => {
-                  const icpRes = await fetchWalletTransactions(
-                    cp.address,
+            await Promise.all(
+              localD2Targets.map(async ({ address }) => {
+                if (cancelled) return;
+                // Parallelize per-counterparty ICP + ICRC fetches
+                const [icpRes2, icrcTxs2] = await Promise.all([
+                  fetchWalletTransactions(
+                    address,
                     proxyUrlRef.current || undefined,
                     txLimitRef.current,
-                  );
-
-                  const icpTxs = icpRes.ok ? icpRes.transactions : [];
-                  const acctId = icpRes.ok
-                    ? (icpRes.accountIdentifier ?? cp.address)
-                    : cp.address;
-
-                  let icrcTxs: Transaction[] = [];
-                  if (!cancelled) {
-                    try {
-                      icrcTxs = await fetchAllIcrcForAddress(
-                        cp.address,
+                  ),
+                  cancelled
+                    ? Promise.resolve([] as Transaction[])
+                    : fetchAllIcrcForAddress(
+                        address,
                         txLimitRef.current,
                         cancelledRef,
                         undefined,
                         currentPrincipal,
-                      );
-                    } catch {
-                      // non-critical
-                    }
-                  }
+                      ).catch(() => [] as Transaction[]),
+                ]);
 
-                  const allTxs = [...icpTxs, ...icrcTxs];
-                  console.log(
-                    `[Depth-2] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`,
-                  );
+                if (cancelled) return;
 
-                  return {
-                    nodeId: cp.address,
-                    accountId: acctId,
-                    transactions: allTxs,
-                  };
-                })(),
-              );
-            }
+                const icpTxs2 = icpRes2.ok ? icpRes2.transactions : [];
+                const acctId2 = icpRes2.ok
+                  ? (icpRes2.accountIdentifier ?? address)
+                  : address;
+
+                const allTxs2 = [...icpTxs2, ...icrcTxs2];
+                console.log(
+                  `[Depth-2] ${address.slice(0, 12)}: ICP=${icpTxs2.length}, ICRC=${icrcTxs2.length}, total=${allTxs2.length}`,
+                );
+
+                d2Results.push({
+                  nodeId: address,
+                  accountId: acctId2,
+                  transactions: allTxs2,
+                });
+              }),
+            );
           }
-        }
-        const d2Results = await Promise.all(d2Promises);
-        if (cancelled) return;
-        setDepth2Fetches(d2Results);
-      } else {
-        setDepth2Fetches([]);
-      }
+        }),
+      );
+
+      if (cancelled) return;
+      setDepth1Fetches(d1Results);
+      setDepth2Fetches(d2Results);
 
       if (!cancelled) setDepthLoading(false);
     })();
@@ -527,7 +557,7 @@ export function useWallet() {
       cancelled = true;
       cancelledRef.current = true;
     };
-  }, [accountIdentifier, rawTransactions, graphDepth]);
+  }, [accountIdentifier, icpTransactions, graphDepth]);
 
   const walletData = useMemo<WalletData | null>(() => {
     console.log(

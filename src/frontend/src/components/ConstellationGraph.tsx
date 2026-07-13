@@ -1923,76 +1923,31 @@ export function ConstellationGraph({
           lineHeight: 1.7,
         }}
       >
-        {colorByLevel
-          ? (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).map(
-              (color, i) => (
-                <div
-                  // biome-ignore lint/suspicious/noArrayIndexKey: static list with fixed order
-                  key={i}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    marginBottom: 2,
-                  }}
-                >
-                  {/* Circle with depth number visible inside */}
-                  <div
-                    style={{
-                      width: 18,
-                      height: 18,
-                      borderRadius: "50%",
-                      background: color,
-                      flexShrink: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: "#fff",
-                      boxShadow: isDark ? `0 0 5px ${color}80` : "none",
-                      border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
-                    }}
-                  >
-                    {i}
-                  </div>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: isDark ? "#a0b4c8" : "#1a1a2e",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {i === 0 ? "Center" : `Depth ${i}`}
-                  </span>
-                </div>
-              ),
-            )
-          : LEGEND_ITEMS.map((item) => {
-              const swatchColor = isDark ? item.dark : item.light;
-              return (
-                <div
-                  key={item.label}
-                  style={{ display: "flex", alignItems: "center", gap: 6 }}
-                >
-                  <span
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: "50%",
-                      background: swatchColor,
-                      display: "inline-block",
-                      flexShrink: 0,
-                      boxShadow: isDark ? `0 0 6px ${swatchColor}` : "none",
-                      border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
-                    }}
-                  />
-                  <span style={{ color: isDark ? "#7799cc" : "#1a1a2e" }}>
-                    {item.label}
-                  </span>
-                </div>
-              );
-            })}
+        {LEGEND_ITEMS.map((item) => {
+          const swatchColor = isDark ? item.dark : item.light;
+          return (
+            <div
+              key={item.label}
+              style={{ display: "flex", alignItems: "center", gap: 6 }}
+            >
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: swatchColor,
+                  display: "inline-block",
+                  flexShrink: 0,
+                  boxShadow: isDark ? `0 0 6px ${swatchColor}` : "none",
+                  border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
+                }}
+              />
+              <span style={{ color: isDark ? "#7799cc" : "#1a1a2e" }}>
+                {item.label}
+              </span>
+            </div>
+          );
+        })}
         <div
           style={{
             marginTop: 4,
@@ -2004,6 +1959,75 @@ export function ConstellationGraph({
           ↓ Inbound&nbsp;&nbsp;↑ Outbound
         </div>
       </div>
+
+      {/* Level-color legend (only when colorByLevel is on) */}
+      {colorByLevel && (
+        <div
+          data-ocid="graph.level_legend"
+          style={{
+            position: "absolute",
+            bottom: 10,
+            left: 150,
+            background: isDark
+              ? "rgba(7,11,28,0.88)"
+              : "rgba(255,255,255,0.92)",
+            border: isDark
+              ? "1px solid rgba(40,60,120,0.5)"
+              : "1px solid rgba(180,190,220,0.5)",
+            borderRadius: 7,
+            padding: "8px 12px",
+            fontSize: 10,
+            color: isDark ? "#7799cc" : "#334466",
+            zIndex: 10,
+            lineHeight: 1.7,
+          }}
+        >
+          {(isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light)
+            .slice(0, 4)
+            .map((color, i) => (
+              <div
+                // biome-ignore lint/suspicious/noArrayIndexKey: static list with fixed order
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  marginBottom: 2,
+                }}
+              >
+                {/* Circle with depth number visible inside */}
+                <div
+                  style={{
+                    width: 18,
+                    height: 18,
+                    borderRadius: "50%",
+                    background: color,
+                    flexShrink: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#fff",
+                    boxShadow: isDark ? `0 0 5px ${color}80` : "none",
+                    border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
+                  }}
+                >
+                  {i}
+                </div>
+                <span
+                  style={{
+                    fontSize: 11,
+                    color: isDark ? "#a0b4c8" : "#1a1a2e",
+                    fontWeight: 500,
+                  }}
+                >
+                  {i === 0 ? "Center" : `Depth ${i}`}
+                </span>
+              </div>
+            ))}
+        </div>
+      )}
 
       {/* Inline label edit modal (when editing from pencil icon outside info window) */}
       {editingLabel && editingLabel !== nodeInfo?.node.id && (

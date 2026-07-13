@@ -6,7 +6,11 @@ import type {
   WalletSummary,
 } from "../types";
 import { computeNetFlow, detectWhale, getWeeklyActivity } from "./filters";
-import { getNodeIdentity, getSnsParticipation } from "./identityService";
+import {
+  getNodeIdentity,
+  getSnsParticipation,
+  toCanonicalId,
+} from "./identityService";
 
 type EdgeAccumulator = GraphEdge & {
   counterpartyId: string;
@@ -34,8 +38,10 @@ function buildEdgeFromTx(
   const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
   if (!counterparty) return null;
 
-  const counterpartyLower = counterparty.toLowerCase();
-  const edgeKey = [acctLower, counterpartyLower].sort().join("|");
+  const counterpartyLower = toCanonicalId(counterparty);
+  const edgeKey = [toCanonicalId(acctLower), counterpartyLower]
+    .sort()
+    .join("|");
   const token = tx.token ?? "ICP";
   const isIcp = token === "ICP";
 
@@ -196,10 +202,10 @@ export function buildGraph(
 
   const counterpartyNodes: GraphNode[] = sortedCounterparties.map((id) => {
     const original = transactions.find(
-      (t) => t.from.toLowerCase() === id || t.to.toLowerCase() === id,
+      (t) => toCanonicalId(t.from) === id || toCanonicalId(t.to) === id,
     );
     const originalId = original
-      ? original.from.toLowerCase() === id
+      ? toCanonicalId(original.from) === id
         ? original.from
         : original.to
       : id;
@@ -220,8 +226,8 @@ export function buildGraph(
   const edges: GraphEdge[] = [...edgeMap.values()]
     .filter(
       (e) =>
-        allowedSet.has(e.source.toLowerCase()) ||
-        allowedSet.has(e.target.toLowerCase()),
+        allowedSet.has(toCanonicalId(e.source)) ||
+        allowedSet.has(toCanonicalId(e.target)),
     )
     .map(({ counterpartyId: _cid, ...rest }) => enrichEdge(rest));
 
@@ -263,7 +269,7 @@ function processTransactionsForDepth(
     const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
     if (!counterparty) continue;
 
-    const cpLower = counterparty.toLowerCase();
+    const cpLower = toCanonicalId(counterparty);
     if (skipExisting && existingNodes.has(cpLower)) continue;
 
     const token = tx.token ?? "ICP";
@@ -307,8 +313,8 @@ function addCrossEdges(
   allEdges: Map<string, GraphEdge>,
 ) {
   for (const tx of allTxs) {
-    const fromLower = tx.from.toLowerCase();
-    const toLower = tx.to.toLowerCase();
+    const fromLower = toCanonicalId(tx.from);
+    const toLower = toCanonicalId(tx.to);
     if (fromLower === toLower) continue;
     const fromNode = allNodes.get(fromLower);
     const toNode = allNodes.get(toLower);
@@ -380,7 +386,7 @@ export function buildMultiDepthGraph(
   const centerIdLower = center.accountId.toLowerCase();
   const centerDisplayIdLower = center.displayId.toLowerCase();
 
-  allNodes.set(center.displayId.toLowerCase(), {
+  allNodes.set(toCanonicalId(center.displayId), {
     id: center.displayId,
     isCenter: true,
     txCount: center.transactions.length,
@@ -424,7 +430,7 @@ export function buildMultiDepthGraph(
       depth: 1,
     });
     allEdges.set(
-      `${center.displayId.toLowerCase()}|${cpLower}`,
+      `${toCanonicalId(center.displayId)}|${cpLower}`,
       enrichEdge({
         source: center.displayId,
         target: edgeInfo.counterpartyId,
@@ -442,7 +448,7 @@ export function buildMultiDepthGraph(
 
   // Depth-2
   for (const d1Fetch of depth1Fetches) {
-    if (!allNodes.has(d1Fetch.nodeId.toLowerCase())) continue;
+    if (!allNodes.has(toCanonicalId(d1Fetch.nodeId))) continue;
 
     const d1AcctLower = d1Fetch.accountId.toLowerCase();
     const d1DisplayIdLower = d1Fetch.nodeId.toLowerCase();
@@ -459,7 +465,7 @@ export function buildMultiDepthGraph(
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3);
 
-    const d1Node = allNodes.get(d1Fetch.nodeId.toLowerCase())!;
+    const d1Node = allNodes.get(toCanonicalId(d1Fetch.nodeId))!;
     for (const [cpLower] of top3) {
       if (allNodes.has(cpLower)) continue;
       const edgeInfo = d2EdgeData.get(cpLower)!;
@@ -471,7 +477,7 @@ export function buildMultiDepthGraph(
         depth: 2,
       });
       allEdges.set(
-        `${d1Node.id.toLowerCase()}|${cpLower}`,
+        `${toCanonicalId(d1Node.id)}|${cpLower}`,
         enrichEdge({
           source: d1Node.id,
           target: edgeInfo.counterpartyId,
@@ -490,7 +496,7 @@ export function buildMultiDepthGraph(
 
   // Depth-3
   for (const d2Fetch of depth2Fetches) {
-    if (!allNodes.has(d2Fetch.nodeId.toLowerCase())) continue;
+    if (!allNodes.has(toCanonicalId(d2Fetch.nodeId))) continue;
 
     const d2AcctLower = d2Fetch.accountId.toLowerCase();
     const d2DisplayIdLower = d2Fetch.nodeId.toLowerCase();
@@ -507,7 +513,7 @@ export function buildMultiDepthGraph(
       .sort((a, b) => b[1] - a[1])
       .slice(0, 2);
 
-    const d2Node = allNodes.get(d2Fetch.nodeId.toLowerCase())!;
+    const d2Node = allNodes.get(toCanonicalId(d2Fetch.nodeId))!;
     for (const [cpLower] of top2) {
       if (allNodes.has(cpLower)) continue;
       const edgeInfo = d3EdgeData.get(cpLower)!;
@@ -519,7 +525,7 @@ export function buildMultiDepthGraph(
         depth: 3,
       });
       allEdges.set(
-        `${d2Node.id.toLowerCase()}|${cpLower}`,
+        `${toCanonicalId(d2Node.id)}|${cpLower}`,
         enrichEdge({
           source: d2Node.id,
           target: edgeInfo.counterpartyId,

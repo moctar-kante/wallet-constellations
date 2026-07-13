@@ -1,7 +1,26 @@
 import { fileURLToPath, URL } from "url";
+import fs from "fs";
+import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import environment from "vite-plugin-environment";
+
+// Populate process.env with canister IDs from env.json BEFORE the environment()
+// plugin runs, so import.meta.env.CANISTER_ID_BACKEND resolves at build time.
+// Without this, env.json ships 'undefined' and the ?? 'aaaaa-aa' fallback in
+// explorerService.ts / useAuth.ts points at the management canister.
+const envPath = path.resolve(fileURLToPath(new URL("./env.json", import.meta.url)));
+try {
+  const envJson = JSON.parse(fs.readFileSync(envPath, "utf-8"));
+  if (envJson.backend_canister_id && envJson.backend_canister_id !== "undefined") {
+    process.env.CANISTER_ID_BACKEND = envJson.backend_canister_id;
+  }
+  if (envJson.frontend_canister_id && envJson.frontend_canister_id !== "undefined") {
+    process.env.CANISTER_ID_FRONTEND = envJson.frontend_canister_id;
+  }
+} catch {
+  // env.json missing or unreadable — fall back to existing process.env values
+}
 
 const ii_url =
   process.env.DFX_NETWORK === "local"

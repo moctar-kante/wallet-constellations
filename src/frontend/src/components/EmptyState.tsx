@@ -37,7 +37,7 @@ export function EmptyState({
     search: {
       icon: <Star className="h-10 w-10 text-neon-blue" />,
       title: "Enter a Principal or Account ID",
-      desc: "Search for any ICP wallet to visualize its transaction network as an interactive constellation.",
+      desc: "Search for any ICP wallet to visualize its transaction network.",
       hint: null,
     },
     empty: {

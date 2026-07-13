@@ -4,7 +4,7 @@
     "connector-googlemail": {
       "source": "caffeinelabs/skills",
       "sourceType": "github",
-      "computedHash": "875f9c192dacae900b6a97d094240c0501b1127104e5cf52a1df2c375c82fbcf"
+      "computedHash": "ef7244db0543069912176f10d32ac095afefb6f175358e0c260e2bd03c12fed1"
     },
     "extension-authorization": {
       "source": "caffeinelabs/skills",

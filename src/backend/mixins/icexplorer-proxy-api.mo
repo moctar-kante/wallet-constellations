@@ -1,4 +1,7 @@
 import Blob "mo:core/Blob";
+import Debug "mo:core/Debug";
+import Error "mo:core/Error";
+import Nat "mo:core/Nat";
 import Nat64 "mo:core/Nat64";
 import Text "mo:core/Text";
 import IC "mo:ic/Types";
@@ -43,8 +46,17 @@ mixin () {
       };
       is_replicated = null;
     };
-    let response = await Call.httpRequest(request);
-    ProxyLib.decodeBody(response.body);
+    Debug.print("icexplorer_portfolio: BEFORE outcall url=" # url # " method=post body=" # jsonBody);
+    try {
+      let response = await Call.httpRequest(request);
+      let body = ProxyLib.decodeBody(response.body);
+      Debug.print("icexplorer_portfolio: AFTER outcall status=" # response.status.toText() # " bodyLen=" # body.size().toText());
+      body;
+    } catch err {
+      let errMsg = "icexplorer_portfolio: ERROR " # err.message();
+      Debug.print(errMsg);
+      "PROXY_ERROR: " # errMsg;
+    };
   };
 
   /// Method 2: fetch ICRC transaction history from IC Explorer.
@@ -64,7 +76,16 @@ mixin () {
       };
       is_replicated = null;
     };
-    let response = await Call.httpRequest(request);
-    ProxyLib.decodeBody(response.body);
+    Debug.print("icexplorer_txlist: BEFORE outcall url=" # url # " method=post body=" # payload);
+    try {
+      let response = await Call.httpRequest(request);
+      let body = ProxyLib.decodeBody(response.body);
+      Debug.print("icexplorer_txlist: AFTER outcall status=" # response.status.toText() # " bodyLen=" # body.size().toText());
+      body;
+    } catch err {
+      let errMsg = "icexplorer_txlist: ERROR " # err.message();
+      Debug.print(errMsg);
+      "PROXY_ERROR: " # errMsg;
+    };
   };
 };

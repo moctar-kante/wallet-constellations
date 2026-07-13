@@ -134,33 +134,48 @@ export function IcrcDebugPanel({ debugState, onClose }: IcrcDebugPanelProps) {
                     Per-Token ({debugState.perToken.length} queried)
                   </div>
                   <div className="space-y-0.5">
-                    {debugState.perToken.map((entry, i) => (
-                      <div
-                        // biome-ignore lint/suspicious/noArrayIndexKey: stable order
-                        key={i}
-                        className={`flex gap-1 items-baseline ${
-                          entry.resultCount > 0
-                            ? "text-neon-green"
-                            : entry.error
-                              ? "text-red-400"
-                              : "text-muted-foreground"
-                        }`}
-                      >
-                        <span className="font-semibold min-w-[48px]">
-                          {entry.symbol}
-                        </span>
-                        <span className="text-[10px] opacity-70">
-                          {entry.canisterId.slice(0, 8)}
-                        </span>
-                        <span className="ml-auto text-right">
-                          {entry.resultCount > 0
-                            ? `${entry.resultCount} tx (${entry.addressFormat})`
-                            : entry.error
-                              ? entry.error.slice(0, 20)
-                              : "0"}
-                        </span>
-                      </div>
-                    ))}
+                    {debugState.perToken.map((entry, i) => {
+                      // Show the full backend error string when present so the
+                      // user can read the complete reject reason (cycles,
+                      // canister reject, etc.) in the diagnostics panel. The
+                      // row layout switches to wrap when the error is long so
+                      // the full message stays visible instead of being
+                      // truncated to 20 chars.
+                      const hasError = entry.resultCount === 0 && entry.error;
+                      return (
+                        <div
+                          // biome-ignore lint/suspicious/noArrayIndexKey: stable order
+                          key={i}
+                          className={`flex gap-1 items-baseline ${
+                            entry.resultCount > 0
+                              ? "text-neon-green"
+                              : hasError
+                                ? "text-red-400"
+                                : "text-muted-foreground"
+                          } ${hasError ? "flex-wrap" : ""}`}
+                        >
+                          <span className="font-semibold min-w-[48px]">
+                            {entry.symbol}
+                          </span>
+                          <span className="text-[10px] opacity-70">
+                            {entry.canisterId.slice(0, 8)}
+                          </span>
+                          <span
+                            className={`text-right ${
+                              hasError
+                                ? "ml-auto basis-full text-left break-words"
+                                : "ml-auto"
+                            }`}
+                          >
+                            {entry.resultCount > 0
+                              ? `${entry.resultCount} tx (${entry.addressFormat})`
+                              : hasError
+                                ? entry.error
+                                : "0"}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </section>
               )}

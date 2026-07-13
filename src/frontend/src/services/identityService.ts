@@ -1,4 +1,5 @@
 import type { NodeIdentity, NodeIdentityType, Transaction } from "../types";
+import { principalToAccountIdentifier } from "./explorerService";
 
 interface KnownCanister {
   id: string;
@@ -254,6 +255,37 @@ const CANISTER_MAP = new Map<string, KnownCanister>(
   KNOWN_CANISTERS.map((c) => [c.id.toLowerCase(), c]),
 );
 
+/**
+ * Secondary lookup: hex account-id form of each known canister → same KnownCanister.
+ * Built via the existing principalToAccountIdentifier helper (explorerService.ts line 177).
+ * Lets a hex-form reference resolve to the same entry as its principal-text form.
+ */
+const CANISTER_MAP_BY_HEX = new Map<string, KnownCanister>();
+for (const c of KNOWN_CANISTERS) {
+  const hex = principalToAccountIdentifier(c.id);
+  if (hex) CANISTER_MAP_BY_HEX.set(hex.toLowerCase(), c);
+}
+
+/**
+ * Resolve either a principal-text canister id OR a hex account-id to a single
+ * canonical key. Preference order:
+ *   1. If the id (lowercased, trimmed) is a known canister principal-text id,
+ *      return that principal-text id lowercased.
+ *   2. Else if the id is a hex account-id that matches a known canister's hex,
+ *      return that canister's principal-text id lowercased (the canonical form).
+ *   3. Else return the id lowercased + trimmed as-is (hex stays hex, unknown
+ *      principals stay as their text form).
+ *
+ * This is the contract graphBuilder.ts consumes for canonical node/edge keying.
+ */
+export function toCanonicalId(id: string): string {
+  const lower = id.toLowerCase().trim();
+  if (CANISTER_MAP.has(lower)) return lower;
+  const hexEntry = CANISTER_MAP_BY_HEX.get(lower);
+  if (hexEntry) return hexEntry.id.toLowerCase();
+  return lower;
+}
+
 /** SNS token symbol → DAO name mapping */
 export const SNS_TOKENS: Record<string, string> = {
   CHAT: "OpenChat",
@@ -280,13 +312,25 @@ export function getNodeIdentity(
   id: string,
   _transactions?: Transaction[],
 ): NodeIdentity {
-  const entry = CANISTER_MAP.get(id.toLowerCase().trim());
+  const lower = id.toLowerCase().trim();
+  const entry = CANISTER_MAP.get(lower);
   if (entry) {
     return {
       type: entry.type,
       label: entry.name,
       icon: entry.icon,
       ringColor: entry.ringColor,
+    };
+  }
+
+  // Hex account-id form of a known canister → same KnownCanister entry.
+  const hexEntry = CANISTER_MAP_BY_HEX.get(lower);
+  if (hexEntry) {
+    return {
+      type: hexEntry.type,
+      label: hexEntry.name,
+      icon: hexEntry.icon,
+      ringColor: hexEntry.ringColor,
     };
   }
 
@@ -334,5 +378,6 @@ export function getSnsParticipation(
  * Check if an ID is a known canister.
  */
 export function isKnownCanister(id: string): boolean {
-  return CANISTER_MAP.has(id.toLowerCase().trim());
+  const lower = id.toLowerCase().trim();
+  return CANISTER_MAP.has(lower) || CANISTER_MAP_BY_HEX.has(lower);
 }

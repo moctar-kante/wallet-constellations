@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   checkExplorerReachable,
   checkIcExplorerReachable,
+  getLastIcExplorerError,
   testParser,
 } from "../services/explorerService";
 
@@ -50,6 +51,10 @@ export function StatusPanel() {
   const [parserStatus, setParserStatus] = useState<StatusLevel>("checking");
   const [icExplorerStatus, setIcExplorerStatus] =
     useState<StatusLevel>("checking");
+  // Actual reject reason from the IC Explorer reachability probe (actor-missing
+  // vs proxy-reject vs PROXY_ERROR message). Surfaced next to the dot so the
+  // user can see why the proxy is offline instead of just a red dot.
+  const [icExplorerError, setIcExplorerError] = useState<string | null>(null);
 
   useEffect(() => {
     setExplorerStatus("checking");
@@ -60,9 +65,10 @@ export function StatusPanel() {
 
   useEffect(() => {
     setIcExplorerStatus("checking");
-    checkIcExplorerReachable().then((ok) =>
-      setIcExplorerStatus(ok ? "ok" : "error"),
-    );
+    checkIcExplorerReachable().then((ok) => {
+      setIcExplorerStatus(ok ? "ok" : "error");
+      setIcExplorerError(ok ? null : getLastIcExplorerError());
+    });
   }, []);
 
   useEffect(() => {
@@ -70,9 +76,13 @@ export function StatusPanel() {
   }, []);
 
   const rows = [
-    { label: "Explorer", status: explorerStatus },
-    { label: "IC Explorer", status: icExplorerStatus },
-    { label: "Parser", status: parserStatus },
+    { label: "Explorer", status: explorerStatus, error: null as string | null },
+    {
+      label: "IC Explorer",
+      status: icExplorerStatus,
+      error: icExplorerError,
+    },
+    { label: "Parser", status: parserStatus, error: null as string | null },
   ];
 
   return (
@@ -87,6 +97,15 @@ export function StatusPanel() {
           <span className={`text-xs font-medium ${statusColor(row.status)}`}>
             {statusLabel(row.status)}
           </span>
+          {row.error && (
+            <span
+              className="text-[10px] text-neon-red/80 max-w-[180px] truncate"
+              title={row.error}
+              data-ocid="wallet.ic_explorer.error_state"
+            >
+              {row.error}
+            </span>
+          )}
         </div>
       ))}
     </div>
