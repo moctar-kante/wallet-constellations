@@ -73,7 +73,7 @@ function buildEdgeFromTx(
     edgeMap.set(edgeKey, {
       source: displayId,
       target: counterparty,
-      counterpartyId: counterparty,
+      counterpartyId: counterpartyLower, // canonical id — consistent node identity regardless of hex/principal first-seen format
       tx_count: 1,
       total_amount: isIcp ? tx.amount : 0,
       inCount: isTo ? 1 : 0,

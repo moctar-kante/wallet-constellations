@@ -341,6 +341,14 @@ export function getNodeIdentity(
   if (idTrimmed.length === 64 && /^[0-9a-f]+$/i.test(idTrimmed)) {
     // Could be a neuron account identifier (governance sub-account)
     // This is a best-effort heuristic only
+    console.warn(
+      "[getNodeIdentity] Wallet fallback:",
+      "raw id:",
+      id,
+      "| lookup id (lowercased/trimmed):",
+      lower,
+      "| reason: 64-char hex heuristic branch — neither CANISTER_MAP nor CANISTER_MAP_BY_HEX matched",
+    );
     return {
       type: "user",
       label: "Wallet",
@@ -349,6 +357,14 @@ export function getNodeIdentity(
     };
   }
 
+  console.warn(
+    "[getNodeIdentity] Wallet fallback:",
+    "raw id:",
+    id,
+    "| lookup id (lowercased/trimmed):",
+    lower,
+    "| reason: final catch-all — neither CANISTER_MAP nor CANISTER_MAP_BY_HEX matched",
+  );
   return {
     type: "user",
     label: "Wallet",
