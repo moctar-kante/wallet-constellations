@@ -2750,10 +2750,6 @@ html.light body {
   animation-timing-function: linear;
 }
 
-.running{
-  animation-play-state: running;
-}
-
 .animate-copy-pulse {
     animation: copyPulse 0.6s ease-out;
   }

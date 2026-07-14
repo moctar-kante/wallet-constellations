@@ -558,8 +558,8 @@ export interface IcrcFetchDebugEntry {
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5-minute TTL on token list + tx responses
 const LEDGERS_PAGE_SIZE = 100; // API hard cap per page
 const LEDGERS_MAX_PAGES = 20; // safety cap: 20 × 100 = 2000 ledgers
-const TX_FETCH_BATCH_SIZE = 8; // process 8 ledgers at a time to avoid rate limits
-const TX_BATCH_DELAY_MS = 150; // short delay between batches (100-200ms)
+const TX_FETCH_BATCH_SIZE = 16; // process 16 ledgers at a time to balance throughput and rate limits
+const TX_BATCH_DELAY_MS = 50; // short delay between batches (50ms)
 
 interface CacheEntry<T> {
   value: T;
@@ -1022,110 +1022,17 @@ async function fetchLedgerTxs(
   }
 }
 
-// Lightweight balance lookup for a single ledger/account pair. Calls the
-// ledger's ICRC /account-balance endpoint and returns the balance as a BigInt,
-// or 0n on any error / empty / unparseable response. Reuses the same
-// principal-text-first-then-hex fallback pattern as fetchLedgerTxs: tries the
-// principal text first, and if that errors or returns zero, retries with the
-// hex account identifier. Never throws — errors are caught and logged so the
-// caller (fetchIcrcTransactions) can use this as a fast pre-filter without one
-// bad ledger aborting the whole balance sweep.
-//
-// Endpoint shape (DFINITY ICRC API):
-//   GET /api/v1/ledgers/{canisterId}/accounts/{accountId}/balance
-// Returns either a plain string/number representing the balance in the
-// token's base units, or an object like { value: "..." } / { balance: "..." }.
-// We coerce all of these to a BigInt defensively.
-async function fetchIcrcBalance(
-  canisterId: string,
-  principal: string,
-  hexAccountId: string,
-  symbol: string,
-): Promise<bigint> {
-  // Try BOTH account formats, principal text FIRST (mirrors fetchLedgerTxs).
-  const attempts: Array<{ id: string; format: "principal" | "hex" }> = [];
-  if (principal) attempts.push({ id: principal, format: "principal" });
-  if (hexAccountId) attempts.push({ id: hexAccountId, format: "hex" });
-
-  for (const { id, format } of attempts) {
-    const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(id)}/balance`;
-    try {
-      const res = await fetch(url, {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(15000),
-      });
-      if (!res.ok) {
-        // Non-OK: try the next address format (if any), then bail to 0n.
-        console.warn(
-          `[ICRC] balance ${symbol} (${canisterId.slice(0, 8)}) ${format} ${id.slice(0, 12)}: HTTP ${res.status} ${res.statusText}`,
-        );
-        continue;
-      }
-      const data = await res.json();
-      // Coerce the response to a BigInt. Handle plain strings/numbers and
-      // common wrapper objects ({ value, balance }).
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const raw: any = data;
-      let bal = 0n;
-      if (typeof raw === "string") {
-        try {
-          bal = BigInt(raw);
-        } catch {
-          bal = 0n;
-        }
-      } else if (typeof raw === "number") {
-        try {
-          bal = BigInt(Math.trunc(raw));
-        } catch {
-          bal = 0n;
-        }
-      } else if (raw !== null && typeof raw === "object") {
-        const valStr = String(
-          raw.value ?? raw.balance ?? raw.amount ?? raw.balance_e8s ?? "0",
-        );
-        try {
-          bal = BigInt(valStr);
-        } catch {
-          bal = 0n;
-        }
-      }
-      // Non-zero balance found via this address form — return immediately so
-      // we don't waste a second request on the fallback form.
-      if (bal > 0n) return bal;
-      // Zero balance from this form: continue to the fallback form (if any).
-      // If both forms return zero, the loop exits and we return 0n below.
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.warn(
-        `[ICRC] balance ${symbol} (${canisterId.slice(0, 8)}) ${format} ${id.slice(0, 12)} error: ${msg}`,
-      );
-      // Continue to the next address form on error.
-    }
-  }
-  return 0n;
-}
-
 /**
  * Fetch a wallet's full ICRC transaction history from the DFINITY ICRC API.
  *
- * WALLET-SCOPED BALANCE PRIORITIZATION: instead of iterating ALL ~300+ ledgers
- * from fetchIcrcTokenList (which, at TX_FETCH_BATCH_SIZE=8 with
- * TX_BATCH_DELAY_MS=150ms between batches, takes long enough that later-listed
- * tokens get cut off by the per-fetch AbortSignal.timeout(15000) or never
- * reached at all), we first run a lightweight balance lookup for each token in
- * tokenList against the wallet (principal or hexAccountId) and keep ONLY the
- * tokens with a non-zero balance. The existing per-ledger tx-fetch loop then
- * runs ONLY over that filtered, balance-confirmed subset. This caps the work
- * to the tokens the wallet actually holds — typically a handful — so the batch
- * loop completes quickly and no held token is skipped due to timeout/rate
- * limiting on earlier, irrelevant ledgers.
- *
- * For each kept ledger, tries BOTH account formats: the principal TEXT first
- * (the DFINITY ICRC API resolves principal-text account ids directly), and if
- * that returns no results, the hex account identifier as a genuine fallback.
- * The two attempts use genuinely different address forms. Every fetch error is
- * logged to console with full context (ledger, account format, error) AND
- * surfaced in the Shift+D diagnostics panel via debugEntries.
+ * Iterates the FULL ledger registry from fetchIcrcTokenList (all 300+ ICRC
+ * tokens) in batches of TX_FETCH_BATCH_SIZE with TX_BATCH_DELAY_MS between
+ * batches. For each ledger, tries BOTH account formats: the principal TEXT
+ * first (the DFINITY ICRC API resolves principal-text account ids directly),
+ * and if that returns no results, the hex account identifier as a genuine
+ * fallback. The two attempts use genuinely different address forms. Every
+ * fetch error is logged to console with full context (ledger, account format,
+ * error) AND surfaced in the Shift+D diagnostics panel via debugEntries.
  *
  * Signature kept compatible with useWallet.ts and comparisonService.ts:
  *   fetchIcrcTransactions(address, limit?, debugEntries?, originalPrincipal?)
@@ -1193,77 +1100,8 @@ export async function fetchIcrcTransactions(
     return [];
   }
 
-  // 1.5) WALLET-SCOPED BALANCE PRIORITIZATION — filter the full ledger
-  // registry down to ONLY the tokens the wallet actually holds a non-zero
-  // balance of. The DFINITY ICRC API exposes no single wallet-scoped tx
-  // endpoint, so the only way to scope the per-ledger tx-fetch loop is to
-  // pre-check balances. Without this filter the loop below would iterate all
-  // ~300+ registered ledgers in batches of 8 with 150ms delays, taking long
-  // enough that later-listed tokens get cut off by the per-fetch
-  // AbortSignal.timeout(15000) or never reached at all. By keeping only the
-  // balance-confirmed subset (typically a handful of tokens), the batch loop
-  // completes quickly and no held token is skipped.
-  //
-  // The balance sweep itself is also batched (TX_FETCH_BATCH_SIZE at a time
-  // with TX_BATCH_DELAY_MS between batches) to stay consistent with the
-  // tx-fetch loop's rate-limit posture and reuse the same constants.
-  const heldTokens: IcrcTokenInfo[] = [];
-  let balanceChecked = 0;
-  let balanceHeld = 0;
-  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
-    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
-    const balances = await Promise.all(
-      batch.map(async (token) => {
-        const bal = await fetchIcrcBalance(
-          token.canisterId,
-          principal,
-          hexAccountId,
-          token.symbol,
-        );
-        return { token, bal };
-      }),
-    );
-    for (const { token, bal } of balances) {
-      balanceChecked += 1;
-      if (bal > 0n) {
-        heldTokens.push(token);
-        balanceHeld += 1;
-      }
-    }
-    // Short delay between batches to avoid rate limiting (skip after the
-    // last batch) — same posture as the tx-fetch loop below.
-    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
-      await sleep(TX_BATCH_DELAY_MS);
-    }
-  }
-
   console.log(
-    `[ICRC] Balance pre-filter: ${balanceHeld}/${balanceChecked} ledgers held by ${principal || hexAccountId}; querying txs for held subset only`,
-  );
-
-  if (heldTokens.length === 0) {
-    // Wallet holds no ICRC token balance — there is nothing to fetch. Avoid
-    // running the tx loop over an empty set and surface a debug entry so the
-    // diagnostics panel explains the zero-result outcome.
-    if (debugEntries) {
-      debugEntries.push({
-        symbol: "ICRC",
-        canisterId: principal || hexAccountId || "",
-        resultCount: 0,
-        addressFormat: "none",
-        error: `no held tokens after balance pre-filter (${balanceChecked} checked)`,
-      });
-    }
-    return [];
-  }
-
-  // From here on, iterate ONLY the balance-confirmed subset. The batch size
-  // and delay constants (TX_FETCH_BATCH_SIZE, TX_BATCH_DELAY_MS) are kept
-  // as-is — they now apply to the much smaller filtered list, which is the
-  // whole point of the pre-filter.
-  const tokensToQuery = heldTokens;
-  console.log(
-    `[ICRC] Querying ${tokensToQuery.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`,
+    `[ICRC] Querying ${tokenList.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`,
   );
 
   const allTxs: Transaction[] = [];
@@ -1271,10 +1109,10 @@ export async function fetchIcrcTransactions(
   let totalWithResults = 0;
   let totalErrored = 0;
 
-  // 2) Batch through the held ledgers, TX_FETCH_BATCH_SIZE at a time, with
+  // 2) Batch through the ledgers, TX_FETCH_BATCH_SIZE at a time, with
   //    short delays between batches to avoid rate limiting.
-  for (let i = 0; i < tokensToQuery.length; i += TX_FETCH_BATCH_SIZE) {
-    const batch = tokensToQuery.slice(i, i + TX_FETCH_BATCH_SIZE);
+  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
+    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
 
     // Process each ledger in the batch in parallel.
     const batchResults = await Promise.all(
@@ -1359,7 +1197,7 @@ export async function fetchIcrcTransactions(
 
     // Short delay between batches to avoid rate limiting (skip after the
     // last batch).
-    if (i + TX_FETCH_BATCH_SIZE < tokensToQuery.length) {
+    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
       await sleep(TX_BATCH_DELAY_MS);
     }
   }

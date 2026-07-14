@@ -64153,8 +64153,8 @@ function testParser() {
 const CACHE_TTL_MS = 5 * 60 * 1e3;
 const LEDGERS_PAGE_SIZE = 100;
 const LEDGERS_MAX_PAGES = 20;
-const TX_FETCH_BATCH_SIZE = 8;
-const TX_BATCH_DELAY_MS = 150;
+const TX_FETCH_BATCH_SIZE = 16;
+const TX_BATCH_DELAY_MS = 50;
 const tokenListCache = /* @__PURE__ */ new Map();
 const txCache = /* @__PURE__ */ new Map();
 function cacheKey(...parts) {
@@ -64460,58 +64460,6 @@ async function fetchLedgerTxs(canisterId, accountId, limit, symbol, decimals, ad
     return { txs: [], httpStatus: null, error: msg };
   }
 }
-async function fetchIcrcBalance(canisterId, principal, hexAccountId, symbol) {
-  const attempts = [];
-  if (principal) attempts.push({ id: principal, format: "principal" });
-  if (hexAccountId) attempts.push({ id: hexAccountId, format: "hex" });
-  for (const { id: id2, format: format2 } of attempts) {
-    const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(id2)}/balance`;
-    try {
-      const res = await fetch(url, {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(15e3)
-      });
-      if (!res.ok) {
-        console.warn(
-          `[ICRC] balance ${symbol} (${canisterId.slice(0, 8)}) ${format2} ${id2.slice(0, 12)}: HTTP ${res.status} ${res.statusText}`
-        );
-        continue;
-      }
-      const data = await res.json();
-      const raw = data;
-      let bal = 0n;
-      if (typeof raw === "string") {
-        try {
-          bal = BigInt(raw);
-        } catch {
-          bal = 0n;
-        }
-      } else if (typeof raw === "number") {
-        try {
-          bal = BigInt(Math.trunc(raw));
-        } catch {
-          bal = 0n;
-        }
-      } else if (raw !== null && typeof raw === "object") {
-        const valStr = String(
-          raw.value ?? raw.balance ?? raw.amount ?? raw.balance_e8s ?? "0"
-        );
-        try {
-          bal = BigInt(valStr);
-        } catch {
-          bal = 0n;
-        }
-      }
-      if (bal > 0n) return bal;
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.warn(
-        `[ICRC] balance ${symbol} (${canisterId.slice(0, 8)}) ${format2} ${id2.slice(0, 12)} error: ${msg}`
-      );
-    }
-  }
-  return 0n;
-}
 async function fetchIcrcTransactions(address, limit = DEFAULT_TX_LIMIT, debugEntries, originalPrincipal) {
   const addr = address.trim();
   if (!addr) return [];
@@ -64557,58 +64505,15 @@ async function fetchIcrcTransactions(address, limit = DEFAULT_TX_LIMIT, debugEnt
     }
     return [];
   }
-  const heldTokens = [];
-  let balanceChecked = 0;
-  let balanceHeld = 0;
-  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
-    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
-    const balances = await Promise.all(
-      batch.map(async (token) => {
-        const bal = await fetchIcrcBalance(
-          token.canisterId,
-          principal,
-          hexAccountId,
-          token.symbol
-        );
-        return { token, bal };
-      })
-    );
-    for (const { token, bal } of balances) {
-      balanceChecked += 1;
-      if (bal > 0n) {
-        heldTokens.push(token);
-        balanceHeld += 1;
-      }
-    }
-    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
-      await sleep(TX_BATCH_DELAY_MS);
-    }
-  }
   console.log(
-    `[ICRC] Balance pre-filter: ${balanceHeld}/${balanceChecked} ledgers held by ${principal || hexAccountId}; querying txs for held subset only`
-  );
-  if (heldTokens.length === 0) {
-    if (debugEntries) {
-      debugEntries.push({
-        symbol: "ICRC",
-        canisterId: principal || hexAccountId || "",
-        resultCount: 0,
-        addressFormat: "none",
-        error: `no held tokens after balance pre-filter (${balanceChecked} checked)`
-      });
-    }
-    return [];
-  }
-  const tokensToQuery = heldTokens;
-  console.log(
-    `[ICRC] Querying ${tokensToQuery.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`
+    `[ICRC] Querying ${tokenList.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`
   );
   const allTxs = [];
   let totalQueried = 0;
   let totalWithResults = 0;
   let totalErrored = 0;
-  for (let i = 0; i < tokensToQuery.length; i += TX_FETCH_BATCH_SIZE) {
-    const batch = tokensToQuery.slice(i, i + TX_FETCH_BATCH_SIZE);
+  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
+    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
     const batchResults = await Promise.all(
       batch.map(async (token) => {
         totalQueried += 1;
@@ -64664,7 +64569,7 @@ async function fetchIcrcTransactions(address, limit = DEFAULT_TX_LIMIT, debugEnt
     for (const txs of batchResults) {
       for (const tx of txs) allTxs.push(tx);
     }
-    if (i + TX_FETCH_BATCH_SIZE < tokensToQuery.length) {
+    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
       await sleep(TX_BATCH_DELAY_MS);
     }
   }
