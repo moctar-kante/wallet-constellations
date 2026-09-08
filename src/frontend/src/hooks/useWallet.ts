@@ -184,7 +184,8 @@ export function useWallet() {
   const [txLimit, setTxLimit] = useState(DEFAULT_TX_LIMIT);
   const [loading, setLoading] = useState(false);
   const [errorType, setErrorType] = useState<ExplorerError | null>(null);
-  const [rawTransactions, setRawTransactions] = useState<Transaction[]>([]);
+  const [icpTransactions, setIcpTransactions] = useState<Transaction[]>([]);
+  const [icrcTransactions, setIcrcTransactions] = useState<Transaction[]>([]);
   const [accountIdentifier, setAccountIdentifier] = useState("");
   const [proxyUrl, setProxyUrl] = useState("");
   const [graphDepth, setGraphDepth] = useState<1 | 2 | 3>(1);
@@ -231,7 +232,8 @@ export function useWallet() {
   const loadPrincipal = useCallback(async (principal: string) => {
     setLoading(true);
     setErrorType(null);
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
@@ -251,7 +253,8 @@ export function useWallet() {
       console.log(
         `[ICP] Loaded ${result.transactions.length} transactions, accountId=${acctId}`,
       );
-      setRawTransactions(result.transactions);
+      setIcpTransactions(result.transactions);
+      setIcrcTransactions([]);
       setAccountIdentifier(acctId);
       if (result.transactions.length === 0) {
         setErrorType("empty");
@@ -294,30 +297,26 @@ export function useWallet() {
             );
 
             if (allIcrcTxs.length > 0) {
-              setRawTransactions((prev) => {
-                const merged = [...prev, ...allIcrcTxs];
-                console.log(
-                  `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} ICP txs → ${merged.length} total`,
-                );
+              setIcrcTransactions(allIcrcTxs);
+              console.log(
+                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${icpTxCount} ICP txs → ${icpTxCount + allIcrcTxs.length} total`,
+              );
 
-                // Write to debug object if debug mode is active
-                if (debugModeRef.current) {
-                  window.__ICRC_DEBUG = {
-                    tokenListCount: tokenList.length,
-                    tokenListSource: "fresh",
-                    tokenListTimestamp: new Date().toISOString(),
-                    perToken: debugEntries,
-                    icpTxCount,
-                    icrcTotalTxCount: allIcrcTxs.length,
-                    mergedTxCount: merged.length,
-                    icrcCounterpartyCount: 0, // updated by graph builder
-                    icrcUnconditionalCount: 0,
-                    lastUpdated: new Date().toISOString(),
-                  };
-                }
-
-                return merged;
-              });
+              // Write to debug object if debug mode is active
+              if (debugModeRef.current) {
+                window.__ICRC_DEBUG = {
+                  tokenListCount: tokenList.length,
+                  tokenListSource: "fresh",
+                  tokenListTimestamp: new Date().toISOString(),
+                  perToken: debugEntries,
+                  icpTxCount,
+                  icrcTotalTxCount: allIcrcTxs.length,
+                  mergedTxCount: icpTxCount + allIcrcTxs.length,
+                  icrcCounterpartyCount: 0, // updated by graph builder
+                  icrcUnconditionalCount: 0,
+                  lastUpdated: new Date().toISOString(),
+                };
+              }
             } else if (debugModeRef.current) {
               window.__ICRC_DEBUG = {
                 tokenListCount: tokenList.length,
@@ -397,7 +396,8 @@ export function useWallet() {
     icrcCancelledRef.current = true;
     setHistoryStack([]);
     setCurrentPrincipal("");
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setErrorType(null);
     setLoading(false);
@@ -442,6 +442,14 @@ export function useWallet() {
     [pinnedVersion],
   );
 
+  // Merged view of ICP + ICRC transactions for consumers that need the full set.
+  // The depth-1/2 effect depends only on icpTransactions so the ICRC merge
+  // landing does not restart the in-flight per-node sweep.
+  const rawTransactions = useMemo(
+    () => [...icpTransactions, ...icrcTransactions],
+    [icpTransactions, icrcTransactions],
+  );
+
   const filteredTransactions = useMemo(
     () => filterByTimeRange(rawTransactions, timeRange),
     [rawTransactions, timeRange],
@@ -452,7 +460,7 @@ export function useWallet() {
   useEffect(() => {
     if (
       !accountIdentifier ||
-      rawTransactions.length === 0 ||
+      icpTransactions.length === 0 ||
       graphDepth === 1
     ) {
       setDepth1Fetches([]);
@@ -467,7 +475,7 @@ export function useWallet() {
     (async () => {
       const top5 = getTopCounterparties(
         accountIdentifier,
-        rawTransactions,
+        icpTransactions,
         5,
         currentPrincipal,
       );
@@ -486,7 +494,21 @@ export function useWallet() {
             ? (icpRes.accountIdentifier ?? cp.address)
             : cp.address;
 
-          // Also fetch ICRC for this counterparty address
+          // Set ICP data immediately per node — do not block on the ICRC sweep
+          const node: DepthFetch = {
+            nodeId: cp.address,
+            accountId: acctId,
+            transactions: icpTxs,
+          };
+          if (!cancelled) {
+            setDepth1Fetches((prev) => {
+              const next = prev.filter((f) => f.nodeId !== cp.address);
+              return [...next, node];
+            });
+          }
+
+          // Patch ICRC results in via functional state update as each node's
+          // sweep resolves — do not block the state update on the full sweep
           let icrcTxs: Transaction[] = [];
           if (!cancelled) {
             try {
@@ -495,6 +517,15 @@ export function useWallet() {
                 txLimitRef.current,
                 cancelledRef,
               );
+              if (!cancelled && icrcTxs.length > 0) {
+                setDepth1Fetches((prev) =>
+                  prev.map((f) =>
+                    f.nodeId === cp.address
+                      ? { ...f, transactions: [...f.transactions, ...icrcTxs] }
+                      : f,
+                  ),
+                );
+              }
             } catch {
               // non-critical — continue with ICP only
             }
@@ -543,6 +574,21 @@ export function useWallet() {
                     ? (icpRes.accountIdentifier ?? cp.address)
                     : cp.address;
 
+                  // Set ICP data immediately per node — do not block on the ICRC sweep
+                  const node: DepthFetch = {
+                    nodeId: cp.address,
+                    accountId: acctId,
+                    transactions: icpTxs,
+                  };
+                  if (!cancelled) {
+                    setDepth2Fetches((prev) => {
+                      const next = prev.filter((f) => f.nodeId !== cp.address);
+                      return [...next, node];
+                    });
+                  }
+
+                  // Patch ICRC results in via functional state update as each
+                  // node's sweep resolves — do not block the state update
                   let icrcTxs: Transaction[] = [];
                   if (!cancelled) {
                     try {
@@ -551,6 +597,18 @@ export function useWallet() {
                         txLimitRef.current,
                         cancelledRef,
                       );
+                      if (!cancelled && icrcTxs.length > 0) {
+                        setDepth2Fetches((prev) =>
+                          prev.map((f) =>
+                            f.nodeId === cp.address
+                              ? {
+                                  ...f,
+                                  transactions: [...f.transactions, ...icrcTxs],
+                                }
+                              : f,
+                          ),
+                        );
+                      }
                     } catch {
                       // non-critical
                     }
@@ -585,7 +643,7 @@ export function useWallet() {
       cancelled = true;
       cancelledRef.current = true;
     };
-  }, [accountIdentifier, rawTransactions, graphDepth]);
+  }, [accountIdentifier, icpTransactions, graphDepth]);
 
   const walletData = useMemo<WalletData | null>(() => {
     console.log(

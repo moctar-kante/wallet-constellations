@@ -81,7 +81,17 @@ export interface ConstellationGraphProps {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatAmount(n: number): string {
+// Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
+// satoshis (integer units) rather than decimal BTC.
+function isChainKeyBtc(token: string): boolean {
+  return /btc/i.test(token);
+}
+
+function formatAmount(n: number, token = "ICP"): string {
+  if (isChainKeyBtc(token)) {
+    const sats = Math.round(n * 100_000_000);
+    return `${sats.toLocaleString()} sats`;
+  }
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(3)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(3)}k`;
   return n.toFixed(3);
@@ -722,13 +732,13 @@ export function ConstellationGraph({
           </span>
           {inAmt > 0 && (
             <div style={{ color: "#44ff88", fontSize: 11, paddingLeft: 8 }}>
-              ↓ {formatAmount(inAmt)}
+              ↓ {formatAmount(inAmt, token)}
               <span style={{ opacity: 0.7 }}> ({inCnt})</span>
             </div>
           )}
           {outAmt > 0 && (
             <div style={{ color: "#ffaa44", fontSize: 11, paddingLeft: 8 }}>
-              ↑ {formatAmount(outAmt)}
+              ↑ {formatAmount(outAmt, token)}
               <span style={{ opacity: 0.7 }}> ({outCnt})</span>
             </div>
           )}
@@ -1342,7 +1352,9 @@ export function ConstellationGraph({
                   fontWeight: 600,
                 }}
               >
-                {minEdgeVolume === 0 ? "All" : formatAmount(minEdgeVolume)}
+                {minEdgeVolume === 0
+                  ? "All"
+                  : formatAmount(minEdgeVolume, "ICP")}
               </span>
             </div>
             <input

@@ -9,7 +9,17 @@ import { ActivityChart } from "./ActivityChart";
 const NEON_BLUE = "#4AA8FF";
 const NEON_AMBER = "#FFB300";
 
-function fmt(n: number): string {
+// Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
+// satoshis (integer units) rather than decimal BTC.
+function isChainKeyBtc(token: string): boolean {
+  return /btc/i.test(token);
+}
+
+function fmt(n: number, token = "ICP"): string {
+  if (isChainKeyBtc(token)) {
+    const sats = Math.round(n * 100_000_000);
+    return `${sats.toLocaleString()} sats`;
+  }
   const abs = Math.abs(n);
   if (abs >= 1_000_000) return `${(n / 1_000_000).toFixed(3)}M`;
   if (abs >= 1_000) return `${(n / 1_000).toFixed(3)}k`;
@@ -136,14 +146,14 @@ function WalletStatCard({
                       ? "bg-[#00FF88]/15 text-[#00FF88]"
                       : "bg-muted/50 text-muted-foreground"
                   }`}
-                  title={`${entry.token}: ${fmt(entry.volume)} total`}
+                  title={`${entry.token}: ${fmt(entry.volume, entry.token)} total`}
                 >
                   {isShared && (
                     <span className="text-[8px] font-bold leading-none">★</span>
                   )}
                   {entry.token}
                   <span className="opacity-60 text-[9px]">
-                    {fmt(entry.volume)}
+                    {fmt(entry.volume, entry.token)}
                   </span>
                 </Badge>
               );

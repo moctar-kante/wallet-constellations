@@ -52796,14 +52796,35 @@ const GREEN = "#3FE08C";
 const AMBER = "#F0B35A";
 const GRID_COLOR = "#22324A";
 const TEXT_COLOR = "#9FB0C8";
+function isChainKeyBtc$3(token) {
+  return /btc/i.test(token);
+}
+function dominantToken(transactions) {
+  const vol = /* @__PURE__ */ new Map();
+  for (const tx of transactions) {
+    const token = tx.token ?? "ICP";
+    vol.set(token, (vol.get(token) ?? 0) + tx.amount);
+  }
+  let best = "ICP";
+  let bestVol = -1;
+  for (const [token, v2] of vol) {
+    if (v2 > bestVol) {
+      bestVol = v2;
+      best = token;
+    }
+  }
+  return best;
+}
 function ActivityChart({ transactions, principal }) {
   const [mode, setMode] = reactExports.useState("tx");
   const daily = getDailyActivity(transactions, principal);
+  const token = dominantToken(transactions);
+  const isBtc = isChainKeyBtc$3(token);
   const chartData = daily.map((d2) => ({
     date: d2.date.slice(5),
     // MM-DD
-    in: mode === "tx" ? d2.txIn : Number.parseFloat(d2.volIn.toFixed(4)),
-    out: mode === "tx" ? d2.txOut : Number.parseFloat(d2.volOut.toFixed(4))
+    in: mode === "tx" ? d2.txIn : isBtc ? Math.round(d2.volIn * 1e8) : d2.volIn,
+    out: mode === "tx" ? d2.txOut : isBtc ? Math.round(d2.volOut * 1e8) : d2.volOut
   }));
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
@@ -52871,7 +52892,7 @@ function ActivityChart({ transactions, principal }) {
             {
               type: "monotone",
               dataKey: "in",
-              name: mode === "tx" ? "Incoming Txs" : "Volume In (ICP)",
+              name: mode === "tx" ? "Incoming Txs" : isBtc ? "Volume In (sats)" : "Volume In (ICP)",
               stroke: GREEN,
               strokeWidth: 2,
               dot: false,
@@ -52883,7 +52904,7 @@ function ActivityChart({ transactions, principal }) {
             {
               type: "monotone",
               dataKey: "out",
-              name: mode === "tx" ? "Outgoing Txs" : "Volume Out (ICP)",
+              name: mode === "tx" ? "Outgoing Txs" : isBtc ? "Volume Out (sats)" : "Volume Out (ICP)",
               stroke: AMBER,
               strokeWidth: 2,
               dot: false,
@@ -56008,7 +56029,14 @@ const LEVEL_PALETTE = {
   dark: ["#00c8ff", "#7b68ee", "#ff9800", "#4caf50"],
   light: ["#00c8ff", "#7b3fb0", "#c45e00", "#0e7a6e"]
 };
-function formatAmount$1(n2) {
+function isChainKeyBtc$2(token) {
+  return /btc/i.test(token);
+}
+function formatAmount$1(n2, token = "ICP") {
+  if (isChainKeyBtc$2(token)) {
+    const sats = Math.round(n2 * 1e8);
+    return `${sats.toLocaleString()} sats`;
+  }
   if (n2 >= 1e6) return `${(n2 / 1e6).toFixed(3)}M`;
   if (n2 >= 1e3) return `${(n2 / 1e3).toFixed(3)}k`;
   return n2.toFixed(3);
@@ -56474,7 +56502,7 @@ function ConstellationGraph({
         ),
         inAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: "#44ff88", fontSize: 11, paddingLeft: 8 }, children: [
           "↓ ",
-          formatAmount$1(inAmt),
+          formatAmount$1(inAmt, token),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
             " (",
             inCnt,
@@ -56483,7 +56511,7 @@ function ConstellationGraph({
         ] }),
         outAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: "#ffaa44", fontSize: 11, paddingLeft: 8 }, children: [
           "↑ ",
-          formatAmount$1(outAmt),
+          formatAmount$1(outAmt, token),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
             " (",
             outCnt,
@@ -57100,7 +57128,7 @@ function ConstellationGraph({
                             color: isDark ? "#aaccff" : "#1a1a2e",
                             fontWeight: 600
                           },
-                          children: minEdgeVolume === 0 ? "All" : formatAmount$1(minEdgeVolume)
+                          children: minEdgeVolume === 0 ? "All" : formatAmount$1(minEdgeVolume, "ICP")
                         }
                       )
                     ]
@@ -65321,7 +65349,8 @@ function useWallet() {
   const [txLimit, setTxLimit] = reactExports.useState(DEFAULT_TX_LIMIT);
   const [loading, setLoading] = reactExports.useState(false);
   const [errorType, setErrorType] = reactExports.useState(null);
-  const [rawTransactions, setRawTransactions] = reactExports.useState([]);
+  const [icpTransactions, setIcpTransactions] = reactExports.useState([]);
+  const [icrcTransactions, setIcrcTransactions] = reactExports.useState([]);
   const [accountIdentifier, setAccountIdentifier] = reactExports.useState("");
   const [proxyUrl, setProxyUrl] = reactExports.useState("");
   const [graphDepth, setGraphDepth] = reactExports.useState(1);
@@ -65359,7 +65388,8 @@ function useWallet() {
   const loadPrincipal = reactExports.useCallback(async (principal) => {
     setLoading(true);
     setErrorType(null);
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
@@ -65377,7 +65407,8 @@ function useWallet() {
       console.log(
         `[ICP] Loaded ${result.transactions.length} transactions, accountId=${acctId}`
       );
-      setRawTransactions(result.transactions);
+      setIcpTransactions(result.transactions);
+      setIcrcTransactions([]);
       setAccountIdentifier(acctId);
       if (result.transactions.length === 0) {
         setErrorType("empty");
@@ -65412,28 +65443,25 @@ function useWallet() {
               `[ICRC] Merging: ICP=${icpTxCount}, ICRC_total=${allIcrcTxs.length}, combined=${icpTxCount + allIcrcTxs.length}`
             );
             if (allIcrcTxs.length > 0) {
-              setRawTransactions((prev) => {
-                const merged = [...prev, ...allIcrcTxs];
-                console.log(
-                  `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} ICP txs → ${merged.length} total`
-                );
-                if (debugModeRef.current) {
-                  window.__ICRC_DEBUG = {
-                    tokenListCount: tokenList.length,
-                    tokenListSource: "fresh",
-                    tokenListTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                    perToken: debugEntries,
-                    icpTxCount,
-                    icrcTotalTxCount: allIcrcTxs.length,
-                    mergedTxCount: merged.length,
-                    icrcCounterpartyCount: 0,
-                    // updated by graph builder
-                    icrcUnconditionalCount: 0,
-                    lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
-                  };
-                }
-                return merged;
-              });
+              setIcrcTransactions(allIcrcTxs);
+              console.log(
+                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${icpTxCount} ICP txs → ${icpTxCount + allIcrcTxs.length} total`
+              );
+              if (debugModeRef.current) {
+                window.__ICRC_DEBUG = {
+                  tokenListCount: tokenList.length,
+                  tokenListSource: "fresh",
+                  tokenListTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                  perToken: debugEntries,
+                  icpTxCount,
+                  icrcTotalTxCount: allIcrcTxs.length,
+                  mergedTxCount: icpTxCount + allIcrcTxs.length,
+                  icrcCounterpartyCount: 0,
+                  // updated by graph builder
+                  icrcUnconditionalCount: 0,
+                  lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
+                };
+              }
             } else if (debugModeRef.current) {
               window.__ICRC_DEBUG = {
                 tokenListCount: tokenList.length,
@@ -65506,7 +65534,8 @@ function useWallet() {
     icrcCancelledRef.current = true;
     setHistoryStack([]);
     setCurrentPrincipal("");
-    setRawTransactions([]);
+    setIcpTransactions([]);
+    setIcrcTransactions([]);
     setAccountIdentifier("");
     setErrorType(null);
     setLoading(false);
@@ -65545,12 +65574,16 @@ function useWallet() {
     },
     [pinnedVersion]
   );
+  const rawTransactions = reactExports.useMemo(
+    () => [...icpTransactions, ...icrcTransactions],
+    [icpTransactions, icrcTransactions]
+  );
   const filteredTransactions = reactExports.useMemo(
     () => filterByTimeRange(rawTransactions, timeRange),
     [rawTransactions, timeRange]
   );
   reactExports.useEffect(() => {
-    if (!accountIdentifier || rawTransactions.length === 0 || graphDepth === 1) {
+    if (!accountIdentifier || icpTransactions.length === 0 || graphDepth === 1) {
       setDepth1Fetches([]);
       setDepth2Fetches([]);
       return;
@@ -65561,7 +65594,7 @@ function useWallet() {
     (async () => {
       const top5 = getTopCounterparties(
         accountIdentifier,
-        rawTransactions,
+        icpTransactions,
         5,
         currentPrincipal
       );
@@ -65574,6 +65607,17 @@ function useWallet() {
           );
           const icpTxs = icpRes.ok ? icpRes.transactions : [];
           const acctId = icpRes.ok ? icpRes.accountIdentifier ?? cp.address : cp.address;
+          const node = {
+            nodeId: cp.address,
+            accountId: acctId,
+            transactions: icpTxs
+          };
+          if (!cancelled) {
+            setDepth1Fetches((prev) => {
+              const next = prev.filter((f2) => f2.nodeId !== cp.address);
+              return [...next, node];
+            });
+          }
           let icrcTxs = [];
           if (!cancelled) {
             try {
@@ -65582,6 +65626,13 @@ function useWallet() {
                 txLimitRef.current,
                 cancelledRef
               );
+              if (!cancelled && icrcTxs.length > 0) {
+                setDepth1Fetches(
+                  (prev) => prev.map(
+                    (f2) => f2.nodeId === cp.address ? { ...f2, transactions: [...f2.transactions, ...icrcTxs] } : f2
+                  )
+                );
+              }
             } catch {
             }
           }
@@ -65621,6 +65672,17 @@ function useWallet() {
                   );
                   const icpTxs = icpRes.ok ? icpRes.transactions : [];
                   const acctId = icpRes.ok ? icpRes.accountIdentifier ?? cp.address : cp.address;
+                  const node = {
+                    nodeId: cp.address,
+                    accountId: acctId,
+                    transactions: icpTxs
+                  };
+                  if (!cancelled) {
+                    setDepth2Fetches((prev) => {
+                      const next = prev.filter((f2) => f2.nodeId !== cp.address);
+                      return [...next, node];
+                    });
+                  }
                   let icrcTxs = [];
                   if (!cancelled) {
                     try {
@@ -65629,6 +65691,16 @@ function useWallet() {
                         txLimitRef.current,
                         cancelledRef
                       );
+                      if (!cancelled && icrcTxs.length > 0) {
+                        setDepth2Fetches(
+                          (prev) => prev.map(
+                            (f2) => f2.nodeId === cp.address ? {
+                              ...f2,
+                              transactions: [...f2.transactions, ...icrcTxs]
+                            } : f2
+                          )
+                        );
+                      }
                     } catch {
                     }
                   }
@@ -65658,7 +65730,7 @@ function useWallet() {
       cancelled = true;
       cancelledRef.current = true;
     };
-  }, [accountIdentifier, rawTransactions, graphDepth]);
+  }, [accountIdentifier, icpTransactions, graphDepth]);
   const walletData = reactExports.useMemo(() => {
     console.log(
       `[Graph] walletData memo: principal=${currentPrincipal.slice(0, 12)}, rawTx=${rawTransactions.length}, acctId=${accountIdentifier.slice(0, 12)}`
@@ -66447,12 +66519,12 @@ function formatDate(ts) {
     return ts;
   }
 }
-function isChainKeyBtc(token) {
+function isChainKeyBtc$1(token) {
   return /btc/i.test(token);
 }
 function formatAmount(tx) {
   const token = tx.token ?? "ICP";
-  if (isChainKeyBtc(token)) {
+  if (isChainKeyBtc$1(token)) {
     const sats = Math.round(tx.amount * 1e8);
     return `${sats.toLocaleString()} sats`;
   }
@@ -66590,7 +66662,14 @@ function TransactionTable({
 }
 const NEON_BLUE = "#4AA8FF";
 const NEON_AMBER = "#FFB300";
-function fmt(n2) {
+function isChainKeyBtc(token) {
+  return /btc/i.test(token);
+}
+function fmt(n2, token = "ICP") {
+  if (isChainKeyBtc(token)) {
+    const sats = Math.round(n2 * 1e8);
+    return `${sats.toLocaleString()} sats`;
+  }
   const abs = Math.abs(n2);
   if (abs >= 1e6) return `${(n2 / 1e6).toFixed(3)}M`;
   if (abs >= 1e3) return `${(n2 / 1e3).toFixed(3)}k`;
@@ -66674,11 +66753,11 @@ function WalletStatCard({
             {
               variant: "outline",
               className: `text-[10px] h-5 border-0 gap-1 ${isShared ? "bg-[#00FF88]/15 text-[#00FF88]" : "bg-muted/50 text-muted-foreground"}`,
-              title: `${entry.token}: ${fmt(entry.volume)} total`,
+              title: `${entry.token}: ${fmt(entry.volume, entry.token)} total`,
               children: [
                 isShared && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[8px] font-bold leading-none", children: "★" }),
                 entry.token,
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-60 text-[9px]", children: fmt(entry.volume) })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-60 text-[9px]", children: fmt(entry.volume, entry.token) })
               ]
             },
             entry.token

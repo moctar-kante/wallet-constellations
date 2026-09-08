@@ -20,6 +20,31 @@ const TEXT_COLOR = "#9FB0C8";
 
 type ChartMode = "tx" | "volume";
 
+// Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
+// satoshis (integer units) rather than decimal BTC.
+function isChainKeyBtc(token: string): boolean {
+  return /btc/i.test(token);
+}
+
+// The daily volume series aggregates amounts across all tokens, so pick the
+// dominant token (by total volume) to drive satoshi vs decimal formatting.
+function dominantToken(transactions: Transaction[]): string {
+  const vol = new Map<string, number>();
+  for (const tx of transactions) {
+    const token = tx.token ?? "ICP";
+    vol.set(token, (vol.get(token) ?? 0) + tx.amount);
+  }
+  let best = "ICP";
+  let bestVol = -1;
+  for (const [token, v] of vol) {
+    if (v > bestVol) {
+      bestVol = v;
+      best = token;
+    }
+  }
+  return best;
+}
+
 interface ActivityChartProps {
   transactions: Transaction[];
   principal: string;
@@ -29,11 +54,23 @@ export function ActivityChart({ transactions, principal }: ActivityChartProps) {
   const [mode, setMode] = useState<ChartMode>("tx");
 
   const daily = getDailyActivity(transactions, principal);
+  const token = dominantToken(transactions);
+  const isBtc = isChainKeyBtc(token);
 
   const chartData = daily.map((d) => ({
     date: d.date.slice(5), // MM-DD
-    in: mode === "tx" ? d.txIn : Number.parseFloat(d.volIn.toFixed(4)),
-    out: mode === "tx" ? d.txOut : Number.parseFloat(d.volOut.toFixed(4)),
+    in:
+      mode === "tx"
+        ? d.txIn
+        : isBtc
+          ? Math.round(d.volIn * 100_000_000)
+          : d.volIn,
+    out:
+      mode === "tx"
+        ? d.txOut
+        : isBtc
+          ? Math.round(d.volOut * 100_000_000)
+          : d.volOut,
   }));
 
   return (
@@ -102,7 +139,13 @@ export function ActivityChart({ transactions, principal }: ActivityChartProps) {
             <Line
               type="monotone"
               dataKey="in"
-              name={mode === "tx" ? "Incoming Txs" : "Volume In (ICP)"}
+              name={
+                mode === "tx"
+                  ? "Incoming Txs"
+                  : isBtc
+                    ? "Volume In (sats)"
+                    : "Volume In (ICP)"
+              }
               stroke={GREEN}
               strokeWidth={2}
               dot={false}
@@ -111,7 +154,13 @@ export function ActivityChart({ transactions, principal }: ActivityChartProps) {
             <Line
               type="monotone"
               dataKey="out"
-              name={mode === "tx" ? "Outgoing Txs" : "Volume Out (ICP)"}
+              name={
+                mode === "tx"
+                  ? "Outgoing Txs"
+                  : isBtc
+                    ? "Volume Out (sats)"
+                    : "Volume Out (ICP)"
+              }
               stroke={AMBER}
               strokeWidth={2}
               dot={false}
