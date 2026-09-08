@@ -53,34 +53,19 @@ function record_opt_to_undefined<T>(arg: T | null): T | undefined {
 }
 import { ExternalBlob } from "@caffeineai/object-storage";
 export { ExternalBlob } from "@caffeineai/object-storage";
-export interface Favorite {
-    address: string;
-    pinnedAt: bigint;
-}
 export interface WalletLabel {
     address: string;
     walletLabel: string;
 }
-export interface HttpRequestResult {
-    status: bigint;
-    body: Uint8Array;
-    headers: Array<HttpHeader>;
-}
-export interface HttpHeader {
-    value: string;
-    name: string;
+export interface Favorite {
+    address: string;
+    pinnedAt: bigint;
 }
 export interface backendInterface {
     addFavorite(address: string): Promise<void>;
     getAllLabels(): Promise<Array<WalletLabel>>;
     getFavorites(): Promise<Array<Favorite>>;
     getLabel(address: string): Promise<string | null>;
-    icexplorer_portfolio(address: string): Promise<string>;
-    icexplorer_transform(arg0: {
-        context: Uint8Array;
-        response: HttpRequestResult;
-    }): Promise<HttpRequestResult>;
-    icexplorer_txlist(payload: string): Promise<string>;
     ping(): Promise<{
         status: string;
     }>;
@@ -144,51 +129,6 @@ export class Backend implements backendInterface {
         } else {
             const result = await this.actor.getLabel(arg0);
             return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
-        }
-    }
-    async icexplorer_portfolio(arg0: string): Promise<string> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.icexplorer_portfolio(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.icexplorer_portfolio(arg0);
-            return result;
-        }
-    }
-    async icexplorer_transform(arg0: {
-        context: Uint8Array;
-        response: HttpRequestResult;
-    }): Promise<HttpRequestResult> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.icexplorer_transform(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.icexplorer_transform(arg0);
-            return result;
-        }
-    }
-    async icexplorer_txlist(arg0: string): Promise<string> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.icexplorer_txlist(arg0);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.icexplorer_txlist(arg0);
-            return result;
         }
     }
     async ping(): Promise<{

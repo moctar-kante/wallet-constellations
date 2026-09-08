@@ -16,30 +16,12 @@ export const Favorite = IDL.Record({
   'address' : IDL.Text,
   'pinnedAt' : IDL.Int,
 });
-export const HttpHeader = IDL.Record({ 'value' : IDL.Text, 'name' : IDL.Text });
-export const HttpRequestResult = IDL.Record({
-  'status' : IDL.Nat,
-  'body' : IDL.Vec(IDL.Nat8),
-  'headers' : IDL.Vec(HttpHeader),
-});
 
 export const idlService = IDL.Service({
   'addFavorite' : IDL.Func([IDL.Text], [], []),
   'getAllLabels' : IDL.Func([], [IDL.Vec(WalletLabel)], ['query']),
   'getFavorites' : IDL.Func([], [IDL.Vec(Favorite)], ['query']),
   'getLabel' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Text)], ['query']),
-  'icexplorer_portfolio' : IDL.Func([IDL.Text], [IDL.Text], []),
-  'icexplorer_transform' : IDL.Func(
-      [
-        IDL.Record({
-          'context' : IDL.Vec(IDL.Nat8),
-          'response' : HttpRequestResult,
-        }),
-      ],
-      [HttpRequestResult],
-      ['query'],
-    ),
-  'icexplorer_txlist' : IDL.Func([IDL.Text], [IDL.Text], []),
   'ping' : IDL.Func([], [IDL.Record({ 'status' : IDL.Text })], ['query']),
   'removeFavorite' : IDL.Func([IDL.Text], [], []),
   'removeLabel' : IDL.Func([IDL.Text], [], []),
@@ -54,30 +36,12 @@ export const idlFactory = ({ IDL }) => {
     'walletLabel' : IDL.Text,
   });
   const Favorite = IDL.Record({ 'address' : IDL.Text, 'pinnedAt' : IDL.Int });
-  const HttpHeader = IDL.Record({ 'value' : IDL.Text, 'name' : IDL.Text });
-  const HttpRequestResult = IDL.Record({
-    'status' : IDL.Nat,
-    'body' : IDL.Vec(IDL.Nat8),
-    'headers' : IDL.Vec(HttpHeader),
-  });
   
   return IDL.Service({
     'addFavorite' : IDL.Func([IDL.Text], [], []),
     'getAllLabels' : IDL.Func([], [IDL.Vec(WalletLabel)], ['query']),
     'getFavorites' : IDL.Func([], [IDL.Vec(Favorite)], ['query']),
     'getLabel' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Text)], ['query']),
-    'icexplorer_portfolio' : IDL.Func([IDL.Text], [IDL.Text], []),
-    'icexplorer_transform' : IDL.Func(
-        [
-          IDL.Record({
-            'context' : IDL.Vec(IDL.Nat8),
-            'response' : HttpRequestResult,
-          }),
-        ],
-        [HttpRequestResult],
-        ['query'],
-      ),
-    'icexplorer_txlist' : IDL.Func([IDL.Text], [IDL.Text], []),
     'ping' : IDL.Func([], [IDL.Record({ 'status' : IDL.Text })], ['query']),
     'removeFavorite' : IDL.Func([IDL.Text], [], []),
     'removeLabel' : IDL.Func([IDL.Text], [], []),

@@ -40,6 +40,7 @@ interface OverviewPanelProps {
   onNavigate: (p: string) => void;
   timeRange?: TimeRange;
   onTimeRangeChange?: (r: TimeRange) => void;
+  tokenCoverage?: number;
 }
 
 function formatWalletAge(
@@ -84,6 +85,7 @@ export function OverviewPanel({
   onNavigate,
   timeRange,
   onTimeRangeChange,
+  tokenCoverage = 0,
 }: OverviewPanelProps) {
   const [copied, setCopied] = useState(false);
   const [icpPrice, setIcpPrice] = useState<number | null>(null);
@@ -218,6 +220,25 @@ export function OverviewPanel({
                       {walletAge.since}
                     </span>
                   </div>
+                </div>
+              )}
+              {/* Token coverage note */}
+              {tokenCoverage > 0 && (
+                <div className="pt-1 border-t border-border/40">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted-foreground">
+                      Token coverage
+                    </span>
+                    <span
+                      className="text-[10px] font-medium text-neon-blue"
+                      data-ocid="wallet.token_coverage"
+                    >
+                      {tokenCoverage} tokens
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground/70 leading-snug">
+                    Full SNS + chain-key set represented
+                  </p>
                 </div>
               )}
               {/* Time range filter */}

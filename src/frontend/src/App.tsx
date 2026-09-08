@@ -28,7 +28,6 @@ import { useComparison } from "./hooks/useComparison";
 import { useTheme } from "./hooks/useTheme";
 import { useUserData } from "./hooks/useUserData";
 import { useWallet } from "./hooks/useWallet";
-import { setBackendActor } from "./services/explorerService";
 import { fetchIcpUsdPrice } from "./services/priceService";
 import type { ExplorerError, GraphEdge, GraphNode } from "./types";
 
@@ -144,14 +143,6 @@ export default function App() {
   } = useAuth();
   const userData = useUserData(isLoggedIn, actor);
 
-  // Inject the authenticated backend actor into explorerService so IC Explorer
-  // proxy calls (icexplorer_portfolio / icexplorer_txlist) route through the
-  // real backend canister via the user's identity. On logout the actor becomes
-  // null, so setBackendActor(null) restores the anonymous-actor fallback.
-  useEffect(() => {
-    setBackendActor(actor);
-  }, [actor]);
-
   const {
     historyStack,
     currentPrincipal,
@@ -177,6 +168,7 @@ export default function App() {
     setShowCrossEdges,
     depthLoading,
     icrcLoading,
+    tokenCoverage,
     togglePin,
     debugMode,
   } = useWallet();
@@ -346,27 +338,28 @@ export default function App() {
             </div>
           )}
 
-          {/* System status bar — above graph on desktop, below core content on mobile */}
-          <div className="flex justify-end order-3 lg:order-none">
+          {/* System status bar — one line above the graph */}
+          <div className="flex justify-end">
             <StatusPanel />
           </div>
 
           {/* Main layout — stacks on mobile, side-by-side on lg+ */}
-          <div className="flex flex-col lg:flex-row gap-4 order-1 lg:order-none">
+          <div className="flex flex-col lg:flex-row gap-4">
             {(hasData || loading) && (
-              <div className="w-full lg:w-72 shrink-0 order-1 lg:order-none">
+              <div className="w-full lg:w-72 shrink-0">
                 <OverviewPanel
                   principal={currentPrincipal}
                   walletData={walletData}
                   onNavigate={navigate}
                   timeRange={timeRange}
                   onTimeRangeChange={setTimeRange}
+                  tokenCoverage={tokenCoverage}
                 />
               </div>
             )}
 
             <div
-              className="flex-1 relative order-2 lg:order-none"
+              className="flex-1 relative"
               style={{ minHeight: "520px", height: "520px" }}
             >
               {loading ? (
@@ -426,7 +419,7 @@ export default function App() {
 
           {/* Transactions table */}
           {hasData && (
-            <Card className="bg-card border-border order-2 lg:order-none">
+            <Card className="bg-card border-border">
               <CardHeader className="pb-3 pt-4 px-4">
                 <CardTitle className="text-sm font-semibold">
                   Recent Transactions
@@ -447,7 +440,7 @@ export default function App() {
 
           {/* Charts row */}
           {hasData && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 order-4 lg:order-none">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Card className="bg-card border-border">
                 <CardHeader className="pb-3 pt-4 px-4">
                   <CardTitle className="text-sm font-semibold">

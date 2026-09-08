@@ -33,6 +33,21 @@ function formatDate(ts: string) {
   }
 }
 
+// Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
+// satoshis (integer units) rather than decimal BTC.
+function isChainKeyBtc(token: string): boolean {
+  return /btc/i.test(token);
+}
+
+function formatAmount(tx: Transaction): string {
+  const token = tx.token ?? "ICP";
+  if (isChainKeyBtc(token)) {
+    const sats = Math.round(tx.amount * 100_000_000);
+    return `${sats.toLocaleString()} sats`;
+  }
+  return `${tx.amount.toFixed(4)} ${token}`;
+}
+
 interface TransactionTableProps {
   transactions: Transaction[];
   principal: string;
@@ -122,14 +137,8 @@ export function TransactionTable({
                       }`}
                     >
                       {isIncoming ? "+" : isOutgoing ? "-" : ""}
-                      {tx.amount.toFixed(4)}
+                      {formatAmount(tx)}
                     </span>
-                    <Badge
-                      variant="outline"
-                      className="ml-1.5 text-[10px] px-1 py-0 border-border text-muted-foreground"
-                    >
-                      {tx.token || "ICP"}
-                    </Badge>
                     {(isIncoming || isOutgoing) && (
                       <Badge
                         variant="outline"

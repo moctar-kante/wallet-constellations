@@ -5,6 +5,8 @@ version = "0.1.0"
 [build]
 outputDir = "src/backend/dist"
 args = [ "--release" ]
+check-wasm = true
+check-deploy = true
 
 [canisters.backend]
 main = "src/backend/main.mo"
@@ -13,15 +15,15 @@ main = "src/backend/main.mo"
 path = ".old/src/backend/dist/backend.most"
 
 [toolchain]
-moc = "1.10.1"
-lintoko = "0.7.0"
+moc = "1.15.1"
+lintoko = "0.11.0"
 
 [lint]
 extends = true
 
 [moc]
-args = [ "--default-persistent-actors", "--actor-idl=src/backend/system-idl", "--implicit-package=core", "-no-check-ir", "-E=M0236,M0235,M0223,M0237", "-A=M0198" ]
+args = [ "--default-persistent-actors", "--implicit-package=core", "-no-check-ir", "-E=M0236,M0235,M0223,M0237", "-A=M0198" ]
 
 [dependencies]
-core = "2.6.0"
+core = "2.6.1"
 ic = "4.2.0"

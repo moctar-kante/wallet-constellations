@@ -11,24 +11,12 @@ import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
 export interface Favorite { 'address' : string, 'pinnedAt' : bigint }
-export interface HttpHeader { 'value' : string, 'name' : string }
-export interface HttpRequestResult {
-  'status' : bigint,
-  'body' : Uint8Array,
-  'headers' : Array<HttpHeader>,
-}
 export interface WalletLabel { 'address' : string, 'walletLabel' : string }
 export interface _SERVICE {
   'addFavorite' : ActorMethod<[string], undefined>,
   'getAllLabels' : ActorMethod<[], Array<WalletLabel>>,
   'getFavorites' : ActorMethod<[], Array<Favorite>>,
   'getLabel' : ActorMethod<[string], [] | [string]>,
-  'icexplorer_portfolio' : ActorMethod<[string], string>,
-  'icexplorer_transform' : ActorMethod<
-    [{ 'context' : Uint8Array, 'response' : HttpRequestResult }],
-    HttpRequestResult
-  >,
-  'icexplorer_txlist' : ActorMethod<[string], string>,
   'ping' : ActorMethod<[], { 'status' : string }>,
   'removeFavorite' : ActorMethod<[string], undefined>,
   'removeLabel' : ActorMethod<[string], undefined>,

@@ -802,10 +802,6 @@ html.light body {
   top: 1rem;
 }
 
-.top-5{
-  top: 1.25rem;
-}
-
 .top-\[1px\]{
   top: 1px;
 }
@@ -852,22 +848,6 @@ html.light body {
 
 .z-\[1\]{
   z-index: 1;
-}
-
-.order-1{
-  order: 1;
-}
-
-.order-2{
-  order: 2;
-}
-
-.order-3{
-  order: 3;
-}
-
-.order-4{
-  order: 4;
 }
 
 .col-start-2{
@@ -1386,10 +1366,6 @@ html.light body {
 
 .max-w-\[160px\]{
   max-width: 160px;
-}
-
-.max-w-\[180px\]{
-  max-width: 180px;
 }
 
 .max-w-\[calc\(100\%-2rem\)\]{
@@ -4457,10 +4433,6 @@ html.light body {
 }
 
 @media (min-width: 1024px){
-
-  .lg\:order-none{
-    order: 0;
-  }
 
   .lg\:w-72{
     width: 18rem;

@@ -17,7 +17,7 @@ var __privateWrapper = (obj, member, setter, getter) => ({
     return __privateGet(obj, member, getter);
   }
 });
-var _disableTimeVerification, _agent, _inner, _expirationTime, _rawKey, _derKey, _a2, _currentInterval, _randomizationFactor, _multiplier, _maxInterval, _startTime, _maxElapsedTime, _maxIterations, _date, _count, _rootKeyPromise, _shouldFetchRootKey, _timeDiffMsecs, _hasSyncedTime, _syncTimePromise, _shouldSyncTime, _identity, _fetch, _fetchOptions, _callOptions, _credentials, _retryTimes, _backoffStrategy, _maxIngressExpiryInMinutes, _HttpAgent_instances, maxIngressExpiryInMs_get, _queryPipeline, _updatePipeline, _subnetKeys, _verifyQuerySignatures, requestAndRetryQuery_fn, requestAndRetry_fn, _verifyQueryResponse, asyncGuard_fn, rootKeyGuard_fn, syncTimeGuard_fn, _focused, _cleanup, _setup, _b2, _provider, _providerCalled, _c, _online, _cleanup2, _setup2, _d, _gcTimeout, _e, _queryType, _initialState, _revertState, _cache, _client, _retryer, _defaultOptions, _abortSignalConsumed, _Query_instances, isInitialPausedFetch_fn, dispatch_fn, _f, _client2, _observers, _mutationCache, _retryer2, _Mutation_instances, dispatch_fn2, _g, _mutations, _scopes, _mutationId, _h, _queries, _i, _queryCache, _mutationCache2, _defaultOptions2, _queryDefaults, _mutationDefaults, _mountCount, _unsubscribeFocus, _unsubscribeOnline, _j, _rawKey2, _derKey2, _publicKey, _privateKey, _inner2, _delegation, _options;
+var _disableTimeVerification, _agent, _inner, _expirationTime, _rawKey, _derKey, _a2, _currentInterval, _randomizationFactor, _multiplier, _maxInterval, _startTime, _maxElapsedTime, _maxIterations, _date, _count, _rootKeyPromise, _shouldFetchRootKey, _timeDiffMsecs, _hasSyncedTime, _syncTimePromise, _shouldSyncTime, _identity, _fetch, _fetchOptions, _callOptions, _credentials, _retryTimes, _backoffStrategy, _maxIngressExpiryInMinutes, _HttpAgent_instances, maxIngressExpiryInMs_get, _queryPipeline, _updatePipeline, _subnetKeys, _verifyQuerySignatures, requestAndRetryQuery_fn, requestAndRetry_fn, _verifyQueryResponse, asyncGuard_fn, rootKeyGuard_fn, syncTimeGuard_fn, _focused, _cleanup, _setup, _b2, _provider, _providerCalled, _c, _online, _cleanup2, _setup2, _d, _gcTimeout, _e, _initialState, _revertState, _cache, _client, _retryer, _defaultOptions, _abortSignalConsumed, _Query_instances, isInitialPausedFetch_fn, dispatch_fn, _f, _client2, _observers, _mutationCache, _retryer2, _Mutation_instances, dispatch_fn2, _g, _mutations, _scopes, _mutationId, _h, _queries, _i, _queryCache, _mutationCache2, _defaultOptions2, _queryDefaults, _mutationDefaults, _mountCount, _unsubscribeFocus, _unsubscribeOnline, _j, _rawKey2, _derKey2, _publicKey, _privateKey, _inner2, _delegation, _options;
 function _mergeNamespaces(n2, m2) {
   for (var i = 0; i < m2.length; i++) {
     const e3 = m2[i];
@@ -170,7 +170,7 @@ function base32Decode(input) {
   let skip = 0;
   let byte = 0;
   const output = new Uint8Array(input.length * 4 / 3 | 0);
-  let o = 0;
+  let o2 = 0;
   function decodeChar(char) {
     let val = lookupTable[char.toLowerCase()];
     if (val === void 0) {
@@ -180,7 +180,7 @@ function base32Decode(input) {
     byte |= val >>> skip;
     skip += 5;
     if (skip >= 8) {
-      output[o++] = byte;
+      output[o2++] = byte;
       skip -= 8;
       if (skip > 0) {
         byte = val << 5 - skip & 255;
@@ -192,7 +192,7 @@ function base32Decode(input) {
   for (const c2 of input) {
     decodeChar(c2);
   }
-  return output.slice(0, o);
+  return output.slice(0, o2);
 }
 const lookUpTable = new Uint32Array([
   0,
@@ -850,12 +850,12 @@ class SHA256 extends HashMD {
     this.H = SHA256_IV[7] | 0;
   }
   get() {
-    const { A, B: B2, C: C2, D, E: E2, F: F2, G: G2, H: H2 } = this;
-    return [A, B2, C2, D, E2, F2, G2, H2];
+    const { A: A2, B: B2, C: C2, D, E: E2, F: F2, G: G2, H: H2 } = this;
+    return [A2, B2, C2, D, E2, F2, G2, H2];
   }
   // prettier-ignore
-  set(A, B2, C2, D, E2, F2, G2, H2) {
-    this.A = A | 0;
+  set(A2, B2, C2, D, E2, F2, G2, H2) {
+    this.A = A2 | 0;
     this.B = B2 | 0;
     this.C = C2 | 0;
     this.D = D | 0;
@@ -874,22 +874,22 @@ class SHA256 extends HashMD {
       const s1 = rotr(W2, 17) ^ rotr(W2, 19) ^ W2 >>> 10;
       SHA256_W[i] = s1 + SHA256_W[i - 7] + s0 + SHA256_W[i - 16] | 0;
     }
-    let { A, B: B2, C: C2, D, E: E2, F: F2, G: G2, H: H2 } = this;
+    let { A: A2, B: B2, C: C2, D, E: E2, F: F2, G: G2, H: H2 } = this;
     for (let i = 0; i < 64; i++) {
       const sigma1 = rotr(E2, 6) ^ rotr(E2, 11) ^ rotr(E2, 25);
       const T1 = H2 + sigma1 + Chi(E2, F2, G2) + SHA256_K[i] + SHA256_W[i] | 0;
-      const sigma0 = rotr(A, 2) ^ rotr(A, 13) ^ rotr(A, 22);
-      const T2 = sigma0 + Maj(A, B2, C2) | 0;
+      const sigma0 = rotr(A2, 2) ^ rotr(A2, 13) ^ rotr(A2, 22);
+      const T2 = sigma0 + Maj(A2, B2, C2) | 0;
       H2 = G2;
       G2 = F2;
       F2 = E2;
       E2 = D + T1 | 0;
       D = C2;
       C2 = B2;
-      B2 = A;
-      A = T1 + T2 | 0;
+      B2 = A2;
+      A2 = T1 + T2 | 0;
     }
-    A = A + this.A | 0;
+    A2 = A2 + this.A | 0;
     B2 = B2 + this.B | 0;
     C2 = C2 + this.C | 0;
     D = D + this.D | 0;
@@ -897,7 +897,7 @@ class SHA256 extends HashMD {
     F2 = F2 + this.F | 0;
     G2 = G2 + this.G | 0;
     H2 = H2 + this.H | 0;
-    this.set(A, B2, C2, D, E2, F2, G2, H2);
+    this.set(A2, B2, C2, D, E2, F2, G2, H2);
   }
   roundClean() {
     clean(SHA256_W);
@@ -4281,300 +4281,294 @@ class AnonymousIdentity {
   }
 }
 class w extends Error {
-  constructor(e3) {
-    super(e3), this.name = "DecodingError";
+  constructor(n2) {
+    super(n2), this.name = "DecodingError";
   }
 }
-const L = 55799, R = /* @__PURE__ */ Symbol("CBOR_STOP_CODE");
-var u$1 = /* @__PURE__ */ ((t2) => (t2[t2.False = 20] = "False", t2[t2.True = 21] = "True", t2[t2.Null = 22] = "Null", t2[t2.Undefined = 23] = "Undefined", t2[t2.Break = 31] = "Break", t2))(u$1 || {}), c$3 = /* @__PURE__ */ ((t2) => (t2[t2.UnsignedInteger = 0] = "UnsignedInteger", t2[t2.NegativeInteger = 1] = "NegativeInteger", t2[t2.ByteString = 2] = "ByteString", t2[t2.TextString = 3] = "TextString", t2[t2.Array = 4] = "Array", t2[t2.Map = 5] = "Map", t2[t2.Tag = 6] = "Tag", t2[t2.Simple = 7] = "Simple", t2))(c$3 || {});
-const Y = 23, G = 255, P$1 = 65535, H = 4294967295, W = BigInt("0xffffffffffffffff");
-var f$1 = /* @__PURE__ */ ((t2) => (t2[t2.Value = 23] = "Value", t2[t2.OneByte = 24] = "OneByte", t2[t2.TwoBytes = 25] = "TwoBytes", t2[t2.FourBytes = 26] = "FourBytes", t2[t2.EightBytes = 27] = "EightBytes", t2[t2.Indefinite = 31] = "Indefinite", t2))(f$1 || {});
-const l$1 = false;
-function K(t2) {
+const m$2 = 55799, L = Symbol("CBOR_STOP_CODE");
+var g$1 = /* @__PURE__ */ ((t2) => (t2[t2.False = 20] = "False", t2[t2.True = 21] = "True", t2[t2.Null = 22] = "Null", t2[t2.Undefined = 23] = "Undefined", t2[t2.Break = 31] = "Break", t2))(g$1 || {}), c$3 = /* @__PURE__ */ ((t2) => (t2[t2.UnsignedInteger = 0] = "UnsignedInteger", t2[t2.NegativeInteger = 1] = "NegativeInteger", t2[t2.ByteString = 2] = "ByteString", t2[t2.TextString = 3] = "TextString", t2[t2.Array = 4] = "Array", t2[t2.Map = 5] = "Map", t2[t2.Tag = 6] = "Tag", t2[t2.Simple = 7] = "Simple", t2))(c$3 || {});
+const z$1 = 23, Y = 255, G = 65535, P$1 = 4294967295, H = BigInt("0xffffffffffffffff");
+var d$1 = /* @__PURE__ */ ((t2) => (t2[t2.Value = 23] = "Value", t2[t2.OneByte = 24] = "OneByte", t2[t2.TwoBytes = 25] = "TwoBytes", t2[t2.FourBytes = 26] = "FourBytes", t2[t2.EightBytes = 27] = "EightBytes", t2[t2.Indefinite = 31] = "Indefinite", t2))(d$1 || {});
+const h$1 = false;
+function W(t2) {
   return t2 == null;
 }
-function Z(t2, e3) {
-  const n2 = new Uint8Array(e3);
-  return n2.set(t2), n2;
+function R(t2, n2) {
+  const e3 = new Uint8Array(n2);
+  return e3.set(t2), e3;
 }
-const q$1 = new TextDecoder();
-function J(t2) {
+const K = new TextDecoder();
+function Z(t2) {
   return (t2 & 224) >> 5;
 }
-function Q(t2) {
+function q$1(t2) {
   return t2 & 31;
 }
-let S = new Uint8Array(), U$1, d$1 = 0;
-function ut(t2, e3) {
-  S = t2, d$1 = 0;
-  const n2 = B();
-  return (e3 == null ? void 0 : e3(n2)) ?? n2;
+let A = new Uint8Array(), y$3, a$2 = 0;
+function ut(t2, n2) {
+  A = t2, a$2 = 0;
+  const e3 = B();
+  return (n2 == null ? void 0 : n2(e3)) ?? e3;
 }
 function B(t2) {
-  const [e3, n2] = N();
-  switch (e3) {
+  const [n2, e3] = N();
+  switch (n2) {
     case c$3.UnsignedInteger:
-      return h$1(n2);
+      return E(e3);
     case c$3.NegativeInteger:
-      return M$2(n2);
+      return j(e3);
     case c$3.ByteString:
-      return $(n2);
+      return $(e3);
     case c$3.TextString:
-      return F(n2);
+      return F(e3);
     case c$3.Array:
-      return p$1(n2);
+      return J(e3);
     case c$3.Map:
-      return j(n2);
+      return b$1(e3);
     case c$3.Tag:
-      return v$2(n2);
+      return M$2(e3);
     case c$3.Simple:
-      return b$1(n2);
+      return Q(e3);
   }
-  throw new w(`Unsupported major type: ${e3}`);
+  throw new w(`Unsupported major type: ${n2}`);
 }
 function N() {
-  const t2 = S.at(d$1);
-  if (K(t2))
+  const t2 = A.at(a$2);
+  if (W(t2))
     throw new w("Provided CBOR data is empty");
-  const e3 = J(t2), n2 = Q(t2);
-  return d$1++, [e3, n2];
+  const n2 = Z(t2), e3 = q$1(t2);
+  return a$2++, [n2, e3];
 }
-function p$1(t2, e3) {
-  const n2 = h$1(t2);
-  if (n2 === 1 / 0) {
-    const o = [];
-    let i = B();
-    for (; i !== R; )
-      o.push(i), i = B();
-    return o;
+function J(t2, n2) {
+  const e3 = E(t2);
+  if (e3 === 1 / 0) {
+    const u2 = [];
+    let f2 = B();
+    for (; f2 !== L; )
+      u2.push(f2), f2 = B();
+    return u2;
   }
-  const s2 = new Array(n2);
-  for (let o = 0; o < n2; o++) {
-    const i = B();
-    s2[o] = i;
+  const i = new Array(e3);
+  for (let u2 = 0; u2 < e3; u2++) {
+    const f2 = B();
+    i[u2] = f2;
   }
-  return s2;
+  return i;
 }
-function b$1(t2) {
+function Q(t2) {
   switch (t2) {
-    case u$1.False:
+    case g$1.False:
       return false;
-    case u$1.True:
+    case g$1.True:
       return true;
-    case u$1.Null:
+    case g$1.Null:
       return null;
-    case u$1.Undefined:
+    case g$1.Undefined:
       return;
-    case u$1.Break:
-      return R;
+    case g$1.Break:
+      return L;
   }
   throw new w(`Unrecognized simple type: ${t2.toString(2)}`);
 }
-function j(t2, e3) {
-  const n2 = h$1(t2), s2 = {};
-  if (n2 === 1 / 0) {
-    let [o, i] = N();
-    for (; o !== c$3.Simple && i !== u$1.Break; ) {
-      const A = F(i), I = B();
-      s2[A] = I, [o, i] = N();
+function b$1(t2, n2) {
+  const e3 = E(t2), i = {};
+  if (e3 === 1 / 0) {
+    let [u2, f2] = N();
+    for (; u2 !== c$3.Simple && f2 !== g$1.Break; ) {
+      const l2 = F(f2), U2 = B();
+      i[l2] = U2, [u2, f2] = N();
     }
-    return s2;
+    return i;
   }
-  for (let o = 0; o < n2; o++) {
-    const [i, A] = N();
-    if (i !== c$3.TextString)
+  for (let u2 = 0; u2 < e3; u2++) {
+    const [f2, l2] = N();
+    if (f2 !== c$3.TextString)
       throw new w("Map keys must be text strings");
-    const I = F(A), D = B();
-    s2[I] = D;
+    const U2 = F(l2), D = B();
+    i[U2] = D;
   }
-  return s2;
+  return i;
 }
-function h$1(t2) {
-  if (t2 <= f$1.Value)
+function E(t2) {
+  if (t2 <= d$1.Value)
     return t2;
-  switch (U$1 = new DataView(S.buffer, S.byteOffset + d$1), t2) {
-    case f$1.OneByte:
-      return d$1++, U$1.getUint8(0);
-    case f$1.TwoBytes:
-      return d$1 += 2, U$1.getUint16(0, l$1);
-    case f$1.FourBytes:
-      return d$1 += 4, U$1.getUint32(0, l$1);
-    case f$1.EightBytes:
-      return d$1 += 8, U$1.getBigUint64(0, l$1);
-    case f$1.Indefinite:
+  switch (y$3 = new DataView(A.buffer, A.byteOffset + a$2), t2) {
+    case d$1.OneByte:
+      return a$2++, y$3.getUint8(0);
+    case d$1.TwoBytes:
+      return a$2 += 2, y$3.getUint16(0, h$1);
+    case d$1.FourBytes:
+      return a$2 += 4, y$3.getUint32(0, h$1);
+    case d$1.EightBytes:
+      return a$2 += 8, y$3.getBigUint64(0, h$1);
+    case d$1.Indefinite:
       return 1 / 0;
     default:
       throw new w(`Unsupported integer info: ${t2.toString(2)}`);
   }
 }
-function M$2(t2) {
-  const e3 = h$1(t2);
-  return typeof e3 == "number" ? -1 - e3 : -1n - e3;
+function j(t2) {
+  const n2 = E(t2);
+  return typeof n2 == "number" ? -1 - n2 : -1n - n2;
 }
 function $(t2) {
-  const e3 = h$1(t2);
-  if (e3 > Number.MAX_SAFE_INTEGER)
+  const n2 = E(t2);
+  if (n2 > Number.MAX_SAFE_INTEGER)
     throw new w("Byte length is too large");
-  const n2 = Number(e3);
-  return d$1 += n2, S.slice(d$1 - n2, d$1);
+  const e3 = Number(n2);
+  return a$2 += e3, A.slice(a$2 - e3, a$2);
 }
 function F(t2) {
-  const e3 = $(t2);
-  return q$1.decode(e3);
+  const n2 = $(t2);
+  return K.decode(n2);
 }
-function v$2(t2, e3) {
-  const n2 = h$1(t2);
-  if (n2 === L)
+function M$2(t2, n2) {
+  const e3 = E(t2);
+  if (e3 === m$2)
     return B();
-  throw new w(`Unsupported tag: ${n2}.`);
+  throw new w(`Unsupported tag: ${e3}.`);
 }
 let x$4 = class x extends Error {
-  constructor(e3) {
-    super(e3), this.name = "SerializationError";
+  constructor(n2) {
+    super(n2), this.name = "SerializationError";
   }
 };
-const C = 2 * 1024, V = 100, tt$1 = new TextEncoder();
-function y$3(t2) {
+const p$1 = 2 * 1024, C = 100, v$2 = new TextEncoder();
+function S(t2) {
   return t2 << 5;
 }
-let a$2 = new Uint8Array(C), g$1 = new DataView(a$2.buffer), r$1 = 0, O = [];
-function gt(t2, e3) {
-  r$1 = 0;
-  const n2 = (e3 == null ? void 0 : e3(t2)) ?? t2;
-  return ft(L, n2, e3), a$2.slice(0, r$1);
+let o = new Uint8Array(p$1), r$1 = new DataView(o.buffer), s$1 = 0, O = [];
+function dt(t2, n2) {
+  s$1 = 0;
+  const e3 = (n2 == null ? void 0 : n2(t2)) ?? t2;
+  return it(m$2, e3, n2), o.slice(0, s$1);
 }
-function k$2(t2) {
-  let e3 = a$2.length * 2;
-  for (; e3 < t2; )
-    e3 *= 2;
-  a$2 = Z(a$2, e3), g$1 = new DataView(a$2.buffer);
-}
-function _(t2, e3) {
-  if (t2 === false || t2 === true || t2 === null || t2 === void 0) {
-    rt(t2);
+function _(t2, n2) {
+  if (s$1 > o.length - C && (o = R(o, o.length * 2), r$1 = new DataView(o.buffer)), t2 === false || t2 === true || t2 === null || t2 === void 0) {
+    et(t2);
     return;
   }
   if (typeof t2 == "number" || typeof t2 == "bigint") {
-    ot(t2);
+    ft(t2);
     return;
   }
   if (typeof t2 == "string") {
-    z$1(t2);
+    X$1(t2);
     return;
   }
   if (t2 instanceof Uint8Array) {
-    m$2(t2);
+    V(t2);
     return;
   }
   if (t2 instanceof ArrayBuffer) {
-    m$2(new Uint8Array(t2));
+    V(new Uint8Array(t2));
     return;
   }
   if (Array.isArray(t2)) {
-    et(t2, e3);
+    tt$1(t2, n2);
     return;
   }
   if (typeof t2 == "object") {
-    nt(t2, e3);
+    nt(t2, n2);
     return;
   }
   throw new x$4(`Unsupported type: ${typeof t2}`);
 }
-function et(t2, e3) {
-  E(c$3.Array, t2.length), t2.forEach((n2, s2) => {
-    _((e3 == null ? void 0 : e3(n2, s2.toString())) ?? n2, e3);
+function tt$1(t2, n2) {
+  I(c$3.Array, t2.length), t2.forEach((e3, i) => {
+    _((n2 == null ? void 0 : n2(e3, i.toString())) ?? e3, n2);
   });
 }
-function nt(t2, e3) {
-  O = Object.entries(t2), E(c$3.Map, O.length), O.forEach(([n2, s2]) => {
-    z$1(n2), _((e3 == null ? void 0 : e3(s2, n2)) ?? s2, e3);
+function nt(t2, n2) {
+  O = Object.entries(t2), I(c$3.Map, O.length), O.forEach(([e3, i]) => {
+    X$1(e3), _((n2 == null ? void 0 : n2(i, e3)) ?? i, n2);
   });
 }
-function E(t2, e3) {
-  if (r$1 > a$2.length - V && k$2(r$1 + V), e3 <= Y) {
-    g$1.setUint8(
-      r$1++,
-      y$3(t2) | Number(e3)
+function I(t2, n2) {
+  if (n2 <= z$1) {
+    r$1.setUint8(
+      s$1++,
+      S(t2) | Number(n2)
     );
     return;
   }
-  if (e3 <= G) {
-    g$1.setUint8(
-      r$1++,
-      y$3(t2) | f$1.OneByte
-    ), g$1.setUint8(r$1, Number(e3)), r$1 += 1;
+  if (n2 <= Y) {
+    r$1.setUint8(
+      s$1++,
+      S(t2) | d$1.OneByte
+    ), r$1.setUint8(s$1, Number(n2)), s$1 += 1;
     return;
   }
-  if (e3 <= P$1) {
-    g$1.setUint8(
-      r$1++,
-      y$3(t2) | f$1.TwoBytes
-    ), g$1.setUint16(r$1, Number(e3), l$1), r$1 += 2;
+  if (n2 <= G) {
+    r$1.setUint8(
+      s$1++,
+      S(t2) | d$1.TwoBytes
+    ), r$1.setUint16(s$1, Number(n2), h$1), s$1 += 2;
     return;
   }
-  if (e3 <= H) {
-    g$1.setUint8(
-      r$1++,
-      y$3(t2) | f$1.FourBytes
-    ), g$1.setUint32(r$1, Number(e3), l$1), r$1 += 4;
+  if (n2 <= P$1) {
+    r$1.setUint8(
+      s$1++,
+      S(t2) | d$1.FourBytes
+    ), r$1.setUint32(s$1, Number(n2), h$1), s$1 += 4;
     return;
   }
-  if (e3 <= W) {
-    g$1.setUint8(
-      r$1++,
-      y$3(t2) | f$1.EightBytes
-    ), g$1.setBigUint64(r$1, BigInt(e3), l$1), r$1 += 8;
+  if (n2 <= H) {
+    r$1.setUint8(
+      s$1++,
+      S(t2) | d$1.EightBytes
+    ), r$1.setBigUint64(s$1, BigInt(n2), h$1), s$1 += 8;
     return;
   }
-  throw new x$4(`Value too large to encode: ${e3}`);
+  throw new x$4(`Value too large to encode: ${n2}`);
 }
-function rt(t2) {
-  E(c$3.Simple, ct(t2));
-}
-function ct(t2) {
-  if (t2 === false)
-    return u$1.False;
-  if (t2 === true)
-    return u$1.True;
-  if (t2 === null)
-    return u$1.Null;
-  if (t2 === void 0)
-    return u$1.Undefined;
-  throw new x$4(`Unrecognized simple value: ${t2.toString()}`);
-}
-function T(t2, e3) {
-  E(t2, e3.length), r$1 > a$2.length - e3.length && k$2(r$1 + e3.length), a$2.set(e3, r$1), r$1 += e3.length;
-}
-function X$1(t2, e3) {
-  E(t2, e3);
-}
-function it(t2) {
-  X$1(c$3.UnsignedInteger, t2);
+function et(t2) {
+  I(c$3.Simple, st(t2));
 }
 function st(t2) {
-  X$1(
+  if (t2 === false)
+    return g$1.False;
+  if (t2 === true)
+    return g$1.True;
+  if (t2 === null)
+    return g$1.Null;
+  if (t2 === void 0)
+    return g$1.Undefined;
+  throw new x$4(`Unrecognized simple value: ${t2.toString()}`);
+}
+function k$2(t2, n2) {
+  I(t2, n2.length), s$1 > o.length - n2.length && (o = R(o, o.length + n2.length), r$1 = new DataView(o.buffer)), o.set(n2, s$1), s$1 += n2.length;
+}
+function T(t2, n2) {
+  I(t2, n2);
+}
+function ct(t2) {
+  T(c$3.UnsignedInteger, t2);
+}
+function ot(t2) {
+  T(
     c$3.NegativeInteger,
     typeof t2 == "bigint" ? -1n - t2 : -1 - t2
   );
 }
-function ot(t2) {
-  t2 >= 0 ? it(t2) : st(t2);
+function ft(t2) {
+  t2 >= 0 ? ct(t2) : ot(t2);
 }
-function z$1(t2) {
-  T(c$3.TextString, tt$1.encode(t2));
+function X$1(t2) {
+  k$2(c$3.TextString, v$2.encode(t2));
 }
-function m$2(t2) {
-  T(c$3.ByteString, t2);
+function V(t2) {
+  k$2(c$3.ByteString, t2);
 }
-function ft(t2, e3, n2) {
-  E(c$3.Tag, t2), _(e3, n2);
+function it(t2, n2, e3) {
+  I(c$3.Tag, t2), _(n2, e3);
 }
 function hasCborValueMethod(value) {
   return typeof value === "object" && value !== null && "toCborValue" in value;
 }
 function encode(value) {
   try {
-    return gt(value, (value2) => {
+    return dt(value, (value2) => {
       if (Principal$1.isPrincipal(value2)) {
         return value2.toUint8Array();
       }
@@ -6103,7 +6097,7 @@ function pprefix(hasEvenY) {
 function SWUFpSqrtRatio(Fp3, Z2) {
   const q2 = Fp3.ORDER;
   let l2 = _0n$4;
-  for (let o = q2 - _1n$5; o % _2n$5 === _0n$4; o /= _2n$5)
+  for (let o2 = q2 - _1n$5; o2 % _2n$5 === _0n$4; o2 /= _2n$5)
     l2 += _1n$5;
   const c1 = l2;
   const _2n_pow_c1_1 = _2n$5 << c1 - _1n$5 - _1n$5;
@@ -6164,8 +6158,8 @@ function SWUFpSqrtRatio(Fp3, Z2) {
 }
 function mapToCurveSimpleSWU(Fp3, opts) {
   validateField(Fp3);
-  const { A, B: B2, Z: Z2 } = opts;
-  if (!Fp3.isValid(A) || !Fp3.isValid(B2) || !Fp3.isValid(Z2))
+  const { A: A2, B: B2, Z: Z2 } = opts;
+  if (!Fp3.isValid(A2) || !Fp3.isValid(B2) || !Fp3.isValid(Z2))
     throw new Error("mapToCurveSimpleSWU: invalid opts");
   const sqrtRatio = SWUFpSqrtRatio(Fp3, Z2);
   if (!Fp3.isOdd)
@@ -6179,10 +6173,10 @@ function mapToCurveSimpleSWU(Fp3, opts) {
     tv3 = Fp3.add(tv2, Fp3.ONE);
     tv3 = Fp3.mul(tv3, B2);
     tv4 = Fp3.cmov(Z2, Fp3.neg(tv2), !Fp3.eql(tv2, Fp3.ZERO));
-    tv4 = Fp3.mul(tv4, A);
+    tv4 = Fp3.mul(tv4, A2);
     tv2 = Fp3.sqr(tv3);
     tv6 = Fp3.sqr(tv4);
-    tv5 = Fp3.mul(tv6, A);
+    tv5 = Fp3.mul(tv6, A2);
     tv2 = Fp3.add(tv2, tv5);
     tv2 = Fp3.mul(tv2, tv3);
     tv6 = Fp3.mul(tv6, tv4);
@@ -8595,12 +8589,12 @@ function edwards(params, extraOpts = {}) {
     double() {
       const { a: a2 } = CURVE;
       const { X: X1, Y: Y1, Z: Z1 } = this;
-      const A = modP(X1 * X1);
+      const A2 = modP(X1 * X1);
       const B2 = modP(Y1 * Y1);
       const C2 = modP(_2n$1 * modP(Z1 * Z1));
-      const D = modP(a2 * A);
+      const D = modP(a2 * A2);
       const x1y1 = X1 + Y1;
-      const E2 = modP(modP(x1y1 * x1y1) - A - B2);
+      const E2 = modP(modP(x1y1 * x1y1) - A2 - B2);
       const G2 = D + B2;
       const F2 = G2 - C2;
       const H2 = D - B2;
@@ -8618,14 +8612,14 @@ function edwards(params, extraOpts = {}) {
       const { a: a2, d: d2 } = CURVE;
       const { X: X1, Y: Y1, Z: Z1, T: T1 } = this;
       const { X: X2, Y: Y2, Z: Z2, T: T2 } = other;
-      const A = modP(X1 * X2);
+      const A2 = modP(X1 * X2);
       const B2 = modP(Y1 * Y2);
       const C2 = modP(T1 * d2 * T2);
       const D = modP(Z1 * Z2);
-      const E2 = modP((X1 + Y1) * (X2 + Y2) - A - B2);
+      const E2 = modP((X1 + Y1) * (X2 + Y2) - A2 - B2);
       const F2 = D - C2;
       const G2 = D + C2;
-      const H2 = modP(B2 - a2 * A);
+      const H2 = modP(B2 - a2 * A2);
       const X3 = modP(E2 * F2);
       const Y3 = modP(G2 * H2);
       const T3 = modP(E2 * H2);
@@ -8797,18 +8791,18 @@ function eddsa(Point, cHash, eddsaOpts = {}) {
     const mid = len / 2;
     const r2 = sig.subarray(0, mid);
     const s2 = bytesToNumberLE(sig.subarray(mid, len));
-    let A, R2, SB;
+    let A2, R2, SB;
     try {
-      A = Point.fromBytes(publicKey, zip215);
+      A2 = Point.fromBytes(publicKey, zip215);
       R2 = Point.fromBytes(r2, zip215);
       SB = BASE2.multiplyUnsafe(s2);
     } catch (error) {
       return false;
     }
-    if (!zip215 && A.isSmallOrder())
+    if (!zip215 && A2.isSmallOrder())
       return false;
-    const k2 = hashDomainToScalar(context, R2.toBytes(), A.toBytes(), msg);
-    const RkA = R2.add(A.multiplyUnsafe(k2));
+    const k2 = hashDomainToScalar(context, R2.toBytes(), A2.toBytes(), msg);
+    const RkA = R2.add(A2.multiplyUnsafe(k2));
     return RkA.subtract(SB).clearCofactor().is0();
   }
   const _size = Fp3.BYTES;
@@ -10744,13 +10738,16 @@ async function loadConfig() {
   if (configCache) {
     return configCache;
   }
-  const backendCanisterId = "rshnv-miaaa-aaaah-qqdva-cai";
+  const backendCanisterId = define_process_env_default.CANISTER_ID_BACKEND;
   const envBaseUrl = define_process_env_default.BASE_URL || "/";
   const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
   try {
     const response = await fetch(`${baseUrl}env.json`);
     const config2 = await response.json();
-    if (!backendCanisterId && config2.backend_canister_id === "undefined") ;
+    if (!backendCanisterId && config2.backend_canister_id === "undefined") {
+      console.error("CANISTER_ID_BACKEND is not set");
+      throw new Error("CANISTER_ID_BACKEND is not set");
+    }
     const fullConfig = {
       backend_host: config2.backend_host === "undefined" ? void 0 : config2.backend_host,
       backend_canister_id: config2.backend_canister_id === "undefined" ? backendCanisterId : config2.backend_canister_id,
@@ -10762,6 +10759,10 @@ async function loadConfig() {
     configCache = fullConfig;
     return fullConfig;
   } catch {
+    if (!backendCanisterId) {
+      console.error("CANISTER_ID_BACKEND is not set");
+      throw new Error("CANISTER_ID_BACKEND is not set");
+    }
     const fallbackConfig = {
       backend_host: void 0,
       backend_canister_id: backendCanisterId,
@@ -10920,8 +10921,8 @@ function timeUntilStale(updatedAt, staleTime) {
 function resolveStaleTime(staleTime, query) {
   return typeof staleTime === "function" ? staleTime(query) : staleTime;
 }
-function resolveQueryBoolean(option, query) {
-  return typeof option === "function" ? option(query) : option;
+function resolveEnabled(enabled, query) {
+  return typeof enabled === "function" ? enabled(query) : enabled;
 }
 function matchQuery(filters, query) {
   const {
@@ -11044,11 +11045,11 @@ function replaceEqualDeep(a2, b2, depth = 0) {
 function isPlainArray(value) {
   return Array.isArray(value) && value.length === Object.keys(value).length;
 }
-function isPlainObject$2(o) {
-  if (!hasObjectPrototype(o)) {
+function isPlainObject$2(o2) {
+  if (!hasObjectPrototype(o2)) {
     return false;
   }
-  const ctor = o.constructor;
+  const ctor = o2.constructor;
   if (ctor === void 0) {
     return true;
   }
@@ -11059,13 +11060,13 @@ function isPlainObject$2(o) {
   if (!prot.hasOwnProperty("isPrototypeOf")) {
     return false;
   }
-  if (Object.getPrototypeOf(o) !== Object.prototype) {
+  if (Object.getPrototypeOf(o2) !== Object.prototype) {
     return false;
   }
   return true;
 }
-function hasObjectPrototype(o) {
-  return Object.prototype.toString.call(o) === "[object Object]";
+function hasObjectPrototype(o2) {
+  return Object.prototype.toString.call(o2) === "[object Object]";
 }
 function sleep$2(timeout2) {
   return new Promise((resolve) => {
@@ -11441,120 +11442,16 @@ var Removable = (_e = class {
     );
   }
   clearGcTimeout() {
-    if (__privateGet(this, _gcTimeout) !== void 0) {
+    if (__privateGet(this, _gcTimeout)) {
       timeoutManager.clearTimeout(__privateGet(this, _gcTimeout));
       __privateSet(this, _gcTimeout, void 0);
     }
   }
 }, _gcTimeout = new WeakMap(), _e);
-function infiniteQueryBehavior(pages) {
-  return {
-    onFetch: (context, query) => {
-      var _a3, _b3, _c2, _d2, _e2;
-      const options = context.options;
-      const direction = (_c2 = (_b3 = (_a3 = context.fetchOptions) == null ? void 0 : _a3.meta) == null ? void 0 : _b3.fetchMore) == null ? void 0 : _c2.direction;
-      const oldPages = ((_d2 = context.state.data) == null ? void 0 : _d2.pages) || [];
-      const oldPageParams = ((_e2 = context.state.data) == null ? void 0 : _e2.pageParams) || [];
-      let result = { pages: [], pageParams: [] };
-      let currentPage = 0;
-      const fetchFn = async () => {
-        let cancelled = false;
-        const addSignalProperty = (object2) => {
-          addConsumeAwareSignal(
-            object2,
-            () => context.signal,
-            () => cancelled = true
-          );
-        };
-        const queryFn = ensureQueryFn(context.options, context.fetchOptions);
-        const fetchPage = async (data, param, previous) => {
-          if (cancelled) {
-            return Promise.reject(context.signal.reason);
-          }
-          if (param == null && data.pages.length) {
-            return Promise.resolve(data);
-          }
-          const createQueryFnContext = () => {
-            const queryFnContext2 = {
-              client: context.client,
-              queryKey: context.queryKey,
-              pageParam: param,
-              direction: previous ? "backward" : "forward",
-              meta: context.options.meta
-            };
-            addSignalProperty(queryFnContext2);
-            return queryFnContext2;
-          };
-          const queryFnContext = createQueryFnContext();
-          const page = await queryFn(queryFnContext);
-          const { maxPages } = context.options;
-          const addTo = previous ? addToStart : addToEnd;
-          return {
-            pages: addTo(data.pages, page, maxPages),
-            pageParams: addTo(data.pageParams, param, maxPages)
-          };
-        };
-        if (direction && oldPages.length) {
-          const previous = direction === "backward";
-          const pageParamFn = previous ? getPreviousPageParam : getNextPageParam;
-          const oldData = {
-            pages: oldPages,
-            pageParams: oldPageParams
-          };
-          const param = pageParamFn(options, oldData);
-          result = await fetchPage(oldData, param, previous);
-        } else {
-          const remainingPages = pages ?? oldPages.length;
-          do {
-            const param = currentPage === 0 ? oldPageParams[0] ?? options.initialPageParam : getNextPageParam(options, result);
-            if (currentPage > 0 && param == null) {
-              break;
-            }
-            result = await fetchPage(result, param);
-            currentPage++;
-          } while (currentPage < remainingPages);
-        }
-        return result;
-      };
-      if (context.options.persister) {
-        context.fetchFn = () => {
-          var _a4, _b4;
-          return (_b4 = (_a4 = context.options).persister) == null ? void 0 : _b4.call(
-            _a4,
-            fetchFn,
-            {
-              client: context.client,
-              queryKey: context.queryKey,
-              meta: context.options.meta,
-              signal: context.signal
-            },
-            query
-          );
-        };
-      } else {
-        context.fetchFn = fetchFn;
-      }
-    }
-  };
-}
-function getNextPageParam(options, { pages, pageParams }) {
-  const lastIndex = pages.length - 1;
-  return pages.length > 0 ? options.getNextPageParam(
-    pages[lastIndex],
-    pages,
-    pageParams[lastIndex],
-    pageParams
-  ) : void 0;
-}
-function getPreviousPageParam(options, { pages, pageParams }) {
-  var _a3;
-  return pages.length > 0 ? (_a3 = options.getPreviousPageParam) == null ? void 0 : _a3.call(options, pages[0], pages, pageParams[0], pageParams) : void 0;
-}
 var Query = (_f = class extends Removable {
   constructor(config2) {
     super();
     __privateAdd(this, _Query_instances);
-    __privateAdd(this, _queryType);
     __privateAdd(this, _initialState);
     __privateAdd(this, _revertState);
     __privateAdd(this, _cache);
@@ -11577,18 +11474,12 @@ var Query = (_f = class extends Removable {
   get meta() {
     return this.options.meta;
   }
-  get queryType() {
-    return __privateGet(this, _queryType);
-  }
   get promise() {
     var _a3;
     return (_a3 = __privateGet(this, _retryer)) == null ? void 0 : _a3.promise;
   }
   setOptions(options) {
     this.options = { ...__privateGet(this, _defaultOptions), ...options };
-    if (options == null ? void 0 : options._type) {
-      __privateSet(this, _queryType, options._type);
-    }
     this.updateGcTime(this.options.gcTime);
     if (this.state && this.state.data === void 0) {
       const defaultState = getDefaultState$1(this.options);
@@ -11615,8 +11506,8 @@ var Query = (_f = class extends Removable {
     });
     return data;
   }
-  setState(state) {
-    __privateMethod(this, _Query_instances, dispatch_fn).call(this, { type: "setState", state });
+  setState(state, setStateOptions) {
+    __privateMethod(this, _Query_instances, dispatch_fn).call(this, { type: "setState", state, setStateOptions });
   }
   cancel(options) {
     var _a3, _b3;
@@ -11637,7 +11528,7 @@ var Query = (_f = class extends Removable {
   }
   isActive() {
     return this.observers.some(
-      (observer) => resolveQueryBoolean(observer.options.enabled, this) !== false
+      (observer) => resolveEnabled(observer.options.enabled, this) !== false
     );
   }
   isDisabled() {
@@ -11721,7 +11612,7 @@ var Query = (_f = class extends Removable {
     }
   }
   async fetch(options, fetchOptions) {
-    var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k;
+    var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k, _l;
     if (this.state.fetchStatus !== "idle" && // If the promise in the retryer is already rejected, we have to definitely
     // re-start the fetch; there is a chance that the query is still in a
     // pending state when that happens
@@ -11787,13 +11678,10 @@ var Query = (_f = class extends Removable {
       return context2;
     };
     const context = createFetchContext();
-    const behavior = __privateGet(this, _queryType) === "infinite" ? infiniteQueryBehavior(
-      this.options.pages
-    ) : this.options.behavior;
-    behavior == null ? void 0 : behavior.onFetch(context, this);
+    (_b3 = this.options.behavior) == null ? void 0 : _b3.onFetch(context, this);
     __privateSet(this, _revertState, this.state);
-    if (this.state.fetchStatus === "idle" || this.state.fetchMeta !== ((_b3 = context.fetchOptions) == null ? void 0 : _b3.meta)) {
-      __privateMethod(this, _Query_instances, dispatch_fn).call(this, { type: "fetch", meta: (_c2 = context.fetchOptions) == null ? void 0 : _c2.meta });
+    if (this.state.fetchStatus === "idle" || this.state.fetchMeta !== ((_c2 = context.fetchOptions) == null ? void 0 : _c2.meta)) {
+      __privateMethod(this, _Query_instances, dispatch_fn).call(this, { type: "fetch", meta: (_d2 = context.fetchOptions) == null ? void 0 : _d2.meta });
     }
     __privateSet(this, _retryer, createRetryer({
       initialPromise: fetchOptions == null ? void 0 : fetchOptions.initialPromise,
@@ -11828,9 +11716,9 @@ var Query = (_f = class extends Removable {
         throw new Error(`${this.queryHash} data is undefined`);
       }
       this.setData(data);
-      (_e2 = (_d2 = __privateGet(this, _cache).config).onSuccess) == null ? void 0 : _e2.call(_d2, data, this);
-      (_g2 = (_f2 = __privateGet(this, _cache).config).onSettled) == null ? void 0 : _g2.call(
-        _f2,
+      (_f2 = (_e2 = __privateGet(this, _cache).config).onSuccess) == null ? void 0 : _f2.call(_e2, data, this);
+      (_h2 = (_g2 = __privateGet(this, _cache).config).onSettled) == null ? void 0 : _h2.call(
+        _g2,
         data,
         this.state.error,
         this
@@ -11851,13 +11739,13 @@ var Query = (_f = class extends Removable {
         type: "error",
         error
       });
-      (_i2 = (_h2 = __privateGet(this, _cache).config).onError) == null ? void 0 : _i2.call(
-        _h2,
+      (_j2 = (_i2 = __privateGet(this, _cache).config).onError) == null ? void 0 : _j2.call(
+        _i2,
         error,
         this
       );
-      (_k = (_j2 = __privateGet(this, _cache).config).onSettled) == null ? void 0 : _k.call(
-        _j2,
+      (_l = (_k = __privateGet(this, _cache).config).onSettled) == null ? void 0 : _l.call(
+        _k,
         this.state.data,
         error,
         this
@@ -11867,7 +11755,7 @@ var Query = (_f = class extends Removable {
       this.scheduleGc();
     }
   }
-}, _queryType = new WeakMap(), _initialState = new WeakMap(), _revertState = new WeakMap(), _cache = new WeakMap(), _client = new WeakMap(), _retryer = new WeakMap(), _defaultOptions = new WeakMap(), _abortSignalConsumed = new WeakMap(), _Query_instances = new WeakSet(), isInitialPausedFetch_fn = function() {
+}, _initialState = new WeakMap(), _revertState = new WeakMap(), _cache = new WeakMap(), _client = new WeakMap(), _retryer = new WeakMap(), _defaultOptions = new WeakMap(), _abortSignalConsumed = new WeakMap(), _Query_instances = new WeakSet(), isInitialPausedFetch_fn = function() {
   return this.state.fetchStatus === "paused" && this.state.status === "pending";
 }, dispatch_fn = function(action) {
   const reducer = (state) => {
@@ -11980,6 +11868,109 @@ function getDefaultState$1(options) {
     status: hasData ? "success" : "pending",
     fetchStatus: "idle"
   };
+}
+function infiniteQueryBehavior(pages) {
+  return {
+    onFetch: (context, query) => {
+      var _a3, _b3, _c2, _d2, _e2;
+      const options = context.options;
+      const direction = (_c2 = (_b3 = (_a3 = context.fetchOptions) == null ? void 0 : _a3.meta) == null ? void 0 : _b3.fetchMore) == null ? void 0 : _c2.direction;
+      const oldPages = ((_d2 = context.state.data) == null ? void 0 : _d2.pages) || [];
+      const oldPageParams = ((_e2 = context.state.data) == null ? void 0 : _e2.pageParams) || [];
+      let result = { pages: [], pageParams: [] };
+      let currentPage = 0;
+      const fetchFn = async () => {
+        let cancelled = false;
+        const addSignalProperty = (object2) => {
+          addConsumeAwareSignal(
+            object2,
+            () => context.signal,
+            () => cancelled = true
+          );
+        };
+        const queryFn = ensureQueryFn(context.options, context.fetchOptions);
+        const fetchPage = async (data, param, previous) => {
+          if (cancelled) {
+            return Promise.reject();
+          }
+          if (param == null && data.pages.length) {
+            return Promise.resolve(data);
+          }
+          const createQueryFnContext = () => {
+            const queryFnContext2 = {
+              client: context.client,
+              queryKey: context.queryKey,
+              pageParam: param,
+              direction: previous ? "backward" : "forward",
+              meta: context.options.meta
+            };
+            addSignalProperty(queryFnContext2);
+            return queryFnContext2;
+          };
+          const queryFnContext = createQueryFnContext();
+          const page = await queryFn(queryFnContext);
+          const { maxPages } = context.options;
+          const addTo = previous ? addToStart : addToEnd;
+          return {
+            pages: addTo(data.pages, page, maxPages),
+            pageParams: addTo(data.pageParams, param, maxPages)
+          };
+        };
+        if (direction && oldPages.length) {
+          const previous = direction === "backward";
+          const pageParamFn = previous ? getPreviousPageParam : getNextPageParam;
+          const oldData = {
+            pages: oldPages,
+            pageParams: oldPageParams
+          };
+          const param = pageParamFn(options, oldData);
+          result = await fetchPage(oldData, param, previous);
+        } else {
+          const remainingPages = pages ?? oldPages.length;
+          do {
+            const param = currentPage === 0 ? oldPageParams[0] ?? options.initialPageParam : getNextPageParam(options, result);
+            if (currentPage > 0 && param == null) {
+              break;
+            }
+            result = await fetchPage(result, param);
+            currentPage++;
+          } while (currentPage < remainingPages);
+        }
+        return result;
+      };
+      if (context.options.persister) {
+        context.fetchFn = () => {
+          var _a4, _b4;
+          return (_b4 = (_a4 = context.options).persister) == null ? void 0 : _b4.call(
+            _a4,
+            fetchFn,
+            {
+              client: context.client,
+              queryKey: context.queryKey,
+              meta: context.options.meta,
+              signal: context.signal
+            },
+            query
+          );
+        };
+      } else {
+        context.fetchFn = fetchFn;
+      }
+    }
+  };
+}
+function getNextPageParam(options, { pages, pageParams }) {
+  const lastIndex = pages.length - 1;
+  return pages.length > 0 ? options.getNextPageParam(
+    pages[lastIndex],
+    pages,
+    pageParams[lastIndex],
+    pageParams
+  ) : void 0;
+}
+function getPreviousPageParam(options, { pages, pageParams }) {
+  var _a3;
+  return pages.length > 0 ? (_a3 = options.getPreviousPageParam) == null ? void 0 : _a3.call(options, pages[0], pages, pageParams[0], pageParams) : void 0;
 }
 var Mutation = (_g = class extends Removable {
   constructor(config2) {
@@ -12651,14 +12642,14 @@ var QueryClient = (_j = class {
     return this.fetchQuery(options).then(noop$8).catch(noop$8);
   }
   fetchInfiniteQuery(options) {
-    options._type = "infinite";
+    options.behavior = infiniteQueryBehavior(options.pages);
     return this.fetchQuery(options);
   }
   prefetchInfiniteQuery(options) {
     return this.fetchInfiniteQuery(options).then(noop$8).catch(noop$8);
   }
   ensureInfiniteQueryData(options) {
-    options._type = "infinite";
+    options.behavior = infiniteQueryBehavior(options.pages);
     return this.ensureQueryData(options);
   }
   resumePausedMutations() {
@@ -13191,15 +13182,15 @@ react_production.useSyncExternalStore = function(subscribe, getSnapshot, getServ
 react_production.useTransition = function() {
   return ReactSharedInternals$2.H.useTransition();
 };
-react_production.version = "19.1.8";
+react_production.version = "19.1.5";
 {
   react.exports = react_production;
 }
 var reactExports = react.exports;
-const React$2 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
-const React$3 = /* @__PURE__ */ _mergeNamespaces({
+const React2 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+const React$2 = /* @__PURE__ */ _mergeNamespaces({
   __proto__: null,
-  default: React$2
+  default: React2
 }, [reactExports]);
 var QueryClientContext = reactExports.createContext(
   void 0
@@ -14666,7 +14657,7 @@ var scheduler_production = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-(function(exports) {
+(function(exports$1) {
   function push2(heap, node) {
     var index2 = heap.length;
     heap.push(node);
@@ -14700,15 +14691,15 @@ var scheduler_production = {};
     var diff = a2.sortIndex - b2.sortIndex;
     return 0 !== diff ? diff : a2.id - b2.id;
   }
-  exports.unstable_now = void 0;
+  exports$1.unstable_now = void 0;
   if ("object" === typeof performance && "function" === typeof performance.now) {
     var localPerformance = performance;
-    exports.unstable_now = function() {
+    exports$1.unstable_now = function() {
       return localPerformance.now();
     };
   } else {
     var localDate2 = Date, initialTime = localDate2.now();
-    exports.unstable_now = function() {
+    exports$1.unstable_now = function() {
       return localDate2.now() - initialTime;
     };
   }
@@ -14735,12 +14726,12 @@ var scheduler_production = {};
   }
   var isMessageLoopRunning = false, taskTimeoutID = -1, frameInterval = 5, startTime = -1;
   function shouldYieldToHost() {
-    return needsPaint ? true : exports.unstable_now() - startTime < frameInterval ? false : true;
+    return needsPaint ? true : exports$1.unstable_now() - startTime < frameInterval ? false : true;
   }
   function performWorkUntilDeadline() {
     needsPaint = false;
     if (isMessageLoopRunning) {
-      var currentTime = exports.unstable_now();
+      var currentTime = exports$1.unstable_now();
       startTime = currentTime;
       var hasMoreWork = true;
       try {
@@ -14760,7 +14751,7 @@ var scheduler_production = {};
                   var continuationCallback = callback(
                     currentTask.expirationTime <= currentTime
                   );
-                  currentTime = exports.unstable_now();
+                  currentTime = exports$1.unstable_now();
                   if ("function" === typeof continuationCallback) {
                     currentTask.callback = continuationCallback;
                     advanceTimers(currentTime);
@@ -14810,27 +14801,27 @@ var scheduler_production = {};
     };
   function requestHostTimeout(callback, ms) {
     taskTimeoutID = localSetTimeout(function() {
-      callback(exports.unstable_now());
+      callback(exports$1.unstable_now());
     }, ms);
   }
-  exports.unstable_IdlePriority = 5;
-  exports.unstable_ImmediatePriority = 1;
-  exports.unstable_LowPriority = 4;
-  exports.unstable_NormalPriority = 3;
-  exports.unstable_Profiling = null;
-  exports.unstable_UserBlockingPriority = 2;
-  exports.unstable_cancelCallback = function(task) {
+  exports$1.unstable_IdlePriority = 5;
+  exports$1.unstable_ImmediatePriority = 1;
+  exports$1.unstable_LowPriority = 4;
+  exports$1.unstable_NormalPriority = 3;
+  exports$1.unstable_Profiling = null;
+  exports$1.unstable_UserBlockingPriority = 2;
+  exports$1.unstable_cancelCallback = function(task) {
     task.callback = null;
   };
-  exports.unstable_forceFrameRate = function(fps) {
+  exports$1.unstable_forceFrameRate = function(fps) {
     0 > fps || 125 < fps ? console.error(
       "forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"
     ) : frameInterval = 0 < fps ? Math.floor(1e3 / fps) : 5;
   };
-  exports.unstable_getCurrentPriorityLevel = function() {
+  exports$1.unstable_getCurrentPriorityLevel = function() {
     return currentPriorityLevel;
   };
-  exports.unstable_next = function(eventHandler) {
+  exports$1.unstable_next = function(eventHandler) {
     switch (currentPriorityLevel) {
       case 1:
       case 2:
@@ -14848,10 +14839,10 @@ var scheduler_production = {};
       currentPriorityLevel = previousPriorityLevel;
     }
   };
-  exports.unstable_requestPaint = function() {
+  exports$1.unstable_requestPaint = function() {
     needsPaint = true;
   };
-  exports.unstable_runWithPriority = function(priorityLevel, eventHandler) {
+  exports$1.unstable_runWithPriority = function(priorityLevel, eventHandler) {
     switch (priorityLevel) {
       case 1:
       case 2:
@@ -14870,8 +14861,8 @@ var scheduler_production = {};
       currentPriorityLevel = previousPriorityLevel;
     }
   };
-  exports.unstable_scheduleCallback = function(priorityLevel, callback, options) {
-    var currentTime = exports.unstable_now();
+  exports$1.unstable_scheduleCallback = function(priorityLevel, callback, options) {
+    var currentTime = exports$1.unstable_now();
     "object" === typeof options && null !== options ? (options = options.delay, options = "number" === typeof options && 0 < options ? currentTime + options : currentTime) : options = currentTime;
     switch (priorityLevel) {
       case 1:
@@ -14901,8 +14892,8 @@ var scheduler_production = {};
     options > currentTime ? (priorityLevel.sortIndex = options, push2(timerQueue, priorityLevel), null === peek(taskQueue) && priorityLevel === peek(timerQueue) && (isHostTimeoutScheduled ? (localClearTimeout(taskTimeoutID), taskTimeoutID = -1) : isHostTimeoutScheduled = true, requestHostTimeout(handleTimeout, options - currentTime))) : (priorityLevel.sortIndex = timeout2, push2(taskQueue, priorityLevel), isHostCallbackScheduled || isPerformingWork || (isHostCallbackScheduled = true, isMessageLoopRunning || (isMessageLoopRunning = true, schedulePerformWorkUntilDeadline())));
     return priorityLevel;
   };
-  exports.unstable_shouldYield = shouldYieldToHost;
-  exports.unstable_wrapCallback = function(callback) {
+  exports$1.unstable_shouldYield = shouldYieldToHost;
+  exports$1.unstable_wrapCallback = function(callback) {
     var parentPriorityLevel = currentPriorityLevel;
     return function() {
       var previousPriorityLevel = currentPriorityLevel;
@@ -15070,7 +15061,7 @@ reactDom_production.useFormState = function(action, initialState, permalink) {
 reactDom_production.useFormStatus = function() {
   return ReactSharedInternals$1.H.useHostTransitionStatus();
 };
-reactDom_production.version = "19.1.8";
+reactDom_production.version = "19.1.5";
 function checkDCE$1() {
   if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
     return;
@@ -26051,12 +26042,12 @@ ReactDOMHydrationRoot.prototype.unstable_scheduleHydration = function(target) {
   }
 };
 var isomorphicReactPackageVersion$jscomp$inline_1785 = React.version;
-if ("19.1.8" !== isomorphicReactPackageVersion$jscomp$inline_1785)
+if ("19.1.5" !== isomorphicReactPackageVersion$jscomp$inline_1785)
   throw Error(
     formatProdErrorMessage(
       527,
       isomorphicReactPackageVersion$jscomp$inline_1785,
-      "19.1.8"
+      "19.1.5"
     )
   );
 ReactDOMSharedInternals.findDOMNode = function(componentOrElement) {
@@ -26074,10 +26065,10 @@ ReactDOMSharedInternals.findDOMNode = function(componentOrElement) {
 };
 var internals$jscomp$inline_2256 = {
   bundleType: 0,
-  version: "19.1.8",
+  version: "19.1.5",
   rendererPackageName: "react-dom",
   currentDispatcherRef: ReactSharedInternals,
-  reconcilerVersion: "19.1.8"
+  reconcilerVersion: "19.1.5"
 };
 if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
   var hook$jscomp$inline_2257 = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -26144,7 +26135,7 @@ reactDomClient_production.hydrateRoot = function(container, initialChildren, opt
   listenToAllSupportedEvents(container);
   return new ReactDOMHydrationRoot(initialChildren);
 };
-reactDomClient_production.version = "19.1.8";
+reactDomClient_production.version = "19.1.5";
 function checkDCE() {
   if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
     return;
@@ -26165,13 +26156,13 @@ function r(e3) {
   var t2, f2, n2 = "";
   if ("string" == typeof e3 || "number" == typeof e3) n2 += e3;
   else if ("object" == typeof e3) if (Array.isArray(e3)) {
-    var o = e3.length;
-    for (t2 = 0; t2 < o; t2++) e3[t2] && (f2 = r(e3[t2])) && (n2 && (n2 += " "), n2 += f2);
+    var o2 = e3.length;
+    for (t2 = 0; t2 < o2; t2++) e3[t2] && (f2 = r(e3[t2])) && (n2 && (n2 += " "), n2 += f2);
   } else for (f2 in e3) e3[f2] && (n2 && (n2 += " "), n2 += f2);
   return n2;
 }
 function clsx() {
-  for (var e3, t2, f2 = 0, n2 = "", o = arguments.length; f2 < o; f2++) (e3 = arguments[f2]) && (t2 = r(e3)) && (n2 && (n2 += " "), n2 += t2);
+  for (var e3, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e3 = arguments[f2]) && (t2 = r(e3)) && (n2 && (n2 += " "), n2 += t2);
   return n2;
 }
 const CLASS_PART_SEPARATOR = "-";
@@ -28725,10 +28716,10 @@ var jt = (n2) => {
     default:
       return null;
   }
-}, te = Array(12).fill(0), Yt = ({ visible: n2, className: e3 }) => React$2.createElement("div", { className: ["sonner-loading-wrapper", e3].filter(Boolean).join(" "), "data-visible": n2 }, React$2.createElement("div", { className: "sonner-spinner" }, te.map((t2, a2) => React$2.createElement("div", { className: "sonner-loading-bar", key: `spinner-bar-${a2}` })))), ee = React$2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", height: "20", width: "20" }, React$2.createElement("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z", clipRule: "evenodd" })), oe = React$2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", height: "20", width: "20" }, React$2.createElement("path", { fillRule: "evenodd", d: "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z", clipRule: "evenodd" })), ae = React$2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", height: "20", width: "20" }, React$2.createElement("path", { fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z", clipRule: "evenodd" })), se = React$2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", height: "20", width: "20" }, React$2.createElement("path", { fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z", clipRule: "evenodd" })), Ot = React$2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }, React$2.createElement("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), React$2.createElement("line", { x1: "6", y1: "6", x2: "18", y2: "18" }));
+}, te = Array(12).fill(0), Yt = ({ visible: n2, className: e3 }) => React2.createElement("div", { className: ["sonner-loading-wrapper", e3].filter(Boolean).join(" "), "data-visible": n2 }, React2.createElement("div", { className: "sonner-spinner" }, te.map((t2, a2) => React2.createElement("div", { className: "sonner-loading-bar", key: `spinner-bar-${a2}` })))), ee = React2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", height: "20", width: "20" }, React2.createElement("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z", clipRule: "evenodd" })), oe = React2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", height: "20", width: "20" }, React2.createElement("path", { fillRule: "evenodd", d: "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z", clipRule: "evenodd" })), ae = React2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", height: "20", width: "20" }, React2.createElement("path", { fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z", clipRule: "evenodd" })), se = React2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", fill: "currentColor", height: "20", width: "20" }, React2.createElement("path", { fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z", clipRule: "evenodd" })), Ot = React2.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }, React2.createElement("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), React2.createElement("line", { x1: "6", y1: "6", x2: "18", y2: "18" }));
 var Ft = () => {
-  let [n2, e3] = React$2.useState(document.hidden);
-  return React$2.useEffect(() => {
+  let [n2, e3] = React2.useState(document.hidden);
+  return React2.useEffect(() => {
     let t2 = () => {
       e3(document.hidden);
     };
@@ -28766,7 +28757,7 @@ var bt = 1, yt = class {
       let a2;
       t2.loading !== void 0 && (a2 = this.create({ ...t2, promise: e3, type: "loading", message: t2.loading, description: typeof t2.description != "function" ? t2.description : void 0 }));
       let u2 = e3 instanceof Promise ? e3 : e3(), f2 = a2 !== void 0, w2, S2 = u2.then(async (i) => {
-        if (w2 = ["resolve", i], React$2.isValidElement(i)) f2 = false, this.create({ id: a2, type: "default", message: i });
+        if (w2 = ["resolve", i], React2.isValidElement(i)) f2 = false, this.create({ id: a2, type: "default", message: i });
         else if (ie(i) && !i.ok) {
           f2 = false;
           let T2 = typeof t2.error == "function" ? await t2.error(`HTTP error! status: ${i.status}`) : t2.error, F2 = typeof t2.description == "function" ? await t2.description(`HTTP error! status: ${i.status}`) : t2.description;
@@ -28819,55 +28810,55 @@ function xe(n2) {
 }
 var ve = (n2) => {
   var Dt, Pt, Nt, Bt, Ct, kt, It, Mt, Ht, At, Lt;
-  let { invert: e3, toast: t2, unstyled: a2, interacting: u2, setHeights: f2, visibleToasts: w2, heights: S2, index: g2, toasts: i, expanded: D, removeToast: T2, defaultRichColors: F2, closeButton: et2, style: ut2, cancelButtonStyle: ft2, actionButtonStyle: l2, className: ot2 = "", descriptionClassName: at = "", duration: X2, position: st2, gap: pt, loadingIcon: rt2, expandByDefault: B2, classNames: s2, icons: P2, closeButtonAriaLabel: nt2 = "Close toast", pauseWhenPageIsHidden: it2 } = n2, [Y2, C2] = React$2.useState(null), [lt, J2] = React$2.useState(null), [W2, H2] = React$2.useState(false), [A, mt] = React$2.useState(false), [L2, z2] = React$2.useState(false), [ct2, d2] = React$2.useState(false), [h2, y2] = React$2.useState(false), [R2, j2] = React$2.useState(0), [p2, _2] = React$2.useState(0), O2 = React$2.useRef(t2.duration || X2 || Wt), G2 = React$2.useRef(null), k2 = React$2.useRef(null), Vt = g2 === 0, Ut = g2 + 1 <= w2, N2 = t2.type, V2 = t2.dismissible !== false, Kt = t2.className || "", Xt = t2.descriptionClassName || "", dt = React$2.useMemo(() => S2.findIndex((r2) => r2.toastId === t2.id) || 0, [S2, t2.id]), Jt = React$2.useMemo(() => {
+  let { invert: e3, toast: t2, unstyled: a2, interacting: u2, setHeights: f2, visibleToasts: w2, heights: S2, index: g2, toasts: i, expanded: D, removeToast: T2, defaultRichColors: F2, closeButton: et2, style: ut2, cancelButtonStyle: ft2, actionButtonStyle: l2, className: ot2 = "", descriptionClassName: at = "", duration: X2, position: st2, gap: pt, loadingIcon: rt, expandByDefault: B2, classNames: s2, icons: P2, closeButtonAriaLabel: nt2 = "Close toast", pauseWhenPageIsHidden: it2 } = n2, [Y2, C2] = React2.useState(null), [lt, J2] = React2.useState(null), [W2, H2] = React2.useState(false), [A2, mt] = React2.useState(false), [L2, z2] = React2.useState(false), [ct2, d2] = React2.useState(false), [h2, y2] = React2.useState(false), [R2, j2] = React2.useState(0), [p2, _2] = React2.useState(0), O2 = React2.useRef(t2.duration || X2 || Wt), G2 = React2.useRef(null), k2 = React2.useRef(null), Vt = g2 === 0, Ut = g2 + 1 <= w2, N2 = t2.type, V2 = t2.dismissible !== false, Kt = t2.className || "", Xt = t2.descriptionClassName || "", dt2 = React2.useMemo(() => S2.findIndex((r2) => r2.toastId === t2.id) || 0, [S2, t2.id]), Jt = React2.useMemo(() => {
     var r2;
     return (r2 = t2.closeButton) != null ? r2 : et2;
-  }, [t2.closeButton, et2]), Tt = React$2.useMemo(() => t2.duration || X2 || Wt, [t2.duration, X2]), gt2 = React$2.useRef(0), U2 = React$2.useRef(0), St = React$2.useRef(0), K2 = React$2.useRef(null), [Gt, Qt] = st2.split("-"), Rt = React$2.useMemo(() => S2.reduce((r2, m2, c2) => c2 >= dt ? r2 : r2 + m2.height, 0), [S2, dt]), Et = Ft(), qt = t2.invert || e3, ht = N2 === "loading";
-  U2.current = React$2.useMemo(() => dt * pt + Rt, [dt, Rt]), React$2.useEffect(() => {
+  }, [t2.closeButton, et2]), Tt = React2.useMemo(() => t2.duration || X2 || Wt, [t2.duration, X2]), gt = React2.useRef(0), U2 = React2.useRef(0), St = React2.useRef(0), K2 = React2.useRef(null), [Gt, Qt] = st2.split("-"), Rt = React2.useMemo(() => S2.reduce((r2, m2, c2) => c2 >= dt2 ? r2 : r2 + m2.height, 0), [S2, dt2]), Et = Ft(), qt = t2.invert || e3, ht = N2 === "loading";
+  U2.current = React2.useMemo(() => dt2 * pt + Rt, [dt2, Rt]), React2.useEffect(() => {
     O2.current = Tt;
-  }, [Tt]), React$2.useEffect(() => {
+  }, [Tt]), React2.useEffect(() => {
     H2(true);
-  }, []), React$2.useEffect(() => {
+  }, []), React2.useEffect(() => {
     let r2 = k2.current;
     if (r2) {
       let m2 = r2.getBoundingClientRect().height;
       return _2(m2), f2((c2) => [{ toastId: t2.id, height: m2, position: t2.position }, ...c2]), () => f2((c2) => c2.filter((b2) => b2.toastId !== t2.id));
     }
-  }, [f2, t2.id]), React$2.useLayoutEffect(() => {
+  }, [f2, t2.id]), React2.useLayoutEffect(() => {
     if (!W2) return;
     let r2 = k2.current, m2 = r2.style.height;
     r2.style.height = "auto";
     let c2 = r2.getBoundingClientRect().height;
     r2.style.height = m2, _2(c2), f2((b2) => b2.find((x3) => x3.toastId === t2.id) ? b2.map((x3) => x3.toastId === t2.id ? { ...x3, height: c2 } : x3) : [{ toastId: t2.id, height: c2, position: t2.position }, ...b2]);
   }, [W2, t2.title, t2.description, f2, t2.id]);
-  let $2 = React$2.useCallback(() => {
+  let $2 = React2.useCallback(() => {
     mt(true), j2(U2.current), f2((r2) => r2.filter((m2) => m2.toastId !== t2.id)), setTimeout(() => {
       T2(t2);
     }, we);
   }, [t2, T2, f2, U2]);
-  React$2.useEffect(() => {
+  React2.useEffect(() => {
     if (t2.promise && N2 === "loading" || t2.duration === 1 / 0 || t2.type === "loading") return;
     let r2;
     return D || u2 || it2 && Et ? (() => {
-      if (St.current < gt2.current) {
-        let b2 = (/* @__PURE__ */ new Date()).getTime() - gt2.current;
+      if (St.current < gt.current) {
+        let b2 = (/* @__PURE__ */ new Date()).getTime() - gt.current;
         O2.current = O2.current - b2;
       }
       St.current = (/* @__PURE__ */ new Date()).getTime();
     })() : (() => {
-      O2.current !== 1 / 0 && (gt2.current = (/* @__PURE__ */ new Date()).getTime(), r2 = setTimeout(() => {
+      O2.current !== 1 / 0 && (gt.current = (/* @__PURE__ */ new Date()).getTime(), r2 = setTimeout(() => {
         var b2;
         (b2 = t2.onAutoClose) == null || b2.call(t2, t2), $2();
       }, O2.current));
     })(), () => clearTimeout(r2);
-  }, [D, u2, t2, N2, it2, Et, $2]), React$2.useEffect(() => {
+  }, [D, u2, t2, N2, it2, Et, $2]), React2.useEffect(() => {
     t2.delete && $2();
   }, [$2, t2.delete]);
   function Zt() {
     var r2, m2, c2;
-    return P2 != null && P2.loading ? React$2.createElement("div", { className: M(s2 == null ? void 0 : s2.loader, (r2 = t2 == null ? void 0 : t2.classNames) == null ? void 0 : r2.loader, "sonner-loader"), "data-visible": N2 === "loading" }, P2.loading) : rt2 ? React$2.createElement("div", { className: M(s2 == null ? void 0 : s2.loader, (m2 = t2 == null ? void 0 : t2.classNames) == null ? void 0 : m2.loader, "sonner-loader"), "data-visible": N2 === "loading" }, rt2) : React$2.createElement(Yt, { className: M(s2 == null ? void 0 : s2.loader, (c2 = t2 == null ? void 0 : t2.classNames) == null ? void 0 : c2.loader), visible: N2 === "loading" });
+    return P2 != null && P2.loading ? React2.createElement("div", { className: M(s2 == null ? void 0 : s2.loader, (r2 = t2 == null ? void 0 : t2.classNames) == null ? void 0 : r2.loader, "sonner-loader"), "data-visible": N2 === "loading" }, P2.loading) : rt ? React2.createElement("div", { className: M(s2 == null ? void 0 : s2.loader, (m2 = t2 == null ? void 0 : t2.classNames) == null ? void 0 : m2.loader, "sonner-loader"), "data-visible": N2 === "loading" }, rt) : React2.createElement(Yt, { className: M(s2 == null ? void 0 : s2.loader, (c2 = t2 == null ? void 0 : t2.classNames) == null ? void 0 : c2.loader), visible: N2 === "loading" });
   }
-  return React$2.createElement("li", { tabIndex: 0, ref: k2, className: M(ot2, Kt, s2 == null ? void 0 : s2.toast, (Dt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Dt.toast, s2 == null ? void 0 : s2.default, s2 == null ? void 0 : s2[N2], (Pt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Pt[N2]), "data-sonner-toast": "", "data-rich-colors": (Nt = t2.richColors) != null ? Nt : F2, "data-styled": !(t2.jsx || t2.unstyled || a2), "data-mounted": W2, "data-promise": !!t2.promise, "data-swiped": h2, "data-removed": A, "data-visible": Ut, "data-y-position": Gt, "data-x-position": Qt, "data-index": g2, "data-front": Vt, "data-swiping": L2, "data-dismissible": V2, "data-type": N2, "data-invert": qt, "data-swipe-out": ct2, "data-swipe-direction": lt, "data-expanded": !!(D || B2 && W2), style: { "--index": g2, "--toasts-before": g2, "--z-index": i.length - g2, "--offset": `${A ? R2 : U2.current}px`, "--initial-height": B2 ? "auto" : `${p2}px`, ...ut2, ...t2.style }, onDragEnd: () => {
+  return React2.createElement("li", { tabIndex: 0, ref: k2, className: M(ot2, Kt, s2 == null ? void 0 : s2.toast, (Dt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Dt.toast, s2 == null ? void 0 : s2.default, s2 == null ? void 0 : s2[N2], (Pt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Pt[N2]), "data-sonner-toast": "", "data-rich-colors": (Nt = t2.richColors) != null ? Nt : F2, "data-styled": !(t2.jsx || t2.unstyled || a2), "data-mounted": W2, "data-promise": !!t2.promise, "data-swiped": h2, "data-removed": A2, "data-visible": Ut, "data-y-position": Gt, "data-x-position": Qt, "data-index": g2, "data-front": Vt, "data-swiping": L2, "data-dismissible": V2, "data-type": N2, "data-invert": qt, "data-swipe-out": ct2, "data-swipe-direction": lt, "data-expanded": !!(D || B2 && W2), style: { "--index": g2, "--toasts-before": g2, "--z-index": i.length - g2, "--offset": `${A2 ? R2 : U2.current}px`, "--initial-height": B2 ? "auto" : `${p2}px`, ...ut2, ...t2.style }, onDragEnd: () => {
     z2(false), C2(null), K2.current = null;
   }, onPointerDown: (r2) => {
     ht || !V2 || (G2.current = /* @__PURE__ */ new Date(), j2(U2.current), r2.target.setPointerCapture(r2.pointerId), r2.target.tagName !== "BUTTON" && (z2(true), K2.current = { x: r2.clientX, y: r2.clientY }));
@@ -28875,8 +28866,8 @@ var ve = (n2) => {
     var x3, Q2, q2, Z2;
     if (ct2 || !V2) return;
     K2.current = null;
-    let r2 = Number(((x3 = k2.current) == null ? void 0 : x3.style.getPropertyValue("--swipe-amount-x").replace("px", "")) || 0), m2 = Number(((Q2 = k2.current) == null ? void 0 : Q2.style.getPropertyValue("--swipe-amount-y").replace("px", "")) || 0), c2 = (/* @__PURE__ */ new Date()).getTime() - ((q2 = G2.current) == null ? void 0 : q2.getTime()), b2 = Y2 === "x" ? r2 : m2, I = Math.abs(b2) / c2;
-    if (Math.abs(b2) >= ye || I > 0.11) {
+    let r2 = Number(((x3 = k2.current) == null ? void 0 : x3.style.getPropertyValue("--swipe-amount-x").replace("px", "")) || 0), m2 = Number(((Q2 = k2.current) == null ? void 0 : Q2.style.getPropertyValue("--swipe-amount-y").replace("px", "")) || 0), c2 = (/* @__PURE__ */ new Date()).getTime() - ((q2 = G2.current) == null ? void 0 : q2.getTime()), b2 = Y2 === "x" ? r2 : m2, I2 = Math.abs(b2) / c2;
+    if (Math.abs(b2) >= ye || I2 > 0.11) {
       j2(U2.current), (Z2 = t2.onDismiss) == null || Z2.call(t2, t2), J2(Y2 === "x" ? r2 > 0 ? "right" : "left" : m2 > 0 ? "down" : "up"), $2(), d2(true), y2(false);
       return;
     }
@@ -28884,18 +28875,18 @@ var ve = (n2) => {
   }, onPointerMove: (r2) => {
     var Q2, q2, Z2, zt;
     if (!K2.current || !V2 || ((Q2 = window.getSelection()) == null ? void 0 : Q2.toString().length) > 0) return;
-    let c2 = r2.clientY - K2.current.y, b2 = r2.clientX - K2.current.x, I = (q2 = n2.swipeDirections) != null ? q2 : xe(st2);
+    let c2 = r2.clientY - K2.current.y, b2 = r2.clientX - K2.current.x, I2 = (q2 = n2.swipeDirections) != null ? q2 : xe(st2);
     !Y2 && (Math.abs(b2) > 1 || Math.abs(c2) > 1) && C2(Math.abs(b2) > Math.abs(c2) ? "x" : "y");
     let x3 = { x: 0, y: 0 };
-    Y2 === "y" ? (I.includes("top") || I.includes("bottom")) && (I.includes("top") && c2 < 0 || I.includes("bottom") && c2 > 0) && (x3.y = c2) : Y2 === "x" && (I.includes("left") || I.includes("right")) && (I.includes("left") && b2 < 0 || I.includes("right") && b2 > 0) && (x3.x = b2), (Math.abs(x3.x) > 0 || Math.abs(x3.y) > 0) && y2(true), (Z2 = k2.current) == null || Z2.style.setProperty("--swipe-amount-x", `${x3.x}px`), (zt = k2.current) == null || zt.style.setProperty("--swipe-amount-y", `${x3.y}px`);
-  } }, Jt && !t2.jsx ? React$2.createElement("button", { "aria-label": nt2, "data-disabled": ht, "data-close-button": true, onClick: ht || !V2 ? () => {
+    Y2 === "y" ? (I2.includes("top") || I2.includes("bottom")) && (I2.includes("top") && c2 < 0 || I2.includes("bottom") && c2 > 0) && (x3.y = c2) : Y2 === "x" && (I2.includes("left") || I2.includes("right")) && (I2.includes("left") && b2 < 0 || I2.includes("right") && b2 > 0) && (x3.x = b2), (Math.abs(x3.x) > 0 || Math.abs(x3.y) > 0) && y2(true), (Z2 = k2.current) == null || Z2.style.setProperty("--swipe-amount-x", `${x3.x}px`), (zt = k2.current) == null || zt.style.setProperty("--swipe-amount-y", `${x3.y}px`);
+  } }, Jt && !t2.jsx ? React2.createElement("button", { "aria-label": nt2, "data-disabled": ht, "data-close-button": true, onClick: ht || !V2 ? () => {
   } : () => {
     var r2;
     $2(), (r2 = t2.onDismiss) == null || r2.call(t2, t2);
-  }, className: M(s2 == null ? void 0 : s2.closeButton, (Bt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Bt.closeButton) }, (Ct = P2 == null ? void 0 : P2.close) != null ? Ct : Ot) : null, t2.jsx || reactExports.isValidElement(t2.title) ? t2.jsx ? t2.jsx : typeof t2.title == "function" ? t2.title() : t2.title : React$2.createElement(React$2.Fragment, null, N2 || t2.icon || t2.promise ? React$2.createElement("div", { "data-icon": "", className: M(s2 == null ? void 0 : s2.icon, (kt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : kt.icon) }, t2.promise || t2.type === "loading" && !t2.icon ? t2.icon || Zt() : null, t2.type !== "loading" ? t2.icon || (P2 == null ? void 0 : P2[N2]) || jt(N2) : null) : null, React$2.createElement("div", { "data-content": "", className: M(s2 == null ? void 0 : s2.content, (It = t2 == null ? void 0 : t2.classNames) == null ? void 0 : It.content) }, React$2.createElement("div", { "data-title": "", className: M(s2 == null ? void 0 : s2.title, (Mt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Mt.title) }, typeof t2.title == "function" ? t2.title() : t2.title), t2.description ? React$2.createElement("div", { "data-description": "", className: M(at, Xt, s2 == null ? void 0 : s2.description, (Ht = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Ht.description) }, typeof t2.description == "function" ? t2.description() : t2.description) : null), reactExports.isValidElement(t2.cancel) ? t2.cancel : t2.cancel && tt(t2.cancel) ? React$2.createElement("button", { "data-button": true, "data-cancel": true, style: t2.cancelButtonStyle || ft2, onClick: (r2) => {
+  }, className: M(s2 == null ? void 0 : s2.closeButton, (Bt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Bt.closeButton) }, (Ct = P2 == null ? void 0 : P2.close) != null ? Ct : Ot) : null, t2.jsx || reactExports.isValidElement(t2.title) ? t2.jsx ? t2.jsx : typeof t2.title == "function" ? t2.title() : t2.title : React2.createElement(React2.Fragment, null, N2 || t2.icon || t2.promise ? React2.createElement("div", { "data-icon": "", className: M(s2 == null ? void 0 : s2.icon, (kt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : kt.icon) }, t2.promise || t2.type === "loading" && !t2.icon ? t2.icon || Zt() : null, t2.type !== "loading" ? t2.icon || (P2 == null ? void 0 : P2[N2]) || jt(N2) : null) : null, React2.createElement("div", { "data-content": "", className: M(s2 == null ? void 0 : s2.content, (It = t2 == null ? void 0 : t2.classNames) == null ? void 0 : It.content) }, React2.createElement("div", { "data-title": "", className: M(s2 == null ? void 0 : s2.title, (Mt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Mt.title) }, typeof t2.title == "function" ? t2.title() : t2.title), t2.description ? React2.createElement("div", { "data-description": "", className: M(at, Xt, s2 == null ? void 0 : s2.description, (Ht = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Ht.description) }, typeof t2.description == "function" ? t2.description() : t2.description) : null), reactExports.isValidElement(t2.cancel) ? t2.cancel : t2.cancel && tt(t2.cancel) ? React2.createElement("button", { "data-button": true, "data-cancel": true, style: t2.cancelButtonStyle || ft2, onClick: (r2) => {
     var m2, c2;
     tt(t2.cancel) && V2 && ((c2 = (m2 = t2.cancel).onClick) == null || c2.call(m2, r2), $2());
-  }, className: M(s2 == null ? void 0 : s2.cancelButton, (At = t2 == null ? void 0 : t2.classNames) == null ? void 0 : At.cancelButton) }, t2.cancel.label) : null, reactExports.isValidElement(t2.action) ? t2.action : t2.action && tt(t2.action) ? React$2.createElement("button", { "data-button": true, "data-action": true, style: t2.actionButtonStyle || l2, onClick: (r2) => {
+  }, className: M(s2 == null ? void 0 : s2.cancelButton, (At = t2 == null ? void 0 : t2.classNames) == null ? void 0 : At.cancelButton) }, t2.cancel.label) : null, reactExports.isValidElement(t2.action) ? t2.action : t2.action && tt(t2.action) ? React2.createElement("button", { "data-button": true, "data-action": true, style: t2.actionButtonStyle || l2, onClick: (r2) => {
     var m2, c2;
     tt(t2.action) && ((c2 = (m2 = t2.action).onClick) == null || c2.call(m2, r2), !r2.defaultPrevented && $2());
   }, className: M(s2 == null ? void 0 : s2.actionButton, (Lt = t2 == null ? void 0 : t2.classNames) == null ? void 0 : Lt.actionButton) }, t2.action.label) : null));
@@ -28920,13 +28911,13 @@ function Te(n2, e3) {
   }), t2;
 }
 var $e = reactExports.forwardRef(function(e3, t2) {
-  let { invert: a2, position: u2 = "bottom-right", hotkey: f2 = ["altKey", "KeyT"], expand: w2, closeButton: S2, className: g2, offset: i, mobileOffset: D, theme: T2 = "light", richColors: F2, duration: et2, style: ut2, visibleToasts: ft2 = pe, toastOptions: l2, dir: ot2 = _t(), gap: at = be, loadingIcon: X2, icons: st2, containerAriaLabel: pt = "Notifications", pauseWhenPageIsHidden: rt2 } = e3, [B2, s2] = React$2.useState([]), P2 = React$2.useMemo(() => Array.from(new Set([u2].concat(B2.filter((d2) => d2.position).map((d2) => d2.position)))), [B2, u2]), [nt2, it2] = React$2.useState([]), [Y2, C2] = React$2.useState(false), [lt, J2] = React$2.useState(false), [W2, H2] = React$2.useState(T2 !== "system" ? T2 : typeof window != "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"), A = React$2.useRef(null), mt = f2.join("+").replace(/Key/g, "").replace(/Digit/g, ""), L2 = React$2.useRef(null), z2 = React$2.useRef(false), ct2 = React$2.useCallback((d2) => {
+  let { invert: a2, position: u2 = "bottom-right", hotkey: f2 = ["altKey", "KeyT"], expand: w2, closeButton: S2, className: g2, offset: i, mobileOffset: D, theme: T2 = "light", richColors: F2, duration: et2, style: ut2, visibleToasts: ft2 = pe, toastOptions: l2, dir: ot2 = _t(), gap: at = be, loadingIcon: X2, icons: st2, containerAriaLabel: pt = "Notifications", pauseWhenPageIsHidden: rt } = e3, [B2, s2] = React2.useState([]), P2 = React2.useMemo(() => Array.from(new Set([u2].concat(B2.filter((d2) => d2.position).map((d2) => d2.position)))), [B2, u2]), [nt2, it2] = React2.useState([]), [Y2, C2] = React2.useState(false), [lt, J2] = React2.useState(false), [W2, H2] = React2.useState(T2 !== "system" ? T2 : typeof window != "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"), A2 = React2.useRef(null), mt = f2.join("+").replace(/Key/g, "").replace(/Digit/g, ""), L2 = React2.useRef(null), z2 = React2.useRef(false), ct2 = React2.useCallback((d2) => {
     s2((h2) => {
       var y2;
       return (y2 = h2.find((R2) => R2.id === d2.id)) != null && y2.delete || v$1.dismiss(d2.id), h2.filter(({ id: R2 }) => R2 !== d2.id);
     });
   }, []);
-  return React$2.useEffect(() => v$1.subscribe((d2) => {
+  return React2.useEffect(() => v$1.subscribe((d2) => {
     if (d2.dismiss) {
       s2((h2) => h2.map((y2) => y2.id === d2.id ? { ...y2, delete: true } : y2));
       return;
@@ -28939,7 +28930,7 @@ var $e = reactExports.forwardRef(function(e3, t2) {
         });
       });
     });
-  }), []), React$2.useEffect(() => {
+  }), []), React2.useEffect(() => {
     if (T2 !== "system") {
       H2(T2);
       return;
@@ -28959,22 +28950,22 @@ var $e = reactExports.forwardRef(function(e3, t2) {
         }
       });
     }
-  }, [T2]), React$2.useEffect(() => {
+  }, [T2]), React2.useEffect(() => {
     B2.length <= 1 && C2(false);
-  }, [B2]), React$2.useEffect(() => {
+  }, [B2]), React2.useEffect(() => {
     let d2 = (h2) => {
       var R2, j2;
-      f2.every((p2) => h2[p2] || h2.code === p2) && (C2(true), (R2 = A.current) == null || R2.focus()), h2.code === "Escape" && (document.activeElement === A.current || (j2 = A.current) != null && j2.contains(document.activeElement)) && C2(false);
+      f2.every((p2) => h2[p2] || h2.code === p2) && (C2(true), (R2 = A2.current) == null || R2.focus()), h2.code === "Escape" && (document.activeElement === A2.current || (j2 = A2.current) != null && j2.contains(document.activeElement)) && C2(false);
     };
     return document.addEventListener("keydown", d2), () => document.removeEventListener("keydown", d2);
-  }, [f2]), React$2.useEffect(() => {
-    if (A.current) return () => {
+  }, [f2]), React2.useEffect(() => {
+    if (A2.current) return () => {
       L2.current && (L2.current.focus({ preventScroll: true }), L2.current = null, z2.current = false);
     };
-  }, [A.current]), React$2.createElement("section", { ref: t2, "aria-label": `${pt} ${mt}`, tabIndex: -1, "aria-live": "polite", "aria-relevant": "additions text", "aria-atomic": "false", suppressHydrationWarning: true }, P2.map((d2, h2) => {
+  }, [A2.current]), React2.createElement("section", { ref: t2, "aria-label": `${pt} ${mt}`, tabIndex: -1, "aria-live": "polite", "aria-relevant": "additions text", "aria-atomic": "false", suppressHydrationWarning: true }, P2.map((d2, h2) => {
     var j2;
     let [y2, R2] = d2.split("-");
-    return B2.length ? React$2.createElement("ol", { key: d2, dir: ot2 === "auto" ? _t() : ot2, tabIndex: -1, ref: A, className: g2, "data-sonner-toaster": true, "data-theme": W2, "data-y-position": y2, "data-lifted": Y2 && B2.length > 1 && !w2, "data-x-position": R2, style: { "--front-toast-height": `${((j2 = nt2[0]) == null ? void 0 : j2.height) || 0}px`, "--width": `${he}px`, "--gap": `${at}px`, ...ut2, ...Te(i, D) }, onBlur: (p2) => {
+    return B2.length ? React2.createElement("ol", { key: d2, dir: ot2 === "auto" ? _t() : ot2, tabIndex: -1, ref: A2, className: g2, "data-sonner-toaster": true, "data-theme": W2, "data-y-position": y2, "data-lifted": Y2 && B2.length > 1 && !w2, "data-x-position": R2, style: { "--front-toast-height": `${((j2 = nt2[0]) == null ? void 0 : j2.height) || 0}px`, "--width": `${he}px`, "--gap": `${at}px`, ...ut2, ...Te(i, D) }, onBlur: (p2) => {
       z2.current && !p2.currentTarget.contains(p2.relatedTarget) && (z2.current = false, L2.current && (L2.current.focus({ preventScroll: true }), L2.current = null));
     }, onFocus: (p2) => {
       p2.target instanceof HTMLElement && p2.target.dataset.dismissible === "false" || z2.current || (z2.current = true, L2.current = p2.relatedTarget);
@@ -28984,7 +28975,7 @@ var $e = reactExports.forwardRef(function(e3, t2) {
       p2.target instanceof HTMLElement && p2.target.dataset.dismissible === "false" || J2(true);
     }, onPointerUp: () => J2(false) }, B2.filter((p2) => !p2.position && h2 === 0 || p2.position === d2).map((p2, _2) => {
       var O2, G2;
-      return React$2.createElement(ve, { key: p2.id, icons: st2, index: _2, toast: p2, defaultRichColors: F2, duration: (O2 = l2 == null ? void 0 : l2.duration) != null ? O2 : et2, className: l2 == null ? void 0 : l2.className, descriptionClassName: l2 == null ? void 0 : l2.descriptionClassName, invert: a2, visibleToasts: ft2, closeButton: (G2 = l2 == null ? void 0 : l2.closeButton) != null ? G2 : S2, interacting: lt, position: d2, style: l2 == null ? void 0 : l2.style, unstyled: l2 == null ? void 0 : l2.unstyled, classNames: l2 == null ? void 0 : l2.classNames, cancelButtonStyle: l2 == null ? void 0 : l2.cancelButtonStyle, actionButtonStyle: l2 == null ? void 0 : l2.actionButtonStyle, removeToast: ct2, toasts: B2.filter((k2) => k2.position == p2.position), heights: nt2.filter((k2) => k2.position == p2.position), setHeights: it2, expandByDefault: w2, gap: at, loadingIcon: X2, expanded: Y2, pauseWhenPageIsHidden: rt2, swipeDirections: e3.swipeDirections });
+      return React2.createElement(ve, { key: p2.id, icons: st2, index: _2, toast: p2, defaultRichColors: F2, duration: (O2 = l2 == null ? void 0 : l2.duration) != null ? O2 : et2, className: l2 == null ? void 0 : l2.className, descriptionClassName: l2 == null ? void 0 : l2.descriptionClassName, invert: a2, visibleToasts: ft2, closeButton: (G2 = l2 == null ? void 0 : l2.closeButton) != null ? G2 : S2, interacting: lt, position: d2, style: l2 == null ? void 0 : l2.style, unstyled: l2 == null ? void 0 : l2.unstyled, classNames: l2 == null ? void 0 : l2.classNames, cancelButtonStyle: l2 == null ? void 0 : l2.cancelButtonStyle, actionButtonStyle: l2 == null ? void 0 : l2.actionButtonStyle, removeToast: ct2, toasts: B2.filter((k2) => k2.position == p2.position), heights: nt2.filter((k2) => k2.position == p2.position), setHeights: it2, expandByDefault: w2, gap: at, loadingIcon: X2, expanded: Y2, pauseWhenPageIsHidden: rt, swipeDirections: e3.swipeDirections });
     })) : null;
   }));
 });
@@ -29052,7 +29043,7 @@ var defaultAttributes = {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const Icon = reactExports.forwardRef(
+const Icon$1 = reactExports.forwardRef(
   ({
     color: color2 = "currentColor",
     size: size2 = 24,
@@ -29089,7 +29080,7 @@ const Icon = reactExports.forwardRef(
  */
 const createLucideIcon = (iconName, iconNode) => {
   const Component2 = reactExports.forwardRef(
-    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
+    ({ className, ...props }, ref) => reactExports.createElement(Icon$1, {
       ref,
       iconNode,
       className: mergeClasses(
@@ -29537,15 +29528,15 @@ var isObject_1 = isObject$7;
 const isObject$8 = /* @__PURE__ */ getDefaultExportFromCjs(isObject_1);
 var baseGetTag$7 = _baseGetTag, isObject$6 = isObject_1;
 var asyncTag = "[object AsyncFunction]", funcTag$1 = "[object Function]", genTag = "[object GeneratorFunction]", proxyTag = "[object Proxy]";
-function isFunction$4(value) {
+function isFunction$3(value) {
   if (!isObject$6(value)) {
     return false;
   }
   var tag = baseGetTag$7(value);
   return tag == funcTag$1 || tag == genTag || tag == asyncTag || tag == proxyTag;
 }
-var isFunction_1 = isFunction$4;
-const isFunction$5 = /* @__PURE__ */ getDefaultExportFromCjs(isFunction_1);
+var isFunction_1 = isFunction$3;
+const isFunction$4 = /* @__PURE__ */ getDefaultExportFromCjs(isFunction_1);
 var root$8 = _root;
 var coreJsData$1 = root$8["__core-js_shared__"];
 var _coreJsData = coreJsData$1;
@@ -29574,7 +29565,7 @@ function toSource$2(func) {
   return "";
 }
 var _toSource = toSource$2;
-var isFunction$3 = isFunction_1, isMasked = _isMasked, isObject$5 = isObject_1, toSource$1 = _toSource;
+var isFunction$2 = isFunction_1, isMasked = _isMasked, isObject$5 = isObject_1, toSource$1 = _toSource;
 var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
 var funcProto$1 = Function.prototype, objectProto$a = Object.prototype;
@@ -29587,7 +29578,7 @@ function baseIsNative$1(value) {
   if (!isObject$5(value) || isMasked(value)) {
     return false;
   }
-  var pattern = isFunction$3(value) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction$2(value) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource$1(value));
 }
 var _baseIsNative = baseIsNative$1;
@@ -30157,13 +30148,13 @@ function shallowEqual(a2, b2) {
   }
   return true;
 }
-function _typeof$L(o) {
+function _typeof$L(o2) {
   "@babel/helpers - typeof";
-  return _typeof$L = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$L(o);
+  return _typeof$L = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$L(o2);
 }
 var SVGContainerPropKeys = ["viewBox", "children"];
 var SVGElementPropKeys = [
@@ -30551,13 +30542,13 @@ function _objectWithoutPropertiesLoose$j(source, excluded) {
   }
   return target;
 }
-function _typeof$K(o) {
+function _typeof$K(o2) {
   "@babel/helpers - typeof";
-  return _typeof$K = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$K(o);
+  return _typeof$K = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$K(o2);
 }
 var REACT_BROWSER_EVENT_MAP = {
   click: "onClick",
@@ -30645,7 +30636,7 @@ var hasClipDot = function hasClipDot2(dot) {
 var isValidSpreadableProp = function isValidSpreadableProp2(property2, key, includeEvents, svgElementType) {
   var _FilteredElementKeyMa;
   var matchingElementTypeKeys = (_FilteredElementKeyMa = FilteredElementKeyMap === null || FilteredElementKeyMap === void 0 ? void 0 : FilteredElementKeyMap[svgElementType]) !== null && _FilteredElementKeyMa !== void 0 ? _FilteredElementKeyMa : [];
-  return key.startsWith("data-") || !isFunction$5(property2) && (svgElementType && matchingElementTypeKeys.includes(key) || SVGElementPropKeys.includes(key)) || includeEvents && EventKeys.includes(key);
+  return key.startsWith("data-") || !isFunction$4(property2) && (svgElementType && matchingElementTypeKeys.includes(key) || SVGElementPropKeys.includes(key)) || includeEvents && EventKeys.includes(key);
 };
 var filterProps = function filterProps2(props, includeEvents, svgElementType) {
   if (!props || typeof props === "function" || typeof props === "boolean") {
@@ -30789,13 +30780,13 @@ function Surface(props) {
     y: 0
   };
   var layerClass = clsx("recharts-surface", className);
-  return /* @__PURE__ */ React$2.createElement("svg", _extends$u({}, filterProps(others, true, "svg"), {
+  return /* @__PURE__ */ React2.createElement("svg", _extends$u({}, filterProps(others, true, "svg"), {
     className: layerClass,
     width,
     height,
     style: style2,
     viewBox: "".concat(svgView.x, " ").concat(svgView.y, " ").concat(svgView.width, " ").concat(svgView.height)
-  }), /* @__PURE__ */ React$2.createElement("title", null, title), /* @__PURE__ */ React$2.createElement("desc", null, desc), children2);
+  }), /* @__PURE__ */ React2.createElement("title", null, title), /* @__PURE__ */ React2.createElement("desc", null, desc), children2);
 }
 var _excluded$h = ["children", "className"];
 function _extends$t() {
@@ -30838,10 +30829,10 @@ function _objectWithoutPropertiesLoose$h(source, excluded) {
   }
   return target;
 }
-var Layer = /* @__PURE__ */ React$2.forwardRef(function(props, ref) {
+var Layer = /* @__PURE__ */ React2.forwardRef(function(props, ref) {
   var children2 = props.children, className = props.className, others = _objectWithoutProperties$h(props, _excluded$h);
   var layerClass = clsx("recharts-layer", className);
-  return /* @__PURE__ */ React$2.createElement("g", _extends$t({
+  return /* @__PURE__ */ React2.createElement("g", _extends$t({
     className: layerClass
   }, filterProps(others, true), {
     ref
@@ -31732,9 +31723,9 @@ function stackOffsetNone(series, order) {
   }
 }
 function stackOrderNone(series) {
-  var n2 = series.length, o = new Array(n2);
-  while (--n2 >= 0) o[n2] = n2;
-  return o;
+  var n2 = series.length, o2 = new Array(n2);
+  while (--n2 >= 0) o2[n2] = n2;
+  return o2;
 }
 function stackValue(d2, key) {
   return d2[key];
@@ -31806,13 +31797,13 @@ function stackOffsetWiggle(series, order) {
   s0[j2 - 1][1] += s0[j2 - 1][0] = y2;
   stackOffsetNone(series, order);
 }
-function _typeof$J(o) {
+function _typeof$J(o2) {
   "@babel/helpers - typeof";
-  return _typeof$J = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$J(o);
+  return _typeof$J = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$J(o2);
 }
 var _excluded$g = ["type", "size", "sizeType"];
 function _extends$s() {
@@ -31832,10 +31823,10 @@ function _extends$s() {
 function ownKeys$C(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -31954,7 +31945,7 @@ var Symbols = function Symbols2(_ref) {
   var className = props.className, cx2 = props.cx, cy = props.cy;
   var filteredProps = filterProps(props, true);
   if (cx2 === +cx2 && cy === +cy && size2 === +size2) {
-    return /* @__PURE__ */ React$2.createElement("path", _extends$s({}, filteredProps, {
+    return /* @__PURE__ */ React2.createElement("path", _extends$s({}, filteredProps, {
       className: clsx("recharts-symbols", className),
       transform: "translate(".concat(cx2, ", ").concat(cy, ")"),
       d: getPath4()
@@ -31963,13 +31954,13 @@ var Symbols = function Symbols2(_ref) {
   return null;
 };
 Symbols.registerSymbol = registerSymbol;
-function _typeof$I(o) {
+function _typeof$I(o2) {
   "@babel/helpers - typeof";
-  return _typeof$I = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$I(o);
+  return _typeof$I = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$I(o2);
 }
 function _extends$r() {
   _extends$r = Object.assign ? Object.assign.bind() : function(target) {
@@ -31988,10 +31979,10 @@ function _extends$r() {
 function ownKeys$B(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -32025,8 +32016,8 @@ function _createClass$l(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$h(t2, o, e3) {
-  return o = _getPrototypeOf$i(o), _possibleConstructorReturn$i(t2, _isNativeReflectConstruct$i() ? Reflect.construct(o, e3 || [], _getPrototypeOf$i(t2).constructor) : o.apply(t2, e3));
+function _callSuper$h(t2, o2, e3) {
+  return o2 = _getPrototypeOf$i(o2), _possibleConstructorReturn$i(t2, _isNativeReflectConstruct$i() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$i(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$i(self2, call) {
   if (call && (_typeof$I(call) === "object" || typeof call === "function")) {
@@ -32052,11 +32043,11 @@ function _isNativeReflectConstruct$i() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$i(o) {
-  _getPrototypeOf$i = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$i(o2) {
+  _getPrototypeOf$i = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$i(o);
+  return _getPrototypeOf$i(o2);
 }
 function _inherits$i(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -32066,12 +32057,12 @@ function _inherits$i(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$i(subClass, superClass);
 }
-function _setPrototypeOf$i(o, p2) {
-  _setPrototypeOf$i = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$i(o2, p2) {
+  _setPrototypeOf$i = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$i(o, p2);
+  return _setPrototypeOf$i(o2, p2);
 }
 function _defineProperty$H(obj, key, value) {
   key = _toPropertyKey$H(key);
@@ -32118,7 +32109,7 @@ var DefaultLegendContent = /* @__PURE__ */ function(_PureComponent) {
         var thirdSize = SIZE / 3;
         var color2 = data.inactive ? inactiveColor : data.color;
         if (data.type === "plainline") {
-          return /* @__PURE__ */ React$2.createElement("line", {
+          return /* @__PURE__ */ React2.createElement("line", {
             strokeWidth: 4,
             fill: "none",
             stroke: color2,
@@ -32131,7 +32122,7 @@ var DefaultLegendContent = /* @__PURE__ */ function(_PureComponent) {
           });
         }
         if (data.type === "line") {
-          return /* @__PURE__ */ React$2.createElement("path", {
+          return /* @__PURE__ */ React2.createElement("path", {
             strokeWidth: 4,
             fill: "none",
             stroke: color2,
@@ -32140,19 +32131,19 @@ var DefaultLegendContent = /* @__PURE__ */ function(_PureComponent) {
           });
         }
         if (data.type === "rect") {
-          return /* @__PURE__ */ React$2.createElement("path", {
+          return /* @__PURE__ */ React2.createElement("path", {
             stroke: "none",
             fill: color2,
             d: "M0,".concat(SIZE / 8, "h").concat(SIZE, "v").concat(SIZE * 3 / 4, "h").concat(-SIZE, "z"),
             className: "recharts-legend-icon"
           });
         }
-        if (/* @__PURE__ */ React$2.isValidElement(data.legendIcon)) {
+        if (/* @__PURE__ */ React2.isValidElement(data.legendIcon)) {
           var iconProps = _objectSpread$B({}, data);
           delete iconProps.legendIcon;
-          return /* @__PURE__ */ React$2.cloneElement(data.legendIcon, iconProps);
+          return /* @__PURE__ */ React2.cloneElement(data.legendIcon, iconProps);
         }
-        return /* @__PURE__ */ React$2.createElement(Symbols, {
+        return /* @__PURE__ */ React2.createElement(Symbols, {
           fill: color2,
           cx: halfSize,
           cy: halfSize,
@@ -32194,23 +32185,23 @@ var DefaultLegendContent = /* @__PURE__ */ function(_PureComponent) {
         if (entry.type === "none") {
           return null;
         }
-        var entryValue = !isFunction$5(entry.value) ? entry.value : null;
+        var entryValue = !isFunction$4(entry.value) ? entry.value : null;
         warn(
-          !isFunction$5(entry.value),
+          !isFunction$4(entry.value),
           `The name property is also required when using a function for the dataKey of a chart's cartesian components. Ex: <Bar name="Name of my Data"/>`
           // eslint-disable-line max-len
         );
         var color2 = entry.inactive ? inactiveColor : entry.color;
-        return /* @__PURE__ */ React$2.createElement("li", _extends$r({
+        return /* @__PURE__ */ React2.createElement("li", _extends$r({
           className,
           style: itemStyle,
           key: "legend-item-".concat(i)
-        }, adaptEventsOfChild(_this.props, entry, i)), /* @__PURE__ */ React$2.createElement(Surface, {
+        }, adaptEventsOfChild(_this.props, entry, i)), /* @__PURE__ */ React2.createElement(Surface, {
           width: iconSize,
           height: iconSize,
           viewBox,
           style: svgStyle
-        }, _this.renderIcon(entry)), /* @__PURE__ */ React$2.createElement("span", {
+        }, _this.renderIcon(entry)), /* @__PURE__ */ React2.createElement("span", {
           className: "recharts-legend-item-text",
           style: {
             color: color2
@@ -32230,7 +32221,7 @@ var DefaultLegendContent = /* @__PURE__ */ function(_PureComponent) {
         margin: 0,
         textAlign: layout === "horizontal" ? align : "left"
       };
-      return /* @__PURE__ */ React$2.createElement("ul", {
+      return /* @__PURE__ */ React2.createElement("ul", {
         className: "recharts-default-legend",
         style: finalStyle
       }, this.renderItems());
@@ -32519,9 +32510,9 @@ function stubFalse() {
 }
 var stubFalse_1 = stubFalse;
 isBuffer$2.exports;
-(function(module, exports) {
+(function(module, exports$1) {
   var root2 = _root, stubFalse2 = stubFalse_1;
-  var freeExports = exports && !exports.nodeType && exports;
+  var freeExports = exports$1 && !exports$1.nodeType && exports$1;
   var freeModule = freeExports && true && module && !module.nodeType && module;
   var moduleExports = freeModule && freeModule.exports === freeExports;
   var Buffer2 = moduleExports ? root2.Buffer : void 0;
@@ -32561,9 +32552,9 @@ function baseUnary$2(func) {
 var _baseUnary = baseUnary$2;
 var _nodeUtil = { exports: {} };
 _nodeUtil.exports;
-(function(module, exports) {
+(function(module, exports$1) {
   var freeGlobal2 = _freeGlobal;
-  var freeExports = exports && !exports.nodeType && exports;
+  var freeExports = exports$1 && !exports$1.nodeType && exports$1;
   var freeModule = freeExports && true && module && !module.nodeType && module;
   var moduleExports = freeModule && freeModule.exports === freeExports;
   var freeProcess = moduleExports && freeGlobal2.process;
@@ -32632,9 +32623,9 @@ function baseKeys$1(object2) {
   return result;
 }
 var _baseKeys = baseKeys$1;
-var isFunction$2 = isFunction_1, isLength$1 = isLength_1;
+var isFunction$1 = isFunction_1, isLength$1 = isLength_1;
 function isArrayLike$5(value) {
-  return value != null && isLength$1(value.length) && !isFunction$2(value);
+  return value != null && isLength$1(value.length) && !isFunction$1(value);
 }
 var isArrayLike_1 = isArrayLike$5;
 var arrayLikeKeys = _arrayLikeKeys, baseKeys = _baseKeys, isArrayLike$4 = isArrayLike_1;
@@ -33031,27 +33022,27 @@ function getUniqPayload(payload, option, defaultUniqBy2) {
   if (option === true) {
     return uniqBy$1(payload, defaultUniqBy2);
   }
-  if (isFunction$5(option)) {
+  if (isFunction$4(option)) {
     return uniqBy$1(payload, option);
   }
   return payload;
 }
-function _typeof$H(o) {
+function _typeof$H(o2) {
   "@babel/helpers - typeof";
-  return _typeof$H = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$H(o);
+  return _typeof$H = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$H(o2);
 }
 var _excluded$f = ["ref"];
 function ownKeys$A(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -33086,8 +33077,8 @@ function _createClass$k(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$g(t2, o, e3) {
-  return o = _getPrototypeOf$h(o), _possibleConstructorReturn$h(t2, _isNativeReflectConstruct$h() ? Reflect.construct(o, e3 || [], _getPrototypeOf$h(t2).constructor) : o.apply(t2, e3));
+function _callSuper$g(t2, o2, e3) {
+  return o2 = _getPrototypeOf$h(o2), _possibleConstructorReturn$h(t2, _isNativeReflectConstruct$h() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$h(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$h(self2, call) {
   if (call && (_typeof$H(call) === "object" || typeof call === "function")) {
@@ -33113,11 +33104,11 @@ function _isNativeReflectConstruct$h() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$h(o) {
-  _getPrototypeOf$h = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$h(o2) {
+  _getPrototypeOf$h = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$h(o);
+  return _getPrototypeOf$h(o2);
 }
 function _inherits$h(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -33127,12 +33118,12 @@ function _inherits$h(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$h(subClass, superClass);
 }
-function _setPrototypeOf$h(o, p2) {
-  _setPrototypeOf$h = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$h(o2, p2) {
+  _setPrototypeOf$h = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$h(o, p2);
+  return _setPrototypeOf$h(o2, p2);
 }
 function _defineProperty$G(obj, key, value) {
   key = _toPropertyKey$G(key);
@@ -33187,15 +33178,15 @@ function defaultUniqBy$1(entry) {
   return entry.value;
 }
 function renderContent$1(content, props) {
-  if (/* @__PURE__ */ React$2.isValidElement(content)) {
-    return /* @__PURE__ */ React$2.cloneElement(content, props);
+  if (/* @__PURE__ */ React2.isValidElement(content)) {
+    return /* @__PURE__ */ React2.cloneElement(content, props);
   }
   if (typeof content === "function") {
-    return /* @__PURE__ */ React$2.createElement(content, props);
+    return /* @__PURE__ */ React2.createElement(content, props);
   }
   props.ref;
   var otherProps = _objectWithoutProperties$f(props, _excluded$f);
-  return /* @__PURE__ */ React$2.createElement(DefaultLegendContent, otherProps);
+  return /* @__PURE__ */ React2.createElement(DefaultLegendContent, otherProps);
 }
 var EPS$1 = 1;
 var Legend = /* @__PURE__ */ function(_PureComponent) {
@@ -33311,7 +33302,7 @@ var Legend = /* @__PURE__ */ function(_PureComponent) {
         width: width || "auto",
         height: height || "auto"
       }, this.getDefaultPosition(wrapperStyle)), wrapperStyle);
-      return /* @__PURE__ */ React$2.createElement("div", {
+      return /* @__PURE__ */ React2.createElement("div", {
         className: "recharts-legend-wrapper",
         style: outerStyle,
         ref: function ref(node) {
@@ -33603,13 +33594,13 @@ var sortBy = baseRest(function(collection, iteratees) {
 });
 var sortBy_1 = sortBy;
 const sortBy$1 = /* @__PURE__ */ getDefaultExportFromCjs(sortBy_1);
-function _typeof$G(o) {
+function _typeof$G(o2) {
   "@babel/helpers - typeof";
-  return _typeof$G = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$G(o);
+  return _typeof$G = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$G(o2);
 }
 function _extends$q() {
   _extends$q = Object.assign ? Object.assign.bind() : function(target) {
@@ -33631,13 +33622,13 @@ function _slicedToArray$c(arr, i) {
 function _nonIterableRest$d() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$l(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$l(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$l(o, minLen);
+function _unsupportedIterableToArray$l(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$l(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$l(o2, minLen);
 }
 function _arrayLikeToArray$l(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -33647,17 +33638,17 @@ function _arrayLikeToArray$l(arr, len) {
 function _iterableToArrayLimit$c(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -33669,10 +33660,10 @@ function _arrayWithHoles$d(arr) {
 function ownKeys$z(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -33747,22 +33738,22 @@ var DefaultTooltipContent = function DefaultTooltipContent2(props) {
         }
         return (
           // eslint-disable-next-line react/no-array-index-key
-          /* @__PURE__ */ React$2.createElement("li", {
+          /* @__PURE__ */ React2.createElement("li", {
             className: "recharts-tooltip-item",
             key: "tooltip-item-".concat(i),
             style: finalItemStyle
-          }, isNumOrStr(finalName) ? /* @__PURE__ */ React$2.createElement("span", {
+          }, isNumOrStr(finalName) ? /* @__PURE__ */ React2.createElement("span", {
             className: "recharts-tooltip-item-name"
-          }, finalName) : null, isNumOrStr(finalName) ? /* @__PURE__ */ React$2.createElement("span", {
+          }, finalName) : null, isNumOrStr(finalName) ? /* @__PURE__ */ React2.createElement("span", {
             className: "recharts-tooltip-item-separator"
-          }, separator) : null, /* @__PURE__ */ React$2.createElement("span", {
+          }, separator) : null, /* @__PURE__ */ React2.createElement("span", {
             className: "recharts-tooltip-item-value"
-          }, finalValue), /* @__PURE__ */ React$2.createElement("span", {
+          }, finalValue), /* @__PURE__ */ React2.createElement("span", {
             className: "recharts-tooltip-item-unit"
           }, entry.unit || ""))
         );
       });
-      return /* @__PURE__ */ React$2.createElement("ul", {
+      return /* @__PURE__ */ React2.createElement("ul", {
         className: "recharts-tooltip-item-list",
         style: listStyle
       }, items);
@@ -33790,21 +33781,21 @@ var DefaultTooltipContent = function DefaultTooltipContent2(props) {
     role: "status",
     "aria-live": "assertive"
   } : {};
-  return /* @__PURE__ */ React$2.createElement("div", _extends$q({
+  return /* @__PURE__ */ React2.createElement("div", _extends$q({
     className: wrapperCN,
     style: finalStyle
-  }, accessibilityAttributes), /* @__PURE__ */ React$2.createElement("p", {
+  }, accessibilityAttributes), /* @__PURE__ */ React2.createElement("p", {
     className: labelCN,
     style: finalLabelStyle
-  }, /* @__PURE__ */ React$2.isValidElement(finalLabel) ? finalLabel : "".concat(finalLabel)), renderContent2());
+  }, /* @__PURE__ */ React2.isValidElement(finalLabel) ? finalLabel : "".concat(finalLabel)), renderContent2());
 };
-function _typeof$F(o) {
+function _typeof$F(o2) {
   "@babel/helpers - typeof";
-  return _typeof$F = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$F(o);
+  return _typeof$F = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$F(o2);
 }
 function _defineProperty$D(obj, key, value) {
   key = _toPropertyKey$E(key);
@@ -33911,21 +33902,21 @@ function getTooltipTranslate(_ref4) {
     })
   };
 }
-function _typeof$E(o) {
+function _typeof$E(o2) {
   "@babel/helpers - typeof";
-  return _typeof$E = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$E(o);
+  return _typeof$E = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$E(o2);
 }
 function ownKeys$y(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -33959,8 +33950,8 @@ function _createClass$j(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$f(t2, o, e3) {
-  return o = _getPrototypeOf$g(o), _possibleConstructorReturn$g(t2, _isNativeReflectConstruct$g() ? Reflect.construct(o, e3 || [], _getPrototypeOf$g(t2).constructor) : o.apply(t2, e3));
+function _callSuper$f(t2, o2, e3) {
+  return o2 = _getPrototypeOf$g(o2), _possibleConstructorReturn$g(t2, _isNativeReflectConstruct$g() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$g(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$g(self2, call) {
   if (call && (_typeof$E(call) === "object" || typeof call === "function")) {
@@ -33986,11 +33977,11 @@ function _isNativeReflectConstruct$g() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$g(o) {
-  _getPrototypeOf$g = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$g(o2) {
+  _getPrototypeOf$g = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$g(o);
+  return _getPrototypeOf$g(o2);
 }
 function _inherits$g(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -34000,12 +33991,12 @@ function _inherits$g(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$g(subClass, superClass);
 }
-function _setPrototypeOf$g(o, p2) {
-  _setPrototypeOf$g = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$g(o2, p2) {
+  _setPrototypeOf$g = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$g(o, p2);
+  return _setPrototypeOf$g(o2, p2);
 }
 function _defineProperty$C(obj, key, value) {
   key = _toPropertyKey$D(key);
@@ -34139,7 +34130,7 @@ var TooltipBoundingBox = /* @__PURE__ */ function(_PureComponent) {
       return (
         // This element allow listening to the `Escape` key.
         // See https://github.com/recharts/recharts/pull/2925
-        /* @__PURE__ */ React$2.createElement("div", {
+        /* @__PURE__ */ React2.createElement("div", {
           tabIndex: -1,
           className: cssClasses,
           style: outerStyle,
@@ -34157,21 +34148,21 @@ var parseIsSsrByDefault = function parseIsSsrByDefault2() {
 var Global = {
   isSsr: parseIsSsrByDefault()
 };
-function _typeof$D(o) {
+function _typeof$D(o2) {
   "@babel/helpers - typeof";
-  return _typeof$D = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$D(o);
+  return _typeof$D = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$D(o2);
 }
 function ownKeys$x(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -34205,8 +34196,8 @@ function _createClass$i(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$e(t2, o, e3) {
-  return o = _getPrototypeOf$f(o), _possibleConstructorReturn$f(t2, _isNativeReflectConstruct$f() ? Reflect.construct(o, e3 || [], _getPrototypeOf$f(t2).constructor) : o.apply(t2, e3));
+function _callSuper$e(t2, o2, e3) {
+  return o2 = _getPrototypeOf$f(o2), _possibleConstructorReturn$f(t2, _isNativeReflectConstruct$f() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$f(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$f(self2, call) {
   if (call && (_typeof$D(call) === "object" || typeof call === "function")) {
@@ -34232,11 +34223,11 @@ function _isNativeReflectConstruct$f() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$f(o) {
-  _getPrototypeOf$f = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$f(o2) {
+  _getPrototypeOf$f = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$f(o);
+  return _getPrototypeOf$f(o2);
 }
 function _inherits$f(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -34246,12 +34237,12 @@ function _inherits$f(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$f(subClass, superClass);
 }
-function _setPrototypeOf$f(o, p2) {
-  _setPrototypeOf$f = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$f(o2, p2) {
+  _setPrototypeOf$f = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$f(o, p2);
+  return _setPrototypeOf$f(o2, p2);
 }
 function _defineProperty$B(obj, key, value) {
   key = _toPropertyKey$C(key);
@@ -34280,13 +34271,13 @@ function defaultUniqBy(entry) {
   return entry.dataKey;
 }
 function renderContent(content, props) {
-  if (/* @__PURE__ */ React$2.isValidElement(content)) {
-    return /* @__PURE__ */ React$2.cloneElement(content, props);
+  if (/* @__PURE__ */ React2.isValidElement(content)) {
+    return /* @__PURE__ */ React2.cloneElement(content, props);
   }
   if (typeof content === "function") {
-    return /* @__PURE__ */ React$2.createElement(content, props);
+    return /* @__PURE__ */ React2.createElement(content, props);
   }
-  return /* @__PURE__ */ React$2.createElement(DefaultTooltipContent, props);
+  return /* @__PURE__ */ React2.createElement(DefaultTooltipContent, props);
 }
 var Tooltip = /* @__PURE__ */ function(_PureComponent) {
   function Tooltip2() {
@@ -34306,7 +34297,7 @@ var Tooltip = /* @__PURE__ */ function(_PureComponent) {
         }), payloadUniqBy, defaultUniqBy);
       }
       var hasPayload = finalPayload.length > 0;
-      return /* @__PURE__ */ React$2.createElement(TooltipBoundingBox, {
+      return /* @__PURE__ */ React2.createElement(TooltipBoundingBox, {
         allowEscapeViewBox,
         animationDuration,
         animationEasing,
@@ -34510,21 +34501,21 @@ function throttle(func, wait, options) {
 }
 var throttle_1 = throttle;
 const throttle$1 = /* @__PURE__ */ getDefaultExportFromCjs(throttle_1);
-function _typeof$C(o) {
+function _typeof$C(o2) {
   "@babel/helpers - typeof";
-  return _typeof$C = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$C(o);
+  return _typeof$C = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$C(o2);
 }
 function ownKeys$w(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -34568,13 +34559,13 @@ function _slicedToArray$b(arr, i) {
 function _nonIterableRest$c() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$k(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$k(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$k(o, minLen);
+function _unsupportedIterableToArray$k(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$k(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$k(o2, minLen);
 }
 function _arrayLikeToArray$k(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -34584,17 +34575,17 @@ function _arrayLikeToArray$k(arr, len) {
 function _iterableToArrayLimit$b(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -34679,8 +34670,8 @@ var ResponsiveContainer = /* @__PURE__ */ reactExports.forwardRef(function(_ref,
     }
     warn(calculatedWidth > 0 || calculatedHeight > 0, "The width(%s) and height(%s) of chart should be greater than 0,\n       please check the style of container, or the props width(%s) and height(%s),\n       or add a minWidth(%s) or minHeight(%s) or use aspect(%s) to control the\n       height and width.", calculatedWidth, calculatedHeight, width, height, minWidth, minHeight, aspect);
     var isCharts = !Array.isArray(children2) && getDisplayName(children2.type).endsWith("Chart");
-    return React$2.Children.map(children2, function(child) {
-      if (/* @__PURE__ */ React$2.isValidElement(child)) {
+    return React2.Children.map(children2, function(child) {
+      if (/* @__PURE__ */ React2.isValidElement(child)) {
         return /* @__PURE__ */ reactExports.cloneElement(child, _objectSpread$w({
           width: calculatedWidth,
           height: calculatedHeight
@@ -34696,7 +34687,7 @@ var ResponsiveContainer = /* @__PURE__ */ reactExports.forwardRef(function(_ref,
       return child;
     });
   }, [aspect, children2, height, maxHeight, minHeight, minWidth, sizes, width]);
-  return /* @__PURE__ */ React$2.createElement("div", {
+  return /* @__PURE__ */ React2.createElement("div", {
     id: id2 ? "".concat(id2) : void 0,
     className: clsx("recharts-responsive-container", className),
     style: _objectSpread$w(_objectSpread$w({}, style2), {}, {
@@ -34713,21 +34704,21 @@ var Cell = function Cell2(_props) {
   return null;
 };
 Cell.displayName = "Cell";
-function _typeof$B(o) {
+function _typeof$B(o2) {
   "@babel/helpers - typeof";
-  return _typeof$B = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$B(o);
+  return _typeof$B = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$B(o2);
 }
 function ownKeys$v(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -34798,12 +34789,12 @@ var getStringSize = function getStringSize2(text) {
     };
   }
   var copyStyle = removeInvalidKeys(style2);
-  var cacheKey2 = JSON.stringify({
+  var cacheKey = JSON.stringify({
     text,
     copyStyle
   });
-  if (stringCache.widthCache[cacheKey2]) {
-    return stringCache.widthCache[cacheKey2];
+  if (stringCache.widthCache[cacheKey]) {
+    return stringCache.widthCache[cacheKey];
   }
   try {
     var measurementSpan = document.getElementById(MEASUREMENT_SPAN_ID);
@@ -34821,7 +34812,7 @@ var getStringSize = function getStringSize2(text) {
       width: rect.width,
       height: rect.height
     };
-    stringCache.widthCache[cacheKey2] = result;
+    stringCache.widthCache[cacheKey] = result;
     if (++stringCache.cacheCount > MAX_CACHE_NUM) {
       stringCache.cacheCount = 0;
       stringCache.widthCache = {};
@@ -34840,13 +34831,13 @@ var getOffset$1 = function getOffset(rect) {
     left: rect.left + window.scrollX - document.documentElement.clientLeft
   };
 };
-function _typeof$A(o) {
+function _typeof$A(o2) {
   "@babel/helpers - typeof";
-  return _typeof$A = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$A(o);
+  return _typeof$A = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$A(o2);
 }
 function _slicedToArray$a(arr, i) {
   return _arrayWithHoles$b(arr) || _iterableToArrayLimit$a(arr, i) || _unsupportedIterableToArray$j(arr, i) || _nonIterableRest$b();
@@ -34854,13 +34845,13 @@ function _slicedToArray$a(arr, i) {
 function _nonIterableRest$b() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$j(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$j(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$j(o, minLen);
+function _unsupportedIterableToArray$j(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$j(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$j(o2, minLen);
 }
 function _arrayLikeToArray$j(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -34870,19 +34861,19 @@ function _arrayLikeToArray$j(arr, len) {
 function _iterableToArrayLimit$a(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) {
         if (Object(t2) !== t2) return;
         f2 = false;
       } else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -35118,13 +35109,13 @@ function _slicedToArray$9(arr, i) {
 function _nonIterableRest$a() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$i(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$i(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$i(o, minLen);
+function _unsupportedIterableToArray$i(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$i(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$i(o2, minLen);
 }
 function _arrayLikeToArray$i(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -35134,19 +35125,19 @@ function _arrayLikeToArray$i(arr, len) {
 function _iterableToArrayLimit$9(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) {
         if (Object(t2) !== t2) return;
         f2 = false;
       } else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -35322,7 +35313,7 @@ var Text = function Text2(_ref5) {
   if (transforms.length) {
     textProps.transform = transforms.join(" ");
   }
-  return /* @__PURE__ */ React$2.createElement("text", _extends$p({}, filterProps(textProps, true), {
+  return /* @__PURE__ */ React2.createElement("text", _extends$p({}, filterProps(textProps, true), {
     x: x3,
     y: y2,
     className: clsx("recharts-text", className),
@@ -35333,7 +35324,7 @@ var Text = function Text2(_ref5) {
     return (
       // duplicate words will cause duplicate keys
       // eslint-disable-next-line react/no-array-index-key
-      /* @__PURE__ */ React$2.createElement("tspan", {
+      /* @__PURE__ */ React2.createElement("tspan", {
         x: x3,
         dy: index2 === 0 ? startDy : lineHeight,
         key: "".concat(words, "-").concat(index2)
@@ -35915,11 +35906,11 @@ function rgba(r2, g2, b2, a2) {
   if (a2 <= 0) r2 = g2 = b2 = NaN;
   return new Rgb(r2, g2, b2, a2);
 }
-function rgbConvert(o) {
-  if (!(o instanceof Color)) o = color(o);
-  if (!o) return new Rgb();
-  o = o.rgb();
-  return new Rgb(o.r, o.g, o.b, o.opacity);
+function rgbConvert(o2) {
+  if (!(o2 instanceof Color)) o2 = color(o2);
+  if (!o2) return new Rgb();
+  o2 = o2.rgb();
+  return new Rgb(o2.r, o2.g, o2.b, o2.opacity);
 }
 function rgb(r2, g2, b2, opacity) {
   return arguments.length === 1 ? rgbConvert(r2) : new Rgb(r2, g2, b2, opacity == null ? 1 : opacity);
@@ -35981,13 +35972,13 @@ function hsla(h2, s2, l2, a2) {
   else if (s2 <= 0) h2 = NaN;
   return new Hsl(h2, s2, l2, a2);
 }
-function hslConvert(o) {
-  if (o instanceof Hsl) return new Hsl(o.h, o.s, o.l, o.opacity);
-  if (!(o instanceof Color)) o = color(o);
-  if (!o) return new Hsl();
-  if (o instanceof Hsl) return o;
-  o = o.rgb();
-  var r2 = o.r / 255, g2 = o.g / 255, b2 = o.b / 255, min2 = Math.min(r2, g2, b2), max2 = Math.max(r2, g2, b2), h2 = NaN, s2 = max2 - min2, l2 = (max2 + min2) / 2;
+function hslConvert(o2) {
+  if (o2 instanceof Hsl) return new Hsl(o2.h, o2.s, o2.l, o2.opacity);
+  if (!(o2 instanceof Color)) o2 = color(o2);
+  if (!o2) return new Hsl();
+  if (o2 instanceof Hsl) return o2;
+  o2 = o2.rgb();
+  var r2 = o2.r / 255, g2 = o2.g / 255, b2 = o2.b / 255, min2 = Math.min(r2, g2, b2), max2 = Math.max(r2, g2, b2), h2 = NaN, s2 = max2 - min2, l2 = (max2 + min2) / 2;
   if (s2) {
     if (r2 === max2) h2 = (g2 - b2) / s2 + (g2 < b2) * 6;
     else if (g2 === max2) h2 = (b2 - r2) / s2 + 2;
@@ -35997,7 +35988,7 @@ function hslConvert(o) {
   } else {
     s2 = l2 > 0 && l2 < 1 ? 0 : h2;
   }
-  return new Hsl(h2, s2, l2, o.opacity);
+  return new Hsl(h2, s2, l2, o2.opacity);
 }
 function hsl(h2, s2, l2, opacity) {
   return arguments.length === 1 ? hslConvert(h2) : new Hsl(h2, s2, l2, opacity == null ? 1 : opacity);
@@ -36164,7 +36155,7 @@ function interpolateString(a2, b2) {
     else s2[++i] = bs;
   }
   return s2.length < 2 ? q2[0] ? one(q2[0].x) : zero(b2) : (b2 = q2.length, function(t2) {
-    for (var i2 = 0, o; i2 < b2; ++i2) s2[(o = q2[i2]).i] = o.x(t2);
+    for (var i2 = 0, o2; i2 < b2; ++i2) s2[(o2 = q2[i2]).i] = o2.x(t2);
     return s2.join("");
   });
 }
@@ -36259,8 +36250,8 @@ function interpolateTransform(parse2, pxComma, pxParen, degParen) {
     scale(a2.scaleX, a2.scaleY, b2.scaleX, b2.scaleY, s2, q2);
     a2 = b2 = null;
     return function(t2) {
-      var i = -1, n2 = q2.length, o;
-      while (++i < n2) s2[(o = q2[i]).i] = o.x(t2);
+      var i = -1, n2 = q2.length, o2;
+      while (++i < n2) s2[(o2 = q2[i]).i] = o2.x(t2);
       return s2.join("");
     };
   };
@@ -36312,11 +36303,11 @@ const interpolateZoom = function zoomRho(rho, rho2, rho4) {
 }(Math.SQRT2, 2, 4);
 function piecewise(interpolate2, values) {
   if (values === void 0) values = interpolate2, interpolate2 = interpolate$1;
-  var i = 0, n2 = values.length - 1, v2 = values[0], I = new Array(n2 < 0 ? 0 : n2);
-  while (i < n2) I[i] = interpolate2(v2, v2 = values[++i]);
+  var i = 0, n2 = values.length - 1, v2 = values[0], I2 = new Array(n2 < 0 ? 0 : n2);
+  while (i < n2) I2[i] = interpolate2(v2, v2 = values[++i]);
   return function(t2) {
     var i2 = Math.max(0, Math.min(n2 - 1, Math.floor(t2 *= n2)));
-    return I[i2](t2 - i2);
+    return I2[i2](t2 - i2);
   };
 }
 function constants(x3) {
@@ -39137,13 +39128,13 @@ function _toConsumableArray$b(arr) {
 function _nonIterableSpread$b() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$h(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$h(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$h(o, minLen);
+function _unsupportedIterableToArray$h(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$h(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$h(o2, minLen);
 }
 function _iterableToArray$c(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
@@ -39315,13 +39306,13 @@ function _slicedToArray$8(arr, i) {
 function _nonIterableRest$9() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$g(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$g(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$g(o, minLen);
+function _unsupportedIterableToArray$g(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$g(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$g(o2, minLen);
 }
 function _arrayLikeToArray$g(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -39477,13 +39468,13 @@ function invariant(condition, message) {
   }
 }
 var _excluded$d = ["offset", "layout", "width", "dataKey", "data", "dataPointFormatter", "xAxis", "yAxis"];
-function _typeof$z(o) {
+function _typeof$z(o2) {
   "@babel/helpers - typeof";
-  return _typeof$z = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$z(o);
+  return _typeof$z = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o22) {
+    return typeof o22;
+  } : function(o22) {
+    return o22 && "function" == typeof Symbol && o22.constructor === Symbol && o22 !== Symbol.prototype ? "symbol" : typeof o22;
+  }, _typeof$z(o2);
 }
 function _extends$o() {
   _extends$o = Object.assign ? Object.assign.bind() : function(target) {
@@ -39505,13 +39496,13 @@ function _slicedToArray$7(arr, i) {
 function _nonIterableRest$8() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$f(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$f(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$f(o, minLen);
+function _unsupportedIterableToArray$f(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$f(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$f(o2, minLen);
 }
 function _arrayLikeToArray$f(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -39521,17 +39512,17 @@ function _arrayLikeToArray$f(arr, len) {
 function _iterableToArrayLimit$7(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r22) {
-      o = true, n2 = r22;
+      o2 = true, n2 = r22;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -39585,8 +39576,8 @@ function _createClass$g(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$d(t2, o, e3) {
-  return o = _getPrototypeOf$e(o), _possibleConstructorReturn$e(t2, _isNativeReflectConstruct$e() ? Reflect.construct(o, e3 || [], _getPrototypeOf$e(t2).constructor) : o.apply(t2, e3));
+function _callSuper$d(t2, o2, e3) {
+  return o2 = _getPrototypeOf$e(o2), _possibleConstructorReturn$e(t2, _isNativeReflectConstruct$e() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$e(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$e(self2, call) {
   if (call && (_typeof$z(call) === "object" || typeof call === "function")) {
@@ -39612,11 +39603,11 @@ function _isNativeReflectConstruct$e() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$e(o) {
-  _getPrototypeOf$e = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$e(o2) {
+  _getPrototypeOf$e = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o22) {
+    return o22.__proto__ || Object.getPrototypeOf(o22);
   };
-  return _getPrototypeOf$e(o);
+  return _getPrototypeOf$e(o2);
 }
 function _inherits$e(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -39626,12 +39617,12 @@ function _inherits$e(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$e(subClass, superClass);
 }
-function _setPrototypeOf$e(o, p2) {
-  _setPrototypeOf$e = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p22) {
-    o2.__proto__ = p22;
-    return o2;
+function _setPrototypeOf$e(o2, p2) {
+  _setPrototypeOf$e = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o22, p22) {
+    o22.__proto__ = p22;
+    return o22;
   };
-  return _setPrototypeOf$e(o, p2);
+  return _setPrototypeOf$e(o2, p2);
 }
 function _defineProperty$y(obj, key, value) {
   key = _toPropertyKey$y(key);
@@ -39733,23 +39724,23 @@ var ErrorBar = /* @__PURE__ */ function(_React$Component) {
             y2: _yMin
           });
         }
-        return /* @__PURE__ */ React$2.createElement(Layer, _extends$o({
+        return /* @__PURE__ */ React2.createElement(Layer, _extends$o({
           className: "recharts-errorBar",
           key: "bar-".concat(lineCoordinates.map(function(c2) {
             return "".concat(c2.x1, "-").concat(c2.x2, "-").concat(c2.y1, "-").concat(c2.y2);
           }))
         }, svgProps), lineCoordinates.map(function(coordinates) {
-          return /* @__PURE__ */ React$2.createElement("line", _extends$o({}, coordinates, {
+          return /* @__PURE__ */ React2.createElement("line", _extends$o({}, coordinates, {
             key: "line-".concat(coordinates.x1, "-").concat(coordinates.x2, "-").concat(coordinates.y1, "-").concat(coordinates.y2)
           }));
         }));
       });
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: "recharts-errorBars"
       }, errorBars);
     }
   }]);
-}(React$2.Component);
+}(React2.Component);
 _defineProperty$y(ErrorBar, "defaultProps", {
   stroke: "black",
   strokeWidth: 1.5,
@@ -39758,21 +39749,21 @@ _defineProperty$y(ErrorBar, "defaultProps", {
   layout: "horizontal"
 });
 _defineProperty$y(ErrorBar, "displayName", "ErrorBar");
-function _typeof$y(o) {
+function _typeof$y(o2) {
   "@babel/helpers - typeof";
-  return _typeof$y = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$y(o);
+  return _typeof$y = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$y(o2);
 }
 function ownKeys$u(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -39856,13 +39847,13 @@ var getLegendProps = function getLegendProps2(_ref) {
     item: legendItem
   });
 };
-function _typeof$x(o) {
+function _typeof$x(o2) {
   "@babel/helpers - typeof";
-  return _typeof$x = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$x(o);
+  return _typeof$x = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$x(o2);
 }
 function _toConsumableArray$9(arr) {
   return _arrayWithoutHoles$9(arr) || _iterableToArray$a(arr) || _unsupportedIterableToArray$e(arr) || _nonIterableSpread$9();
@@ -39870,13 +39861,13 @@ function _toConsumableArray$9(arr) {
 function _nonIterableSpread$9() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$e(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$e(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$e(o, minLen);
+function _unsupportedIterableToArray$e(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$e(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$e(o2, minLen);
 }
 function _iterableToArray$a(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -39892,10 +39883,10 @@ function _arrayLikeToArray$e(arr, len) {
 function ownKeys$t(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -39940,7 +39931,7 @@ function getValueByDataKey(obj, dataKey, defaultValue) {
   if (isNumOrStr(dataKey)) {
     return get$4(obj, dataKey, defaultValue);
   }
-  if (isFunction$5(dataKey)) {
+  if (isFunction$4(dataKey)) {
     return dataKey(obj);
   }
   return defaultValue;
@@ -40388,7 +40379,7 @@ var parseScale = function parseScale2(axis, chartType, hasBar) {
       realScaleType: d3Scales[name] ? name : "point"
     };
   }
-  return isFunction$5(scale) ? {
+  return isFunction$4(scale) ? {
     scale
   } : {
     scale: point(),
@@ -40659,7 +40650,7 @@ var getDomainOfStackGroups = function getDomainOfStackGroups2(stackGroups, start
 var MIN_VALUE_REG = /^dataMin[\s]*-[\s]*([0-9]+([.]{1}[0-9]+){0,1})$/;
 var MAX_VALUE_REG = /^dataMax[\s]*\+[\s]*([0-9]+([.]{1}[0-9]+){0,1})$/;
 var parseSpecifiedDomain = function parseSpecifiedDomain2(specifiedDomain, dataDomain, allowDataOverflow) {
-  if (isFunction$5(specifiedDomain)) {
+  if (isFunction$4(specifiedDomain)) {
     return specifiedDomain(dataDomain, allowDataOverflow);
   }
   if (!Array.isArray(specifiedDomain)) {
@@ -40671,7 +40662,7 @@ var parseSpecifiedDomain = function parseSpecifiedDomain2(specifiedDomain, dataD
   } else if (MIN_VALUE_REG.test(specifiedDomain[0])) {
     var value = +MIN_VALUE_REG.exec(specifiedDomain[0])[1];
     domain[0] = dataDomain[0] - value;
-  } else if (isFunction$5(specifiedDomain[0])) {
+  } else if (isFunction$4(specifiedDomain[0])) {
     domain[0] = specifiedDomain[0](dataDomain[0]);
   } else {
     domain[0] = dataDomain[0];
@@ -40681,7 +40672,7 @@ var parseSpecifiedDomain = function parseSpecifiedDomain2(specifiedDomain, dataD
   } else if (MAX_VALUE_REG.test(specifiedDomain[1])) {
     var _value = +MAX_VALUE_REG.exec(specifiedDomain[1])[1];
     domain[1] = dataDomain[1] + _value;
-  } else if (isFunction$5(specifiedDomain[1])) {
+  } else if (isFunction$4(specifiedDomain[1])) {
     domain[1] = specifiedDomain[1](dataDomain[1]);
   } else {
     domain[1] = dataDomain[1];
@@ -40696,8 +40687,8 @@ var getBandSizeOfAxis = function getBandSizeOfAxis2(axis, ticks2, isBar) {
     }
   }
   if (axis && ticks2 && ticks2.length >= 2) {
-    var orderedTicks = sortBy$1(ticks2, function(o) {
-      return o.coordinate;
+    var orderedTicks = sortBy$1(ticks2, function(o2) {
+      return o2.coordinate;
     });
     var bandSize = Infinity;
     for (var i = 1, len = orderedTicks.length; i < len; i++) {
@@ -40734,21 +40725,21 @@ var getTooltipItem = function getTooltipItem2(graphicalItem, payload) {
     hide: hide2
   });
 };
-function _typeof$w(o) {
+function _typeof$w(o2) {
   "@babel/helpers - typeof";
-  return _typeof$w = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$w(o);
+  return _typeof$w = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$w(o2);
 }
 function ownKeys$s(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -40792,13 +40783,13 @@ function _slicedToArray$6(arr, i) {
 function _nonIterableRest$7() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$d(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$d(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$d(o, minLen);
+function _unsupportedIterableToArray$d(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$d(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$d(o2, minLen);
 }
 function _arrayLikeToArray$d(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -40808,17 +40799,17 @@ function _arrayLikeToArray$d(arr, len) {
 function _iterableToArrayLimit$6(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -40986,15 +40977,15 @@ var inRangeOfSector = function inRangeOfSector2(_ref5, sector) {
   return null;
 };
 var getTickClassName = function getTickClassName2(tick) {
-  return !/* @__PURE__ */ reactExports.isValidElement(tick) && !isFunction$5(tick) && typeof tick !== "boolean" ? tick.className : "";
+  return !/* @__PURE__ */ reactExports.isValidElement(tick) && !isFunction$4(tick) && typeof tick !== "boolean" ? tick.className : "";
 };
-function _typeof$v(o) {
+function _typeof$v(o2) {
   "@babel/helpers - typeof";
-  return _typeof$v = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$v(o);
+  return _typeof$v = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$v(o2);
 }
 var _excluded$c = ["offset"];
 function _toConsumableArray$8(arr) {
@@ -41003,13 +40994,13 @@ function _toConsumableArray$8(arr) {
 function _nonIterableSpread$8() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$c(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$c(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$c(o, minLen);
+function _unsupportedIterableToArray$c(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$c(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$c(o2, minLen);
 }
 function _iterableToArray$9(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -41051,10 +41042,10 @@ function _objectWithoutPropertiesLoose$c(source, excluded) {
 function ownKeys$r(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -41109,7 +41100,7 @@ function _extends$n() {
 var getLabel = function getLabel2(props) {
   var value = props.value, formatter = props.formatter;
   var label = isNil$1(props.children) ? value : props.children;
-  if (isFunction$5(formatter)) {
+  if (isFunction$4(formatter)) {
     return formatter(label);
   }
   return label;
@@ -41141,13 +41132,13 @@ var renderRadialLabel = function renderRadialLabel2(labelProps, label, attrs) {
   var endPoint = polarToCartesian(cx2, cy, radius, labelAngle + (direction ? 1 : -1) * 359);
   var path = "M".concat(startPoint.x, ",").concat(startPoint.y, "\n    A").concat(radius, ",").concat(radius, ",0,1,").concat(direction ? 0 : 1, ",\n    ").concat(endPoint.x, ",").concat(endPoint.y);
   var id2 = isNil$1(labelProps.id) ? uniqueId("recharts-radial-line-") : labelProps.id;
-  return /* @__PURE__ */ React$2.createElement("text", _extends$n({}, attrs, {
+  return /* @__PURE__ */ React2.createElement("text", _extends$n({}, attrs, {
     dominantBaseline: "central",
     className: clsx("recharts-radial-bar-label", className)
-  }), /* @__PURE__ */ React$2.createElement("defs", null, /* @__PURE__ */ React$2.createElement("path", {
+  }), /* @__PURE__ */ React2.createElement("defs", null, /* @__PURE__ */ React2.createElement("path", {
     id: id2,
     d: path
-  })), /* @__PURE__ */ React$2.createElement("textPath", {
+  })), /* @__PURE__ */ React2.createElement("textPath", {
     xlinkHref: "#".concat(id2)
   }, label));
 };
@@ -41348,14 +41339,14 @@ function Label$2(_ref4) {
     offset: offset2
   }, restProps);
   var viewBox = props.viewBox, position = props.position, value = props.value, children2 = props.children, content = props.content, _props$className = props.className, className = _props$className === void 0 ? "" : _props$className, textBreakAll = props.textBreakAll;
-  if (!viewBox || isNil$1(value) && isNil$1(children2) && !/* @__PURE__ */ reactExports.isValidElement(content) && !isFunction$5(content)) {
+  if (!viewBox || isNil$1(value) && isNil$1(children2) && !/* @__PURE__ */ reactExports.isValidElement(content) && !isFunction$4(content)) {
     return null;
   }
   if (/* @__PURE__ */ reactExports.isValidElement(content)) {
     return /* @__PURE__ */ reactExports.cloneElement(content, props);
   }
   var label;
-  if (isFunction$5(content)) {
+  if (isFunction$4(content)) {
     label = /* @__PURE__ */ reactExports.createElement(content, props);
     if (/* @__PURE__ */ reactExports.isValidElement(label)) {
       return label;
@@ -41369,7 +41360,7 @@ function Label$2(_ref4) {
     return renderRadialLabel(props, label, attrs);
   }
   var positionAttrs = isPolarLabel ? getAttrsOfPolarLabel(props) : getAttrsOfCartesianLabel(props);
-  return /* @__PURE__ */ React$2.createElement(Text, _extends$n({
+  return /* @__PURE__ */ React2.createElement(Text, _extends$n({
     className: clsx("recharts-label", className)
   }, attrs, positionAttrs, {
     breakAll: textBreakAll
@@ -41428,13 +41419,13 @@ var parseLabel = function parseLabel2(label, viewBox) {
     return null;
   }
   if (label === true) {
-    return /* @__PURE__ */ React$2.createElement(Label$2, {
+    return /* @__PURE__ */ React2.createElement(Label$2, {
       key: "label-implicit",
       viewBox
     });
   }
   if (isNumOrStr(label)) {
-    return /* @__PURE__ */ React$2.createElement(Label$2, {
+    return /* @__PURE__ */ React2.createElement(Label$2, {
       key: "label-implicit",
       viewBox,
       value: label
@@ -41447,21 +41438,21 @@ var parseLabel = function parseLabel2(label, viewBox) {
         viewBox
       });
     }
-    return /* @__PURE__ */ React$2.createElement(Label$2, {
+    return /* @__PURE__ */ React2.createElement(Label$2, {
       key: "label-implicit",
       content: label,
       viewBox
     });
   }
-  if (isFunction$5(label)) {
-    return /* @__PURE__ */ React$2.createElement(Label$2, {
+  if (isFunction$4(label)) {
+    return /* @__PURE__ */ React2.createElement(Label$2, {
       key: "label-implicit",
       content: label,
       viewBox
     });
   }
   if (isObject$8(label)) {
-    return /* @__PURE__ */ React$2.createElement(Label$2, _extends$n({
+    return /* @__PURE__ */ React2.createElement(Label$2, _extends$n({
       viewBox
     }, label, {
       key: "label-implicit"
@@ -41497,13 +41488,13 @@ function last(array2) {
 }
 var last_1 = last;
 const last$1 = /* @__PURE__ */ getDefaultExportFromCjs(last_1);
-function _typeof$u(o) {
+function _typeof$u(o2) {
   "@babel/helpers - typeof";
-  return _typeof$u = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$u(o);
+  return _typeof$u = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$u(o2);
 }
 var _excluded$b = ["valueAccessor"], _excluded2$5 = ["data", "dataKey", "clockWise", "id", "textBreakAll"];
 function _toConsumableArray$7(arr) {
@@ -41512,13 +41503,13 @@ function _toConsumableArray$7(arr) {
 function _nonIterableSpread$7() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$b(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$b(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$b(o, minLen);
+function _unsupportedIterableToArray$b(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$b(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$b(o2, minLen);
 }
 function _iterableToArray$8(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -41548,10 +41539,10 @@ function _extends$m() {
 function ownKeys$q(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -41624,14 +41615,14 @@ function LabelList(_ref) {
   if (!data || !data.length) {
     return null;
   }
-  return /* @__PURE__ */ React$2.createElement(Layer, {
+  return /* @__PURE__ */ React2.createElement(Layer, {
     className: "recharts-label-list"
   }, data.map(function(entry, index2) {
     var value = isNil$1(dataKey) ? valueAccessor(entry, index2) : getValueByDataKey(entry && entry.payload, dataKey);
     var idProps = isNil$1(id2) ? {} : {
       id: "".concat(id2, "-").concat(index2)
     };
-    return /* @__PURE__ */ React$2.createElement(Label$2, _extends$m({}, filterProps(entry, true), others, idProps, {
+    return /* @__PURE__ */ React2.createElement(Label$2, _extends$m({}, filterProps(entry, true), others, idProps, {
       parentViewBox: entry.parentViewBox,
       value,
       textBreakAll,
@@ -41649,20 +41640,20 @@ function parseLabelList(label, data) {
     return null;
   }
   if (label === true) {
-    return /* @__PURE__ */ React$2.createElement(LabelList, {
+    return /* @__PURE__ */ React2.createElement(LabelList, {
       key: "labelList-implicit",
       data
     });
   }
-  if (/* @__PURE__ */ React$2.isValidElement(label) || isFunction$5(label)) {
-    return /* @__PURE__ */ React$2.createElement(LabelList, {
+  if (/* @__PURE__ */ React2.isValidElement(label) || isFunction$4(label)) {
+    return /* @__PURE__ */ React2.createElement(LabelList, {
       key: "labelList-implicit",
       data,
       content: label
     });
   }
   if (isObject$8(label)) {
-    return /* @__PURE__ */ React$2.createElement(LabelList, _extends$m({
+    return /* @__PURE__ */ React2.createElement(LabelList, _extends$m({
       data
     }, label, {
       key: "labelList-implicit"
@@ -41690,13 +41681,13 @@ function renderCallByParent2(parentProps, data) {
   return [implicitLabelList].concat(_toConsumableArray$7(explicitChildren));
 }
 LabelList.renderCallByParent = renderCallByParent2;
-function _typeof$t(o) {
+function _typeof$t(o2) {
   "@babel/helpers - typeof";
-  return _typeof$t = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$t(o);
+  return _typeof$t = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$t(o2);
 }
 function _extends$l() {
   _extends$l = Object.assign ? Object.assign.bind() : function(target) {
@@ -41715,10 +41706,10 @@ function _extends$l() {
 function ownKeys$p(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -41903,19 +41894,19 @@ var Sector = function Sector2(sectorProps) {
       endAngle
     });
   }
-  return /* @__PURE__ */ React$2.createElement("path", _extends$l({}, filterProps(props, true), {
+  return /* @__PURE__ */ React2.createElement("path", _extends$l({}, filterProps(props, true), {
     className: layerClass,
     d: path,
     role: "img"
   }));
 };
-function _typeof$s(o) {
+function _typeof$s(o2) {
   "@babel/helpers - typeof";
-  return _typeof$s = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$s(o);
+  return _typeof$s = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$s(o2);
 }
 function _extends$k() {
   _extends$k = Object.assign ? Object.assign.bind() : function(target) {
@@ -41934,10 +41925,10 @@ function _extends$k() {
 function ownKeys$o(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -42000,7 +41991,7 @@ var getY = function getY2(p2) {
   return p2.y;
 };
 var getCurveFactory = function getCurveFactory2(type, layout) {
-  if (isFunction$5(type)) {
+  if (isFunction$4(type)) {
     return type;
   }
   var name = "curve".concat(upperFirst$1(type));
@@ -42569,13 +42560,13 @@ function setRafTimeout(callback) {
   };
   requestAnimationFrame(shouldUpdate);
 }
-function _typeof$r(o) {
+function _typeof$r(o2) {
   "@babel/helpers - typeof";
-  return _typeof$r = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$r(o);
+  return _typeof$r = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$r(o2);
 }
 function _toArray(arr) {
   return _arrayWithHoles$6(arr) || _iterableToArray$7(arr) || _unsupportedIterableToArray$a(arr) || _nonIterableRest$6();
@@ -42583,13 +42574,13 @@ function _toArray(arr) {
 function _nonIterableRest$6() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$a(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$a(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$a(o, minLen);
+function _unsupportedIterableToArray$a(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$a(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$a(o2, minLen);
 }
 function _arrayLikeToArray$a(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -42652,21 +42643,21 @@ function createAnimateManager() {
     }
   };
 }
-function _typeof$q(o) {
+function _typeof$q(o2) {
   "@babel/helpers - typeof";
-  return _typeof$q = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$q(o);
+  return _typeof$q = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o22) {
+    return typeof o22;
+  } : function(o22) {
+    return o22 && "function" == typeof Symbol && o22.constructor === Symbol && o22 !== Symbol.prototype ? "symbol" : typeof o22;
+  }, _typeof$q(o2);
 }
 function ownKeys$n(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r22) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r22) {
       return Object.getOwnPropertyDescriptor(e3, r22).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -42738,17 +42729,17 @@ function _nonIterableRest$5() {
 function _iterableToArrayLimit$5(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2.return && (u2 = t2.return(), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -42763,13 +42754,13 @@ function _toConsumableArray$6(arr) {
 function _nonIterableSpread$6() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$9(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$9(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$9(o, minLen);
+function _unsupportedIterableToArray$9(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$9(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$9(o2, minLen);
 }
 function _iterableToArray$6(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -42890,19 +42881,19 @@ var configBezier = function configBezier2() {
 };
 var configSpring = function configSpring2() {
   var config2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-  var _config$stiff = config2.stiff, stiff = _config$stiff === void 0 ? 100 : _config$stiff, _config$damping = config2.damping, damping = _config$damping === void 0 ? 8 : _config$damping, _config$dt = config2.dt, dt = _config$dt === void 0 ? 17 : _config$dt;
+  var _config$stiff = config2.stiff, stiff = _config$stiff === void 0 ? 100 : _config$stiff, _config$damping = config2.damping, damping = _config$damping === void 0 ? 8 : _config$damping, _config$dt = config2.dt, dt2 = _config$dt === void 0 ? 17 : _config$dt;
   var stepper = function stepper2(currX, destX, currV) {
     var FSpring = -(currX - destX) * stiff;
     var FDamping = currV * damping;
-    var newV = currV + (FSpring - FDamping) * dt / 1e3;
-    var newX = currV * dt / 1e3 + currX;
+    var newV = currV + (FSpring - FDamping) * dt2 / 1e3;
+    var newX = currV * dt2 / 1e3 + currX;
     if (Math.abs(newX - destX) < ACCURACY && Math.abs(newV) < ACCURACY) {
       return [destX, 0];
     }
     return [newX, newV];
   };
   stepper.isStepper = true;
-  stepper.dt = dt;
+  stepper.dt = dt2;
   return stepper;
 };
 var configEasing = function configEasing2() {
@@ -42931,13 +42922,13 @@ var configEasing = function configEasing2() {
   }
   return null;
 };
-function _typeof$p(o) {
+function _typeof$p(o2) {
   "@babel/helpers - typeof";
-  return _typeof$p = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$p(o);
+  return _typeof$p = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$p(o2);
 }
 function _toConsumableArray$5(arr) {
   return _arrayWithoutHoles$5(arr) || _iterableToArray$5(arr) || _unsupportedIterableToArray$8(arr) || _nonIterableSpread$5();
@@ -42954,10 +42945,10 @@ function _arrayWithoutHoles$5(arr) {
 function ownKeys$m(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -43001,13 +42992,13 @@ function _slicedToArray$4(arr, i) {
 function _nonIterableRest$4() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$8(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$8(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$8(o, minLen);
+function _unsupportedIterableToArray$8(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$8(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$8(o2, minLen);
 }
 function _arrayLikeToArray$8(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -43017,17 +43008,17 @@ function _arrayLikeToArray$8(arr, len) {
 function _iterableToArrayLimit$4(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2.return && (u2 = t2.return(), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -43132,13 +43123,13 @@ const configUpdate = function(from, to, easing, duration, render) {
     };
   };
 };
-function _typeof$o(o) {
+function _typeof$o(o2) {
   "@babel/helpers - typeof";
-  return _typeof$o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$o(o);
+  return _typeof$o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$o(o2);
 }
 var _excluded$a = ["children", "begin", "duration", "attributeName", "easing", "isActive", "steps", "from", "to", "canBegin", "onAnimationEnd", "shouldReAnimate", "onAnimationReStart"];
 function _objectWithoutProperties$a(source, excluded) {
@@ -43174,13 +43165,13 @@ function _toConsumableArray$4(arr) {
 function _nonIterableSpread$4() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$7(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$7(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$7(o, minLen);
+function _unsupportedIterableToArray$7(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$7(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$7(o2, minLen);
 }
 function _iterableToArray$4(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -43196,10 +43187,10 @@ function _arrayLikeToArray$7(arr, len) {
 function ownKeys$l(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -43264,12 +43255,12 @@ function _inherits$d(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$d(subClass, superClass);
 }
-function _setPrototypeOf$d(o, p2) {
-  _setPrototypeOf$d = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$d(o2, p2) {
+  _setPrototypeOf$d = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$d(o, p2);
+  return _setPrototypeOf$d(o2, p2);
 }
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct$d();
@@ -43310,11 +43301,11 @@ function _isNativeReflectConstruct$d() {
     return false;
   }
 }
-function _getPrototypeOf$d(o) {
-  _getPrototypeOf$d = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$d(o2) {
+  _getPrototypeOf$d = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$d(o);
+  return _getPrototypeOf$d(o2);
 }
 var Animate = /* @__PURE__ */ function(_PureComponent) {
   _inherits$d(Animate2, _PureComponent);
@@ -43543,7 +43534,7 @@ var Animate = /* @__PURE__ */ function(_PureComponent) {
       if (count2 === 1) {
         return cloneContainer(reactExports.Children.only(children2));
       }
-      return /* @__PURE__ */ React$2.createElement("div", null, reactExports.Children.map(children2, function(child) {
+      return /* @__PURE__ */ React2.createElement("div", null, reactExports.Children.map(children2, function(child) {
         return cloneContainer(child);
       }));
     }
@@ -43591,13 +43582,13 @@ Animate.propTypes = {
   onAnimationStart: PropTypes.func,
   onAnimationReStart: PropTypes.func
 };
-function _typeof$n(o) {
+function _typeof$n(o2) {
   "@babel/helpers - typeof";
-  return _typeof$n = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$n(o);
+  return _typeof$n = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$n(o2);
 }
 function _extends$j() {
   _extends$j = Object.assign ? Object.assign.bind() : function(target) {
@@ -43619,13 +43610,13 @@ function _slicedToArray$3(arr, i) {
 function _nonIterableRest$3() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$6(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$6(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$6(o, minLen);
+function _unsupportedIterableToArray$6(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$6(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$6(o2, minLen);
 }
 function _arrayLikeToArray$6(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -43635,17 +43626,17 @@ function _arrayLikeToArray$6(arr, len) {
 function _iterableToArrayLimit$3(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -43657,10 +43648,10 @@ function _arrayWithHoles$3(arr) {
 function ownKeys$k(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -43786,12 +43777,12 @@ var Rectangle = function Rectangle2(rectangleProps) {
   }
   var layerClass = clsx("recharts-rectangle", className);
   if (!isUpdateAnimationActive) {
-    return /* @__PURE__ */ React$2.createElement("path", _extends$j({}, filterProps(props, true), {
+    return /* @__PURE__ */ React2.createElement("path", _extends$j({}, filterProps(props, true), {
       className: layerClass,
       d: getRectanglePath(x3, y2, width, height, radius)
     }));
   }
-  return /* @__PURE__ */ React$2.createElement(Animate, {
+  return /* @__PURE__ */ React2.createElement(Animate, {
     canBegin: totalLength > 0,
     from: {
       width,
@@ -43810,7 +43801,7 @@ var Rectangle = function Rectangle2(rectangleProps) {
     isActive: isUpdateAnimationActive
   }, function(_ref) {
     var currWidth = _ref.width, currHeight = _ref.height, currX = _ref.x, currY = _ref.y;
-    return /* @__PURE__ */ React$2.createElement(Animate, {
+    return /* @__PURE__ */ React2.createElement(Animate, {
       canBegin: totalLength > 0,
       from: "0px ".concat(totalLength === -1 ? 1 : totalLength, "px"),
       to: "".concat(totalLength, "px 0px"),
@@ -43819,7 +43810,7 @@ var Rectangle = function Rectangle2(rectangleProps) {
       duration: animationDuration,
       isActive: isAnimationActive,
       easing: animationEasing
-    }, /* @__PURE__ */ React$2.createElement("path", _extends$j({}, filterProps(props, true), {
+    }, /* @__PURE__ */ React2.createElement("path", _extends$j({}, filterProps(props, true), {
       className: layerClass,
       d: getRectanglePath(currX, currY, currWidth, currHeight, radius),
       ref: pathRef
@@ -43873,13 +43864,13 @@ function _toConsumableArray$3(arr) {
 function _nonIterableSpread$3() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$5(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$5(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$5(o, minLen);
+function _unsupportedIterableToArray$5(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$5(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$5(o2, minLen);
 }
 function _iterableToArray$3(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -43940,22 +43931,22 @@ var Polygon = function Polygon2(props) {
   if (baseLinePoints && baseLinePoints.length) {
     var hasStroke = others.stroke && others.stroke !== "none";
     var rangePath = getRanglePath(points, baseLinePoints, connectNulls);
-    return /* @__PURE__ */ React$2.createElement("g", {
+    return /* @__PURE__ */ React2.createElement("g", {
       className: layerClass
-    }, /* @__PURE__ */ React$2.createElement("path", _extends$i({}, filterProps(others, true), {
+    }, /* @__PURE__ */ React2.createElement("path", _extends$i({}, filterProps(others, true), {
       fill: rangePath.slice(-1) === "Z" ? others.fill : "none",
       stroke: "none",
       d: rangePath
-    })), hasStroke ? /* @__PURE__ */ React$2.createElement("path", _extends$i({}, filterProps(others, true), {
+    })), hasStroke ? /* @__PURE__ */ React2.createElement("path", _extends$i({}, filterProps(others, true), {
       fill: "none",
       d: getSinglePolygonPath(points, connectNulls)
-    })) : null, hasStroke ? /* @__PURE__ */ React$2.createElement("path", _extends$i({}, filterProps(others, true), {
+    })) : null, hasStroke ? /* @__PURE__ */ React2.createElement("path", _extends$i({}, filterProps(others, true), {
       fill: "none",
       d: getSinglePolygonPath(baseLinePoints, connectNulls)
     })) : null);
   }
   var singlePath = getSinglePolygonPath(points, connectNulls);
-  return /* @__PURE__ */ React$2.createElement("path", _extends$i({}, filterProps(others, true), {
+  return /* @__PURE__ */ React2.createElement("path", _extends$i({}, filterProps(others, true), {
     fill: singlePath.slice(-1) === "Z" ? others.fill : "none",
     className: layerClass,
     d: singlePath
@@ -43988,13 +43979,13 @@ var Dot = function Dot2(props) {
   }
   return null;
 };
-function _typeof$m(o) {
+function _typeof$m(o2) {
   "@babel/helpers - typeof";
-  return _typeof$m = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$m(o);
+  return _typeof$m = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$m(o2);
 }
 var _excluded$8 = ["x", "y", "top", "left", "width", "height", "className"];
 function _extends$g() {
@@ -44014,10 +44005,10 @@ function _extends$g() {
 function ownKeys$j(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -44097,7 +44088,7 @@ var Cross = function Cross2(_ref) {
   if (!isNumber$1(x3) || !isNumber$1(y2) || !isNumber$1(width) || !isNumber$1(height) || !isNumber$1(top) || !isNumber$1(left)) {
     return null;
   }
-  return /* @__PURE__ */ React$2.createElement("path", _extends$g({}, filterProps(props, true), {
+  return /* @__PURE__ */ React2.createElement("path", _extends$g({}, filterProps(props, true), {
     className: clsx("recharts-cross", className),
     d: getPath2(x3, y2, width, height, top, left)
   }));
@@ -44115,13 +44106,13 @@ function minBy(array2, iteratee) {
 var minBy_1 = minBy;
 const minBy$1 = /* @__PURE__ */ getDefaultExportFromCjs(minBy_1);
 var _excluded$7 = ["cx", "cy", "angle", "ticks", "axisLine"], _excluded2$4 = ["ticks", "tick", "angle", "tickFormatter", "stroke"];
-function _typeof$l(o) {
+function _typeof$l(o2) {
   "@babel/helpers - typeof";
-  return _typeof$l = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$l(o);
+  return _typeof$l = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$l(o2);
 }
 function _extends$f() {
   _extends$f = Object.assign ? Object.assign.bind() : function(target) {
@@ -44140,10 +44131,10 @@ function _extends$f() {
 function ownKeys$i(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -44204,8 +44195,8 @@ function _createClass$e(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$c(t2, o, e3) {
-  return o = _getPrototypeOf$c(o), _possibleConstructorReturn$c(t2, _isNativeReflectConstruct$c() ? Reflect.construct(o, e3 || [], _getPrototypeOf$c(t2).constructor) : o.apply(t2, e3));
+function _callSuper$c(t2, o2, e3) {
+  return o2 = _getPrototypeOf$c(o2), _possibleConstructorReturn$c(t2, _isNativeReflectConstruct$c() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$c(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$c(self2, call) {
   if (call && (_typeof$l(call) === "object" || typeof call === "function")) {
@@ -44231,11 +44222,11 @@ function _isNativeReflectConstruct$c() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$c(o) {
-  _getPrototypeOf$c = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$c(o2) {
+  _getPrototypeOf$c = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$c(o);
+  return _getPrototypeOf$c(o2);
 }
 function _inherits$c(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -44245,12 +44236,12 @@ function _inherits$c(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$c(subClass, superClass);
 }
-function _setPrototypeOf$c(o, p2) {
-  _setPrototypeOf$c = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$c(o2, p2) {
+  _setPrototypeOf$c = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$c(o, p2);
+  return _setPrototypeOf$c(o2, p2);
 }
 function _defineProperty$l(obj, key, value) {
   key = _toPropertyKey$l(key);
@@ -44349,7 +44340,7 @@ var PolarRadiusAxis = /* @__PURE__ */ function(_PureComponent) {
         x2: point1.x,
         y2: point1.y
       });
-      return /* @__PURE__ */ React$2.createElement("line", _extends$f({
+      return /* @__PURE__ */ React2.createElement("line", _extends$f({
         className: "recharts-polar-radius-axis-line"
       }, props));
     }
@@ -44374,12 +44365,12 @@ var PolarRadiusAxis = /* @__PURE__ */ function(_PureComponent) {
         }, coord), {}, {
           payload: entry
         });
-        return /* @__PURE__ */ React$2.createElement(Layer, _extends$f({
+        return /* @__PURE__ */ React2.createElement(Layer, _extends$f({
           className: clsx("recharts-polar-radius-axis-tick", getTickClassName(tick)),
           key: "tick-".concat(entry.coordinate)
         }, adaptEventsOfChild(_this.props, entry, i)), PolarRadiusAxis2.renderTickItem(tick, tickProps, tickFormatter ? tickFormatter(entry.value, i) : entry.value));
       });
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: "recharts-polar-radius-axis-ticks"
       }, items);
     }
@@ -44390,7 +44381,7 @@ var PolarRadiusAxis = /* @__PURE__ */ function(_PureComponent) {
       if (!ticks2 || !ticks2.length) {
         return null;
       }
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: clsx("recharts-polar-radius-axis", this.props.className)
       }, axisLine && this.renderAxisLine(), tick && this.renderTicks(), Label$2.renderCallByParent(this.props, this.getViewBox()));
     }
@@ -44398,12 +44389,12 @@ var PolarRadiusAxis = /* @__PURE__ */ function(_PureComponent) {
     key: "renderTickItem",
     value: function renderTickItem(option, props, value) {
       var tickItem;
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        tickItem = /* @__PURE__ */ React$2.cloneElement(option, props);
-      } else if (isFunction$5(option)) {
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        tickItem = /* @__PURE__ */ React2.cloneElement(option, props);
+      } else if (isFunction$4(option)) {
         tickItem = option(props);
       } else {
-        tickItem = /* @__PURE__ */ React$2.createElement(Text, _extends$f({}, props, {
+        tickItem = /* @__PURE__ */ React2.createElement(Text, _extends$f({}, props, {
           className: "recharts-polar-radius-axis-tick-value"
         }), value);
       }
@@ -44428,13 +44419,13 @@ _defineProperty$l(PolarRadiusAxis, "defaultProps", {
   scale: "auto",
   allowDuplicatedCategory: true
 });
-function _typeof$k(o) {
+function _typeof$k(o2) {
   "@babel/helpers - typeof";
-  return _typeof$k = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$k(o);
+  return _typeof$k = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$k(o2);
 }
 function _extends$e() {
   _extends$e = Object.assign ? Object.assign.bind() : function(target) {
@@ -44453,10 +44444,10 @@ function _extends$e() {
 function ownKeys$h(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -44491,8 +44482,8 @@ function _createClass$d(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$b(t2, o, e3) {
-  return o = _getPrototypeOf$b(o), _possibleConstructorReturn$b(t2, _isNativeReflectConstruct$b() ? Reflect.construct(o, e3 || [], _getPrototypeOf$b(t2).constructor) : o.apply(t2, e3));
+function _callSuper$b(t2, o2, e3) {
+  return o2 = _getPrototypeOf$b(o2), _possibleConstructorReturn$b(t2, _isNativeReflectConstruct$b() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$b(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$b(self2, call) {
   if (call && (_typeof$k(call) === "object" || typeof call === "function")) {
@@ -44518,11 +44509,11 @@ function _isNativeReflectConstruct$b() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$b(o) {
-  _getPrototypeOf$b = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$b(o2) {
+  _getPrototypeOf$b = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$b(o);
+  return _getPrototypeOf$b(o2);
 }
 function _inherits$b(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -44532,12 +44523,12 @@ function _inherits$b(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$b(subClass, superClass);
 }
-function _setPrototypeOf$b(o, p2) {
-  _setPrototypeOf$b = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$b(o2, p2) {
+  _setPrototypeOf$b = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$b(o, p2);
+  return _setPrototypeOf$b(o2, p2);
 }
 function _defineProperty$k(obj, key, value) {
   key = _toPropertyKey$k(key);
@@ -44621,7 +44612,7 @@ var PolarAngleAxis = /* @__PURE__ */ function(_PureComponent) {
         fill: "none"
       }, filterProps(axisLine, false));
       if (axisLineType === "circle") {
-        return /* @__PURE__ */ React$2.createElement(Dot, _extends$e({
+        return /* @__PURE__ */ React2.createElement(Dot, _extends$e({
           className: "recharts-polar-angle-axis-line"
         }, props, {
           cx: cx2,
@@ -44633,7 +44624,7 @@ var PolarAngleAxis = /* @__PURE__ */ function(_PureComponent) {
       var points = ticks2.map(function(entry) {
         return polarToCartesian(cx2, cy, radius, entry.coordinate);
       });
-      return /* @__PURE__ */ React$2.createElement(Polygon, _extends$e({
+      return /* @__PURE__ */ React2.createElement(Polygon, _extends$e({
         className: "recharts-polar-angle-axis-line"
       }, props, {
         points
@@ -44663,14 +44654,14 @@ var PolarAngleAxis = /* @__PURE__ */ function(_PureComponent) {
           x: lineCoord.x2,
           y: lineCoord.y2
         });
-        return /* @__PURE__ */ React$2.createElement(Layer, _extends$e({
+        return /* @__PURE__ */ React2.createElement(Layer, _extends$e({
           className: clsx("recharts-polar-angle-axis-tick", getTickClassName(tick)),
           key: "tick-".concat(entry.coordinate)
-        }, adaptEventsOfChild(_this.props, entry, i)), tickLine && /* @__PURE__ */ React$2.createElement("line", _extends$e({
+        }, adaptEventsOfChild(_this.props, entry, i)), tickLine && /* @__PURE__ */ React2.createElement("line", _extends$e({
           className: "recharts-polar-angle-axis-tick-line"
         }, tickLineProps, lineCoord)), tick && PolarAngleAxis2.renderTickItem(tick, tickProps, tickFormatter ? tickFormatter(entry.value, i) : entry.value));
       });
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: "recharts-polar-angle-axis-ticks"
       }, items);
     }
@@ -44681,7 +44672,7 @@ var PolarAngleAxis = /* @__PURE__ */ function(_PureComponent) {
       if (radius <= 0 || !ticks2 || !ticks2.length) {
         return null;
       }
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: clsx("recharts-polar-angle-axis", this.props.className)
       }, axisLine && this.renderAxisLine(), this.renderTicks());
     }
@@ -44689,12 +44680,12 @@ var PolarAngleAxis = /* @__PURE__ */ function(_PureComponent) {
     key: "renderTickItem",
     value: function renderTickItem(option, props, value) {
       var tickItem;
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        tickItem = /* @__PURE__ */ React$2.cloneElement(option, props);
-      } else if (isFunction$5(option)) {
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        tickItem = /* @__PURE__ */ React2.cloneElement(option, props);
+      } else if (isFunction$4(option)) {
         tickItem = option(props);
       } else {
-        tickItem = /* @__PURE__ */ React$2.createElement(Text, _extends$e({}, props, {
+        tickItem = /* @__PURE__ */ React2.createElement(Text, _extends$e({}, props, {
           className: "recharts-polar-angle-axis-tick-value"
         }), value);
       }
@@ -44747,13 +44738,13 @@ function isBoolean(value) {
 }
 var isBoolean_1 = isBoolean;
 const isBoolean$1 = /* @__PURE__ */ getDefaultExportFromCjs(isBoolean_1);
-function _typeof$j(o) {
+function _typeof$j(o2) {
   "@babel/helpers - typeof";
-  return _typeof$j = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$j(o);
+  return _typeof$j = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$j(o2);
 }
 function _extends$d() {
   _extends$d = Object.assign ? Object.assign.bind() : function(target) {
@@ -44775,13 +44766,13 @@ function _slicedToArray$2(arr, i) {
 function _nonIterableRest$2() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$4(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$4(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$4(o, minLen);
+function _unsupportedIterableToArray$4(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$4(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$4(o2, minLen);
 }
 function _arrayLikeToArray$4(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -44791,17 +44782,17 @@ function _arrayLikeToArray$4(arr, len) {
 function _iterableToArrayLimit$2(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -44813,10 +44804,10 @@ function _arrayWithHoles$2(arr) {
 function ownKeys$g(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -44897,12 +44888,12 @@ var Trapezoid = function Trapezoid2(props) {
   }
   var layerClass = clsx("recharts-trapezoid", className);
   if (!isUpdateAnimationActive) {
-    return /* @__PURE__ */ React$2.createElement("g", null, /* @__PURE__ */ React$2.createElement("path", _extends$d({}, filterProps(trapezoidProps, true), {
+    return /* @__PURE__ */ React2.createElement("g", null, /* @__PURE__ */ React2.createElement("path", _extends$d({}, filterProps(trapezoidProps, true), {
       className: layerClass,
       d: getTrapezoidPath(x3, y2, upperWidth, lowerWidth, height)
     })));
   }
-  return /* @__PURE__ */ React$2.createElement(Animate, {
+  return /* @__PURE__ */ React2.createElement(Animate, {
     canBegin: totalLength > 0,
     from: {
       upperWidth: 0,
@@ -44923,7 +44914,7 @@ var Trapezoid = function Trapezoid2(props) {
     isActive: isUpdateAnimationActive
   }, function(_ref) {
     var currUpperWidth = _ref.upperWidth, currLowerWidth = _ref.lowerWidth, currHeight = _ref.height, currX = _ref.x, currY = _ref.y;
-    return /* @__PURE__ */ React$2.createElement(Animate, {
+    return /* @__PURE__ */ React2.createElement(Animate, {
       canBegin: totalLength > 0,
       from: "0px ".concat(totalLength === -1 ? 1 : totalLength, "px"),
       to: "".concat(totalLength, "px 0px"),
@@ -44931,7 +44922,7 @@ var Trapezoid = function Trapezoid2(props) {
       begin: animationBegin,
       duration: animationDuration,
       easing: animationEasing
-    }, /* @__PURE__ */ React$2.createElement("path", _extends$d({}, filterProps(trapezoidProps, true), {
+    }, /* @__PURE__ */ React2.createElement("path", _extends$d({}, filterProps(trapezoidProps, true), {
       className: layerClass,
       d: getTrapezoidPath(currX, currY, currUpperWidth, currLowerWidth, currHeight),
       ref: pathRef
@@ -44939,13 +44930,13 @@ var Trapezoid = function Trapezoid2(props) {
   });
 };
 var _excluded$6 = ["option", "shapeType", "propTransformer", "activeClassName", "isActive"];
-function _typeof$i(o) {
+function _typeof$i(o2) {
   "@babel/helpers - typeof";
-  return _typeof$i = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$i(o);
+  return _typeof$i = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$i(o2);
 }
 function _objectWithoutProperties$6(source, excluded) {
   if (source == null) return {};
@@ -44976,10 +44967,10 @@ function _objectWithoutPropertiesLoose$6(source, excluded) {
 function ownKeys$f(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -45027,14 +45018,14 @@ function ShapeSelector(_ref) {
   var shapeType = _ref.shapeType, elementProps = _ref.elementProps;
   switch (shapeType) {
     case "rectangle":
-      return /* @__PURE__ */ React$2.createElement(Rectangle, elementProps);
+      return /* @__PURE__ */ React2.createElement(Rectangle, elementProps);
     case "trapezoid":
-      return /* @__PURE__ */ React$2.createElement(Trapezoid, elementProps);
+      return /* @__PURE__ */ React2.createElement(Trapezoid, elementProps);
     case "sector":
-      return /* @__PURE__ */ React$2.createElement(Sector, elementProps);
+      return /* @__PURE__ */ React2.createElement(Sector, elementProps);
     case "symbols":
       if (isSymbolsProps(shapeType)) {
-        return /* @__PURE__ */ React$2.createElement(Symbols, elementProps);
+        return /* @__PURE__ */ React2.createElement(Symbols, elementProps);
       }
       break;
     default:
@@ -45052,23 +45043,23 @@ function Shape(_ref2) {
   var shape;
   if (/* @__PURE__ */ reactExports.isValidElement(option)) {
     shape = /* @__PURE__ */ reactExports.cloneElement(option, _objectSpread$f(_objectSpread$f({}, props), getPropsFromShapeOption(option)));
-  } else if (isFunction$5(option)) {
+  } else if (isFunction$4(option)) {
     shape = option(props);
   } else if (isPlainObject$1(option) && !isBoolean$1(option)) {
     var nextProps = propTransformer(option, props);
-    shape = /* @__PURE__ */ React$2.createElement(ShapeSelector, {
+    shape = /* @__PURE__ */ React2.createElement(ShapeSelector, {
       shapeType,
       elementProps: nextProps
     });
   } else {
     var elementProps = props;
-    shape = /* @__PURE__ */ React$2.createElement(ShapeSelector, {
+    shape = /* @__PURE__ */ React2.createElement(ShapeSelector, {
       shapeType,
       elementProps
     });
   }
   if (isActive) {
-    return /* @__PURE__ */ React$2.createElement(Layer, {
+    return /* @__PURE__ */ React2.createElement(Layer, {
       className: activeClassName
     }, shape);
   }
@@ -45154,13 +45145,13 @@ function getActiveShapeIndexForTooltip(_ref3) {
   return activeIndex;
 }
 var _Pie;
-function _typeof$h(o) {
+function _typeof$h(o2) {
   "@babel/helpers - typeof";
-  return _typeof$h = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$h(o);
+  return _typeof$h = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$h(o2);
 }
 function _extends$c() {
   _extends$c = Object.assign ? Object.assign.bind() : function(target) {
@@ -45179,10 +45170,10 @@ function _extends$c() {
 function ownKeys$e(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -45217,8 +45208,8 @@ function _createClass$c(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$a(t2, o, e3) {
-  return o = _getPrototypeOf$a(o), _possibleConstructorReturn$a(t2, _isNativeReflectConstruct$a() ? Reflect.construct(o, e3 || [], _getPrototypeOf$a(t2).constructor) : o.apply(t2, e3));
+function _callSuper$a(t2, o2, e3) {
+  return o2 = _getPrototypeOf$a(o2), _possibleConstructorReturn$a(t2, _isNativeReflectConstruct$a() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$a(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$a(self2, call) {
   if (call && (_typeof$h(call) === "object" || typeof call === "function")) {
@@ -45244,11 +45235,11 @@ function _isNativeReflectConstruct$a() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$a(o) {
-  _getPrototypeOf$a = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$a(o2) {
+  _getPrototypeOf$a = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$a(o);
+  return _getPrototypeOf$a(o2);
 }
 function _inherits$a(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -45258,12 +45249,12 @@ function _inherits$a(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$a(subClass, superClass);
 }
-function _setPrototypeOf$a(o, p2) {
-  _setPrototypeOf$a = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$a(o2, p2) {
+  _setPrototypeOf$a = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$a(o, p2);
+  return _setPrototypeOf$a(o2, p2);
 }
 function _defineProperty$h(obj, key, value) {
   key = _toPropertyKey$h(key);
@@ -45301,7 +45292,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
       _this.setState({
         isAnimationFinished: true
       });
-      if (isFunction$5(onAnimationEnd2)) {
+      if (isFunction$4(onAnimationEnd2)) {
         onAnimationEnd2();
       }
     });
@@ -45310,7 +45301,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
       _this.setState({
         isAnimationFinished: false
       });
-      if (isFunction$5(onAnimationStart2)) {
+      if (isFunction$4(onAnimationStart2)) {
         onAnimationStart2();
       }
     });
@@ -45374,12 +45365,12 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
         }
         return (
           // eslint-disable-next-line react/no-array-index-key
-          /* @__PURE__ */ React$2.createElement(Layer, {
+          /* @__PURE__ */ React2.createElement(Layer, {
             key: "label-".concat(entry.startAngle, "-").concat(entry.endAngle, "-").concat(entry.midAngle, "-").concat(i)
           }, labelLine && Pie2.renderLabelLineItem(labelLine, lineProps, "line"), Pie2.renderLabelItem(label, labelProps, getValueByDataKey(entry, realDataKey)))
         );
       });
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: "recharts-pie-labels"
       }, labels);
     }
@@ -45397,7 +45388,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
           stroke: blendStroke ? entry.fill : entry.stroke,
           tabIndex: -1
         });
-        return /* @__PURE__ */ React$2.createElement(Layer, _extends$c({
+        return /* @__PURE__ */ React2.createElement(Layer, _extends$c({
           ref: function ref(_ref) {
             if (_ref && !_this2.sectorRefs.includes(_ref)) {
               _this2.sectorRefs.push(_ref);
@@ -45408,7 +45399,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
         }, adaptEventsOfChild(_this2.props, entry, i), {
           // eslint-disable-next-line react/no-array-index-key
           key: "sector-".concat(entry === null || entry === void 0 ? void 0 : entry.startAngle, "-").concat(entry === null || entry === void 0 ? void 0 : entry.endAngle, "-").concat(entry.midAngle, "-").concat(i)
-        }), /* @__PURE__ */ React$2.createElement(Shape, _extends$c({
+        }), /* @__PURE__ */ React2.createElement(Shape, _extends$c({
           option: sectorOptions,
           isActive,
           shapeType: "sector"
@@ -45421,7 +45412,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
       var _this3 = this;
       var _this$props3 = this.props, sectors = _this$props3.sectors, isAnimationActive = _this$props3.isAnimationActive, animationBegin = _this$props3.animationBegin, animationDuration = _this$props3.animationDuration, animationEasing = _this$props3.animationEasing, animationId = _this$props3.animationId;
       var _this$state = this.state, prevSectors = _this$state.prevSectors, prevIsAnimationActive = _this$state.prevIsAnimationActive;
-      return /* @__PURE__ */ React$2.createElement(Animate, {
+      return /* @__PURE__ */ React2.createElement(Animate, {
         begin: animationBegin,
         duration: animationDuration,
         isActive: isAnimationActive,
@@ -45463,7 +45454,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
             curAngle = _latest.endAngle;
           }
         });
-        return /* @__PURE__ */ React$2.createElement(Layer, null, _this3.renderSectorsStatically(stepData));
+        return /* @__PURE__ */ React2.createElement(Layer, null, _this3.renderSectorsStatically(stepData));
       });
     }
   }, {
@@ -45527,7 +45518,7 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
         return null;
       }
       var layerClass = clsx("recharts-pie", className);
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         tabIndex: this.props.rootTabIndex,
         className: layerClass,
         ref: function ref(_ref3) {
@@ -45577,14 +45568,14 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
   }, {
     key: "renderLabelLineItem",
     value: function renderLabelLineItem(option, props, key) {
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        return /* @__PURE__ */ React$2.cloneElement(option, props);
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        return /* @__PURE__ */ React2.cloneElement(option, props);
       }
-      if (isFunction$5(option)) {
+      if (isFunction$4(option)) {
         return option(props);
       }
       var className = clsx("recharts-pie-label-line", typeof option !== "boolean" ? option.className : "");
-      return /* @__PURE__ */ React$2.createElement(Curve, _extends$c({}, props, {
+      return /* @__PURE__ */ React2.createElement(Curve, _extends$c({}, props, {
         key,
         type: "linear",
         className
@@ -45593,18 +45584,18 @@ var Pie = /* @__PURE__ */ function(_PureComponent) {
   }, {
     key: "renderLabelItem",
     value: function renderLabelItem(option, props, value) {
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        return /* @__PURE__ */ React$2.cloneElement(option, props);
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        return /* @__PURE__ */ React2.cloneElement(option, props);
       }
       var label = value;
-      if (isFunction$5(option)) {
+      if (isFunction$4(option)) {
         label = option(props);
-        if (/* @__PURE__ */ React$2.isValidElement(label)) {
+        if (/* @__PURE__ */ React2.isValidElement(label)) {
           return label;
         }
       }
-      var className = clsx("recharts-pie-label-text", typeof option !== "boolean" && !isFunction$5(option) ? option.className : "");
-      return /* @__PURE__ */ React$2.createElement(Text, _extends$c({}, props, {
+      var className = clsx("recharts-pie-label-text", typeof option !== "boolean" && !isFunction$4(option) ? option.className : "");
+      return /* @__PURE__ */ React2.createElement(Text, _extends$c({}, props, {
         alignmentBaseline: "middle",
         className
       }), label);
@@ -45796,21 +45787,21 @@ var createRange = _createRange;
 var range2 = createRange();
 var range_1 = range2;
 const range$1 = /* @__PURE__ */ getDefaultExportFromCjs(range_1);
-function _typeof$g(o) {
+function _typeof$g(o2) {
   "@babel/helpers - typeof";
-  return _typeof$g = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$g(o);
+  return _typeof$g = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$g(o2);
 }
 function ownKeys$d(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -45859,13 +45850,13 @@ var generatePrefixStyle = function generatePrefixStyle2(name, value) {
   result[name] = value;
   return result;
 };
-function _typeof$f(o) {
+function _typeof$f(o2) {
   "@babel/helpers - typeof";
-  return _typeof$f = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$f(o);
+  return _typeof$f = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$f(o2);
 }
 function _extends$b() {
   _extends$b = Object.assign ? Object.assign.bind() : function(target) {
@@ -45884,10 +45875,10 @@ function _extends$b() {
 function ownKeys$c(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -45922,8 +45913,8 @@ function _createClass$b(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$9(t2, o, e3) {
-  return o = _getPrototypeOf$9(o), _possibleConstructorReturn$9(t2, _isNativeReflectConstruct$9() ? Reflect.construct(o, e3 || [], _getPrototypeOf$9(t2).constructor) : o.apply(t2, e3));
+function _callSuper$9(t2, o2, e3) {
+  return o2 = _getPrototypeOf$9(o2), _possibleConstructorReturn$9(t2, _isNativeReflectConstruct$9() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$9(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$9(self2, call) {
   if (call && (_typeof$f(call) === "object" || typeof call === "function")) {
@@ -45949,11 +45940,11 @@ function _isNativeReflectConstruct$9() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$9(o) {
-  _getPrototypeOf$9 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$9(o2) {
+  _getPrototypeOf$9 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$9(o);
+  return _getPrototypeOf$9(o2);
 }
 function _inherits$9(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -45963,12 +45954,12 @@ function _inherits$9(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$9(subClass, superClass);
 }
-function _setPrototypeOf$9(o, p2) {
-  _setPrototypeOf$9 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$9(o2, p2) {
+  _setPrototypeOf$9 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$9(o, p2);
+  return _setPrototypeOf$9(o2, p2);
 }
 function _defineProperty$f(obj, key, value) {
   key = _toPropertyKey$f(key);
@@ -46113,7 +46104,7 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
     value: function getTextOfTick(index2) {
       var _this$props3 = this.props, data = _this$props3.data, tickFormatter = _this$props3.tickFormatter, dataKey = _this$props3.dataKey;
       var text = getValueByDataKey(data[index2], dataKey, index2);
-      return isFunction$5(tickFormatter) ? tickFormatter(text, index2) : text;
+      return isFunction$4(tickFormatter) ? tickFormatter(text, index2) : text;
     }
   }, {
     key: "attachDragEndListener",
@@ -46228,7 +46219,7 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
     key: "renderBackground",
     value: function renderBackground() {
       var _this$props6 = this.props, x3 = _this$props6.x, y2 = _this$props6.y, width = _this$props6.width, height = _this$props6.height, fill = _this$props6.fill, stroke = _this$props6.stroke;
-      return /* @__PURE__ */ React$2.createElement("rect", {
+      return /* @__PURE__ */ React2.createElement("rect", {
         stroke,
         fill,
         x: x3,
@@ -46245,7 +46236,7 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
       if (!chartElement) {
         return null;
       }
-      return /* @__PURE__ */ React$2.cloneElement(chartElement, {
+      return /* @__PURE__ */ React2.cloneElement(chartElement, {
         x: x3,
         y: y2,
         width,
@@ -46268,7 +46259,7 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
         height
       });
       var ariaLabelBrush = ariaLabel || "Min value: ".concat((_data$startIndex = data[startIndex]) === null || _data$startIndex === void 0 ? void 0 : _data$startIndex.name, ", Max value: ").concat((_data$endIndex = data[endIndex]) === null || _data$endIndex === void 0 ? void 0 : _data$endIndex.name);
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         tabIndex: 0,
         role: "slider",
         "aria-label": ariaLabelBrush,
@@ -46307,7 +46298,7 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
       var _this$props9 = this.props, y2 = _this$props9.y, height = _this$props9.height, stroke = _this$props9.stroke, travellerWidth = _this$props9.travellerWidth;
       var x3 = Math.min(startX, endX) + travellerWidth;
       var width = Math.max(Math.abs(endX - startX) - travellerWidth, 0);
-      return /* @__PURE__ */ React$2.createElement("rect", {
+      return /* @__PURE__ */ React2.createElement("rect", {
         className: "recharts-brush-slide",
         onMouseEnter: this.handleEnterSlideOrTraveller,
         onMouseLeave: this.handleLeaveSlideOrTraveller,
@@ -46335,14 +46326,14 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
         pointerEvents: "none",
         fill: stroke
       };
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: "recharts-brush-texts"
-      }, /* @__PURE__ */ React$2.createElement(Text, _extends$b({
+      }, /* @__PURE__ */ React2.createElement(Text, _extends$b({
         textAnchor: "end",
         verticalAnchor: "middle",
         x: Math.min(startX, endX) - offset2,
         y: y2 + height / 2
-      }, attrs), this.getTextOfTick(startIndex)), /* @__PURE__ */ React$2.createElement(Text, _extends$b({
+      }, attrs), this.getTextOfTick(startIndex)), /* @__PURE__ */ React2.createElement(Text, _extends$b({
         textAnchor: "start",
         verticalAnchor: "middle",
         x: Math.max(startX, endX) + travellerWidth + offset2,
@@ -46358,9 +46349,9 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
         return null;
       }
       var layerClass = clsx("recharts-brush", className);
-      var isPanoramic = React$2.Children.count(children2) === 1;
+      var isPanoramic = React2.Children.count(children2) === 1;
       var style2 = generatePrefixStyle("userSelect", "none");
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: layerClass,
         onMouseLeave: this.handleLeaveWrapper,
         onTouchMove: this.handleTouchMove,
@@ -46372,21 +46363,21 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
     value: function renderDefaultTraveller(props) {
       var x3 = props.x, y2 = props.y, width = props.width, height = props.height, stroke = props.stroke;
       var lineY = Math.floor(y2 + height / 2) - 1;
-      return /* @__PURE__ */ React$2.createElement(React$2.Fragment, null, /* @__PURE__ */ React$2.createElement("rect", {
+      return /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("rect", {
         x: x3,
         y: y2,
         width,
         height,
         fill: stroke,
         stroke: "none"
-      }), /* @__PURE__ */ React$2.createElement("line", {
+      }), /* @__PURE__ */ React2.createElement("line", {
         x1: x3 + 1,
         y1: lineY,
         x2: x3 + width - 1,
         y2: lineY,
         fill: "none",
         stroke: "#fff"
-      }), /* @__PURE__ */ React$2.createElement("line", {
+      }), /* @__PURE__ */ React2.createElement("line", {
         x1: x3 + 1,
         y1: lineY + 2,
         x2: x3 + width - 1,
@@ -46399,9 +46390,9 @@ var Brush = /* @__PURE__ */ function(_PureComponent) {
     key: "renderTraveller",
     value: function renderTraveller(option, props) {
       var rectangle;
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        rectangle = /* @__PURE__ */ React$2.cloneElement(option, props);
-      } else if (isFunction$5(option)) {
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        rectangle = /* @__PURE__ */ React2.cloneElement(option, props);
+      } else if (isFunction$4(option)) {
         rectangle = option(props);
       } else {
         rectangle = Brush2.renderDefaultTraveller(props);
@@ -46567,13 +46558,13 @@ function every(collection, predicate, guard) {
 var every_1 = every;
 const every$1 = /* @__PURE__ */ getDefaultExportFromCjs(every_1);
 var _excluded$5 = ["x", "y"];
-function _typeof$e(o) {
+function _typeof$e(o2) {
   "@babel/helpers - typeof";
-  return _typeof$e = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$e(o);
+  return _typeof$e = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o22) {
+    return typeof o22;
+  } : function(o22) {
+    return o22 && "function" == typeof Symbol && o22.constructor === Symbol && o22 !== Symbol.prototype ? "symbol" : typeof o22;
+  }, _typeof$e(o2);
 }
 function _extends$a() {
   _extends$a = Object.assign ? Object.assign.bind() : function(target) {
@@ -46592,10 +46583,10 @@ function _extends$a() {
 function ownKeys$b(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r22) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r22) {
       return Object.getOwnPropertyDescriptor(e3, r22).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -46681,7 +46672,7 @@ function typeguardBarRectangleProps(_ref, props) {
   });
 }
 function BarRectangle(props) {
-  return /* @__PURE__ */ React$2.createElement(Shape, _extends$a({
+  return /* @__PURE__ */ React2.createElement(Shape, _extends$a({
     shapeType: "rectangle",
     propTransformer: typeguardBarRectangleProps,
     activeClassName: "recharts-active-bar"
@@ -46701,13 +46692,13 @@ var minPointSizeCallback = function minPointSizeCallback2(minPointSize) {
 };
 var _excluded$4 = ["value", "background"];
 var _Bar;
-function _typeof$d(o) {
+function _typeof$d(o2) {
   "@babel/helpers - typeof";
-  return _typeof$d = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$d(o);
+  return _typeof$d = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$d(o2);
 }
 function _objectWithoutProperties$4(source, excluded) {
   if (source == null) return {};
@@ -46752,10 +46743,10 @@ function _extends$9() {
 function ownKeys$a(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -46790,8 +46781,8 @@ function _createClass$a(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$8(t2, o, e3) {
-  return o = _getPrototypeOf$8(o), _possibleConstructorReturn$8(t2, _isNativeReflectConstruct$8() ? Reflect.construct(o, e3 || [], _getPrototypeOf$8(t2).constructor) : o.apply(t2, e3));
+function _callSuper$8(t2, o2, e3) {
+  return o2 = _getPrototypeOf$8(o2), _possibleConstructorReturn$8(t2, _isNativeReflectConstruct$8() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$8(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$8(self2, call) {
   if (call && (_typeof$d(call) === "object" || typeof call === "function")) {
@@ -46817,11 +46808,11 @@ function _isNativeReflectConstruct$8() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$8(o) {
-  _getPrototypeOf$8 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$8(o2) {
+  _getPrototypeOf$8 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$8(o);
+  return _getPrototypeOf$8(o2);
 }
 function _inherits$8(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -46831,12 +46822,12 @@ function _inherits$8(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$8(subClass, superClass);
 }
-function _setPrototypeOf$8(o, p2) {
-  _setPrototypeOf$8 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$8(o2, p2) {
+  _setPrototypeOf$8 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$8(o, p2);
+  return _setPrototypeOf$8(o2, p2);
 }
 function _defineProperty$d(obj, key, value) {
   key = _toPropertyKey$d(key);
@@ -46911,13 +46902,13 @@ var Bar = /* @__PURE__ */ function(_PureComponent) {
           onAnimationStart: _this2.handleAnimationStart,
           onAnimationEnd: _this2.handleAnimationEnd
         });
-        return /* @__PURE__ */ React$2.createElement(Layer, _extends$9({
+        return /* @__PURE__ */ React2.createElement(Layer, _extends$9({
           className: "recharts-bar-rectangle"
         }, adaptEventsOfChild(_this2.props, entry, i), {
           // https://github.com/recharts/recharts/issues/5415
           // eslint-disable-next-line react/no-array-index-key
           key: "rectangle-".concat(entry === null || entry === void 0 ? void 0 : entry.x, "-").concat(entry === null || entry === void 0 ? void 0 : entry.y, "-").concat(entry === null || entry === void 0 ? void 0 : entry.value, "-").concat(i)
-        }), /* @__PURE__ */ React$2.createElement(BarRectangle, props));
+        }), /* @__PURE__ */ React2.createElement(BarRectangle, props));
       });
     }
   }, {
@@ -46926,7 +46917,7 @@ var Bar = /* @__PURE__ */ function(_PureComponent) {
       var _this3 = this;
       var _this$props2 = this.props, data = _this$props2.data, layout = _this$props2.layout, isAnimationActive = _this$props2.isAnimationActive, animationBegin = _this$props2.animationBegin, animationDuration = _this$props2.animationDuration, animationEasing = _this$props2.animationEasing, animationId = _this$props2.animationId;
       var prevData = this.state.prevData;
-      return /* @__PURE__ */ React$2.createElement(Animate, {
+      return /* @__PURE__ */ React2.createElement(Animate, {
         begin: animationBegin,
         duration: animationDuration,
         isActive: isAnimationActive,
@@ -46970,7 +46961,7 @@ var Bar = /* @__PURE__ */ function(_PureComponent) {
             width: w2
           });
         });
-        return /* @__PURE__ */ React$2.createElement(Layer, null, _this3.renderRectanglesStatically(stepData));
+        return /* @__PURE__ */ React2.createElement(Layer, null, _this3.renderRectanglesStatically(stepData));
       });
     }
   }, {
@@ -47004,7 +46995,7 @@ var Bar = /* @__PURE__ */ function(_PureComponent) {
           index: i,
           className: "recharts-bar-background-rectangle"
         });
-        return /* @__PURE__ */ React$2.createElement(BarRectangle, _extends$9({
+        return /* @__PURE__ */ React2.createElement(BarRectangle, _extends$9({
           key: "background-bar-".concat(i),
           option: _this4.props.background,
           isActive: i === activeIndex
@@ -47035,8 +47026,8 @@ var Bar = /* @__PURE__ */ function(_PureComponent) {
       var errorBarProps = {
         clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : null
       };
-      return /* @__PURE__ */ React$2.createElement(Layer, errorBarProps, errorBarItems.map(function(item) {
-        return /* @__PURE__ */ React$2.cloneElement(item, {
+      return /* @__PURE__ */ React2.createElement(Layer, errorBarProps, errorBarItems.map(function(item) {
+        return /* @__PURE__ */ React2.cloneElement(item, {
           key: "error-bar-".concat(clipPathId, "-").concat(item.props.dataKey),
           data,
           xAxis,
@@ -47060,16 +47051,16 @@ var Bar = /* @__PURE__ */ function(_PureComponent) {
       var needClipY = yAxis && yAxis.allowDataOverflow;
       var needClip = needClipX || needClipY;
       var clipPathId = isNil$1(id2) ? this.id : id2;
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: layerClass
-      }, needClipX || needClipY ? /* @__PURE__ */ React$2.createElement("defs", null, /* @__PURE__ */ React$2.createElement("clipPath", {
+      }, needClipX || needClipY ? /* @__PURE__ */ React2.createElement("defs", null, /* @__PURE__ */ React2.createElement("clipPath", {
         id: "clipPath-".concat(clipPathId)
-      }, /* @__PURE__ */ React$2.createElement("rect", {
+      }, /* @__PURE__ */ React2.createElement("rect", {
         x: needClipX ? left : left - width / 2,
         y: needClipY ? top : top - height / 2,
         width: needClipX ? width : width * 2,
         height: needClipY ? height : height * 2
-      }))) : null, /* @__PURE__ */ React$2.createElement(Layer, {
+      }))) : null, /* @__PURE__ */ React2.createElement(Layer, {
         className: "recharts-bar-rectangles",
         clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : null
       }, background ? this.renderBackground() : null, this.renderRectangles()), this.renderErrorBar(needClip, clipPathId), (!isAnimationActive || isAnimationFinished) && LabelList.renderCallByParent(this.props, data));
@@ -47207,13 +47198,13 @@ _defineProperty$d(Bar, "getComposedData", function(_ref2) {
     layout
   }, offset2);
 });
-function _typeof$c(o) {
+function _typeof$c(o2) {
   "@babel/helpers - typeof";
-  return _typeof$c = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$c(o);
+  return _typeof$c = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$c(o2);
 }
 function _classCallCheck$9(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -47238,10 +47229,10 @@ function _createClass$9(Constructor, protoProps, staticProps) {
 function ownKeys$9(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -47552,19 +47543,19 @@ var ChartWidthContext = /* @__PURE__ */ reactExports.createContext(0);
 var ChartLayoutContextProvider = function ChartLayoutContextProvider2(props) {
   var _props$state = props.state, xAxisMap = _props$state.xAxisMap, yAxisMap = _props$state.yAxisMap, offset2 = _props$state.offset, clipPathId = props.clipPathId, children2 = props.children, width = props.width, height = props.height;
   var viewBox = calculateViewBox(offset2);
-  return /* @__PURE__ */ React$2.createElement(XAxisContext.Provider, {
+  return /* @__PURE__ */ React2.createElement(XAxisContext.Provider, {
     value: xAxisMap
-  }, /* @__PURE__ */ React$2.createElement(YAxisContext.Provider, {
+  }, /* @__PURE__ */ React2.createElement(YAxisContext.Provider, {
     value: yAxisMap
-  }, /* @__PURE__ */ React$2.createElement(OffsetContext.Provider, {
+  }, /* @__PURE__ */ React2.createElement(OffsetContext.Provider, {
     value: offset2
-  }, /* @__PURE__ */ React$2.createElement(ViewBoxContext.Provider, {
+  }, /* @__PURE__ */ React2.createElement(ViewBoxContext.Provider, {
     value: viewBox
-  }, /* @__PURE__ */ React$2.createElement(ClipPathIdContext.Provider, {
+  }, /* @__PURE__ */ React2.createElement(ClipPathIdContext.Provider, {
     value: clipPathId
-  }, /* @__PURE__ */ React$2.createElement(ChartHeightContext.Provider, {
+  }, /* @__PURE__ */ React2.createElement(ChartHeightContext.Provider, {
     value: height
-  }, /* @__PURE__ */ React$2.createElement(ChartWidthContext.Provider, {
+  }, /* @__PURE__ */ React2.createElement(ChartWidthContext.Provider, {
     value: width
   }, children2)))))));
 };
@@ -47609,13 +47600,13 @@ var useChartWidth = function useChartWidth2() {
 var useChartHeight = function useChartHeight2() {
   return reactExports.useContext(ChartHeightContext);
 };
-function _typeof$b(o) {
+function _typeof$b(o2) {
   "@babel/helpers - typeof";
-  return _typeof$b = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$b(o);
+  return _typeof$b = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$b(o2);
 }
 function _classCallCheck$8(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -47636,8 +47627,8 @@ function _createClass$8(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$7(t2, o, e3) {
-  return o = _getPrototypeOf$7(o), _possibleConstructorReturn$7(t2, _isNativeReflectConstruct$7() ? Reflect.construct(o, e3 || [], _getPrototypeOf$7(t2).constructor) : o.apply(t2, e3));
+function _callSuper$7(t2, o2, e3) {
+  return o2 = _getPrototypeOf$7(o2), _possibleConstructorReturn$7(t2, _isNativeReflectConstruct$7() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$7(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$7(self2, call) {
   if (call && (_typeof$b(call) === "object" || typeof call === "function")) {
@@ -47663,11 +47654,11 @@ function _isNativeReflectConstruct$7() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$7(o) {
-  _getPrototypeOf$7 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$7(o2) {
+  _getPrototypeOf$7 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$7(o);
+  return _getPrototypeOf$7(o2);
 }
 function _inherits$7(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -47677,20 +47668,20 @@ function _inherits$7(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$7(subClass, superClass);
 }
-function _setPrototypeOf$7(o, p2) {
-  _setPrototypeOf$7 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$7(o2, p2) {
+  _setPrototypeOf$7 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$7(o, p2);
+  return _setPrototypeOf$7(o2, p2);
 }
 function ownKeys$8(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -47734,13 +47725,13 @@ function _slicedToArray$1(arr, i) {
 function _nonIterableRest$1() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$3(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$3(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$3(o, minLen);
+function _unsupportedIterableToArray$3(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$3(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$3(o2, minLen);
 }
 function _arrayLikeToArray$3(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -47750,17 +47741,17 @@ function _arrayLikeToArray$3(arr, len) {
 function _iterableToArrayLimit$1(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r3) {
-      o = true, n2 = r3;
+      o2 = true, n2 = r3;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -47785,12 +47776,12 @@ function _extends$8() {
 }
 var renderLine = function renderLine2(option, props) {
   var line;
-  if (/* @__PURE__ */ React$2.isValidElement(option)) {
-    line = /* @__PURE__ */ React$2.cloneElement(option, props);
-  } else if (isFunction$5(option)) {
+  if (/* @__PURE__ */ React2.isValidElement(option)) {
+    line = /* @__PURE__ */ React2.cloneElement(option, props);
+  } else if (isFunction$4(option)) {
     line = option(props);
   } else {
-    line = /* @__PURE__ */ React$2.createElement("line", _extends$8({}, props, {
+    line = /* @__PURE__ */ React2.createElement("line", _extends$8({}, props, {
       className: "recharts-reference-line-line"
     }));
   }
@@ -47879,7 +47870,7 @@ function ReferenceLineImpl(props) {
     x2: x22,
     y2
   });
-  return /* @__PURE__ */ React$2.createElement(Layer, {
+  return /* @__PURE__ */ React2.createElement(Layer, {
     className: clsx("recharts-reference-line", className)
   }, renderLine(shape, lineProps), Label$2.renderCallByParent(props, rectWithCoords({
     x1,
@@ -47897,10 +47888,10 @@ var ReferenceLine = /* @__PURE__ */ function(_React$Component) {
   return _createClass$8(ReferenceLine2, [{
     key: "render",
     value: function render() {
-      return /* @__PURE__ */ React$2.createElement(ReferenceLineImpl, this.props);
+      return /* @__PURE__ */ React2.createElement(ReferenceLineImpl, this.props);
     }
   }]);
-}(React$2.Component);
+}(React2.Component);
 _defineProperty$b(ReferenceLine, "displayName", "ReferenceLine");
 _defineProperty$b(ReferenceLine, "defaultProps", {
   isFront: false,
@@ -47927,21 +47918,21 @@ function _extends$7() {
   };
   return _extends$7.apply(this, arguments);
 }
-function _typeof$a(o) {
+function _typeof$a(o2) {
   "@babel/helpers - typeof";
-  return _typeof$a = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$a(o);
+  return _typeof$a = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$a(o2);
 }
 function ownKeys$7(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -47975,8 +47966,8 @@ function _createClass$7(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$6(t2, o, e3) {
-  return o = _getPrototypeOf$6(o), _possibleConstructorReturn$6(t2, _isNativeReflectConstruct$6() ? Reflect.construct(o, e3 || [], _getPrototypeOf$6(t2).constructor) : o.apply(t2, e3));
+function _callSuper$6(t2, o2, e3) {
+  return o2 = _getPrototypeOf$6(o2), _possibleConstructorReturn$6(t2, _isNativeReflectConstruct$6() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$6(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$6(self2, call) {
   if (call && (_typeof$a(call) === "object" || typeof call === "function")) {
@@ -48002,11 +47993,11 @@ function _isNativeReflectConstruct$6() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$6(o) {
-  _getPrototypeOf$6 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$6(o2) {
+  _getPrototypeOf$6 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$6(o);
+  return _getPrototypeOf$6(o2);
 }
 function _inherits$6(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -48016,12 +48007,12 @@ function _inherits$6(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$6(subClass, superClass);
 }
-function _setPrototypeOf$6(o, p2) {
-  _setPrototypeOf$6 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$6(o2, p2) {
+  _setPrototypeOf$6 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$6(o, p2);
+  return _setPrototypeOf$6(o2, p2);
 }
 function _defineProperty$a(obj, key, value) {
   key = _toPropertyKey$a(key);
@@ -48092,7 +48083,7 @@ var ReferenceDot = /* @__PURE__ */ function(_React$Component) {
         cx: cx2,
         cy
       });
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: clsx("recharts-reference-dot", className)
       }, ReferenceDot2.renderDot(shape, dotProps), Label$2.renderCallByParent(this.props, {
         x: cx2 - r2,
@@ -48102,7 +48093,7 @@ var ReferenceDot = /* @__PURE__ */ function(_React$Component) {
       }));
     }
   }]);
-}(React$2.Component);
+}(React2.Component);
 _defineProperty$a(ReferenceDot, "displayName", "ReferenceDot");
 _defineProperty$a(ReferenceDot, "defaultProps", {
   isFront: false,
@@ -48117,12 +48108,12 @@ _defineProperty$a(ReferenceDot, "defaultProps", {
 });
 _defineProperty$a(ReferenceDot, "renderDot", function(option, props) {
   var dot;
-  if (/* @__PURE__ */ React$2.isValidElement(option)) {
-    dot = /* @__PURE__ */ React$2.cloneElement(option, props);
-  } else if (isFunction$5(option)) {
+  if (/* @__PURE__ */ React2.isValidElement(option)) {
+    dot = /* @__PURE__ */ React2.cloneElement(option, props);
+  } else if (isFunction$4(option)) {
     dot = option(props);
   } else {
-    dot = /* @__PURE__ */ React$2.createElement(Dot, _extends$7({}, props, {
+    dot = /* @__PURE__ */ React2.createElement(Dot, _extends$7({}, props, {
       cx: props.cx,
       cy: props.cy,
       className: "recharts-reference-dot-dot"
@@ -48144,21 +48135,21 @@ function _extends$6() {
   };
   return _extends$6.apply(this, arguments);
 }
-function _typeof$9(o) {
+function _typeof$9(o2) {
   "@babel/helpers - typeof";
-  return _typeof$9 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$9(o);
+  return _typeof$9 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$9(o2);
 }
 function ownKeys$6(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -48192,8 +48183,8 @@ function _createClass$6(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$5(t2, o, e3) {
-  return o = _getPrototypeOf$5(o), _possibleConstructorReturn$5(t2, _isNativeReflectConstruct$5() ? Reflect.construct(o, e3 || [], _getPrototypeOf$5(t2).constructor) : o.apply(t2, e3));
+function _callSuper$5(t2, o2, e3) {
+  return o2 = _getPrototypeOf$5(o2), _possibleConstructorReturn$5(t2, _isNativeReflectConstruct$5() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$5(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$5(self2, call) {
   if (call && (_typeof$9(call) === "object" || typeof call === "function")) {
@@ -48219,11 +48210,11 @@ function _isNativeReflectConstruct$5() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$5(o) {
-  _getPrototypeOf$5 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$5(o2) {
+  _getPrototypeOf$5 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$5(o);
+  return _getPrototypeOf$5(o2);
 }
 function _inherits$5(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -48233,12 +48224,12 @@ function _inherits$5(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$5(subClass, superClass);
 }
-function _setPrototypeOf$5(o, p2) {
-  _setPrototypeOf$5 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$5(o2, p2) {
+  _setPrototypeOf$5 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$5(o, p2);
+  return _setPrototypeOf$5(o2, p2);
 }
 function _defineProperty$9(obj, key, value) {
   key = _toPropertyKey$9(key);
@@ -48315,14 +48306,14 @@ var ReferenceArea = /* @__PURE__ */ function(_React$Component) {
         return null;
       }
       var clipPath = ifOverflowMatches(this.props, "hidden") ? "url(#".concat(clipPathId, ")") : void 0;
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: clsx("recharts-reference-area", className)
       }, ReferenceArea2.renderRect(shape, _objectSpread$6(_objectSpread$6({
         clipPath
       }, filterProps(this.props, true)), rect)), Label$2.renderCallByParent(this.props, rect));
     }
   }]);
-}(React$2.Component);
+}(React2.Component);
 _defineProperty$9(ReferenceArea, "displayName", "ReferenceArea");
 _defineProperty$9(ReferenceArea, "defaultProps", {
   isFront: false,
@@ -48337,12 +48328,12 @@ _defineProperty$9(ReferenceArea, "defaultProps", {
 });
 _defineProperty$9(ReferenceArea, "renderRect", function(option, props) {
   var rect;
-  if (/* @__PURE__ */ React$2.isValidElement(option)) {
-    rect = /* @__PURE__ */ React$2.cloneElement(option, props);
-  } else if (isFunction$5(option)) {
+  if (/* @__PURE__ */ React2.isValidElement(option)) {
+    rect = /* @__PURE__ */ React2.cloneElement(option, props);
+  } else if (isFunction$4(option)) {
     rect = option(props);
   } else {
-    rect = /* @__PURE__ */ React$2.createElement(Rectangle, _extends$6({}, props, {
+    rect = /* @__PURE__ */ React2.createElement(Rectangle, _extends$6({}, props, {
       className: "recharts-reference-area-rect"
     }));
   }
@@ -48433,21 +48424,21 @@ function getEquidistantTicks(sign2, boundaries, getTickSize, ticks2, minTickGap)
   }
   return [];
 }
-function _typeof$8(o) {
+function _typeof$8(o2) {
   "@babel/helpers - typeof";
-  return _typeof$8 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$8(o);
+  return _typeof$8 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$8(o2);
 }
 function ownKeys$5(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -48594,7 +48585,7 @@ function getTicks(props, fontSize, letterSpacing) {
     height: 0
   };
   var getTickSize = function getTickSize2(content, index2) {
-    var value = isFunction$5(tickFormatter) ? tickFormatter(content.value, index2) : content.value;
+    var value = isFunction$4(tickFormatter) ? tickFormatter(content.value, index2) : content.value;
     return sizeKey === "width" ? getAngledTickWidth(getStringSize(value, {
       fontSize,
       letterSpacing
@@ -48618,13 +48609,13 @@ function getTicks(props, fontSize, letterSpacing) {
   });
 }
 var _excluded$3 = ["viewBox"], _excluded2$3 = ["viewBox"], _excluded3 = ["ticks"];
-function _typeof$7(o) {
+function _typeof$7(o2) {
   "@babel/helpers - typeof";
-  return _typeof$7 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$7(o);
+  return _typeof$7 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$7(o2);
 }
 function _extends$5() {
   _extends$5 = Object.assign ? Object.assign.bind() : function(target) {
@@ -48643,10 +48634,10 @@ function _extends$5() {
 function ownKeys$4(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -48707,8 +48698,8 @@ function _createClass$5(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$4(t2, o, e3) {
-  return o = _getPrototypeOf$4(o), _possibleConstructorReturn$4(t2, _isNativeReflectConstruct$4() ? Reflect.construct(o, e3 || [], _getPrototypeOf$4(t2).constructor) : o.apply(t2, e3));
+function _callSuper$4(t2, o2, e3) {
+  return o2 = _getPrototypeOf$4(o2), _possibleConstructorReturn$4(t2, _isNativeReflectConstruct$4() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$4(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$4(self2, call) {
   if (call && (_typeof$7(call) === "object" || typeof call === "function")) {
@@ -48734,11 +48725,11 @@ function _isNativeReflectConstruct$4() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$4(o) {
-  _getPrototypeOf$4 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$4(o2) {
+  _getPrototypeOf$4 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$4(o);
+  return _getPrototypeOf$4(o2);
 }
 function _inherits$4(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -48748,12 +48739,12 @@ function _inherits$4(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$4(subClass, superClass);
 }
-function _setPrototypeOf$4(o, p2) {
-  _setPrototypeOf$4 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$4(o2, p2) {
+  _setPrototypeOf$4 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$4(o, p2);
+  return _setPrototypeOf$4(o2, p2);
 }
 function _defineProperty$7(obj, key, value) {
   key = _toPropertyKey$7(key);
@@ -48928,7 +48919,7 @@ var CartesianAxis = /* @__PURE__ */ function(_Component) {
           y2: y2 + height
         });
       }
-      return /* @__PURE__ */ React$2.createElement("line", _extends$5({}, props, {
+      return /* @__PURE__ */ React2.createElement("line", _extends$5({}, props, {
         className: clsx("recharts-cartesian-axis-line", get$4(axisLine, "className"))
       }));
     }
@@ -48969,14 +48960,14 @@ var CartesianAxis = /* @__PURE__ */ function(_Component) {
             visibleTicksCount: finalTicks.length,
             tickFormatter
           });
-          return /* @__PURE__ */ React$2.createElement(Layer, _extends$5({
+          return /* @__PURE__ */ React2.createElement(Layer, _extends$5({
             className: "recharts-cartesian-axis-tick",
             key: "tick-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
-          }, adaptEventsOfChild(_this2.props, entry, i)), tickLine && /* @__PURE__ */ React$2.createElement("line", _extends$5({}, tickLineProps, lineCoord, {
+          }, adaptEventsOfChild(_this2.props, entry, i)), tickLine && /* @__PURE__ */ React2.createElement("line", _extends$5({}, tickLineProps, lineCoord, {
             className: clsx("recharts-cartesian-axis-tick-line", get$4(tickLine, "className"))
-          })), tick && CartesianAxis2.renderTickItem(tick, tickProps, "".concat(isFunction$5(tickFormatter) ? tickFormatter(entry.value, i) : entry.value).concat(unit2 || "")));
+          })), tick && CartesianAxis2.renderTickItem(tick, tickProps, "".concat(isFunction$4(tickFormatter) ? tickFormatter(entry.value, i) : entry.value).concat(unit2 || "")));
         });
-        return /* @__PURE__ */ React$2.createElement("g", {
+        return /* @__PURE__ */ React2.createElement("g", {
           className: "recharts-cartesian-axis-ticks"
         }, items);
       }
@@ -48991,13 +48982,13 @@ var CartesianAxis = /* @__PURE__ */ function(_Component) {
       }
       var _this$props8 = this.props, ticks2 = _this$props8.ticks, noTicksProps = _objectWithoutProperties$3(_this$props8, _excluded3);
       var finalTicks = ticks2;
-      if (isFunction$5(ticksGenerator)) {
+      if (isFunction$4(ticksGenerator)) {
         finalTicks = ticks2 && ticks2.length > 0 ? ticksGenerator(this.props) : ticksGenerator(noTicksProps);
       }
       if (width <= 0 || height <= 0 || !finalTicks || !finalTicks.length) {
         return null;
       }
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: clsx("recharts-cartesian-axis", className),
         ref: function ref(_ref2) {
           _this3.layerReference = _ref2;
@@ -49009,16 +49000,16 @@ var CartesianAxis = /* @__PURE__ */ function(_Component) {
     value: function renderTickItem(option, props, value) {
       var tickItem;
       var combinedClassName = clsx(props.className, "recharts-cartesian-axis-tick-value");
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        tickItem = /* @__PURE__ */ React$2.cloneElement(option, _objectSpread$4(_objectSpread$4({}, props), {}, {
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        tickItem = /* @__PURE__ */ React2.cloneElement(option, _objectSpread$4(_objectSpread$4({}, props), {}, {
           className: combinedClassName
         }));
-      } else if (isFunction$5(option)) {
+      } else if (isFunction$4(option)) {
         tickItem = option(_objectSpread$4(_objectSpread$4({}, props), {}, {
           className: combinedClassName
         }));
       } else {
-        tickItem = /* @__PURE__ */ React$2.createElement(Text, _extends$5({}, props, {
+        tickItem = /* @__PURE__ */ React2.createElement(Text, _extends$5({}, props, {
           className: "recharts-cartesian-axis-tick-value"
         }), value);
       }
@@ -49054,21 +49045,21 @@ _defineProperty$7(CartesianAxis, "defaultProps", {
   interval: "preserveEnd"
 });
 var _excluded$2 = ["x1", "y1", "x2", "y2", "key"], _excluded2$2 = ["offset"];
-function _typeof$6(o) {
+function _typeof$6(o2) {
   "@babel/helpers - typeof";
-  return _typeof$6 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$6(o);
+  return _typeof$6 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$6(o2);
 }
 function ownKeys$3(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -49152,7 +49143,7 @@ var Background = function Background2(props) {
     return null;
   }
   var fillOpacity = props.fillOpacity, x3 = props.x, y2 = props.y, width = props.width, height = props.height, ry = props.ry;
-  return /* @__PURE__ */ React$2.createElement("rect", {
+  return /* @__PURE__ */ React2.createElement("rect", {
     x: x3,
     y: y2,
     ry,
@@ -49166,16 +49157,16 @@ var Background = function Background2(props) {
 };
 function renderLineItem(option, props) {
   var lineItem;
-  if (/* @__PURE__ */ React$2.isValidElement(option)) {
-    lineItem = /* @__PURE__ */ React$2.cloneElement(option, props);
-  } else if (isFunction$5(option)) {
+  if (/* @__PURE__ */ React2.isValidElement(option)) {
+    lineItem = /* @__PURE__ */ React2.cloneElement(option, props);
+  } else if (isFunction$4(option)) {
     lineItem = option(props);
   } else {
     var x1 = props.x1, y1 = props.y1, x22 = props.x2, y2 = props.y2, key = props.key, others = _objectWithoutProperties$2(props, _excluded$2);
     var _filterProps = filterProps(others, false);
     _filterProps.offset;
     var restOfFilteredProps = _objectWithoutProperties$2(_filterProps, _excluded2$2);
-    lineItem = /* @__PURE__ */ React$2.createElement("line", _extends$4({}, restOfFilteredProps, {
+    lineItem = /* @__PURE__ */ React2.createElement("line", _extends$4({}, restOfFilteredProps, {
       x1,
       y1,
       x2: x22,
@@ -49202,7 +49193,7 @@ function HorizontalGridLines(props) {
     });
     return renderLineItem(horizontal, lineItemProps);
   });
-  return /* @__PURE__ */ React$2.createElement("g", {
+  return /* @__PURE__ */ React2.createElement("g", {
     className: "recharts-cartesian-grid-horizontal"
   }, items);
 }
@@ -49222,7 +49213,7 @@ function VerticalGridLines(props) {
     });
     return renderLineItem(vertical, lineItemProps);
   });
-  return /* @__PURE__ */ React$2.createElement("g", {
+  return /* @__PURE__ */ React2.createElement("g", {
     className: "recharts-cartesian-grid-vertical"
   }, items);
 }
@@ -49246,7 +49237,7 @@ function HorizontalStripes(props) {
       return null;
     }
     var colorIndex = i % horizontalFill.length;
-    return /* @__PURE__ */ React$2.createElement("rect", {
+    return /* @__PURE__ */ React2.createElement("rect", {
       key: "react-".concat(i),
       y: entry,
       x: x3,
@@ -49258,7 +49249,7 @@ function HorizontalStripes(props) {
       className: "recharts-cartesian-grid-bg"
     });
   });
-  return /* @__PURE__ */ React$2.createElement("g", {
+  return /* @__PURE__ */ React2.createElement("g", {
     className: "recharts-cartesian-gridstripes-horizontal"
   }, items);
 }
@@ -49282,7 +49273,7 @@ function VerticalStripes(props) {
       return null;
     }
     var colorIndex = i % verticalFill.length;
-    return /* @__PURE__ */ React$2.createElement("rect", {
+    return /* @__PURE__ */ React2.createElement("rect", {
       key: "react-".concat(i),
       x: entry,
       y: y2,
@@ -49294,7 +49285,7 @@ function VerticalStripes(props) {
       className: "recharts-cartesian-grid-bg"
     });
   });
-  return /* @__PURE__ */ React$2.createElement("g", {
+  return /* @__PURE__ */ React2.createElement("g", {
     className: "recharts-cartesian-gridstripes-vertical"
   }, items);
 }
@@ -49357,7 +49348,7 @@ function CartesianGrid(props) {
   var verticalCoordinatesGenerator = propsIncludingDefaults.verticalCoordinatesGenerator || defaultVerticalCoordinatesGenerator;
   var horizontalCoordinatesGenerator = propsIncludingDefaults.horizontalCoordinatesGenerator || defaultHorizontalCoordinatesGenerator;
   var horizontalPoints = propsIncludingDefaults.horizontalPoints, verticalPoints = propsIncludingDefaults.verticalPoints;
-  if ((!horizontalPoints || !horizontalPoints.length) && isFunction$5(horizontalCoordinatesGenerator)) {
+  if ((!horizontalPoints || !horizontalPoints.length) && isFunction$4(horizontalCoordinatesGenerator)) {
     var isHorizontalValues = horizontalValues && horizontalValues.length;
     var generatorResult = horizontalCoordinatesGenerator({
       yAxis: yAxis ? _objectSpread$3(_objectSpread$3({}, yAxis), {}, {
@@ -49372,7 +49363,7 @@ function CartesianGrid(props) {
       horizontalPoints = generatorResult;
     }
   }
-  if ((!verticalPoints || !verticalPoints.length) && isFunction$5(verticalCoordinatesGenerator)) {
+  if ((!verticalPoints || !verticalPoints.length) && isFunction$4(verticalCoordinatesGenerator)) {
     var isVerticalValues = verticalValues && verticalValues.length;
     var _generatorResult = verticalCoordinatesGenerator({
       xAxis: xAxis ? _objectSpread$3(_objectSpread$3({}, xAxis), {}, {
@@ -49387,9 +49378,9 @@ function CartesianGrid(props) {
       verticalPoints = _generatorResult;
     }
   }
-  return /* @__PURE__ */ React$2.createElement("g", {
+  return /* @__PURE__ */ React2.createElement("g", {
     className: "recharts-cartesian-grid"
-  }, /* @__PURE__ */ React$2.createElement(Background, {
+  }, /* @__PURE__ */ React2.createElement(Background, {
     fill: propsIncludingDefaults.fill,
     fillOpacity: propsIncludingDefaults.fillOpacity,
     x: propsIncludingDefaults.x,
@@ -49397,31 +49388,31 @@ function CartesianGrid(props) {
     width: propsIncludingDefaults.width,
     height: propsIncludingDefaults.height,
     ry: propsIncludingDefaults.ry
-  }), /* @__PURE__ */ React$2.createElement(HorizontalGridLines, _extends$4({}, propsIncludingDefaults, {
+  }), /* @__PURE__ */ React2.createElement(HorizontalGridLines, _extends$4({}, propsIncludingDefaults, {
     offset: offset2,
     horizontalPoints,
     xAxis,
     yAxis
-  })), /* @__PURE__ */ React$2.createElement(VerticalGridLines, _extends$4({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ React2.createElement(VerticalGridLines, _extends$4({}, propsIncludingDefaults, {
     offset: offset2,
     verticalPoints,
     xAxis,
     yAxis
-  })), /* @__PURE__ */ React$2.createElement(HorizontalStripes, _extends$4({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ React2.createElement(HorizontalStripes, _extends$4({}, propsIncludingDefaults, {
     horizontalPoints
-  })), /* @__PURE__ */ React$2.createElement(VerticalStripes, _extends$4({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ React2.createElement(VerticalStripes, _extends$4({}, propsIncludingDefaults, {
     verticalPoints
   })));
 }
 CartesianGrid.displayName = "CartesianGrid";
 var _excluded$1 = ["type", "layout", "connectNulls", "ref"], _excluded2$1 = ["key"];
-function _typeof$5(o) {
+function _typeof$5(o2) {
   "@babel/helpers - typeof";
-  return _typeof$5 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$5(o);
+  return _typeof$5 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$5(o2);
 }
 function _objectWithoutProperties$1(source, excluded) {
   if (source == null) return {};
@@ -49466,10 +49457,10 @@ function _extends$3() {
 function ownKeys$2(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -49490,13 +49481,13 @@ function _toConsumableArray$2(arr) {
 function _nonIterableSpread$2() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$2(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$2(o, minLen);
+function _unsupportedIterableToArray$2(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$2(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$2(o2, minLen);
 }
 function _iterableToArray$2(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -49529,8 +49520,8 @@ function _createClass$4(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$3(t2, o, e3) {
-  return o = _getPrototypeOf$3(o), _possibleConstructorReturn$3(t2, _isNativeReflectConstruct$3() ? Reflect.construct(o, e3 || [], _getPrototypeOf$3(t2).constructor) : o.apply(t2, e3));
+function _callSuper$3(t2, o2, e3) {
+  return o2 = _getPrototypeOf$3(o2), _possibleConstructorReturn$3(t2, _isNativeReflectConstruct$3() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$3(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$3(self2, call) {
   if (call && (_typeof$5(call) === "object" || typeof call === "function")) {
@@ -49556,11 +49547,11 @@ function _isNativeReflectConstruct$3() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$3(o) {
-  _getPrototypeOf$3 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$3(o2) {
+  _getPrototypeOf$3 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$3(o);
+  return _getPrototypeOf$3(o2);
 }
 function _inherits$3(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -49570,12 +49561,12 @@ function _inherits$3(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$3(subClass, superClass);
 }
-function _setPrototypeOf$3(o, p2) {
-  _setPrototypeOf$3 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$3(o2, p2) {
+  _setPrototypeOf$3 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$3(o, p2);
+  return _setPrototypeOf$3(o2, p2);
 }
 function _defineProperty$5(obj, key, value) {
   key = _toPropertyKey$5(key);
@@ -49716,8 +49707,8 @@ var Line = /* @__PURE__ */ function(_PureComponent) {
       var errorBarProps = {
         clipPath: needClip ? "url(#clipPath-".concat(clipPathId, ")") : null
       };
-      return /* @__PURE__ */ React$2.createElement(Layer, errorBarProps, errorBarItems.map(function(item) {
-        return /* @__PURE__ */ React$2.cloneElement(item, {
+      return /* @__PURE__ */ React2.createElement(Layer, errorBarProps, errorBarItems.map(function(item) {
+        return /* @__PURE__ */ React2.cloneElement(item, {
           key: "bar-".concat(item.props.dataKey),
           data: points,
           xAxis,
@@ -49755,7 +49746,7 @@ var Line = /* @__PURE__ */ function(_PureComponent) {
       var dotsProps = {
         clipPath: needClip ? "url(#clipPath-".concat(clipDot ? "" : "dots-").concat(clipPathId, ")") : null
       };
-      return /* @__PURE__ */ React$2.createElement(Layer, _extends$3({
+      return /* @__PURE__ */ React2.createElement(Layer, _extends$3({
         className: "recharts-line-dots",
         key: "dots"
       }, dotsProps), dots);
@@ -49776,7 +49767,7 @@ var Line = /* @__PURE__ */ function(_PureComponent) {
         layout,
         connectNulls
       });
-      return /* @__PURE__ */ React$2.createElement(Curve, _extends$3({}, curveProps, {
+      return /* @__PURE__ */ React2.createElement(Curve, _extends$3({}, curveProps, {
         pathRef: this.pathRef
       }));
     }
@@ -49786,7 +49777,7 @@ var Line = /* @__PURE__ */ function(_PureComponent) {
       var _this2 = this;
       var _this$props4 = this.props, points = _this$props4.points, strokeDasharray = _this$props4.strokeDasharray, isAnimationActive = _this$props4.isAnimationActive, animationBegin = _this$props4.animationBegin, animationDuration = _this$props4.animationDuration, animationEasing = _this$props4.animationEasing, animationId = _this$props4.animationId, animateNewValues = _this$props4.animateNewValues, width = _this$props4.width, height = _this$props4.height;
       var _this$state = this.state, prevPoints = _this$state.prevPoints, totalLength = _this$state.totalLength;
-      return /* @__PURE__ */ React$2.createElement(Animate, {
+      return /* @__PURE__ */ React2.createElement(Animate, {
         begin: animationBegin,
         duration: animationDuration,
         isActive: isAnimationActive,
@@ -49877,18 +49868,18 @@ var Line = /* @__PURE__ */ function(_PureComponent) {
       }, _ref2$r = _ref2.r, r2 = _ref2$r === void 0 ? 3 : _ref2$r, _ref2$strokeWidth = _ref2.strokeWidth, strokeWidth = _ref2$strokeWidth === void 0 ? 2 : _ref2$strokeWidth;
       var _ref3 = hasClipDot(dot) ? dot : {}, _ref3$clipDot = _ref3.clipDot, clipDot = _ref3$clipDot === void 0 ? true : _ref3$clipDot;
       var dotSize = r2 * 2 + strokeWidth;
-      return /* @__PURE__ */ React$2.createElement(Layer, {
+      return /* @__PURE__ */ React2.createElement(Layer, {
         className: layerClass
-      }, needClipX || needClipY ? /* @__PURE__ */ React$2.createElement("defs", null, /* @__PURE__ */ React$2.createElement("clipPath", {
+      }, needClipX || needClipY ? /* @__PURE__ */ React2.createElement("defs", null, /* @__PURE__ */ React2.createElement("clipPath", {
         id: "clipPath-".concat(clipPathId)
-      }, /* @__PURE__ */ React$2.createElement("rect", {
+      }, /* @__PURE__ */ React2.createElement("rect", {
         x: needClipX ? left : left - width / 2,
         y: needClipY ? top : top - height / 2,
         width: needClipX ? width : width * 2,
         height: needClipY ? height : height * 2
-      })), !clipDot && /* @__PURE__ */ React$2.createElement("clipPath", {
+      })), !clipDot && /* @__PURE__ */ React2.createElement("clipPath", {
         id: "clipPath-dots-".concat(clipPathId)
-      }, /* @__PURE__ */ React$2.createElement("rect", {
+      }, /* @__PURE__ */ React2.createElement("rect", {
         x: left - dotSize / 2,
         y: top - dotSize / 2,
         width: width + dotSize,
@@ -49926,14 +49917,14 @@ var Line = /* @__PURE__ */ function(_PureComponent) {
     key: "renderDotItem",
     value: function renderDotItem(option, props) {
       var dotItem;
-      if (/* @__PURE__ */ React$2.isValidElement(option)) {
-        dotItem = /* @__PURE__ */ React$2.cloneElement(option, props);
-      } else if (isFunction$5(option)) {
+      if (/* @__PURE__ */ React2.isValidElement(option)) {
+        dotItem = /* @__PURE__ */ React2.cloneElement(option, props);
+      } else if (isFunction$4(option)) {
         dotItem = option(props);
       } else {
         var key = props.key, dotProps = _objectWithoutProperties$1(props, _excluded2$1);
         var className = clsx("recharts-line-dot", typeof option !== "boolean" ? option.className : "");
-        dotItem = /* @__PURE__ */ React$2.createElement(Dot, _extends$3({
+        dotItem = /* @__PURE__ */ React2.createElement(Dot, _extends$3({
           key
         }, dotProps, {
           className
@@ -50000,13 +49991,13 @@ _defineProperty$5(Line, "getComposedData", function(_ref4) {
     layout
   }, offset2);
 });
-function _typeof$4(o) {
+function _typeof$4(o2) {
   "@babel/helpers - typeof";
-  return _typeof$4 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$4(o);
+  return _typeof$4 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$4(o2);
 }
 function _classCallCheck$3(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -50027,8 +50018,8 @@ function _createClass$3(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$2(t2, o, e3) {
-  return o = _getPrototypeOf$2(o), _possibleConstructorReturn$2(t2, _isNativeReflectConstruct$2() ? Reflect.construct(o, e3 || [], _getPrototypeOf$2(t2).constructor) : o.apply(t2, e3));
+function _callSuper$2(t2, o2, e3) {
+  return o2 = _getPrototypeOf$2(o2), _possibleConstructorReturn$2(t2, _isNativeReflectConstruct$2() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$2(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$2(self2, call) {
   if (call && (_typeof$4(call) === "object" || typeof call === "function")) {
@@ -50054,11 +50045,11 @@ function _isNativeReflectConstruct$2() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$2(o) {
-  _getPrototypeOf$2 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$2(o2) {
+  _getPrototypeOf$2 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$2(o);
+  return _getPrototypeOf$2(o2);
 }
 function _inherits$2(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -50068,12 +50059,12 @@ function _inherits$2(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$2(subClass, superClass);
 }
-function _setPrototypeOf$2(o, p2) {
-  _setPrototypeOf$2 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$2(o2, p2) {
+  _setPrototypeOf$2 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$2(o, p2);
+  return _setPrototypeOf$2(o2, p2);
 }
 function _defineProperty$4(obj, key, value) {
   key = _toPropertyKey$4(key);
@@ -50169,13 +50160,13 @@ _defineProperty$4(XAxis, "defaultProps", {
   reversed: false,
   allowDuplicatedCategory: true
 });
-function _typeof$3(o) {
+function _typeof$3(o2) {
   "@babel/helpers - typeof";
-  return _typeof$3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$3(o);
+  return _typeof$3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$3(o2);
 }
 function _classCallCheck$2(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -50196,8 +50187,8 @@ function _createClass$2(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper$1(t2, o, e3) {
-  return o = _getPrototypeOf$1(o), _possibleConstructorReturn$1(t2, _isNativeReflectConstruct$1() ? Reflect.construct(o, e3 || [], _getPrototypeOf$1(t2).constructor) : o.apply(t2, e3));
+function _callSuper$1(t2, o2, e3) {
+  return o2 = _getPrototypeOf$1(o2), _possibleConstructorReturn$1(t2, _isNativeReflectConstruct$1() ? Reflect.construct(o2, e3 || [], _getPrototypeOf$1(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn$1(self2, call) {
   if (call && (_typeof$3(call) === "object" || typeof call === "function")) {
@@ -50223,11 +50214,11 @@ function _isNativeReflectConstruct$1() {
     return !!t2;
   })();
 }
-function _getPrototypeOf$1(o) {
-  _getPrototypeOf$1 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf$1(o2) {
+  _getPrototypeOf$1 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
+    return o3.__proto__ || Object.getPrototypeOf(o3);
   };
-  return _getPrototypeOf$1(o);
+  return _getPrototypeOf$1(o2);
 }
 function _inherits$1(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -50237,12 +50228,12 @@ function _inherits$1(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf$1(subClass, superClass);
 }
-function _setPrototypeOf$1(o, p2) {
-  _setPrototypeOf$1 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p3) {
-    o2.__proto__ = p3;
-    return o2;
+function _setPrototypeOf$1(o2, p2) {
+  _setPrototypeOf$1 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
+    o3.__proto__ = p3;
+    return o3;
   };
-  return _setPrototypeOf$1(o, p2);
+  return _setPrototypeOf$1(o2, p2);
 }
 function _defineProperty$3(obj, key, value) {
   key = _toPropertyKey$3(key);
@@ -50344,13 +50335,13 @@ function _toConsumableArray$1(arr) {
 function _nonIterableSpread$1() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray$1(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$1(o, minLen);
+function _unsupportedIterableToArray$1(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray$1(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray$1(o2, minLen);
 }
 function _iterableToArray$1(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -50563,13 +50554,13 @@ var eventemitter3Exports = eventemitter3.exports;
 const EventEmitter = /* @__PURE__ */ getDefaultExportFromCjs(eventemitter3Exports);
 var eventCenter = new EventEmitter();
 var SYNC_EVENT = "recharts.syncMouseEvents";
-function _typeof$2(o) {
+function _typeof$2(o2) {
   "@babel/helpers - typeof";
-  return _typeof$2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$2(o);
+  return _typeof$2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$2(o2);
 }
 function _classCallCheck$1(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -50757,21 +50748,21 @@ function getCursorPoints(layout, activeCoordinate, offset2) {
     y: y2
   }];
 }
-function _typeof$1(o) {
+function _typeof$1(o2) {
   "@babel/helpers - typeof";
-  return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof$1(o);
+  return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
+    return typeof o3;
+  } : function(o3) {
+    return o3 && "function" == typeof Symbol && o3.constructor === Symbol && o3 !== Symbol.prototype ? "symbol" : typeof o3;
+  }, _typeof$1(o2);
 }
 function ownKeys$1(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r3) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r3) {
       return Object.getOwnPropertyDescriptor(e3, r3).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -50852,13 +50843,13 @@ function Cursor(props) {
   return /* @__PURE__ */ reactExports.isValidElement(elementPropsCursor) ? /* @__PURE__ */ reactExports.cloneElement(elementPropsCursor, cursorProps) : /* @__PURE__ */ reactExports.createElement(cursorComp, cursorProps);
 }
 var _excluded = ["item"], _excluded2 = ["children", "className", "width", "height", "style", "compact", "title", "desc"];
-function _typeof(o) {
+function _typeof(o2) {
   "@babel/helpers - typeof";
-  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o2) {
-    return typeof o2;
-  } : function(o2) {
-    return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
-  }, _typeof(o);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o22) {
+    return typeof o22;
+  } : function(o22) {
+    return o22 && "function" == typeof Symbol && o22.constructor === Symbol && o22 !== Symbol.prototype ? "symbol" : typeof o22;
+  }, _typeof(o2);
 }
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function(target) {
@@ -50883,17 +50874,17 @@ function _nonIterableRest() {
 function _iterableToArrayLimit(r2, l2) {
   var t2 = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t2) {
-    var e3, n2, i, u2, a2 = [], f2 = true, o = false;
+    var e3, n2, i, u2, a2 = [], f2 = true, o2 = false;
     try {
       if (i = (t2 = t2.call(r2)).next, 0 === l2) ;
       else for (; !(f2 = (e3 = i.call(t2)).done) && (a2.push(e3.value), a2.length !== l2); f2 = true) ;
     } catch (r22) {
-      o = true, n2 = r22;
+      o2 = true, n2 = r22;
     } finally {
       try {
         if (!f2 && null != t2["return"] && (u2 = t2["return"](), Object(u2) !== u2)) return;
       } finally {
-        if (o) throw n2;
+        if (o2) throw n2;
       }
     }
     return a2;
@@ -50947,8 +50938,8 @@ function _createClass(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, "prototype", { writable: false });
   return Constructor;
 }
-function _callSuper(t2, o, e3) {
-  return o = _getPrototypeOf(o), _possibleConstructorReturn(t2, _isNativeReflectConstruct() ? Reflect.construct(o, e3 || [], _getPrototypeOf(t2).constructor) : o.apply(t2, e3));
+function _callSuper(t2, o2, e3) {
+  return o2 = _getPrototypeOf(o2), _possibleConstructorReturn(t2, _isNativeReflectConstruct() ? Reflect.construct(o2, e3 || [], _getPrototypeOf(t2).constructor) : o2.apply(t2, e3));
 }
 function _possibleConstructorReturn(self2, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -50974,11 +50965,11 @@ function _isNativeReflectConstruct() {
     return !!t2;
   })();
 }
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
-    return o2.__proto__ || Object.getPrototypeOf(o2);
+function _getPrototypeOf(o2) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o22) {
+    return o22.__proto__ || Object.getPrototypeOf(o22);
   };
-  return _getPrototypeOf(o);
+  return _getPrototypeOf(o2);
 }
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -50988,12 +50979,12 @@ function _inherits(subClass, superClass) {
   Object.defineProperty(subClass, "prototype", { writable: false });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
-function _setPrototypeOf(o, p2) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p22) {
-    o2.__proto__ = p22;
-    return o2;
+function _setPrototypeOf(o2, p2) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o22, p22) {
+    o22.__proto__ = p22;
+    return o22;
   };
-  return _setPrototypeOf(o, p2);
+  return _setPrototypeOf(o2, p2);
 }
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
@@ -51001,13 +50992,13 @@ function _toConsumableArray(arr) {
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n2 = Object.prototype.toString.call(o).slice(8, -1);
-  if (n2 === "Object" && o.constructor) n2 = o.constructor.name;
-  if (n2 === "Map" || n2 === "Set") return Array.from(o);
-  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray(o, minLen);
+function _unsupportedIterableToArray(o2, minLen) {
+  if (!o2) return;
+  if (typeof o2 === "string") return _arrayLikeToArray(o2, minLen);
+  var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+  if (n2 === "Object" && o2.constructor) n2 = o2.constructor.name;
+  if (n2 === "Map" || n2 === "Set") return Array.from(o2);
+  if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) return _arrayLikeToArray(o2, minLen);
 }
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
@@ -51023,10 +51014,10 @@ function _arrayLikeToArray(arr, len) {
 function ownKeys(e3, r2) {
   var t2 = Object.keys(e3);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e3);
-    r2 && (o = o.filter(function(r22) {
+    var o2 = Object.getOwnPropertySymbols(e3);
+    r2 && (o2 = o2.filter(function(r22) {
       return Object.getOwnPropertyDescriptor(e3, r22).enumerable;
-    })), t2.push.apply(t2, o);
+    })), t2.push.apply(t2, o2);
   }
   return t2;
 }
@@ -51381,8 +51372,8 @@ var tooltipTicksGenerator = function tooltipTicksGenerator2(axisMap) {
   var tooltipTicks = getTicksOfAxis(axis, false, true);
   return {
     tooltipTicks,
-    orderedTooltipTicks: sortBy$1(tooltipTicks, function(o) {
-      return o.coordinate;
+    orderedTooltipTicks: sortBy$1(tooltipTicks, function(o2) {
+      return o2.coordinate;
     }),
     tooltipAxis: axis,
     tooltipAxisBandSize: getBandSizeOfAxis(axis, tooltipTicks)
@@ -51689,7 +51680,7 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
           _this.setState(_nextState);
           _this.triggerSyncEvent(_nextState);
           var onMouseEnter = _this.props.onMouseEnter;
-          if (isFunction$5(onMouseEnter)) {
+          if (isFunction$4(onMouseEnter)) {
             onMouseEnter(_nextState, e3);
           }
         }
@@ -51704,7 +51695,7 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
         _this.setState(nextState);
         _this.triggerSyncEvent(nextState);
         var onMouseMove = _this.props.onMouseMove;
-        if (isFunction$5(onMouseMove)) {
+        if (isFunction$4(onMouseMove)) {
           onMouseMove(nextState, e3);
         }
       });
@@ -51740,14 +51731,14 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
         _this.setState(nextState);
         _this.triggerSyncEvent(nextState);
         var onMouseLeave = _this.props.onMouseLeave;
-        if (isFunction$5(onMouseLeave)) {
+        if (isFunction$4(onMouseLeave)) {
           onMouseLeave(nextState, e3);
         }
       });
       _defineProperty(_this, "handleOuterEvent", function(e3) {
         var eventName = getReactEventByType(e3);
         var event = get$4(_this.props, "".concat(eventName));
-        if (eventName && isFunction$5(event)) {
+        if (eventName && isFunction$4(event)) {
           var _mouse;
           var mouse;
           if (/.*touch.*/i.test(eventName)) {
@@ -51767,21 +51758,21 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
           _this.setState(_nextState2);
           _this.triggerSyncEvent(_nextState2);
           var onClick = _this.props.onClick;
-          if (isFunction$5(onClick)) {
+          if (isFunction$4(onClick)) {
             onClick(_nextState2, e3);
           }
         }
       });
       _defineProperty(_this, "handleMouseDown", function(e3) {
         var onMouseDown = _this.props.onMouseDown;
-        if (isFunction$5(onMouseDown)) {
+        if (isFunction$4(onMouseDown)) {
           var _nextState3 = _this.getMouseInfo(e3);
           onMouseDown(_nextState3, e3);
         }
       });
       _defineProperty(_this, "handleMouseUp", function(e3) {
         var onMouseUp = _this.props.onMouseUp;
-        if (isFunction$5(onMouseUp)) {
+        if (isFunction$4(onMouseUp)) {
           var _nextState4 = _this.getMouseInfo(e3);
           onMouseUp(_nextState4, e3);
         }
@@ -51803,14 +51794,14 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
       });
       _defineProperty(_this, "handleDoubleClick", function(e3) {
         var onDoubleClick = _this.props.onDoubleClick;
-        if (isFunction$5(onDoubleClick)) {
+        if (isFunction$4(onDoubleClick)) {
           var _nextState5 = _this.getMouseInfo(e3);
           onDoubleClick(_nextState5, e3);
         }
       });
       _defineProperty(_this, "handleContextMenu", function(e3) {
         var onContextMenu = _this.props.onContextMenu;
-        if (isFunction$5(onContextMenu)) {
+        if (isFunction$4(onContextMenu)) {
           var _nextState6 = _this.getMouseInfo(e3);
           onContextMenu(_nextState6, e3);
         }
@@ -51881,7 +51872,7 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
         var isActive = (_element$props$active = element.props.active) !== null && _element$props$active !== void 0 ? _element$props$active : isTooltipActive;
         var layout = _this.props.layout;
         var key = element.key || "_recharts-cursor";
-        return /* @__PURE__ */ React$2.createElement(Cursor, {
+        return /* @__PURE__ */ React2.createElement(Cursor, {
           key,
           activeCoordinate,
           activePayload,
@@ -52413,9 +52404,9 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
       value: function renderClipPath() {
         var clipPathId = this.clipPathId;
         var _this$state$offset = this.state.offset, left = _this$state$offset.left, top = _this$state$offset.top, height = _this$state$offset.height, width = _this$state$offset.width;
-        return /* @__PURE__ */ React$2.createElement("defs", null, /* @__PURE__ */ React$2.createElement("clipPath", {
+        return /* @__PURE__ */ React2.createElement("defs", null, /* @__PURE__ */ React2.createElement("clipPath", {
           id: clipPathId
-        }, /* @__PURE__ */ React$2.createElement("rect", {
+        }, /* @__PURE__ */ React2.createElement("rect", {
           x: left,
           y: top,
           height,
@@ -52510,12 +52501,12 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
         var _this$props6 = this.props, children2 = _this$props6.children, className = _this$props6.className, width = _this$props6.width, height = _this$props6.height, style2 = _this$props6.style, compact = _this$props6.compact, title = _this$props6.title, desc = _this$props6.desc, others = _objectWithoutProperties(_this$props6, _excluded2);
         var attrs = filterProps(others, false);
         if (compact) {
-          return /* @__PURE__ */ React$2.createElement(ChartLayoutContextProvider, {
+          return /* @__PURE__ */ React2.createElement(ChartLayoutContextProvider, {
             state: this.state,
             width: this.props.width,
             height: this.props.height,
             clipPathId: this.clipPathId
-          }, /* @__PURE__ */ React$2.createElement(Surface, _extends({}, attrs, {
+          }, /* @__PURE__ */ React2.createElement(Surface, _extends({}, attrs, {
             width,
             height,
             title,
@@ -52534,12 +52525,12 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
           };
         }
         var events2 = this.parseEventsOfWrapper();
-        return /* @__PURE__ */ React$2.createElement(ChartLayoutContextProvider, {
+        return /* @__PURE__ */ React2.createElement(ChartLayoutContextProvider, {
           state: this.state,
           width: this.props.width,
           height: this.props.height,
           clipPathId: this.clipPathId
-        }, /* @__PURE__ */ React$2.createElement("div", _extends({
+        }, /* @__PURE__ */ React2.createElement("div", _extends({
           className: clsx("recharts-wrapper", className),
           style: _objectSpread({
             position: "relative",
@@ -52551,7 +52542,7 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
           ref: function ref(node) {
             _this3.container = node;
           }
-        }), /* @__PURE__ */ React$2.createElement(Surface, _extends({}, attrs, {
+        }), /* @__PURE__ */ React2.createElement(Surface, _extends({}, attrs, {
           width,
           height,
           title,
@@ -52654,18 +52645,18 @@ var generateCategoricalChart = function generateCategoricalChart2(_ref6) {
     var dot;
     if (/* @__PURE__ */ reactExports.isValidElement(option)) {
       dot = /* @__PURE__ */ reactExports.cloneElement(option, props);
-    } else if (isFunction$5(option)) {
+    } else if (isFunction$4(option)) {
       dot = option(props);
     } else {
-      dot = /* @__PURE__ */ React$2.createElement(Dot, props);
+      dot = /* @__PURE__ */ React2.createElement(Dot, props);
     }
-    return /* @__PURE__ */ React$2.createElement(Layer, {
+    return /* @__PURE__ */ React2.createElement(Layer, {
       className: "recharts-active-dot",
       key
     }, dot);
   });
   var CategoricalChart = /* @__PURE__ */ reactExports.forwardRef(function CategoricalChart2(props, ref) {
-    return /* @__PURE__ */ React$2.createElement(CategoricalChartWrapper, _extends({}, props, {
+    return /* @__PURE__ */ React2.createElement(CategoricalChartWrapper, _extends({}, props, {
       ref
     }));
   });
@@ -52904,7 +52895,7 @@ function ActivityChart({ transactions, principal }) {
     ) })
   ] });
 }
-function setRef$1(ref, value) {
+function setRef(ref, value) {
   if (typeof ref === "function") {
     return ref(value);
   } else if (ref !== null && ref !== void 0) {
@@ -52915,7 +52906,7 @@ function composeRefs(...refs) {
   return (node) => {
     let hasCleanup = false;
     const cleanups = refs.map((ref) => {
-      const cleanup = setRef$1(ref, node);
+      const cleanup = setRef(ref, node);
       if (!hasCleanup && typeof cleanup == "function") {
         hasCleanup = true;
       }
@@ -52928,7 +52919,7 @@ function composeRefs(...refs) {
           if (typeof cleanup == "function") {
             cleanup();
           } else {
-            setRef$1(refs[i], null);
+            setRef(refs[i], null);
           }
         }
       };
@@ -52938,72 +52929,67 @@ function composeRefs(...refs) {
 function useComposedRefs(...refs) {
   return reactExports.useCallback(composeRefs(...refs), refs);
 }
+var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+var use = React$2[" use ".trim().toString()];
+function isPromiseLike(value) {
+  return typeof value === "object" && value !== null && "then" in value;
+}
+function isLazyComponent(element) {
+  return element != null && typeof element === "object" && "$$typeof" in element && element.$$typeof === REACT_LAZY_TYPE && "_payload" in element && isPromiseLike(element._payload);
+}
 // @__NO_SIDE_EFFECTS__
-function createSlot(ownerName) {
+function createSlot$1(ownerName) {
+  const SlotClone = /* @__PURE__ */ createSlotClone$1(ownerName);
   const Slot2 = reactExports.forwardRef((props, forwardedRef) => {
     let { children: children2, ...slotProps } = props;
-    let slottableElement = null;
-    let hasSlottable = false;
-    const newChildren = [];
     if (isLazyComponent(children2) && typeof use === "function") {
       children2 = use(children2._payload);
     }
-    reactExports.Children.forEach(children2, (maybeSlottable) => {
-      var _a3;
-      if (isSlottable(maybeSlottable)) {
-        hasSlottable = true;
-        const slottable = maybeSlottable;
-        let child = "child" in slottable.props ? slottable.props.child : slottable.props.children;
-        if (isLazyComponent(child) && typeof use === "function") {
-          child = use(child._payload);
+    const childrenArray = reactExports.Children.toArray(children2);
+    const slottable = childrenArray.find(isSlottable$1);
+    if (slottable) {
+      const newElement = slottable.props.children;
+      const newChildren = childrenArray.map((child) => {
+        if (child === slottable) {
+          if (reactExports.Children.count(newElement) > 1) return reactExports.Children.only(null);
+          return reactExports.isValidElement(newElement) ? newElement.props.children : null;
+        } else {
+          return child;
         }
-        slottableElement = getSlottableElementFromSlottable(slottable, child);
-        newChildren.push((_a3 = slottableElement == null ? void 0 : slottableElement.props) == null ? void 0 : _a3.children);
-      } else {
-        newChildren.push(maybeSlottable);
-      }
-    });
-    if (slottableElement) {
-      slottableElement = reactExports.cloneElement(slottableElement, void 0, newChildren);
-    } else if (
-      // A `Slottable` was found but it didn't resolve to a single element (e.g.
-      // it wrapped multiple elements, text, or a render-prop `child` that
-      // wasn't an element). Don't fall back to treating the `Slottable` wrapper
-      // itself as the slot target — throw a descriptive error below instead.
-      !hasSlottable && reactExports.Children.count(children2) === 1 && reactExports.isValidElement(children2)
-    ) {
-      slottableElement = children2;
+      });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(SlotClone, { ...slotProps, ref: forwardedRef, children: reactExports.isValidElement(newElement) ? reactExports.cloneElement(newElement, void 0, newChildren) : null });
     }
-    const slottableElementRef = slottableElement ? getElementRef$1(slottableElement) : void 0;
-    const composedRef = useComposedRefs(forwardedRef, slottableElementRef);
-    if (!slottableElement) {
-      if (children2 || children2 === 0) {
-        throw new Error(
-          hasSlottable ? createSlottableError(ownerName) : createSlotError(ownerName)
-        );
-      }
-      return children2;
-    }
-    const mergedProps = mergeProps(slotProps, slottableElement.props ?? {});
-    if (slottableElement.type !== reactExports.Fragment) {
-      mergedProps.ref = forwardedRef ? composedRef : slottableElementRef;
-    }
-    return reactExports.cloneElement(slottableElement, mergedProps);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(SlotClone, { ...slotProps, ref: forwardedRef, children: children2 });
   });
   Slot2.displayName = `${ownerName}.Slot`;
   return Slot2;
 }
-var Slot$1 = /* @__PURE__ */ createSlot("Slot");
-var SLOTTABLE_IDENTIFIER = Symbol.for("radix.slottable");
-var getSlottableElementFromSlottable = (slottable, child) => {
-  if ("child" in slottable.props) {
-    const child2 = slottable.props.child;
-    if (!reactExports.isValidElement(child2)) return null;
-    return reactExports.cloneElement(child2, void 0, slottable.props.children(child2.props.children));
-  }
-  return reactExports.isValidElement(child) ? child : null;
-};
-function mergeProps(slotProps, childProps) {
+var Slot$1 = /* @__PURE__ */ createSlot$1("Slot");
+// @__NO_SIDE_EFFECTS__
+function createSlotClone$1(ownerName) {
+  const SlotClone = reactExports.forwardRef((props, forwardedRef) => {
+    let { children: children2, ...slotProps } = props;
+    if (isLazyComponent(children2) && typeof use === "function") {
+      children2 = use(children2._payload);
+    }
+    if (reactExports.isValidElement(children2)) {
+      const childrenRef = getElementRef$1(children2);
+      const props2 = mergeProps$1(slotProps, children2.props);
+      if (children2.type !== reactExports.Fragment) {
+        props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
+      }
+      return reactExports.cloneElement(children2, props2);
+    }
+    return reactExports.Children.count(children2) > 1 ? reactExports.Children.only(null) : null;
+  });
+  SlotClone.displayName = `${ownerName}.SlotClone`;
+  return SlotClone;
+}
+var SLOTTABLE_IDENTIFIER$1 = Symbol("radix.slottable");
+function isSlottable$1(child) {
+  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER$1;
+}
+function mergeProps$1(slotProps, childProps) {
   const overrideProps = { ...childProps };
   for (const propName in childProps) {
     const slotPropValue = slotProps[propName];
@@ -53041,23 +53027,6 @@ function getElementRef$1(element) {
   }
   return element.props.ref || element.ref;
 }
-function isSlottable(child) {
-  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
-}
-var REACT_LAZY_TYPE = Symbol.for("react.lazy");
-function isLazyComponent(element) {
-  return element != null && typeof element === "object" && "$$typeof" in element && element.$$typeof === REACT_LAZY_TYPE && "_payload" in element && isPromiseLike(element._payload);
-}
-function isPromiseLike(value) {
-  return typeof value === "object" && value !== null && "then" in value;
-}
-var createSlotError = (ownerName) => {
-  return `${ownerName} failed to slot onto its children. Expected a single React element child or \`Slottable\`.`;
-};
-var createSlottableError = (ownerName) => {
-  return `${ownerName} failed to slot onto its \`Slottable\`. Expected \`Slottable\` to receive a single React element child.`;
-};
-var use = React$3[" use ".trim().toString()];
 const falsyToString = (value) => typeof value === "boolean" ? `${value}` : value === 0 ? "0" : value;
 const cx = clsx;
 const cva = (base, config2) => (props) => {
@@ -53215,7 +53184,7 @@ function Input({ className, type, ...props }) {
     }
   );
 }
-var NODES = [
+var NODES$1 = [
   "a",
   "button",
   "div",
@@ -53234,8 +53203,8 @@ var NODES = [
   "svg",
   "ul"
 ];
-var Primitive = NODES.reduce((primitive, node) => {
-  const Slot2 = /* @__PURE__ */ createSlot(`Primitive.${node}`);
+var Primitive$1 = NODES$1.reduce((primitive, node) => {
+  const Slot2 = /* @__PURE__ */ createSlot$1(`Primitive.${node}`);
   const Node2 = reactExports.forwardRef((props, forwardedRef) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? Slot2 : node;
@@ -53247,13 +53216,10 @@ var Primitive = NODES.reduce((primitive, node) => {
   Node2.displayName = `Primitive.${node}`;
   return { ...primitive, [node]: Node2 };
 }, {});
-function dispatchDiscreteCustomEvent(target, event) {
-  if (target) reactDomExports.flushSync(() => target.dispatchEvent(event));
-}
 var NAME$2 = "Label";
 var Label$1 = reactExports.forwardRef((props, forwardedRef) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Primitive.label,
+    Primitive$1.label,
     {
       ...props,
       ref: forwardedRef,
@@ -54807,11 +54773,11 @@ function onRemove(typename) {
   return function() {
     var on = this.__on;
     if (!on) return;
-    for (var j2 = 0, i = -1, m2 = on.length, o; j2 < m2; ++j2) {
-      if (o = on[j2], (!typename.type || o.type === typename.type) && o.name === typename.name) {
-        this.removeEventListener(o.type, o.listener, o.options);
+    for (var j2 = 0, i = -1, m2 = on.length, o2; j2 < m2; ++j2) {
+      if (o2 = on[j2], (!typename.type || o2.type === typename.type) && o2.name === typename.name) {
+        this.removeEventListener(o2.type, o2.listener, o2.options);
       } else {
-        on[++i] = o;
+        on[++i] = o2;
       }
     }
     if (++i) on.length = i;
@@ -54820,29 +54786,29 @@ function onRemove(typename) {
 }
 function onAdd(typename, value, options) {
   return function() {
-    var on = this.__on, o, listener = contextListener(value);
+    var on = this.__on, o2, listener = contextListener(value);
     if (on) for (var j2 = 0, m2 = on.length; j2 < m2; ++j2) {
-      if ((o = on[j2]).type === typename.type && o.name === typename.name) {
-        this.removeEventListener(o.type, o.listener, o.options);
-        this.addEventListener(o.type, o.listener = listener, o.options = options);
-        o.value = value;
+      if ((o2 = on[j2]).type === typename.type && o2.name === typename.name) {
+        this.removeEventListener(o2.type, o2.listener, o2.options);
+        this.addEventListener(o2.type, o2.listener = listener, o2.options = options);
+        o2.value = value;
         return;
       }
     }
     this.addEventListener(typename.type, listener, options);
-    o = { type: typename.type, name: typename.name, value, listener, options };
-    if (!on) this.__on = [o];
-    else on.push(o);
+    o2 = { type: typename.type, name: typename.name, value, listener, options };
+    if (!on) this.__on = [o2];
+    else on.push(o2);
   };
 }
 function selection_on(typename, value, options) {
   var typenames = parseTypenames(typename + ""), i, n2 = typenames.length, t2;
   if (arguments.length < 2) {
     var on = this.node().__on;
-    if (on) for (var j2 = 0, m2 = on.length, o; j2 < m2; ++j2) {
-      for (i = 0, o = on[j2]; i < n2; ++i) {
-        if ((t2 = typenames[i]).type === o.type && t2.name === o.name) {
-          return o.value;
+    if (on) for (var j2 = 0, m2 = on.length, o2; j2 < m2; ++j2) {
+      for (i = 0, o2 = on[j2]; i < n2; ++i) {
+        if ((t2 = typenames[i]).type === o2.type && t2.name === o2.name) {
+          return o2.value;
         }
       }
     }
@@ -55041,21 +55007,21 @@ function create(node, id2, self2) {
     if (self2.delay <= elapsed) start2(elapsed - self2.delay);
   }
   function start2(elapsed) {
-    var i, j2, n2, o;
+    var i, j2, n2, o2;
     if (self2.state !== SCHEDULED) return stop();
     for (i in schedules) {
-      o = schedules[i];
-      if (o.name !== self2.name) continue;
-      if (o.state === STARTED) return timeout(start2);
-      if (o.state === RUNNING) {
-        o.state = ENDED;
-        o.timer.stop();
-        o.on.call("interrupt", node, node.__data__, o.index, o.group);
+      o2 = schedules[i];
+      if (o2.name !== self2.name) continue;
+      if (o2.state === STARTED) return timeout(start2);
+      if (o2.state === RUNNING) {
+        o2.state = ENDED;
+        o2.timer.stop();
+        o2.on.call("interrupt", node, node.__data__, o2.index, o2.group);
         delete schedules[i];
       } else if (+i < id2) {
-        o.state = ENDED;
-        o.timer.stop();
-        o.on.call("cancel", node, node.__data__, o.index, o.group);
+        o2.state = ENDED;
+        o2.timer.stop();
+        o2.on.call("cancel", node, node.__data__, o2.index, o2.group);
         delete schedules[i];
       }
     }
@@ -55072,8 +55038,8 @@ function create(node, id2, self2) {
     self2.state = STARTED;
     tween = new Array(n2 = self2.tween.length);
     for (i = 0, j2 = -1; i < n2; ++i) {
-      if (o = self2.tween[i].value.call(node, node.__data__, self2.index, self2.group)) {
-        tween[++j2] = o;
+      if (o2 = self2.tween[i].value.call(node, node.__data__, self2.index, self2.group)) {
+        tween[++j2] = o2;
       }
     }
     tween.length = j2 + 1;
@@ -56039,10 +56005,10 @@ function useTheme() {
   return { theme, setTheme, toggleTheme };
 }
 const LEVEL_PALETTE = {
-  dark: ["#00c8ff", "#7b68ee", "#ff9800", "#4caf50", "#f06292"],
-  light: ["#00c8ff", "#7b3fb0", "#c45e00", "#0e7a6e", "#2e7d32"]
+  dark: ["#00c8ff", "#7b68ee", "#ff9800", "#4caf50"],
+  light: ["#00c8ff", "#7b3fb0", "#c45e00", "#0e7a6e"]
 };
-function formatAmount(n2) {
+function formatAmount$1(n2) {
   if (n2 >= 1e6) return `${(n2 / 1e6).toFixed(3)}M`;
   if (n2 >= 1e3) return `${(n2 / 1e3).toFixed(3)}k`;
   return n2.toFixed(3);
@@ -56508,7 +56474,7 @@ function ConstellationGraph({
         ),
         inAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: "#44ff88", fontSize: 11, paddingLeft: 8 }, children: [
           "↓ ",
-          formatAmount(inAmt),
+          formatAmount$1(inAmt),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
             " (",
             inCnt,
@@ -56517,7 +56483,7 @@ function ConstellationGraph({
         ] }),
         outAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: "#ffaa44", fontSize: 11, paddingLeft: 8 }, children: [
           "↑ ",
-          formatAmount(outAmt),
+          formatAmount$1(outAmt),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
             " (",
             outCnt,
@@ -57134,7 +57100,7 @@ function ConstellationGraph({
                             color: isDark ? "#aaccff" : "#1a1a2e",
                             fontWeight: 600
                           },
-                          children: minEdgeVolume === 0 ? "All" : formatAmount(minEdgeVolume)
+                          children: minEdgeVolume === 0 ? "All" : formatAmount$1(minEdgeVolume)
                         }
                       )
                     ]
@@ -57716,7 +57682,54 @@ function ConstellationGraph({
               lineHeight: 1.7
             },
             children: [
-              LEGEND_ITEMS.map((item) => {
+              colorByLevel ? (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).map(
+                (color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "div",
+                  {
+                    style: {
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      marginBottom: 2
+                    },
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "div",
+                        {
+                          style: {
+                            width: 18,
+                            height: 18,
+                            borderRadius: "50%",
+                            background: color2,
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 10,
+                            fontWeight: 700,
+                            color: "#fff",
+                            boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
+                            border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
+                          },
+                          children: i
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "span",
+                        {
+                          style: {
+                            fontSize: 11,
+                            color: isDark ? "#a0b4c8" : "#1a1a2e",
+                            fontWeight: 500
+                          },
+                          children: i === 0 ? "Center" : `Depth ${i}`
+                        }
+                      )
+                    ]
+                  },
+                  i
+                )
+              ) : LEGEND_ITEMS.map((item) => {
                 const swatchColor = isDark ? item.dark : item.light;
                 return /* @__PURE__ */ jsxRuntimeExports.jsxs(
                   "div",
@@ -57757,71 +57770,6 @@ function ConstellationGraph({
                 }
               )
             ]
-          }
-        ),
-        colorByLevel && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            "data-ocid": "graph.level_legend",
-            style: {
-              position: "absolute",
-              bottom: 10,
-              left: 150,
-              background: isDark ? "rgba(7,11,28,0.88)" : "rgba(255,255,255,0.92)",
-              border: isDark ? "1px solid rgba(40,60,120,0.5)" : "1px solid rgba(180,190,220,0.5)",
-              borderRadius: 7,
-              padding: "8px 12px",
-              fontSize: 10,
-              color: isDark ? "#7799cc" : "#334466",
-              zIndex: 10,
-              lineHeight: 1.7
-            },
-            children: (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).slice(0, 4).map((color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                style: {
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  marginBottom: 2
-                },
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "div",
-                    {
-                      style: {
-                        width: 18,
-                        height: 18,
-                        borderRadius: "50%",
-                        background: color2,
-                        flexShrink: 0,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 10,
-                        fontWeight: 700,
-                        color: "#fff",
-                        boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
-                        border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
-                      },
-                      children: i
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "span",
-                    {
-                      style: {
-                        fontSize: 11,
-                        color: isDark ? "#a0b4c8" : "#1a1a2e",
-                        fontWeight: 500
-                      },
-                      children: i === 0 ? "Center" : `Depth ${i}`
-                    }
-                  )
-                ]
-              },
-              i
-            ))
           }
         ),
         editingLabel && editingLabel !== (nodeInfo == null ? void 0 : nodeInfo.node.id) && /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -57946,7 +57894,7 @@ function EmptyState({
     search: {
       icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-10 w-10 text-neon-blue" }),
       title: "Enter a Principal or Account ID",
-      desc: "Search for any ICP wallet to visualize its transaction network.",
+      desc: "Search for any ICP wallet to visualize its transaction network as an interactive constellation.",
       hint: null
     },
     empty: {
@@ -58172,27 +58120,18 @@ function IcrcDebugPanel({ debugState, onClose }) {
                       debugState.perToken.length,
                       " queried)"
                     ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: debugState.perToken.map((entry, i) => {
-                      const hasError = entry.resultCount === 0 && entry.error;
-                      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                        "div",
-                        {
-                          className: `flex gap-1 items-baseline ${entry.resultCount > 0 ? "text-neon-green" : hasError ? "text-red-400" : "text-muted-foreground"} ${hasError ? "flex-wrap" : ""}`,
-                          children: [
-                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold min-w-[48px]", children: entry.symbol }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] opacity-70", children: entry.canisterId.slice(0, 8) }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsx(
-                              "span",
-                              {
-                                className: `text-right ${hasError ? "ml-auto basis-full text-left break-words" : "ml-auto"}`,
-                                children: entry.resultCount > 0 ? `${entry.resultCount} tx (${entry.addressFormat})` : hasError ? entry.error : "0"
-                              }
-                            )
-                          ]
-                        },
-                        i
-                      );
-                    }) })
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: debugState.perToken.map((entry, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "div",
+                      {
+                        className: `flex gap-1 items-baseline ${entry.resultCount > 0 ? "text-neon-green" : entry.error ? "text-red-400" : "text-muted-foreground"}`,
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold min-w-[48px]", children: entry.symbol }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] opacity-70", children: entry.canisterId.slice(0, 8) }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-right", children: entry.resultCount > 0 ? `${entry.resultCount} tx (${entry.addressFormat})` : entry.error ? entry.error.slice(0, 20) : "0" })
+                        ]
+                      },
+                      i
+                    )) })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-[10px] text-muted-foreground border-t border-border pt-2", children: [
                     "Updated: ",
@@ -58209,7 +58148,7 @@ function IcrcDebugPanel({ debugState, onClose }) {
     }
   );
 }
-function createContextScope(scopeName, createContextScopeDeps = []) {
+function createContextScope$1(scopeName, createContextScopeDeps = []) {
   let defaultContexts = [];
   function createContext3(rootComponentName, defaultContext) {
     const BaseContext = reactExports.createContext(defaultContext);
@@ -58224,14 +58163,12 @@ function createContextScope(scopeName, createContextScopeDeps = []) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(Context.Provider, { value, children: children2 });
     };
     Provider.displayName = rootComponentName + "Provider";
-    function useContext2(consumerName, scope, options = {}) {
+    function useContext2(consumerName, scope) {
       var _a3;
-      const { optional = false } = options;
       const Context = ((_a3 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a3[index2]) || BaseContext;
       const context = reactExports.useContext(Context);
       if (context) return context;
       if (defaultContext !== void 0) return defaultContext;
-      if (optional) return void 0;
       throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
     }
     return [Provider, useContext2];
@@ -58249,9 +58186,9 @@ function createContextScope(scopeName, createContextScopeDeps = []) {
     };
   };
   createScope.scopeName = scopeName;
-  return [createContext3, composeContextScopes(createScope, ...createContextScopeDeps)];
+  return [createContext3, composeContextScopes$1(createScope, ...createContextScopeDeps)];
 }
-function composeContextScopes(...scopes) {
+function composeContextScopes$1(...scopes) {
   const baseScope = scopes[0];
   if (scopes.length === 1) return baseScope;
   const createScope = () => {
@@ -58273,7 +58210,7 @@ function composeContextScopes(...scopes) {
 }
 var PROGRESS_NAME = "Progress";
 var DEFAULT_MAX = 100;
-var [createProgressContext] = createContextScope(PROGRESS_NAME);
+var [createProgressContext] = createContextScope$1(PROGRESS_NAME);
 var [ProgressProvider, useProgressContext] = createProgressContext(PROGRESS_NAME);
 var Progress$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
@@ -58294,7 +58231,7 @@ var Progress$1 = reactExports.forwardRef(
     const value = isValidValueNumber(valueProp, max2) ? valueProp : null;
     const valueLabel = isNumber2(value) ? getValueLabel(value, max2) : void 0;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ProgressProvider, { scope: __scopeProgress, value, max: max2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Primitive.div,
+      Primitive$1.div,
       {
         "aria-valuemax": max2,
         "aria-valuemin": 0,
@@ -58317,7 +58254,7 @@ var ProgressIndicator = reactExports.forwardRef(
     const { __scopeProgress, ...indicatorProps } = props;
     const context = useProgressContext(INDICATOR_NAME, __scopeProgress);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Primitive.div,
+      Primitive$1.div,
       {
         "data-state": getProgressState(context.value, context.max),
         "data-value": context.value ?? void 0,
@@ -58388,28 +58325,170 @@ function clamp$1(value, [min2, max2]) {
 function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
   return function handleEvent(event) {
     originalEventHandler == null ? void 0 : originalEventHandler(event);
-    if (checkForDefaultPrevented === false || !event || !event.defaultPrevented) {
+    if (checkForDefaultPrevented === false || !event.defaultPrevented) {
       return ourEventHandler == null ? void 0 : ourEventHandler(event);
     }
   };
 }
+function createContextScope(scopeName, createContextScopeDeps = []) {
+  let defaultContexts = [];
+  function createContext3(rootComponentName, defaultContext) {
+    const BaseContext = reactExports.createContext(defaultContext);
+    const index2 = defaultContexts.length;
+    defaultContexts = [...defaultContexts, defaultContext];
+    const Provider = (props) => {
+      var _a3;
+      const { scope, children: children2, ...context } = props;
+      const Context = ((_a3 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a3[index2]) || BaseContext;
+      const value = reactExports.useMemo(() => context, Object.values(context));
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(Context.Provider, { value, children: children2 });
+    };
+    Provider.displayName = rootComponentName + "Provider";
+    function useContext2(consumerName, scope) {
+      var _a3;
+      const Context = ((_a3 = scope == null ? void 0 : scope[scopeName]) == null ? void 0 : _a3[index2]) || BaseContext;
+      const context = reactExports.useContext(Context);
+      if (context) return context;
+      if (defaultContext !== void 0) return defaultContext;
+      throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
+    }
+    return [Provider, useContext2];
+  }
+  const createScope = () => {
+    const scopeContexts = defaultContexts.map((defaultContext) => {
+      return reactExports.createContext(defaultContext);
+    });
+    return function useScope(scope) {
+      const contexts = (scope == null ? void 0 : scope[scopeName]) || scopeContexts;
+      return reactExports.useMemo(
+        () => ({ [`__scope${scopeName}`]: { ...scope, [scopeName]: contexts } }),
+        [scope, contexts]
+      );
+    };
+  };
+  createScope.scopeName = scopeName;
+  return [createContext3, composeContextScopes(createScope, ...createContextScopeDeps)];
+}
+function composeContextScopes(...scopes) {
+  const baseScope = scopes[0];
+  if (scopes.length === 1) return baseScope;
+  const createScope = () => {
+    const scopeHooks = scopes.map((createScope2) => ({
+      useScope: createScope2(),
+      scopeName: createScope2.scopeName
+    }));
+    return function useComposedScopes(overrideScopes) {
+      const nextScopes = scopeHooks.reduce((nextScopes2, { useScope, scopeName }) => {
+        const scopeProps = useScope(overrideScopes);
+        const currentScope = scopeProps[`__scope${scopeName}`];
+        return { ...nextScopes2, ...currentScope };
+      }, {});
+      return reactExports.useMemo(() => ({ [`__scope${baseScope.scopeName}`]: nextScopes }), [nextScopes]);
+    };
+  };
+  createScope.scopeName = baseScope.scopeName;
+  return createScope;
+}
+// @__NO_SIDE_EFFECTS__
+function createSlot(ownerName) {
+  const SlotClone = /* @__PURE__ */ createSlotClone(ownerName);
+  const Slot2 = reactExports.forwardRef((props, forwardedRef) => {
+    const { children: children2, ...slotProps } = props;
+    const childrenArray = reactExports.Children.toArray(children2);
+    const slottable = childrenArray.find(isSlottable);
+    if (slottable) {
+      const newElement = slottable.props.children;
+      const newChildren = childrenArray.map((child) => {
+        if (child === slottable) {
+          if (reactExports.Children.count(newElement) > 1) return reactExports.Children.only(null);
+          return reactExports.isValidElement(newElement) ? newElement.props.children : null;
+        } else {
+          return child;
+        }
+      });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(SlotClone, { ...slotProps, ref: forwardedRef, children: reactExports.isValidElement(newElement) ? reactExports.cloneElement(newElement, void 0, newChildren) : null });
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(SlotClone, { ...slotProps, ref: forwardedRef, children: children2 });
+  });
+  Slot2.displayName = `${ownerName}.Slot`;
+  return Slot2;
+}
+// @__NO_SIDE_EFFECTS__
+function createSlotClone(ownerName) {
+  const SlotClone = reactExports.forwardRef((props, forwardedRef) => {
+    const { children: children2, ...slotProps } = props;
+    if (reactExports.isValidElement(children2)) {
+      const childrenRef = getElementRef(children2);
+      const props2 = mergeProps(slotProps, children2.props);
+      if (children2.type !== reactExports.Fragment) {
+        props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
+      }
+      return reactExports.cloneElement(children2, props2);
+    }
+    return reactExports.Children.count(children2) > 1 ? reactExports.Children.only(null) : null;
+  });
+  SlotClone.displayName = `${ownerName}.SlotClone`;
+  return SlotClone;
+}
+var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+function isSlottable(child) {
+  return reactExports.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+}
+function mergeProps(slotProps, childProps) {
+  const overrideProps = { ...childProps };
+  for (const propName in childProps) {
+    const slotPropValue = slotProps[propName];
+    const childPropValue = childProps[propName];
+    const isHandler = /^on[A-Z]/.test(propName);
+    if (isHandler) {
+      if (slotPropValue && childPropValue) {
+        overrideProps[propName] = (...args) => {
+          const result = childPropValue(...args);
+          slotPropValue(...args);
+          return result;
+        };
+      } else if (slotPropValue) {
+        overrideProps[propName] = slotPropValue;
+      }
+    } else if (propName === "style") {
+      overrideProps[propName] = { ...slotPropValue, ...childPropValue };
+    } else if (propName === "className") {
+      overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
+    }
+  }
+  return { ...slotProps, ...overrideProps };
+}
+function getElementRef(element) {
+  var _a3, _b3;
+  let getter = (_a3 = Object.getOwnPropertyDescriptor(element.props, "ref")) == null ? void 0 : _a3.get;
+  let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+  if (mayWarn) {
+    return element.ref;
+  }
+  getter = (_b3 = Object.getOwnPropertyDescriptor(element, "ref")) == null ? void 0 : _b3.get;
+  mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+  if (mayWarn) {
+    return element.props.ref;
+  }
+  return element.props.ref || element.ref;
+}
 function createCollection(name) {
-  const PROVIDER_NAME2 = name + "CollectionProvider";
-  const [createCollectionContext, createCollectionScope2] = createContextScope(PROVIDER_NAME2);
+  const PROVIDER_NAME = name + "CollectionProvider";
+  const [createCollectionContext, createCollectionScope2] = createContextScope(PROVIDER_NAME);
   const [CollectionProviderImpl, useCollectionContext] = createCollectionContext(
-    PROVIDER_NAME2,
+    PROVIDER_NAME,
     { collectionRef: { current: null }, itemMap: /* @__PURE__ */ new Map() }
   );
   const CollectionProvider = (props) => {
     const { scope, children: children2 } = props;
-    const ref = reactExports.useRef(null);
-    const itemMap = reactExports.useRef(/* @__PURE__ */ new Map()).current;
+    const ref = React2.useRef(null);
+    const itemMap = React2.useRef(/* @__PURE__ */ new Map()).current;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(CollectionProviderImpl, { scope, itemMap, collectionRef: ref, children: children2 });
   };
-  CollectionProvider.displayName = PROVIDER_NAME2;
+  CollectionProvider.displayName = PROVIDER_NAME;
   const COLLECTION_SLOT_NAME = name + "CollectionSlot";
   const CollectionSlotImpl = /* @__PURE__ */ createSlot(COLLECTION_SLOT_NAME);
-  const CollectionSlot = reactExports.forwardRef(
+  const CollectionSlot = React2.forwardRef(
     (props, forwardedRef) => {
       const { scope, children: children2 } = props;
       const context = useCollectionContext(COLLECTION_SLOT_NAME, scope);
@@ -58421,13 +58500,13 @@ function createCollection(name) {
   const ITEM_SLOT_NAME = name + "CollectionItemSlot";
   const ITEM_DATA_ATTR = "data-radix-collection-item";
   const CollectionItemSlotImpl = /* @__PURE__ */ createSlot(ITEM_SLOT_NAME);
-  const CollectionItemSlot = reactExports.forwardRef(
+  const CollectionItemSlot = React2.forwardRef(
     (props, forwardedRef) => {
       const { scope, children: children2, ...itemData } = props;
-      const ref = reactExports.useRef(null);
+      const ref = React2.useRef(null);
       const composedRefs = useComposedRefs(forwardedRef, ref);
       const context = useCollectionContext(ITEM_SLOT_NAME, scope);
-      reactExports.useEffect(() => {
+      React2.useEffect(() => {
         context.itemMap.set(ref, { ref, ...itemData });
         return () => void context.itemMap.delete(ref);
       });
@@ -58437,7 +58516,7 @@ function createCollection(name) {
   CollectionItemSlot.displayName = ITEM_SLOT_NAME;
   function useCollection2(scope) {
     const context = useCollectionContext(name + "CollectionConsumer", scope);
-    const getItems = reactExports.useCallback(() => {
+    const getItems = React2.useCallback(() => {
       const collectionNode = context.collectionRef.current;
       if (!collectionNode) return [];
       const orderedNodes = Array.from(collectionNode.querySelectorAll(`[${ITEM_DATA_ATTR}]`));
@@ -58460,6 +58539,41 @@ function useDirection(localDir) {
   const globalDir = reactExports.useContext(DirectionContext);
   return localDir || globalDir || "ltr";
 }
+var NODES = [
+  "a",
+  "button",
+  "div",
+  "form",
+  "h2",
+  "h3",
+  "img",
+  "input",
+  "label",
+  "li",
+  "nav",
+  "ol",
+  "p",
+  "select",
+  "span",
+  "svg",
+  "ul"
+];
+var Primitive = NODES.reduce((primitive, node) => {
+  const Slot2 = /* @__PURE__ */ createSlot(`Primitive.${node}`);
+  const Node2 = reactExports.forwardRef((props, forwardedRef) => {
+    const { asChild, ...primitiveProps } = props;
+    const Comp = asChild ? Slot2 : node;
+    if (typeof window !== "undefined") {
+      window[Symbol.for("radix-ui")] = true;
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Comp, { ...primitiveProps, ref: forwardedRef });
+  });
+  Node2.displayName = `Primitive.${node}`;
+  return { ...primitive, [node]: Node2 };
+}, {});
+function dispatchDiscreteCustomEvent(target, event) {
+  if (target) reactDomExports.flushSync(() => target.dispatchEvent(event));
+}
 function useCallbackRef$1(callback) {
   const callbackRef = reactExports.useRef(callback);
   reactExports.useEffect(() => {
@@ -58470,6 +58584,18 @@ function useCallbackRef$1(callback) {
     return (_a3 = callbackRef.current) == null ? void 0 : _a3.call(callbackRef, ...args);
   }, []);
 }
+function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis == null ? void 0 : globalThis.document) {
+  const onEscapeKeyDown = useCallbackRef$1(onEscapeKeyDownProp);
+  reactExports.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onEscapeKeyDown(event);
+      }
+    };
+    ownerDocument.addEventListener("keydown", handleKeyDown, { capture: true });
+    return () => ownerDocument.removeEventListener("keydown", handleKeyDown, { capture: true });
+  }, [onEscapeKeyDown, ownerDocument]);
+}
 var DISMISSABLE_LAYER_NAME = "DismissableLayer";
 var CONTEXT_UPDATE = "dismissableLayer.update";
 var POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
@@ -58478,19 +58604,12 @@ var originalBodyPointerEvents;
 var DismissableLayerContext = reactExports.createContext({
   layers: /* @__PURE__ */ new Set(),
   layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
-  branches: /* @__PURE__ */ new Set(),
-  // Outside elements that belong to a layer's own dismiss affordance (eg, a
-  // dialog overlay). Pressing them should dismiss the layer regardless of
-  // whether or not they stop propagation.
-  //
-  // See https://github.com/radix-ui/primitives/issues/3346
-  dismissableSurfaces: /* @__PURE__ */ new Set()
+  branches: /* @__PURE__ */ new Set()
 });
 var DismissableLayer = reactExports.forwardRef(
   (props, forwardedRef) => {
     const {
       disableOutsidePointerEvents = false,
-      deferPointerDownOutside = false,
       onEscapeKeyDown,
       onPointerDownOutside,
       onFocusOutside,
@@ -58502,45 +58621,22 @@ var DismissableLayer = reactExports.forwardRef(
     const [node, setNode] = reactExports.useState(null);
     const ownerDocument = (node == null ? void 0 : node.ownerDocument) ?? (globalThis == null ? void 0 : globalThis.document);
     const [, force] = reactExports.useState({});
-    const composedRefs = useComposedRefs(forwardedRef, setNode);
+    const composedRefs = useComposedRefs(forwardedRef, (node2) => setNode(node2));
     const layers = Array.from(context.layers);
-    const [highestLayerWithOutsidePointerEventsDisabled] = [
-      ...context.layersWithOutsidePointerEventsDisabled
-    ].slice(-1);
-    const highestLayerWithOutsidePointerEventsDisabledIndex = highestLayerWithOutsidePointerEventsDisabled ? layers.indexOf(highestLayerWithOutsidePointerEventsDisabled) : -1;
+    const [highestLayerWithOutsidePointerEventsDisabled] = [...context.layersWithOutsidePointerEventsDisabled].slice(-1);
+    const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(highestLayerWithOutsidePointerEventsDisabled);
     const index2 = node ? layers.indexOf(node) : -1;
     const isBodyPointerEventsDisabled = context.layersWithOutsidePointerEventsDisabled.size > 0;
     const isPointerEventsEnabled = index2 >= highestLayerWithOutsidePointerEventsDisabledIndex;
-    const isDeferredPointerDownOutsideRef = reactExports.useRef(false);
-    const pointerDownOutside = usePointerDownOutside(
-      (event) => {
-        onPointerDownOutside == null ? void 0 : onPointerDownOutside(event);
-        onInteractOutside == null ? void 0 : onInteractOutside(event);
-        if (!event.defaultPrevented) onDismiss == null ? void 0 : onDismiss();
-      },
-      {
-        ownerDocument,
-        deferPointerDownOutside,
-        isDeferredPointerDownOutsideRef,
-        dismissableSurfaces: context.dismissableSurfaces,
-        shouldHandlePointerDownOutside: reactExports.useCallback(
-          (target) => {
-            if (!(target instanceof Node)) {
-              return false;
-            }
-            const isPointerDownOnBranch = [...context.branches].some(
-              (branch) => branch.contains(target)
-            );
-            return isPointerEventsEnabled && !isPointerDownOnBranch;
-          },
-          [context.branches, isPointerEventsEnabled]
-        )
-      }
-    );
+    const pointerDownOutside = usePointerDownOutside((event) => {
+      const target = event.target;
+      const isPointerDownOnBranch = [...context.branches].some((branch) => branch.contains(target));
+      if (!isPointerEventsEnabled || isPointerDownOnBranch) return;
+      onPointerDownOutside == null ? void 0 : onPointerDownOutside(event);
+      onInteractOutside == null ? void 0 : onInteractOutside(event);
+      if (!event.defaultPrevented) onDismiss == null ? void 0 : onDismiss();
+    }, ownerDocument);
     const focusOutside = useFocusOutside((event) => {
-      if (deferPointerDownOutside && isDeferredPointerDownOutsideRef.current) {
-        return;
-      }
       const target = event.target;
       const isFocusInBranch = [...context.branches].some((branch) => branch.contains(target));
       if (isFocusInBranch) return;
@@ -58548,24 +58644,15 @@ var DismissableLayer = reactExports.forwardRef(
       onInteractOutside == null ? void 0 : onInteractOutside(event);
       if (!event.defaultPrevented) onDismiss == null ? void 0 : onDismiss();
     }, ownerDocument);
-    const isHighestLayer = node ? index2 === layers.length - 1 : false;
-    const handleKeyDown = useCallbackRef$1((event) => {
-      if (event.key !== "Escape") {
-        return;
-      }
+    useEscapeKeydown((event) => {
+      const isHighestLayer = index2 === context.layers.size - 1;
+      if (!isHighestLayer) return;
       onEscapeKeyDown == null ? void 0 : onEscapeKeyDown(event);
       if (!event.defaultPrevented && onDismiss) {
         event.preventDefault();
         onDismiss();
       }
-    });
-    reactExports.useEffect(() => {
-      if (!isHighestLayer) {
-        return;
-      }
-      ownerDocument.addEventListener("keydown", handleKeyDown, { capture: true });
-      return () => ownerDocument.removeEventListener("keydown", handleKeyDown, { capture: true });
-    }, [ownerDocument, isHighestLayer, handleKeyDown]);
+    }, ownerDocument);
     reactExports.useEffect(() => {
       if (!node) return;
       if (disableOutsidePointerEvents) {
@@ -58578,11 +58665,8 @@ var DismissableLayer = reactExports.forwardRef(
       context.layers.add(node);
       dispatchUpdate();
       return () => {
-        if (disableOutsidePointerEvents) {
-          context.layersWithOutsidePointerEventsDisabled.delete(node);
-          if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
-            ownerDocument.body.style.pointerEvents = originalBodyPointerEvents;
-          }
+        if (disableOutsidePointerEvents && context.layersWithOutsidePointerEventsDisabled.size === 1) {
+          ownerDocument.body.style.pointerEvents = originalBodyPointerEvents;
         }
       };
     }, [node, ownerDocument, disableOutsidePointerEvents, context]);
@@ -58636,102 +58720,35 @@ var DismissableLayerBranch = reactExports.forwardRef((props, forwardedRef) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive.div, { ...props, ref: composedRefs });
 });
 DismissableLayerBranch.displayName = BRANCH_NAME;
-var IS_TRUE = () => true;
-function usePointerDownOutside(onPointerDownOutside, args) {
-  const {
-    ownerDocument = globalThis == null ? void 0 : globalThis.document,
-    deferPointerDownOutside = false,
-    isDeferredPointerDownOutsideRef,
-    dismissableSurfaces,
-    shouldHandlePointerDownOutside = IS_TRUE
-  } = args;
+function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis == null ? void 0 : globalThis.document) {
   const handlePointerDownOutside = useCallbackRef$1(onPointerDownOutside);
   const isPointerInsideReactTreeRef = reactExports.useRef(false);
-  const isPointerDownOutsideRef = reactExports.useRef(false);
-  const interceptedOutsideInteractionEventsRef = reactExports.useRef(/* @__PURE__ */ new Map());
   const handleClickRef = reactExports.useRef(() => {
   });
   reactExports.useEffect(() => {
-    function resetOutsideInteraction() {
-      isPointerDownOutsideRef.current = false;
-      isDeferredPointerDownOutsideRef.current = false;
-      interceptedOutsideInteractionEventsRef.current.clear();
-    }
-    function isOutsideInteractionIntercepted() {
-      return Array.from(interceptedOutsideInteractionEventsRef.current.values()).some(Boolean);
-    }
-    function handleInteractionCapture(event) {
-      if (!isPointerDownOutsideRef.current) {
-        return;
-      }
-      const target = event.target;
-      const isDismissableSurface = target instanceof Node && [...dismissableSurfaces].some((surface) => surface.contains(target));
-      if (!isDismissableSurface) {
-        interceptedOutsideInteractionEventsRef.current.set(event.type, true);
-      }
-      if (event.type === "click") {
-        window.setTimeout(() => {
-          if (isPointerDownOutsideRef.current) {
-            handleClickRef.current();
-          }
-        }, 0);
-      }
-    }
-    function handleInteractionBubble(event) {
-      if (isPointerDownOutsideRef.current) {
-        interceptedOutsideInteractionEventsRef.current.set(event.type, false);
-      }
-    }
     const handlePointerDown = (event) => {
       if (event.target && !isPointerInsideReactTreeRef.current) {
         let handleAndDispatchPointerDownOutsideEvent2 = function() {
-          ownerDocument.removeEventListener("click", handleClickRef.current);
-          const wasOutsideInteractionIntercepted = isOutsideInteractionIntercepted();
-          resetOutsideInteraction();
-          if (!wasOutsideInteractionIntercepted) {
-            handleAndDispatchCustomEvent(
-              POINTER_DOWN_OUTSIDE,
-              handlePointerDownOutside,
-              eventDetail,
-              { discrete: true }
-            );
-          }
+          handleAndDispatchCustomEvent(
+            POINTER_DOWN_OUTSIDE,
+            handlePointerDownOutside,
+            eventDetail,
+            { discrete: true }
+          );
         };
-        if (!shouldHandlePointerDownOutside(event.target)) {
-          ownerDocument.removeEventListener("click", handleClickRef.current);
-          resetOutsideInteraction();
-          isPointerInsideReactTreeRef.current = false;
-          return;
-        }
         const eventDetail = { originalEvent: event };
-        isPointerDownOutsideRef.current = true;
-        isDeferredPointerDownOutsideRef.current = deferPointerDownOutside && event.button === 0;
-        interceptedOutsideInteractionEventsRef.current.clear();
-        if (!deferPointerDownOutside || event.button !== 0) {
-          handleAndDispatchPointerDownOutsideEvent2();
-        } else {
+        if (event.pointerType === "touch") {
           ownerDocument.removeEventListener("click", handleClickRef.current);
           handleClickRef.current = handleAndDispatchPointerDownOutsideEvent2;
           ownerDocument.addEventListener("click", handleClickRef.current, { once: true });
+        } else {
+          handleAndDispatchPointerDownOutsideEvent2();
         }
       } else {
         ownerDocument.removeEventListener("click", handleClickRef.current);
-        resetOutsideInteraction();
       }
       isPointerInsideReactTreeRef.current = false;
     };
-    const outsideInteractionEvents = [
-      "pointerup",
-      "mousedown",
-      "mouseup",
-      "touchstart",
-      "touchend",
-      "click"
-    ];
-    for (const eventName of outsideInteractionEvents) {
-      ownerDocument.addEventListener(eventName, handleInteractionCapture, true);
-      ownerDocument.addEventListener(eventName, handleInteractionBubble);
-    }
     const timerId = window.setTimeout(() => {
       ownerDocument.addEventListener("pointerdown", handlePointerDown);
     }, 0);
@@ -58739,19 +58756,8 @@ function usePointerDownOutside(onPointerDownOutside, args) {
       window.clearTimeout(timerId);
       ownerDocument.removeEventListener("pointerdown", handlePointerDown);
       ownerDocument.removeEventListener("click", handleClickRef.current);
-      for (const eventName of outsideInteractionEvents) {
-        ownerDocument.removeEventListener(eventName, handleInteractionCapture, true);
-        ownerDocument.removeEventListener(eventName, handleInteractionBubble);
-      }
     };
-  }, [
-    ownerDocument,
-    handlePointerDownOutside,
-    deferPointerDownOutside,
-    isDeferredPointerDownOutsideRef,
-    dismissableSurfaces,
-    shouldHandlePointerDownOutside
-  ]);
+  }, [ownerDocument, handlePointerDownOutside]);
   return {
     // ensures we check React component tree (not just DOM tree)
     onPointerDownCapture: () => isPointerInsideReactTreeRef.current = true
@@ -58792,27 +58798,17 @@ function handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
   }
 }
 var count$1 = 0;
-var guards = null;
 function useFocusGuards() {
   reactExports.useEffect(() => {
-    if (!guards) {
-      guards = { start: createFocusGuard(), end: createFocusGuard() };
-    }
-    const { start: start2, end } = guards;
-    if (document.body.firstElementChild !== start2) {
-      document.body.insertAdjacentElement("afterbegin", start2);
-    }
-    if (document.body.lastElementChild !== end) {
-      document.body.insertAdjacentElement("beforeend", end);
-    }
+    const edgeGuards = document.querySelectorAll("[data-radix-focus-guard]");
+    document.body.insertAdjacentElement("afterbegin", edgeGuards[0] ?? createFocusGuard());
+    document.body.insertAdjacentElement("beforeend", edgeGuards[1] ?? createFocusGuard());
     count$1++;
     return () => {
       if (count$1 === 1) {
-        guards == null ? void 0 : guards.start.remove();
-        guards == null ? void 0 : guards.end.remove();
-        guards = null;
+        document.querySelectorAll("[data-radix-focus-guard]").forEach((node) => node.remove());
       }
-      count$1 = Math.max(0, count$1 - 1);
+      count$1--;
     };
   }, []);
 }
@@ -58842,7 +58838,7 @@ var FocusScope = reactExports.forwardRef((props, forwardedRef) => {
   const onMountAutoFocus = useCallbackRef$1(onMountAutoFocusProp);
   const onUnmountAutoFocus = useCallbackRef$1(onUnmountAutoFocusProp);
   const lastFocusedElementRef = reactExports.useRef(null);
-  const composedRefs = useComposedRefs(forwardedRef, setContainer);
+  const composedRefs = useComposedRefs(forwardedRef, (node) => setContainer(node));
   const focusScope = reactExports.useRef({
     paused: false,
     pause() {
@@ -58972,12 +58968,8 @@ function getTabbableCandidates(container) {
   return nodes;
 }
 function findVisible(elements, container) {
-  const canUseCheckVisibility = typeof container.checkVisibility === "function" && container.checkVisibility({ checkVisibilityCSS: true });
   for (const element of elements) {
-    const hidden = canUseCheckVisibility ? !element.checkVisibility({ checkVisibilityCSS: true }) : isHidden(element, { upTo: container });
-    if (!hidden) {
-      return element;
-    }
+    if (!isHidden(element, { upTo: container })) return element;
   }
 }
 function isHidden(node, { upTo }) {
@@ -59032,14 +59024,14 @@ function removeLinks(items) {
 }
 var useLayoutEffect2 = (globalThis == null ? void 0 : globalThis.document) ? reactExports.useLayoutEffect : () => {
 };
-var useReactId = React$3[" useId ".trim().toString()] || (() => void 0);
+var useReactId = React$2[" useId ".trim().toString()] || (() => void 0);
 var count = 0;
 function useId(deterministicId) {
   const [id2, setId] = reactExports.useState(useReactId());
   useLayoutEffect2(() => {
     setId((reactId) => reactId ?? String(count++));
   }, [deterministicId]);
-  return id2 ? `radix-${id2}` : "";
+  return deterministicId || (id2 ? `radix-${id2}` : "");
 }
 const sides = ["top", "right", "bottom", "left"];
 const min = Math.min;
@@ -61014,18 +61006,7 @@ var [PopperProvider, usePopperContext] = createPopperContext(POPPER_NAME);
 var Popper = (props) => {
   const { __scopePopper, children: children2 } = props;
   const [anchor, setAnchor] = reactExports.useState(null);
-  const [placementState, setPlacementState] = reactExports.useState(void 0);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    PopperProvider,
-    {
-      scope: __scopePopper,
-      anchor,
-      onAnchorChange: setAnchor,
-      placementState,
-      setPlacementState,
-      children: children2
-    }
-  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(PopperProvider, { scope: __scopePopper, anchor, onAnchorChange: setAnchor, children: children2 });
 };
 Popper.displayName = POPPER_NAME;
 var ANCHOR_NAME = "PopperAnchor";
@@ -61034,40 +61015,16 @@ var PopperAnchor = reactExports.forwardRef(
     const { __scopePopper, virtualRef, ...anchorProps } = props;
     const context = usePopperContext(ANCHOR_NAME, __scopePopper);
     const ref = reactExports.useRef(null);
-    const onAnchorChange = context.onAnchorChange;
-    const callbackRef = reactExports.useCallback(
-      (node) => {
-        ref.current = node;
-        if (node) {
-          onAnchorChange(node);
-        }
-      },
-      [onAnchorChange]
-    );
-    const composedRefs = useComposedRefs(forwardedRef, callbackRef);
+    const composedRefs = useComposedRefs(forwardedRef, ref);
     const anchorRef = reactExports.useRef(null);
     reactExports.useEffect(() => {
-      if (!virtualRef) {
-        return;
-      }
       const previousAnchor = anchorRef.current;
-      anchorRef.current = virtualRef.current;
+      anchorRef.current = (virtualRef == null ? void 0 : virtualRef.current) || ref.current;
       if (previousAnchor !== anchorRef.current) {
-        onAnchorChange(anchorRef.current);
+        context.onAnchorChange(anchorRef.current);
       }
     });
-    const sideAndAlign = context.placementState && getSideAndAlignFromPlacement(context.placementState);
-    const placedSide = sideAndAlign == null ? void 0 : sideAndAlign[0];
-    const placedAlign = sideAndAlign == null ? void 0 : sideAndAlign[1];
-    return virtualRef ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Primitive.div,
-      {
-        "data-radix-popper-side": placedSide,
-        "data-radix-popper-align": placedAlign,
-        ...anchorProps,
-        ref: composedRefs
-      }
-    );
+    return virtualRef ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive.div, { ...anchorProps, ref: composedRefs });
   }
 );
 PopperAnchor.displayName = ANCHOR_NAME;
@@ -61094,7 +61051,7 @@ var PopperContent = reactExports.forwardRef(
     } = props;
     const context = usePopperContext(CONTENT_NAME$1, __scopePopper);
     const [content, setContent] = reactExports.useState(null);
-    const composedRefs = useComposedRefs(forwardedRef, setContent);
+    const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
     const [arrow$12, setArrow] = reactExports.useState(null);
     const arrowSize = useSize(arrow$12);
     const arrowWidth = (arrowSize == null ? void 0 : arrowSize.width) ?? 0;
@@ -61144,27 +61101,9 @@ var PopperContent = reactExports.forwardRef(
         }),
         arrow$12 && arrow({ element: arrow$12, padding: arrowPadding }),
         transformOrigin({ arrowWidth, arrowHeight }),
-        hideWhenDetached && hide({
-          strategy: "referenceHidden",
-          ...detectOverflowOptions,
-          // `hide` detects whether the anchor (reference) is clipped, so when
-          // no explicit `collisionBoundary` is set we fall back to Floating
-          // UI's default clipping ancestors (e.g. a scrollable menu). This
-          // lets an occluded submenu hide once its anchor scrolls out of view
-          // (#3237). The collision/size middlewares deliberately keep the
-          // viewport-based default to avoid clamping content rendered inside
-          // transformed or overflow-clipping portal containers.
-          boundary: hasExplicitBoundaries ? detectOverflowOptions.boundary : void 0
-        })
+        hideWhenDetached && hide({ strategy: "referenceHidden", ...detectOverflowOptions })
       ]
     });
-    const setPlacementState = context.setPlacementState;
-    useLayoutEffect2(() => {
-      setPlacementState(placement);
-      return () => {
-        setPlacementState(void 0);
-      };
-    }, [placement, setPlacementState]);
     const [placedSide, placedAlign] = getSideAndAlignFromPlacement(placement);
     const handlePlaced = useCallbackRef$1(onPlaced);
     useLayoutEffect2(() => {
@@ -61190,7 +61129,7 @@ var PopperContent = reactExports.forwardRef(
           // keep off the page when measuring
           minWidth: "max-content",
           zIndex: contentZIndex,
-          "--radix-popper-transform-origin": [
+          ["--radix-popper-transform-origin"]: [
             (_d2 = middlewareData.transformOrigin) == null ? void 0 : _d2.x,
             (_e2 = middlewareData.transformOrigin) == null ? void 0 : _e2.y
           ].join(" "),
@@ -61208,7 +61147,6 @@ var PopperContent = reactExports.forwardRef(
           {
             scope: __scopePopper,
             placedSide,
-            placedAlign,
             onArrowChange: setArrow,
             arrowX,
             arrowY,
@@ -61329,190 +61267,21 @@ function getSideAndAlignFromPlacement(placement) {
   const [side, align = "center"] = placement.split("-");
   return [side, align];
 }
-var Root2 = Popper;
+var Root2$1 = Popper;
 var Anchor = PopperAnchor;
 var Content = PopperContent;
 var Arrow = PopperArrow;
 var PORTAL_NAME$1 = "Portal";
-var Portal = reactExports.forwardRef((props, forwardedRef) => {
+var Portal$1 = reactExports.forwardRef((props, forwardedRef) => {
   var _a3;
   const { container: containerProp, ...portalProps } = props;
   const [mounted, setMounted] = reactExports.useState(false);
   useLayoutEffect2(() => setMounted(true), []);
   const container = containerProp || mounted && ((_a3 = globalThis == null ? void 0 : globalThis.document) == null ? void 0 : _a3.body);
-  return container ? reactDomExports.createPortal(/* @__PURE__ */ jsxRuntimeExports.jsx(Primitive.div, { ...portalProps, ref: forwardedRef }), container) : null;
+  return container ? ReactDOM$2.createPortal(/* @__PURE__ */ jsxRuntimeExports.jsx(Primitive.div, { ...portalProps, ref: forwardedRef }), container) : null;
 });
-Portal.displayName = PORTAL_NAME$1;
-function useStateMachine(initialState, machine) {
-  return reactExports.useReducer((state, event) => {
-    const nextState = machine[state][event];
-    return nextState ?? state;
-  }, initialState);
-}
-var Presence = (props) => {
-  const { present, children: children2 } = props;
-  const presence = usePresence(present);
-  const child = typeof children2 === "function" ? children2({ present: presence.isPresent }) : reactExports.Children.only(children2);
-  const ref = useStableComposedRefs(presence.ref, getElementRef(child));
-  const forceMount = typeof children2 === "function";
-  return forceMount || presence.isPresent ? reactExports.cloneElement(child, { ref }) : null;
-};
-Presence.displayName = "Presence";
-function usePresence(present) {
-  const [node, setNode] = reactExports.useState();
-  const stylesRef = reactExports.useRef(null);
-  const prevPresentRef = reactExports.useRef(present);
-  const prevAnimationNameRef = reactExports.useRef("none");
-  const mountAnimationNameRef = reactExports.useRef(void 0);
-  const initialState = present ? "mounted" : "unmounted";
-  const [state, send] = useStateMachine(initialState, {
-    mounted: {
-      UNMOUNT: "unmounted",
-      ANIMATION_OUT: "unmountSuspended"
-    },
-    unmountSuspended: {
-      MOUNT: "mounted",
-      ANIMATION_END: "unmounted"
-    },
-    unmounted: {
-      MOUNT: "mounted"
-    }
-  });
-  reactExports.useEffect(() => {
-    if (state === "mounted") {
-      prevAnimationNameRef.current = mountAnimationNameRef.current ?? getAnimationName(stylesRef.current);
-      mountAnimationNameRef.current = void 0;
-    } else {
-      prevAnimationNameRef.current = "none";
-    }
-  }, [state]);
-  useLayoutEffect2(() => {
-    const styles = stylesRef.current;
-    const wasPresent = prevPresentRef.current;
-    const hasPresentChanged = wasPresent !== present;
-    if (hasPresentChanged) {
-      const prevAnimationName = prevAnimationNameRef.current;
-      const currentAnimationName = getAnimationName(styles);
-      if (present) {
-        mountAnimationNameRef.current = currentAnimationName;
-        send("MOUNT");
-      } else if (currentAnimationName === "none" || (styles == null ? void 0 : styles.display) === "none") {
-        send("UNMOUNT");
-      } else {
-        const isAnimating = prevAnimationName !== currentAnimationName;
-        if (wasPresent && isAnimating) {
-          send("ANIMATION_OUT");
-        } else {
-          send("UNMOUNT");
-        }
-      }
-      prevPresentRef.current = present;
-    }
-  }, [present, send]);
-  useLayoutEffect2(() => {
-    if (node) {
-      let timeoutId;
-      const ownerWindow = node.ownerDocument.defaultView ?? window;
-      const handleAnimationEnd = (event) => {
-        const currentAnimationName = getAnimationName(stylesRef.current);
-        const isCurrentAnimation = currentAnimationName.includes(CSS.escape(event.animationName));
-        if (event.target === node && isCurrentAnimation) {
-          send("ANIMATION_END");
-          if (!prevPresentRef.current) {
-            const currentFillMode = node.style.animationFillMode;
-            node.style.animationFillMode = "forwards";
-            timeoutId = ownerWindow.setTimeout(() => {
-              if (node.style.animationFillMode === "forwards") {
-                node.style.animationFillMode = currentFillMode;
-              }
-            });
-          }
-        }
-      };
-      const handleAnimationStart = (event) => {
-        if (event.target === node) {
-          prevAnimationNameRef.current = getAnimationName(stylesRef.current);
-        }
-      };
-      node.addEventListener("animationstart", handleAnimationStart);
-      node.addEventListener("animationcancel", handleAnimationEnd);
-      node.addEventListener("animationend", handleAnimationEnd);
-      return () => {
-        ownerWindow.clearTimeout(timeoutId);
-        node.removeEventListener("animationstart", handleAnimationStart);
-        node.removeEventListener("animationcancel", handleAnimationEnd);
-        node.removeEventListener("animationend", handleAnimationEnd);
-      };
-    } else {
-      send("ANIMATION_END");
-    }
-  }, [node, send]);
-  return {
-    isPresent: ["mounted", "unmountSuspended"].includes(state),
-    ref: reactExports.useCallback((node2) => {
-      if (node2) {
-        const styles = getComputedStyle(node2);
-        stylesRef.current = styles;
-        mountAnimationNameRef.current = getAnimationName(styles);
-      } else {
-        stylesRef.current = null;
-      }
-      setNode(node2);
-    }, [])
-  };
-}
-function setRef(ref, value) {
-  if (typeof ref === "function") {
-    return ref(value);
-  } else if (ref !== null && ref !== void 0) {
-    ref.current = value;
-  }
-}
-function useStableComposedRefs(...refs) {
-  const refsRef = reactExports.useRef(refs);
-  refsRef.current = refs;
-  return reactExports.useCallback((node) => {
-    const currentRefs = refsRef.current;
-    let hasCleanup = false;
-    const cleanups = currentRefs.map((ref) => {
-      const cleanup = setRef(ref, node);
-      if (!hasCleanup && typeof cleanup === "function") {
-        hasCleanup = true;
-      }
-      return cleanup;
-    });
-    if (hasCleanup) {
-      return () => {
-        for (let i = 0; i < cleanups.length; i++) {
-          const cleanup = cleanups[i];
-          if (typeof cleanup === "function") {
-            cleanup();
-          } else {
-            setRef(currentRefs[i], null);
-          }
-        }
-      };
-    }
-  }, []);
-}
-function getAnimationName(styles) {
-  return (styles == null ? void 0 : styles.animationName) || "none";
-}
-function getElementRef(element) {
-  var _a3, _b3;
-  let getter = (_a3 = Object.getOwnPropertyDescriptor(element.props, "ref")) == null ? void 0 : _a3.get;
-  let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
-  if (mayWarn) {
-    return element.ref;
-  }
-  getter = (_b3 = Object.getOwnPropertyDescriptor(element, "ref")) == null ? void 0 : _b3.get;
-  mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
-  if (mayWarn) {
-    return element.props.ref;
-  }
-  return element.props.ref || element.ref;
-}
-var useInsertionEffect = React$3[" useInsertionEffect ".trim().toString()] || useLayoutEffect2;
+Portal$1.displayName = PORTAL_NAME$1;
+var useInsertionEffect = React$2[" useInsertionEffect ".trim().toString()] || useLayoutEffect2;
 function useControllableState({
   prop,
   defaultProp,
@@ -61544,7 +61313,7 @@ function useControllableState({
     (nextValue) => {
       var _a3;
       if (isControlled) {
-        const value2 = isFunction$1(nextValue) ? nextValue(prop) : nextValue;
+        const value2 = isFunction(nextValue) ? nextValue(prop) : nextValue;
         if (value2 !== prop) {
           (_a3 = onChangeRef.current) == null ? void 0 : _a3.call(onChangeRef, value2);
         }
@@ -61575,7 +61344,7 @@ function useUncontrolledState({
   }, [value, prevValueRef]);
   return [value, setValue, onChangeRef];
 }
-function isFunction$1(value) {
+function isFunction(value) {
   return typeof value === "function";
 }
 function usePrevious(value) {
@@ -62403,10 +62172,9 @@ var [createSelectContext] = createContextScope(SELECT_NAME, [
   createPopperScope
 ]);
 var usePopperScope = createPopperScope();
-var [SelectProviderImpl, useSelectContext] = createSelectContext(SELECT_NAME);
+var [SelectProvider, useSelectContext] = createSelectContext(SELECT_NAME);
 var [SelectNativeOptionsProvider, useSelectNativeOptionsContext] = createSelectContext(SELECT_NAME);
-var PROVIDER_NAME = "SelectProvider";
-function SelectProvider(props) {
+var Select$1 = (props) => {
   const {
     __scopeSelect,
     children: children2,
@@ -62421,9 +62189,7 @@ function SelectProvider(props) {
     autoComplete,
     disabled,
     required,
-    form,
-    // @ts-expect-error internal render prop used by `Select` to compose its default parts
-    internal_do_not_use_render
+    form
   } = props;
   const popperScope = usePopperScope(__scopeSelect);
   const [trigger, setTrigger] = reactExports.useState(null);
@@ -62443,81 +62209,68 @@ function SelectProvider(props) {
     caller: SELECT_NAME
   });
   const triggerPointerDownPosRef = reactExports.useRef(null);
-  const initialValueRef = reactExports.useRef(value);
-  reactExports.useEffect(() => {
-    const associatedForm = form ? trigger == null ? void 0 : trigger.ownerDocument.getElementById(form) : trigger == null ? void 0 : trigger.form;
-    if (associatedForm instanceof HTMLFormElement) {
-      const reset = () => setValue(initialValueRef.current);
-      associatedForm.addEventListener("reset", reset);
-      return () => associatedForm.removeEventListener("reset", reset);
-    }
-  }, [form, trigger, setValue]);
-  const isFormControl = trigger ? !!form || !!trigger.closest("form") : true;
+  const isFormControl = trigger ? form || !!trigger.closest("form") : true;
   const [nativeOptionsSet, setNativeOptionsSet] = reactExports.useState(/* @__PURE__ */ new Set());
-  const contentId = useId();
   const nativeSelectKey = Array.from(nativeOptionsSet).map((option) => option.props.value).join(";");
-  const handleNativeOptionAdd = reactExports.useCallback((option) => {
-    setNativeOptionsSet((prev) => new Set(prev).add(option));
-  }, []);
-  const handleNativeOptionRemove = reactExports.useCallback((option) => {
-    setNativeOptionsSet((prev) => {
-      const optionsSet = new Set(prev);
-      optionsSet.delete(option);
-      return optionsSet;
-    });
-  }, []);
-  const context = {
-    required,
-    trigger,
-    onTriggerChange: setTrigger,
-    valueNode,
-    onValueNodeChange: setValueNode,
-    valueNodeHasChildren,
-    onValueNodeHasChildrenChange: setValueNodeHasChildren,
-    contentId,
-    value,
-    onValueChange: setValue,
-    open,
-    onOpenChange: setOpen,
-    dir: direction,
-    triggerPointerDownPosRef,
-    disabled,
-    name,
-    autoComplete,
-    form,
-    nativeOptions: nativeOptionsSet,
-    nativeSelectKey,
-    isFormControl
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Root2, { ...popperScope, children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectProviderImpl, { scope: __scopeSelect, ...context, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Collection.Provider, { scope: __scopeSelect, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    SelectNativeOptionsProvider,
-    {
-      scope: __scopeSelect,
-      onNativeOptionAdd: handleNativeOptionAdd,
-      onNativeOptionRemove: handleNativeOptionRemove,
-      children: isFunction(internal_do_not_use_render) ? internal_do_not_use_render(context) : children2
-    }
-  ) }) }) });
-}
-SelectProvider.displayName = PROVIDER_NAME;
-var Select$1 = (props) => {
-  const { __scopeSelect, children: children2, ...providerProps } = props;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Root2$1, { ...popperScope, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
     SelectProvider,
     {
-      __scopeSelect,
-      ...providerProps,
-      internal_do_not_use_render: ({ isFormControl }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        children2,
-        isFormControl ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      required,
+      scope: __scopeSelect,
+      trigger,
+      onTriggerChange: setTrigger,
+      valueNode,
+      onValueNodeChange: setValueNode,
+      valueNodeHasChildren,
+      onValueNodeHasChildrenChange: setValueNodeHasChildren,
+      contentId: useId(),
+      value,
+      onValueChange: setValue,
+      open,
+      onOpenChange: setOpen,
+      dir: direction,
+      triggerPointerDownPosRef,
+      disabled,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Collection.Provider, { scope: __scopeSelect, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SelectNativeOptionsProvider,
+          {
+            scope: props.__scopeSelect,
+            onNativeOptionAdd: reactExports.useCallback((option) => {
+              setNativeOptionsSet((prev) => new Set(prev).add(option));
+            }, []),
+            onNativeOptionRemove: reactExports.useCallback((option) => {
+              setNativeOptionsSet((prev) => {
+                const optionsSet = new Set(prev);
+                optionsSet.delete(option);
+                return optionsSet;
+              });
+            }, []),
+            children: children2
+          }
+        ) }),
+        isFormControl ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
           SelectBubbleInput,
           {
-            __scopeSelect
-          }
+            "aria-hidden": true,
+            required,
+            tabIndex: -1,
+            name,
+            autoComplete,
+            value,
+            onChange: (event) => setValue(event.target.value),
+            disabled,
+            form,
+            children: [
+              value === void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "" }) : null,
+              Array.from(nativeOptionsSet)
+            ]
+          },
+          nativeSelectKey
         ) : null
-      ] })
+      ]
     }
-  );
+  ) });
 };
 Select$1.displayName = SELECT_NAME;
 var TRIGGER_NAME = "SelectTrigger";
@@ -62555,7 +62308,7 @@ var SelectTrigger$1 = reactExports.forwardRef(
       {
         type: "button",
         role: "combobox",
-        "aria-controls": context.open ? context.contentId : void 0,
+        "aria-controls": context.contentId,
         "aria-expanded": context.open,
         "aria-required": context.required,
         "aria-autocomplete": "none",
@@ -62609,15 +62362,13 @@ var SelectValue$1 = reactExports.forwardRef(
     useLayoutEffect2(() => {
       onValueNodeHasChildrenChange(hasChildren);
     }, [onValueNodeHasChildrenChange, hasChildren]);
-    const showPlaceholder = shouldShowPlaceholder(context.value);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       Primitive.span,
       {
         ...valueProps,
-        asChild: showPlaceholder ? false : valueProps.asChild,
         ref: composedRefs,
         style: { pointerEvents: "none" },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: showPlaceholder ? placeholder : children2 }, showPlaceholder ? "placeholder" : "value")
+        children: shouldShowPlaceholder(context.value) ? /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: placeholder }) : children2
       }
     );
   }
@@ -62632,45 +62383,37 @@ var SelectIcon = reactExports.forwardRef(
 );
 SelectIcon.displayName = ICON_NAME;
 var PORTAL_NAME = "SelectPortal";
-var [PortalProvider, usePortalContext] = createSelectContext(PORTAL_NAME, {
-  forceMount: void 0
-});
 var SelectPortal = (props) => {
-  const { __scopeSelect, forceMount, ...portalProps } = props;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(PortalProvider, { scope: props.__scopeSelect, forceMount, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, { asChild: true, ...portalProps }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal$1, { asChild: true, ...props });
 };
 SelectPortal.displayName = PORTAL_NAME;
 var CONTENT_NAME = "SelectContent";
 var SelectContent$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const portalContext = usePortalContext(CONTENT_NAME, props.__scopeSelect);
-    const { forceMount = portalContext.forceMount, ...contentProps } = props;
     const context = useSelectContext(CONTENT_NAME, props.__scopeSelect);
     const [fragment, setFragment] = reactExports.useState();
     useLayoutEffect2(() => {
       setFragment(new DocumentFragment());
     }, []);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Presence, { present: forceMount || context.open, children: ({ present }) => present ? /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContentImpl, { ...contentProps, ref: forwardedRef }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContentFragment, { ...contentProps, fragment }) });
+    if (!context.open) {
+      const frag = fragment;
+      return frag ? reactDomExports.createPortal(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContentProvider, { scope: props.__scopeSelect, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Collection.Slot, { scope: props.__scopeSelect, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: props.children }) }) }),
+        frag
+      ) : null;
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContentImpl, { ...props, ref: forwardedRef });
   }
 );
 SelectContent$1.displayName = CONTENT_NAME;
-var SelectContentFragment = reactExports.forwardRef((props, forwardedRef) => {
-  const { __scopeSelect, children: children2, fragment } = props;
-  if (!fragment) return null;
-  return reactDomExports.createPortal(
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContentProvider, { scope: __scopeSelect, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Collection.Slot, { scope: __scopeSelect, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: forwardedRef, children: children2 }) }) }),
-    fragment
-  );
-});
-SelectContentFragment.displayName = "SelectContentFragment";
 var CONTENT_MARGIN = 10;
 var [SelectContentProvider, useSelectContentContext] = createSelectContext(CONTENT_NAME);
 var CONTENT_IMPL_NAME = "SelectContentImpl";
 var Slot = /* @__PURE__ */ createSlot("SelectContent.RemoveScroll");
 var SelectContentImpl = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const { __scopeSelect } = props;
     const {
+      __scopeSelect,
       position = "item-aligned",
       onCloseAutoFocus,
       onEscapeKeyDown,
@@ -62693,7 +62436,7 @@ var SelectContentImpl = reactExports.forwardRef(
     const context = useSelectContext(CONTENT_NAME, __scopeSelect);
     const [content, setContent] = reactExports.useState(null);
     const [viewport, setViewport] = reactExports.useState(null);
-    const composedRefs = useComposedRefs(forwardedRef, setContent);
+    const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
     const [selectedItem, setSelectedItem] = reactExports.useState(null);
     const [selectedItemText, setSelectedItemText] = reactExports.useState(
       null
@@ -62745,7 +62488,7 @@ var SelectContentImpl = reactExports.forwardRef(
           if (pointerMoveDelta.x <= 10 && pointerMoveDelta.y <= 10) {
             event.preventDefault();
           } else {
-            if (!event.composedPath().includes(content)) {
+            if (!content.contains(event.target)) {
               onOpenChange(false);
             }
           }
@@ -62776,10 +62519,7 @@ var SelectContentImpl = reactExports.forwardRef(
       const currentItem = enabledItems.find((item) => item.ref.current === document.activeElement);
       const nextItem = findNextItem(enabledItems, search, currentItem);
       if (nextItem) {
-        setTimeout(() => {
-          var _a3;
-          return (_a3 = nextItem.ref.current) == null ? void 0 : _a3.focus();
-        });
+        setTimeout(() => nextItem.ref.current.focus());
       }
     });
     const itemRefCallback = reactExports.useCallback(
@@ -62912,7 +62652,7 @@ var SelectItemAlignedPosition = reactExports.forwardRef((props, forwardedRef) =>
   const contentContext = useSelectContentContext(CONTENT_NAME, __scopeSelect);
   const [contentWrapper, setContentWrapper] = reactExports.useState(null);
   const [content, setContent] = reactExports.useState(null);
-  const composedRefs = useComposedRefs(forwardedRef, setContent);
+  const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
   const getItems = useCollection(__scopeSelect);
   const shouldExpandOnScrollRef = reactExports.useRef(false);
   const shouldRepositionRef = reactExports.useRef(true);
@@ -63207,13 +62947,13 @@ var SelectItem$1 = reactExports.forwardRef(
     const isSelected = context.value === value;
     const [textValue, setTextValue] = reactExports.useState(textValueProp ?? "");
     const [isFocused, setIsFocused] = reactExports.useState(false);
-    const handleItemRefCallback = useCallbackRef$1(
+    const composedRefs = useComposedRefs(
+      forwardedRef,
       (node) => {
         var _a3;
         return (_a3 = contentContext.itemRefCallback) == null ? void 0 : _a3.call(contentContext, node, value, disabled);
       }
     );
-    const composedRefs = useComposedRefs(forwardedRef, handleItemRefCallback);
     const textId = useId();
     const pointerTypeRef = reactExports.useRef("touch");
     const handleSelect = () => {
@@ -63222,6 +62962,11 @@ var SelectItem$1 = reactExports.forwardRef(
         context.onOpenChange(false);
       }
     };
+    if (value === "") {
+      throw new Error(
+        "A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder."
+      );
+    }
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       SelectItemContextProvider,
       {
@@ -63281,19 +63026,10 @@ var SelectItem$1 = reactExports.forwardRef(
                 }),
                 onKeyDown: composeEventHandlers(itemProps.onKeyDown, (event) => {
                   var _a3;
-                  if (disabled || event.target !== event.currentTarget) {
-                    return;
-                  }
                   const isTypingAhead = ((_a3 = contentContext.searchRef) == null ? void 0 : _a3.current) !== "";
-                  if (isTypingAhead && event.key === " ") {
-                    return;
-                  }
-                  if (SELECTION_KEYS.includes(event.key)) {
-                    handleSelect();
-                  }
-                  if (event.key === " ") {
-                    event.preventDefault();
-                  }
+                  if (isTypingAhead && event.key === " ") return;
+                  if (SELECTION_KEYS.includes(event.key)) handleSelect();
+                  if (event.key === " ") event.preventDefault();
                 })
               }
             )
@@ -63313,17 +63049,14 @@ var SelectItemText = reactExports.forwardRef(
     const itemContext = useSelectItemContext(ITEM_TEXT_NAME, __scopeSelect);
     const nativeOptionsContext = useSelectNativeOptionsContext(ITEM_TEXT_NAME, __scopeSelect);
     const [itemTextNode, setItemTextNode] = reactExports.useState(null);
-    const handleItemTextRefCallback = useCallbackRef$1(
+    const composedRefs = useComposedRefs(
+      forwardedRef,
+      (node) => setItemTextNode(node),
+      itemContext.onItemTextChange,
       (node) => {
         var _a3;
         return (_a3 = contentContext.itemTextRefCallback) == null ? void 0 : _a3.call(contentContext, node, itemContext.value, itemContext.disabled);
       }
-    );
-    const composedRefs = useComposedRefs(
-      forwardedRef,
-      setItemTextNode,
-      itemContext.onItemTextChange,
-      handleItemTextRefCallback
     );
     const textContent = itemTextNode == null ? void 0 : itemTextNode.textContent;
     const nativeOption = reactExports.useMemo(
@@ -63337,7 +63070,7 @@ var SelectItemText = reactExports.forwardRef(
     }, [onNativeOptionAdd, onNativeOptionRemove, nativeOption]);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Primitive.span, { id: itemContext.textId, ...itemTextProps, ref: composedRefs }),
-      itemContext.isSelected && context.valueNode && !context.valueNodeHasChildren && !shouldShowPlaceholder(context.value) ? reactDomExports.createPortal(itemTextProps.children, context.valueNode) : null
+      itemContext.isSelected && context.valueNode && !context.valueNodeHasChildren ? reactDomExports.createPortal(itemTextProps.children, context.valueNode) : null
     ] });
   }
 );
@@ -63475,24 +63208,18 @@ var SelectArrow = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeSelect, ...arrowProps } = props;
     const popperScope = usePopperScope(__scopeSelect);
+    const context = useSelectContext(ARROW_NAME, __scopeSelect);
     const contentContext = useSelectContentContext(ARROW_NAME, __scopeSelect);
-    return contentContext.position === "popper" ? /* @__PURE__ */ jsxRuntimeExports.jsx(Arrow, { ...popperScope, ...arrowProps, ref: forwardedRef }) : null;
+    return context.open && contentContext.position === "popper" ? /* @__PURE__ */ jsxRuntimeExports.jsx(Arrow, { ...popperScope, ...arrowProps, ref: forwardedRef }) : null;
   }
 );
 SelectArrow.displayName = ARROW_NAME;
 var BUBBLE_INPUT_NAME = "SelectBubbleInput";
 var SelectBubbleInput = reactExports.forwardRef(
-  ({ __scopeSelect, ...props }, forwardedRef) => {
-    const context = useSelectContext(BUBBLE_INPUT_NAME, __scopeSelect);
-    const { value, onValueChange, required, disabled, name, autoComplete, form } = context;
-    const { nativeOptions, nativeSelectKey } = context;
+  ({ __scopeSelect, value, ...props }, forwardedRef) => {
     const ref = reactExports.useRef(null);
     const composedRefs = useComposedRefs(forwardedRef, ref);
-    const selectValue = value ?? "";
-    const prevValue = usePrevious(selectValue);
-    const hasEmptyValueOption = Array.from(nativeOptions).some(
-      (option) => (option.props.value ?? "") === ""
-    );
+    const prevValue = usePrevious(value);
     reactExports.useEffect(() => {
       const select2 = ref.current;
       if (!select2) return;
@@ -63502,40 +63229,24 @@ var SelectBubbleInput = reactExports.forwardRef(
         "value"
       );
       const setValue = descriptor.set;
-      if (prevValue !== selectValue && setValue) {
+      if (prevValue !== value && setValue) {
         const event = new Event("change", { bubbles: true });
-        setValue.call(select2, selectValue);
+        setValue.call(select2, value);
         select2.dispatchEvent(event);
       }
-    }, [prevValue, selectValue]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    }, [prevValue, value]);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
       Primitive.select,
       {
-        "aria-hidden": true,
-        required,
-        tabIndex: -1,
-        name,
-        autoComplete,
-        disabled,
-        form,
-        onChange: (event) => onValueChange(event.target.value),
         ...props,
         style: { ...VISUALLY_HIDDEN_STYLES, ...props.style },
         ref: composedRefs,
-        defaultValue: selectValue,
-        children: [
-          shouldShowPlaceholder(value) && !hasEmptyValueOption ? /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "" }) : null,
-          Array.from(nativeOptions)
-        ]
-      },
-      nativeSelectKey
+        defaultValue: value
+      }
     );
   }
 );
 SelectBubbleInput.displayName = BUBBLE_INPUT_NAME;
-function isFunction(value) {
-  return typeof value === "function";
-}
 function shouldShowPlaceholder(value) {
   return value === "" || value === void 0;
 }
@@ -63579,15 +63290,27 @@ function findNextItem(items, search, currentItem) {
 function wrapArray(array2, startIndex) {
   return array2.map((_2, index2) => array2[(startIndex + index2) % array2.length]);
 }
+var Root2 = Select$1;
+var Trigger = SelectTrigger$1;
+var Value = SelectValue$1;
+var Icon = SelectIcon;
+var Portal = SelectPortal;
+var Content2 = SelectContent$1;
+var Viewport = SelectViewport;
+var Item = SelectItem$1;
+var ItemText = SelectItemText;
+var ItemIndicator = SelectItemIndicator;
+var ScrollUpButton = SelectScrollUpButton$1;
+var ScrollDownButton = SelectScrollDownButton$1;
 function Select({
   ...props
 }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Select$1, { "data-slot": "select", ...props });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Root2, { "data-slot": "select", ...props });
 }
 function SelectValue({
   ...props
 }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue$1, { "data-slot": "select-value", ...props });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Value, { "data-slot": "select-value", ...props });
 }
 function SelectTrigger({
   className,
@@ -63596,7 +63319,7 @@ function SelectTrigger({
   ...props
 }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    SelectTrigger$1,
+    Trigger,
     {
       "data-slot": "select-trigger",
       "data-size": size2,
@@ -63607,7 +63330,7 @@ function SelectTrigger({
       ...props,
       children: [
         children2,
-        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectIcon, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { className: "size-4 opacity-50" }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { className: "size-4 opacity-50" }) })
       ]
     }
   );
@@ -63618,8 +63341,8 @@ function SelectContent({
   position = "popper",
   ...props
 }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(SelectPortal, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    SelectContent$1,
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Content2,
     {
       "data-slot": "select-content",
       className: cn(
@@ -63632,7 +63355,7 @@ function SelectContent({
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(SelectScrollUpButton, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
-          SelectViewport,
+          Viewport,
           {
             className: cn(
               "p-1",
@@ -63652,7 +63375,7 @@ function SelectItem({
   ...props
 }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    SelectItem$1,
+    Item,
     {
       "data-slot": "select-item",
       className: cn(
@@ -63661,8 +63384,8 @@ function SelectItem({
       ),
       ...props,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute right-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItemIndicator, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "size-4" }) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItemText, { children: children2 })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute right-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ItemIndicator, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "size-4" }) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ItemText, { children: children2 })
       ]
     }
   );
@@ -63672,7 +63395,7 @@ function SelectScrollUpButton({
   ...props
 }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    SelectScrollUpButton$1,
+    ScrollUpButton,
     {
       "data-slot": "select-scroll-up-button",
       className: cn(
@@ -63689,7 +63412,7 @@ function SelectScrollDownButton({
   ...props
 }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    SelectScrollDownButton$1,
+    ScrollDownButton,
     {
       "data-slot": "select-scroll-down-button",
       className: cn(
@@ -63701,12 +63424,1061 @@ function SelectScrollDownButton({
     }
   );
 }
+const COLORS = {
+  user: "#94A3B8",
+  sns: "#3FE08C",
+  dex: "#F0B35A",
+  nns: "#60A5FA",
+  neuron: "#C084FC"
+};
+const ICONS = {
+  user: "👤",
+  sns: "🌐",
+  dex: "⚡",
+  nns: "🔷",
+  neuron: "💎"
+};
+const KNOWN_CANISTERS = [
+  // ── NNS ─────────────────────────────────────────────────────────────────
+  {
+    id: "rrkah-fqaaa-aaaaa-aaaaq-cai",
+    name: "NNS Governance",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "ryjl3-tyaaa-aaaaa-aaaba-cai",
+    name: "ICP Ledger",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "qoctq-giaaa-aaaaa-aaaea-cai",
+    name: "NNS Root",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "rkp4c-7iaaa-aaaaa-aaaca-cai",
+    name: "NNS Lifeline",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "r7inp-6aaaa-aaaaa-aaabq-cai",
+    name: "NNS Registry",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "rdmx6-jaaaa-aaaaa-aaadq-cai",
+    name: "NNS Identity",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "aaaaa-aa",
+    name: "IC Management",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  {
+    id: "6s3za-cqaaa-aaaaa-aaacq-cai",
+    name: "Cycles Minting",
+    type: "nns",
+    icon: ICONS.nns,
+    ringColor: COLORS.nns
+  },
+  // ── SNS Governance Canisters ─────────────────────────────────────────────
+  {
+    id: "3e3x2-xyaaa-aaaaq-aaalq-cai",
+    name: "OpenChat",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "7jkta-eyaaa-aaaaq-aaa6q-cai",
+    name: "Kinic",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "6rdgd-kyaaa-aaaaq-aaavq-cai",
+    name: "Hot or Not",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "tw2vt-hqaaa-aaaaq-aab6a-cai",
+    name: "Gold DAO",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "xjngq-yaaaa-aaaaq-aabha-cai",
+    name: "BOOM DAO",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "extk5-gaaaa-aaaaq-aadaq-cai",
+    name: "Neutrinite",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "jfnic-kaaaa-aaaaq-aadla-cai",
+    name: "WaterNeuron",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "2hx64-daaaa-aaaaq-aaana-cai",
+    name: "Dragginz",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "yc3ey-aiaaa-aaaaq-aabgq-cai",
+    name: "DecideAI",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "u67kc-jyaaa-aaaaq-aabpq-cai",
+    name: "YRAL",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "6syxn-4yaaa-aaaaq-aaboq-cai",
+    name: "NTN",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "h4j5e-7iaaa-aaaaq-aacca-cai",
+    name: "ICLighthouse",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "uly3p-iqaaa-aaaaq-aabma-cai",
+    name: "Sonic DAO",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  // ── SNS Ledger Canisters ────────────────────────────────────────────────
+  {
+    id: "2ouva-viaaa-aaaaq-aaamq-cai",
+    name: "OpenChat Ledger",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "73mez-iiaaa-aaaaq-aaasq-cai",
+    name: "Kinic Ledger",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  {
+    id: "tyyy3-4aaaa-aaaaq-aab7a-cai",
+    name: "Gold DAO Ledger",
+    type: "sns",
+    icon: ICONS.sns,
+    ringColor: COLORS.sns
+  },
+  // ── DEX Canisters ────────────────────────────────────────────────────────
+  {
+    id: "5ucrv-taaaa-aaaag-qb2uq-cai",
+    name: "ICPSwap",
+    type: "dex",
+    icon: ICONS.dex,
+    ringColor: COLORS.dex
+  },
+  {
+    id: "3xwpq-ziaaa-aaaah-qcn4a-cai",
+    name: "Sonic DEX",
+    type: "dex",
+    icon: ICONS.dex,
+    ringColor: COLORS.dex
+  },
+  {
+    id: "ltyfs-qiaaa-aaaak-aan3a-cai",
+    name: "ICPSwap Pool",
+    type: "dex",
+    icon: ICONS.dex,
+    ringColor: COLORS.dex
+  },
+  {
+    id: "4mmnk-kiaaa-aaaag-qbllq-cai",
+    name: "ICDex",
+    type: "dex",
+    icon: ICONS.dex,
+    ringColor: COLORS.dex
+  },
+  // ── NNS Neurons ────────────────────────────────────────────────────────
+  {
+    id: "yh2sk-raaaa-aaaaa-aacfq-cai",
+    name: "NNS Treasury",
+    type: "neuron",
+    icon: ICONS.neuron,
+    ringColor: COLORS.neuron
+  }
+];
+const CANISTER_MAP = new Map(
+  KNOWN_CANISTERS.map((c2) => [c2.id.toLowerCase(), c2])
+);
+const SNS_TOKENS = {
+  CHAT: "OpenChat",
+  KINIC: "Kinic",
+  WTN: "WaterNeuron",
+  GOLD: "Gold DAO",
+  BOOM: "BOOM DAO",
+  NTN: "NTN",
+  SNEED: "ICLighthouse",
+  HOT: "Hot or Not",
+  DRAG: "Dragginz",
+  DCD: "DecideAI",
+  YRAL: "YRAL",
+  SONIC: "Sonic DAO",
+  GLDGov: "Gold DAO Gov"
+};
+function getNodeIdentity(id2, _transactions) {
+  const entry = CANISTER_MAP.get(id2.toLowerCase().trim());
+  if (entry) {
+    return {
+      type: entry.type,
+      label: entry.name,
+      icon: entry.icon,
+      ringColor: entry.ringColor
+    };
+  }
+  const idTrimmed = id2.trim();
+  if (idTrimmed.length === 64 && /^[0-9a-f]+$/i.test(idTrimmed)) {
+    return {
+      type: "user",
+      label: "Wallet",
+      icon: ICONS.user,
+      ringColor: COLORS.user
+    };
+  }
+  return {
+    type: "user",
+    label: "Wallet",
+    icon: ICONS.user,
+    ringColor: COLORS.user
+  };
+}
+function getSnsParticipation(_address, transactions) {
+  const tokens = /* @__PURE__ */ new Set();
+  for (const tx of transactions) {
+    if (tx.token && tx.token !== "ICP" && SNS_TOKENS[tx.token]) {
+      tokens.add(SNS_TOKENS[tx.token]);
+    }
+  }
+  return [...tokens];
+}
+function addTokenAmount(map2, token, amount) {
+  map2[token] = (map2[token] ?? 0) + amount;
+}
+function buildEdgeFromTx(acctLower, displayIdLower, displayId, tx, edgeMap) {
+  const fromLower = tx.from.toLowerCase();
+  const toLower = tx.to.toLowerCase();
+  const isFrom = fromLower === acctLower || fromLower === displayIdLower;
+  const isTo = toLower === acctLower || toLower === displayIdLower;
+  const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
+  if (!counterparty) return null;
+  const counterpartyLower = counterparty.toLowerCase();
+  const edgeKey = [acctLower, counterpartyLower].sort().join("|");
+  const token = tx.token ?? "ICP";
+  const isIcp = token === "ICP";
+  const existing = edgeMap.get(edgeKey);
+  if (existing) {
+    existing.tx_count += 1;
+    if (isIcp) existing.total_amount += tx.amount;
+    if (isTo) {
+      existing.inCount += 1;
+      addTokenAmount(existing.inAmountByToken, token, tx.amount);
+      addTokenAmount(existing.inCountByToken, token, 1);
+    } else {
+      existing.outCount += 1;
+      addTokenAmount(existing.outAmountByToken, token, tx.amount);
+      addTokenAmount(existing.outCountByToken, token, 1);
+    }
+  } else {
+    const inAmountByToken = {};
+    const outAmountByToken = {};
+    const inCountByToken = {};
+    const outCountByToken = {};
+    if (isTo) {
+      inAmountByToken[token] = tx.amount;
+      inCountByToken[token] = 1;
+    } else {
+      outAmountByToken[token] = tx.amount;
+      outCountByToken[token] = 1;
+    }
+    edgeMap.set(edgeKey, {
+      source: displayId,
+      target: counterparty,
+      counterpartyId: counterparty,
+      tx_count: 1,
+      total_amount: isIcp ? tx.amount : 0,
+      inCount: isTo ? 1 : 0,
+      outCount: isFrom ? 1 : 0,
+      inAmountByToken,
+      outAmountByToken,
+      inCountByToken,
+      outCountByToken
+    });
+  }
+  return counterpartyLower;
+}
+function enrichEdge(edge) {
+  var _a3, _b3, _c2, _d2;
+  const netFlowByToken = {};
+  const allTokens = /* @__PURE__ */ new Set([
+    ...Object.keys(edge.inAmountByToken ?? {}),
+    ...Object.keys(edge.outAmountByToken ?? {})
+  ]);
+  for (const token of allTokens) {
+    const inAmt = ((_a3 = edge.inAmountByToken) == null ? void 0 : _a3[token]) ?? 0;
+    const outAmt = ((_b3 = edge.outAmountByToken) == null ? void 0 : _b3[token]) ?? 0;
+    netFlowByToken[token] = inAmt - outAmt;
+  }
+  return {
+    ...edge,
+    netFlowByToken,
+    totalVolumeICP: (((_c2 = edge.inAmountByToken) == null ? void 0 : _c2.ICP) ?? 0) + (((_d2 = edge.outAmountByToken) == null ? void 0 : _d2.ICP) ?? 0)
+  };
+}
+function getSavedAddresses() {
+  try {
+    const raw = localStorage.getItem("icpath_saved_wallets");
+    if (!raw) return /* @__PURE__ */ new Set();
+    const wallets = JSON.parse(raw);
+    return new Set(wallets.map((w2) => w2.address.toLowerCase()));
+  } catch {
+    return /* @__PURE__ */ new Set();
+  }
+}
+function enrichNode(node, allTransactions, allAddresses, savedAddresses) {
+  const identity4 = getNodeIdentity(node.id);
+  const snsTokens = getSnsParticipation(node.id, allTransactions);
+  if (snsTokens.length > 0) {
+    identity4.snsTokens = snsTokens;
+  }
+  const sparklineData = getWeeklyActivity(allTransactions, node.id);
+  const netFlowICP = computeNetFlow(allTransactions, node.id);
+  const isWhale = detectWhale(allTransactions, node.id, allAddresses);
+  const isPinned = savedAddresses.has(node.id.toLowerCase());
+  return {
+    ...node,
+    identity: identity4,
+    sparklineData,
+    netFlowICP,
+    isWhale,
+    isPinned
+  };
+}
+function buildGraph(displayId, accountIdentifier, transactions, maxCounterparties = 20) {
+  const acctLower = accountIdentifier.toLowerCase();
+  const displayIdLower = displayId.toLowerCase();
+  const edgeMap = /* @__PURE__ */ new Map();
+  const counterpartyTx = /* @__PURE__ */ new Map();
+  const icrcCounterparties = /* @__PURE__ */ new Set();
+  for (const tx of transactions) {
+    const cpLower = buildEdgeFromTx(
+      acctLower,
+      displayIdLower,
+      displayId,
+      tx,
+      edgeMap
+    );
+    if (cpLower) {
+      counterpartyTx.set(cpLower, (counterpartyTx.get(cpLower) ?? 0) + 1);
+      if (tx.token && tx.token !== "ICP") {
+        icrcCounterparties.add(cpLower);
+      }
+    }
+  }
+  const sortedCounterparties = [...counterpartyTx.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, maxCounterparties).map(([id2]) => id2);
+  const allowedSet = new Set(sortedCounterparties);
+  for (const cp of icrcCounterparties) {
+    if (!allowedSet.has(cp)) {
+      allowedSet.add(cp);
+      sortedCounterparties.push(cp);
+    }
+  }
+  const savedAddresses = getSavedAddresses();
+  const allAddresses = [displayId, ...sortedCounterparties];
+  const centerNode = {
+    id: displayId,
+    isCenter: true,
+    txCount: transactions.length,
+    totalAmount: transactions.reduce((s2, t2) => s2 + t2.amount, 0),
+    depth: 0
+  };
+  const counterpartyNodes = sortedCounterparties.map((id2) => {
+    const original = transactions.find(
+      (t2) => t2.from.toLowerCase() === id2 || t2.to.toLowerCase() === id2
+    );
+    const originalId = original ? original.from.toLowerCase() === id2 ? original.from : original.to : id2;
+    return {
+      id: originalId,
+      isCenter: false,
+      txCount: counterpartyTx.get(id2) ?? 0,
+      totalAmount: 0,
+      depth: 1
+    };
+  });
+  const rawNodes = [centerNode, ...counterpartyNodes];
+  const nodes = rawNodes.map(
+    (n2) => enrichNode(n2, transactions, allAddresses, savedAddresses)
+  );
+  const edges = [...edgeMap.values()].filter(
+    (e3) => allowedSet.has(e3.source.toLowerCase()) || allowedSet.has(e3.target.toLowerCase())
+  ).map(({ counterpartyId: _cid, ...rest }) => enrichEdge(rest));
+  return { nodes, edges };
+}
+function processTransactionsForDepth(txs, acctLower, displayIdLower, existingNodes, skipExisting = false) {
+  const txCount = /* @__PURE__ */ new Map();
+  const edgeData = /* @__PURE__ */ new Map();
+  const icrcCounterparties = /* @__PURE__ */ new Set();
+  for (const tx of txs) {
+    const fromLower = tx.from.toLowerCase();
+    const toLower = tx.to.toLowerCase();
+    const isFrom = fromLower === acctLower || fromLower === displayIdLower;
+    const isTo = toLower === acctLower || toLower === displayIdLower;
+    const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
+    if (!counterparty) continue;
+    const cpLower = counterparty.toLowerCase();
+    if (skipExisting && existingNodes.has(cpLower)) continue;
+    const token = tx.token ?? "ICP";
+    const isIcp = token === "ICP";
+    txCount.set(cpLower, (txCount.get(cpLower) ?? 0) + 1);
+    if (!isIcp) {
+      icrcCounterparties.add(cpLower);
+    }
+    const edge = edgeData.get(cpLower) ?? {
+      inCount: 0,
+      outCount: 0,
+      tx_count: 0,
+      total_amount: 0,
+      counterpartyId: counterparty,
+      inAmountByToken: {},
+      outAmountByToken: {},
+      inCountByToken: {},
+      outCountByToken: {}
+    };
+    edge.tx_count += 1;
+    if (isIcp) edge.total_amount += tx.amount;
+    if (isTo) {
+      edge.inCount += 1;
+      addTokenAmount(edge.inAmountByToken, token, tx.amount);
+      addTokenAmount(edge.inCountByToken, token, 1);
+    } else {
+      edge.outCount += 1;
+      addTokenAmount(edge.outAmountByToken, token, tx.amount);
+      addTokenAmount(edge.outCountByToken, token, 1);
+    }
+    edgeData.set(cpLower, edge);
+  }
+  return { txCount, edgeData, icrcCounterparties };
+}
+function addCrossEdges(allTxs, allNodes, allEdges) {
+  for (const tx of allTxs) {
+    const fromLower = tx.from.toLowerCase();
+    const toLower = tx.to.toLowerCase();
+    if (fromLower === toLower) continue;
+    const fromNode = allNodes.get(fromLower);
+    const toNode = allNodes.get(toLower);
+    if (!fromNode || !toNode) continue;
+    const key1 = `${fromLower}|${toLower}`;
+    const key2 = `${toLower}|${fromLower}`;
+    const token = tx.token ?? "ICP";
+    const isIcp = token === "ICP";
+    const existingKey = allEdges.has(key1) ? key1 : allEdges.has(key2) ? key2 : null;
+    if (existingKey) {
+      const e3 = allEdges.get(existingKey);
+      e3.tx_count += 1;
+      if (isIcp) e3.total_amount += tx.amount;
+      const isInbound = existingKey === key2;
+      if (isInbound) {
+        e3.inCount += 1;
+        addTokenAmount(e3.inAmountByToken, token, tx.amount);
+        addTokenAmount(e3.inCountByToken, token, 1);
+      } else {
+        e3.outCount += 1;
+        addTokenAmount(e3.outAmountByToken, token, tx.amount);
+        addTokenAmount(e3.outCountByToken, token, 1);
+      }
+    } else {
+      allEdges.set(
+        key1,
+        enrichEdge({
+          source: fromNode.id,
+          target: toNode.id,
+          tx_count: 1,
+          total_amount: isIcp ? tx.amount : 0,
+          inCount: 0,
+          outCount: 1,
+          inAmountByToken: {},
+          outAmountByToken: { [token]: tx.amount },
+          inCountByToken: {},
+          outCountByToken: { [token]: 1 }
+        })
+      );
+    }
+  }
+}
+function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterparties, showCrossEdges = false) {
+  const allNodes = /* @__PURE__ */ new Map();
+  const allEdges = /* @__PURE__ */ new Map();
+  const savedAddresses = getSavedAddresses();
+  const centerIdLower = center2.accountId.toLowerCase();
+  const centerDisplayIdLower = center2.displayId.toLowerCase();
+  allNodes.set(center2.displayId.toLowerCase(), {
+    id: center2.displayId,
+    isCenter: true,
+    txCount: center2.transactions.length,
+    totalAmount: center2.transactions.reduce((s2, t2) => s2 + t2.amount, 0),
+    depth: 0
+  });
+  const {
+    txCount: d1TxCount,
+    edgeData: d1EdgeData,
+    icrcCounterparties: d1IcrcCps
+  } = processTransactionsForDepth(
+    center2.transactions,
+    centerIdLower,
+    centerDisplayIdLower,
+    allNodes,
+    false
+  );
+  const sortedD1 = [...d1TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, maxCounterparties);
+  const d1AllowedSet = new Set(sortedD1.map(([id2]) => id2));
+  for (const cp of d1IcrcCps) {
+    if (!d1AllowedSet.has(cp)) {
+      d1AllowedSet.add(cp);
+      const txCnt = d1TxCount.get(cp) ?? 0;
+      sortedD1.push([cp, txCnt]);
+    }
+  }
+  for (const [cpLower] of sortedD1) {
+    const edgeInfo = d1EdgeData.get(cpLower);
+    allNodes.set(cpLower, {
+      id: edgeInfo.counterpartyId,
+      isCenter: false,
+      txCount: edgeInfo.tx_count,
+      totalAmount: edgeInfo.total_amount,
+      depth: 1
+    });
+    allEdges.set(
+      `${center2.displayId.toLowerCase()}|${cpLower}`,
+      enrichEdge({
+        source: center2.displayId,
+        target: edgeInfo.counterpartyId,
+        tx_count: edgeInfo.tx_count,
+        total_amount: edgeInfo.total_amount,
+        inCount: edgeInfo.inCount,
+        outCount: edgeInfo.outCount,
+        inAmountByToken: edgeInfo.inAmountByToken,
+        outAmountByToken: edgeInfo.outAmountByToken,
+        inCountByToken: edgeInfo.inCountByToken,
+        outCountByToken: edgeInfo.outCountByToken
+      })
+    );
+  }
+  for (const d1Fetch of depth1Fetches) {
+    if (!allNodes.has(d1Fetch.nodeId.toLowerCase())) continue;
+    const d1AcctLower = d1Fetch.accountId.toLowerCase();
+    const d1DisplayIdLower = d1Fetch.nodeId.toLowerCase();
+    const { txCount: d2TxCount, edgeData: d2EdgeData } = processTransactionsForDepth(
+      d1Fetch.transactions,
+      d1AcctLower,
+      d1DisplayIdLower,
+      allNodes,
+      true
+    );
+    const top3 = [...d2TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, 3);
+    const d1Node = allNodes.get(d1Fetch.nodeId.toLowerCase());
+    for (const [cpLower] of top3) {
+      if (allNodes.has(cpLower)) continue;
+      const edgeInfo = d2EdgeData.get(cpLower);
+      allNodes.set(cpLower, {
+        id: edgeInfo.counterpartyId,
+        isCenter: false,
+        txCount: edgeInfo.tx_count,
+        totalAmount: edgeInfo.total_amount,
+        depth: 2
+      });
+      allEdges.set(
+        `${d1Node.id.toLowerCase()}|${cpLower}`,
+        enrichEdge({
+          source: d1Node.id,
+          target: edgeInfo.counterpartyId,
+          tx_count: edgeInfo.tx_count,
+          total_amount: edgeInfo.total_amount,
+          inCount: edgeInfo.inCount,
+          outCount: edgeInfo.outCount,
+          inAmountByToken: edgeInfo.inAmountByToken,
+          outAmountByToken: edgeInfo.outAmountByToken,
+          inCountByToken: edgeInfo.inCountByToken,
+          outCountByToken: edgeInfo.outCountByToken
+        })
+      );
+    }
+  }
+  for (const d2Fetch of depth2Fetches) {
+    if (!allNodes.has(d2Fetch.nodeId.toLowerCase())) continue;
+    const d2AcctLower = d2Fetch.accountId.toLowerCase();
+    const d2DisplayIdLower = d2Fetch.nodeId.toLowerCase();
+    const { txCount: d3TxCount, edgeData: d3EdgeData } = processTransactionsForDepth(
+      d2Fetch.transactions,
+      d2AcctLower,
+      d2DisplayIdLower,
+      allNodes,
+      true
+    );
+    const top2 = [...d3TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, 2);
+    const d2Node = allNodes.get(d2Fetch.nodeId.toLowerCase());
+    for (const [cpLower] of top2) {
+      if (allNodes.has(cpLower)) continue;
+      const edgeInfo = d3EdgeData.get(cpLower);
+      allNodes.set(cpLower, {
+        id: edgeInfo.counterpartyId,
+        isCenter: false,
+        txCount: edgeInfo.tx_count,
+        totalAmount: edgeInfo.total_amount,
+        depth: 3
+      });
+      allEdges.set(
+        `${d2Node.id.toLowerCase()}|${cpLower}`,
+        enrichEdge({
+          source: d2Node.id,
+          target: edgeInfo.counterpartyId,
+          tx_count: edgeInfo.tx_count,
+          total_amount: edgeInfo.total_amount,
+          inCount: edgeInfo.inCount,
+          outCount: edgeInfo.outCount,
+          inAmountByToken: edgeInfo.inAmountByToken,
+          outAmountByToken: edgeInfo.outAmountByToken,
+          inCountByToken: edgeInfo.inCountByToken,
+          outCountByToken: edgeInfo.outCountByToken
+        })
+      );
+    }
+  }
+  if (showCrossEdges) {
+    const allTxs = [
+      ...center2.transactions,
+      ...depth1Fetches.flatMap((f2) => f2.transactions),
+      ...depth2Fetches.flatMap((f2) => f2.transactions)
+    ];
+    addCrossEdges(allTxs, allNodes, allEdges);
+  }
+  const allTxsForEnrich = [
+    ...center2.transactions,
+    ...depth1Fetches.flatMap((f2) => f2.transactions),
+    ...depth2Fetches.flatMap((f2) => f2.transactions)
+  ];
+  const allAddresses = [...allNodes.values()].map((n2) => n2.id);
+  const enrichedNodes = [...allNodes.values()].map(
+    (n2) => enrichNode(n2, allTxsForEnrich, allAddresses, savedAddresses)
+  );
+  return {
+    nodes: enrichedNodes,
+    edges: [...allEdges.values()]
+  };
+}
+function computeSummary(accountId, transactions) {
+  const acctLower = accountId.toLowerCase();
+  let totalIn = 0;
+  let totalOut = 0;
+  const counterparties = /* @__PURE__ */ new Set();
+  const icpTxs = transactions.filter((tx) => !tx.token || tx.token === "ICP");
+  for (const tx of icpTxs) {
+    const isTo = tx.to.toLowerCase() === acctLower;
+    const isFrom = tx.from.toLowerCase() === acctLower;
+    if (isTo) {
+      totalIn += tx.amount;
+      if (tx.from) counterparties.add(tx.from.toLowerCase());
+    } else if (isFrom) {
+      totalOut += tx.amount;
+      if (tx.to) counterparties.add(tx.to.toLowerCase());
+    }
+  }
+  return {
+    totalTx: icpTxs.length,
+    totalIn,
+    totalOut,
+    counterpartyCount: counterparties.size
+  };
+}
+function getTopCounterparties(accountId, transactions, limit = 5, displayId) {
+  const acctLower = accountId.toLowerCase();
+  const displayIdLower = (displayId == null ? void 0 : displayId.toLowerCase()) ?? "";
+  const map2 = /* @__PURE__ */ new Map();
+  for (const tx of transactions) {
+    const fromLower = tx.from.toLowerCase();
+    const toLower = tx.to.toLowerCase();
+    const isFrom = fromLower === acctLower || fromLower === displayIdLower;
+    const isTo = toLower === acctLower || toLower === displayIdLower;
+    const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
+    if (!counterparty) continue;
+    const existing = map2.get(counterparty);
+    if (existing) {
+      existing.txCount += 1;
+      existing.volume += tx.amount;
+    } else {
+      map2.set(counterparty, { txCount: 1, volume: tx.amount });
+    }
+  }
+  return [...map2.entries()].sort((a2, b2) => b2[1].txCount - a2[1].txCount).slice(0, limit).map(([address, stats]) => ({ address, ...stats }));
+}
+let cache = null;
+const CACHE_TTL = 5 * 60 * 1e3;
+async function fetchFromCoinbase() {
+  var _a3;
+  try {
+    const res = await fetch("https://api.coinbase.com/v2/prices/ICP-USD/spot", {
+      cache: "no-store"
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    const amount = (_a3 = json == null ? void 0 : json.data) == null ? void 0 : _a3.amount;
+    if (!amount) return null;
+    const price = Number.parseFloat(amount);
+    return Number.isFinite(price) ? price : null;
+  } catch {
+    return null;
+  }
+}
+async function fetchFromIcpApi() {
+  try {
+    const res = await fetch(
+      "https://uvevg-iyaaa-aaaak-ac27q-cai.raw.ic0.app/ticker",
+      { cache: "no-store" }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!Array.isArray(data)) return null;
+    const pair = data.find(
+      (t2) => t2.ticker_id && (t2.ticker_id.includes("ICP") || t2.ticker_id.includes("icp")) || t2.base_id && t2.base_id === "ryjl3-tyaaa-aaaaa-aaaba-cai"
+    );
+    if ((pair == null ? void 0 : pair.last_price) && Number.isFinite(pair.last_price)) {
+      return pair.last_price;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+async function fetchIcpUsdPrice() {
+  if (cache && Date.now() - cache.fetchedAt < CACHE_TTL) {
+    return cache.price;
+  }
+  let price = await fetchFromCoinbase();
+  if (price === null) {
+    price = await fetchFromIcpApi();
+  }
+  if (price !== null) {
+    cache = { price, fetchedAt: Date.now() };
+  }
+  return price;
+}
+function shortenId$1(id2) {
+  if (id2.length <= 14) return id2;
+  return `${id2.slice(0, 8)}…${id2.slice(-4)}`;
+}
+function formatIcp(val) {
+  if (val >= 1e6) return `${(val / 1e6).toFixed(2)}M`;
+  if (val >= 1e3) return `${(val / 1e3).toFixed(2)}K`;
+  return val.toFixed(4);
+}
+function formatWalletAge(firstTxDate) {
+  const now2 = /* @__PURE__ */ new Date();
+  const diffMs = now2.getTime() - firstTxDate.getTime();
+  if (diffMs <= 0) return null;
+  const diffDays = Math.floor(diffMs / (1e3 * 60 * 60 * 24));
+  const diffMonths = Math.floor(diffDays / 30.44);
+  const diffYears = Math.floor(diffDays / 365.25);
+  if (diffDays === 0 && diffMonths === 0 && diffYears === 0) return null;
+  let age;
+  if (diffYears >= 1) {
+    const remainMonths = Math.floor((diffDays - diffYears * 365.25) / 30.44);
+    age = remainMonths > 0 ? `${diffYears}y ${remainMonths}mo` : `${diffYears} year${diffYears > 1 ? "s" : ""}`;
+  } else if (diffMonths >= 1) {
+    age = `${diffMonths} month${diffMonths > 1 ? "s" : ""}`;
+  } else {
+    age = `${diffDays} day${diffDays !== 1 ? "s" : ""}`;
+  }
+  const since = firstTxDate.toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric"
+  });
+  return { age, since };
+}
+function OverviewPanel({
+  principal,
+  walletData,
+  onNavigate,
+  timeRange,
+  onTimeRangeChange,
+  tokenCoverage = 0
+}) {
+  const [copied, setCopied] = reactExports.useState(false);
+  const [icpPrice, setIcpPrice] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    let cancelled = false;
+    fetchIcpUsdPrice().then((p2) => {
+      if (!cancelled && p2 !== null) setIcpPrice(p2);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(principal).catch(() => {
+    });
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1e3);
+    ue.success("Address copied!", { duration: 2e3 });
+  };
+  const allTxsForAge = (walletData == null ? void 0 : walletData.allTransactions) ?? [];
+  const walletAge = reactExports.useMemo(() => {
+    if (!allTxsForAge.length) return null;
+    let earliest = Number.POSITIVE_INFINITY;
+    for (const tx of allTxsForAge) {
+      const ts = new Date(tx.timestamp).getTime();
+      if (!Number.isNaN(ts) && ts > 0 && ts < earliest) earliest = ts;
+    }
+    if (!Number.isFinite(earliest) || earliest <= 0) return null;
+    return formatWalletAge(new Date(earliest));
+  }, [allTxsForAge]);
+  const walletIsOlderThanYear = reactExports.useMemo(() => {
+    if (!allTxsForAge.length) return false;
+    let earliest = Number.POSITIVE_INFINITY;
+    for (const tx of allTxsForAge) {
+      const ts = new Date(tx.timestamp).getTime();
+      if (!Number.isNaN(ts) && ts < earliest) earliest = ts;
+    }
+    if (!Number.isFinite(earliest)) return false;
+    return Date.now() - earliest >= 365 * 24 * 60 * 60 * 1e3;
+  }, [allTxsForAge]);
+  const topCounterparties = walletData ? getTopCounterparties(principal, walletData.transactions) : [];
+  const activityScore = walletData ? Math.min(100, walletData.summary.totalTx / 100 * 100) : 0;
+  const snsParticipation = walletData && walletData.transactions.length > 0 ? getSnsParticipation(principal, walletData.transactions) : [];
+  const timeRangeLabels = {
+    all: "All time",
+    day: "Day",
+    week: "Week",
+    "1mo": "1 month",
+    "3mo": "3 months",
+    "6mo": "6 months",
+    "1y": "1 year"
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "flex flex-col gap-3 w-full", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Wallet Info" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4 space-y-2", children: principal ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-xs text-foreground truncate flex-1", children: shortenId$1(principal) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              "data-ocid": "wallet.copy_address",
+              onClick: handleCopy,
+              className: "shrink-0 p-1 rounded hover:bg-muted/50 transition-colors",
+              title: copied ? "Copied!" : "Copy address",
+              "aria-label": "Copy wallet address",
+              children: copied ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "h-3.5 w-3.5 text-neon-green" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { className: "h-3.5 w-3.5 text-muted-foreground" })
+            }
+          )
+        ] }),
+        icpPrice !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground/70", children: [
+          "1 ICP =",
+          " ",
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-neon-amber font-medium", children: [
+            "$",
+            icpPrice.toFixed(2)
+          ] })
+        ] }),
+        walletAge && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1 border-t border-border/40 space-y-0.5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: "Wallet age" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-medium text-foreground", children: walletAge.age })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: "Since" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground/80", children: walletAge.since })
+          ] })
+        ] }),
+        tokenCoverage > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1 border-t border-border/40", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: "Token coverage" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "span",
+              {
+                className: "text-[10px] font-medium text-neon-blue",
+                "data-ocid": "wallet.token_coverage",
+                children: [
+                  tokenCoverage,
+                  " tokens"
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground/70 leading-snug", children: "Full SNS + chain-key set represented" })
+        ] }),
+        onTimeRangeChange && timeRange && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1 border-t border-border/40", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mb-1.5", children: "Time filter" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Select,
+            {
+              value: timeRange,
+              onValueChange: (v2) => onTimeRangeChange(v2),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  SelectTrigger,
+                  {
+                    className: "h-7 text-xs bg-muted/40 border-border/60 text-foreground w-full",
+                    "data-ocid": "wallet.time_range_select",
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { children: timeRangeLabels[timeRange] })
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(SelectContent, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "all", children: "All time" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "day", children: "Day (24h)" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "week", children: "Week (7d)" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "1mo", children: "1 month" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "3mo", children: "3 months" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "6mo", children: "6 months" }),
+                  walletIsOlderThanYear && /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "1y", children: "1 year" })
+                ] })
+              ]
+            }
+          )
+        ] })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "No wallet loaded" }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Transaction Summary" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "px-4 pb-4 space-y-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Txs" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (walletData == null ? void 0 : walletData.summary.totalTx) ?? 0 })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowDownLeft, { className: "h-3 w-3 text-neon-green" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total In" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-green", children: [
+            walletData ? formatIcp(walletData.summary.totalIn) : "—",
+            " ICP"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowUpRight, { className: "h-3 w-3 text-neon-red" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Out" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-red", children: [
+            walletData ? formatIcp(walletData.summary.totalOut) : "—",
+            " ICP"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { className: "h-3 w-3 text-neon-blue" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Counterparties" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (walletData == null ? void 0 : walletData.summary.counterpartyCount) ?? 0 })
+        ] }),
+        snsParticipation.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pt-1 border-t border-border/50", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-1.5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground shrink-0 mt-0.5", children: "DAOs:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-neon-green font-medium leading-snug", children: snsParticipation.join(", ") })
+        ] }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Top Counterparties" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: topCounterparties.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "No data" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: "space-y-2", children: topCounterparties.map((cp, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "li",
+        {
+          "data-ocid": `wallet.item.${i + 1}`,
+          className: "flex items-center gap-2",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground w-4 text-right", children: [
+              i + 1,
+              "."
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                "data-ocid": "wallet.link",
+                onClick: () => onNavigate(cp.address),
+                className: "font-mono text-xs text-neon-blue hover:text-neon-blue/70 truncate flex-1 text-left transition-colors",
+                title: cp.address,
+                children: shortenId$1(cp.address)
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground shrink-0", children: [
+              cp.txCount,
+              " txs"
+            ] })
+          ]
+        },
+        cp.address
+      )) }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { className: "h-3 w-3 text-neon-amber" }),
+        "Activity Score"
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "px-4 pb-4 space-y-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { value: activityScore, className: "h-2 bg-muted" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-xs text-muted-foreground", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Low" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-neon-amber font-medium", children: [
+            activityScore.toFixed(0),
+            "%"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "High" })
+        ] })
+      ] })
+    ] })
+  ] });
+}
 const LEDGER_API_BASE = "https://ledger-api.internetcomputer.org";
 const ICRC_API_BASE = "https://icrc-api.internetcomputer.org";
-let lastIcExplorerError = null;
-function getLastIcExplorerError() {
-  return lastIcExplorerError;
-}
 const DEFAULT_TX_LIMIT = 100;
 function e8sToIcp(val) {
   const n2 = typeof val === "bigint" ? Number(val) : Number(val);
@@ -63722,6 +64494,14 @@ function parseTimestamp(raw) {
     return new Date(Math.floor(Number(raw) / 1e6)).toISOString();
   }
   return new Date(raw).toISOString();
+}
+function extractOwner(val) {
+  if (!val) return "";
+  if (typeof val === "string") return val;
+  if (typeof val === "object") {
+    return String(val.owner ?? val.address ?? "");
+  }
+  return String(val);
 }
 function sha224(data) {
   let h0 = 3238371032 | 0;
@@ -63899,14 +64679,6 @@ function principalAddressToHex(addr) {
   const hex2 = principalToAccountIdentifier(addr);
   return hex2 ?? addr;
 }
-function extractOwner(val) {
-  if (!val) return "";
-  if (typeof val === "string") return val;
-  if (typeof val === "object") {
-    return String(val.owner ?? val.address ?? "");
-  }
-  return String(val);
-}
 function normalizeTransaction(raw) {
   var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z;
   try {
@@ -63925,20 +64697,20 @@ function normalizeTransaction(raw) {
     if ((_b3 = raw == null ? void 0 : raw.transaction) == null ? void 0 : _b3.operations) {
       const ops = raw.transaction.operations;
       const txOps = ops.filter(
-        (o) => o.type === "TRANSACTION" || o.type === "Transfer"
+        (o2) => o2.type === "TRANSACTION" || o2.type === "Transfer"
       );
-      const feeOps = ops.filter((o) => o.type === "FEE" || o.type === "Fee");
+      const feeOps = ops.filter((o2) => o2.type === "FEE" || o2.type === "Fee");
       if (txOps.length >= 2) {
         const senderOp = txOps.find(
-          (o) => {
+          (o2) => {
             var _a4;
-            return String(((_a4 = o.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
+            return String(((_a4 = o2.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
           }
         );
         const receiverOp = txOps.find(
-          (o) => {
+          (o2) => {
             var _a4;
-            return !String(((_a4 = o.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
+            return !String(((_a4 = o2.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
           }
         );
         if (senderOp && receiverOp) {
@@ -63956,9 +64728,9 @@ function normalizeTransaction(raw) {
         }
       }
       const nonFeeOps = ops.filter(
-        (o) => {
+        (o2) => {
           var _a4;
-          return !feeOps.includes(o) && ((_a4 = o.account) == null ? void 0 : _a4.address);
+          return !feeOps.includes(o2) && ((_a4 = o2.account) == null ? void 0 : _a4.address);
         }
       );
       if (nonFeeOps.length >= 2) {
@@ -64035,14 +64807,6 @@ async function fetchWalletTransactions(principal, proxyUrl, limit = DEFAULT_TX_L
   if (!accountId) {
     return { ok: false, error: "invalid" };
   }
-  const wkey = cacheKey("walletTxs", principal.trim(), accountId);
-  const cachedTxs = getCached(txCache, wkey);
-  if (cachedTxs) {
-    console.log(
-      `[ICP] Tx fetch: ${cachedTxs.length} txs (cached) for ${principal.trim()}`
-    );
-    return { ok: true, transactions: cachedTxs, accountIdentifier: accountId };
-  }
   const base = proxyUrl ? proxyUrl.replace(/\/$/, "") : LEDGER_API_BASE;
   const url = `${base}/accounts/${encodeURIComponent(accountId)}/transactions?limit=${limit}`;
   let response;
@@ -64076,7 +64840,6 @@ async function fetchWalletTransactions(principal, proxyUrl, limit = DEFAULT_TX_L
   if (transactions.length === 0 && rawList.length > 0) {
     return { ok: false, error: "parse" };
   }
-  if (transactions.length > 0) setCached(txCache, wkey, transactions);
   return { ok: true, transactions, accountIdentifier: accountId };
 }
 async function checkExplorerReachable() {
@@ -64095,38 +64858,6 @@ async function checkExplorerReachable() {
     } catch {
       return false;
     }
-  }
-}
-async function checkIcExplorerReachable() {
-  try {
-    const r2 = await fetch(`${ICRC_API_BASE}/api/v1/ledgers?limit=1`, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(8e3)
-    });
-    if (!r2.ok) {
-      lastIcExplorerError = `HTTP ${r2.status} ${r2.statusText}`;
-      console.warn(
-        `[ICRC] reachability probe failed: HTTP ${r2.status} ${r2.statusText}`
-      );
-      return false;
-    }
-    const data = await r2.json();
-    const list = extractTransactionArray(data);
-    if (!Array.isArray(list)) {
-      lastIcExplorerError = "unexpected response shape";
-      console.warn(
-        "[ICRC] reachability probe failed: unexpected response shape",
-        data
-      );
-      return false;
-    }
-    lastIcExplorerError = null;
-    return true;
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    lastIcExplorerError = msg;
-    console.warn("[ICRC] reachability probe failed:", err);
-    return false;
   }
 }
 function testParser() {
@@ -64150,1525 +64881,346 @@ function testParser() {
     return false;
   }
 }
-const CACHE_TTL_MS = 5 * 60 * 1e3;
-const LEDGERS_PAGE_SIZE = 100;
-const LEDGERS_MAX_PAGES = 20;
-const TX_FETCH_BATCH_SIZE = 16;
-const TX_BATCH_DELAY_MS = 50;
-const tokenListCache = /* @__PURE__ */ new Map();
-const txCache = /* @__PURE__ */ new Map();
-function cacheKey(...parts) {
-  return parts.filter(Boolean).join("|").toLowerCase();
-}
-function getCached(cache2, key) {
-  const entry = cache2.get(key);
-  if (!entry) return null;
-  if (Date.now() - entry.fetchedAt > CACHE_TTL_MS) {
-    cache2.delete(key);
-    return null;
-  }
-  return entry.value;
-}
-function setCached(cache2, key, value) {
-  if (value === null || value === void 0) return;
-  cache2.set(key, { value, fetchedAt: Date.now() });
-}
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-function parseLedgerMetadata(item) {
-  const canisterId = String(
-    item.ledger_canister_id ?? item.canister_id ?? item.id ?? ""
-  ).trim();
-  let symbol = "";
-  let decimals = null;
-  const unwrap2 = (val) => {
-    if (val === null || val === void 0) return "";
-    if (typeof val === "string" || typeof val === "number") return String(val);
-    const wrapped = val.Text ?? val.text ?? val.value ?? val.Value ?? val.string ?? val.str;
-    if (wrapped !== void 0) return String(wrapped);
-    return String(val);
-  };
-  const clean2 = (raw) => {
-    let s2 = String(raw ?? "").trim();
-    if (s2.startsWith('"') && s2.endsWith('"') || s2.startsWith("'") && s2.endsWith("'")) {
-      s2 = s2.slice(1, -1).trim();
+let icrcTokenListCache = null;
+const TOKEN_LIST_TTL_MS = 5 * 60 * 1e3;
+const TOKEN_LIST_MIN_COUNT = 10;
+const TOKEN_LIST_PAGE_SIZE = 100;
+async function fetchIcrcTokenListOnce() {
+  const parsed = [];
+  let cursor = null;
+  for (; ; ) {
+    const url = `${ICRC_API_BASE}/api/v2/ledgers?limit=${TOKEN_LIST_PAGE_SIZE}${cursor ? `&after=${encodeURIComponent(cursor)}` : ""}`;
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(15e3)
+    });
+    if (!res.ok) {
+      throw new Error(`ICRC token list HTTP ${res.status}: ${res.statusText}`);
     }
-    return s2;
-  };
-  const meta = item.icrc1_metadata ?? item.metadata ?? item.meta;
-  if (meta !== null && typeof meta === "object" && !Array.isArray(meta)) {
-    const symbolVal = meta.icrc1_symbol ?? meta["icrc1:symbol"] ?? meta.symbol ?? meta.Symbol;
-    if (symbolVal !== void 0) symbol = clean2(unwrap2(symbolVal));
-    const decVal = meta.icrc1_decimals ?? meta["icrc1:decimals"] ?? meta.decimals ?? meta.Decimals;
-    if (decVal !== void 0) {
-      const parsed = Number(unwrap2(decVal));
-      if (!Number.isNaN(parsed)) decimals = parsed;
-    }
-  }
-  if (!symbol || decimals === null) {
-    if (Array.isArray(meta)) {
-      for (const entry of meta) {
-        const key = String((entry == null ? void 0 : entry.key) ?? "").toLowerCase();
-        const val = entry == null ? void 0 : entry.val;
-        if (!val) continue;
-        if ((key === "icrc1:symbol" || key === "icrc1_symbol" || key === "symbol") && !symbol) {
-          symbol = clean2(unwrap2(val));
-        } else if ((key === "icrc1:decimals" || key === "icrc1_decimals" || key === "decimals") && decimals === null) {
-          const parsed = Number(unwrap2(val));
-          if (!Number.isNaN(parsed)) decimals = parsed;
+    const data = await res.json();
+    console.log(
+      "[ICRC] Raw token list response shape:",
+      typeof data,
+      Array.isArray(data) ? "array" : Object.keys(data ?? {}).join(",")
+    );
+    const list = Array.isArray(data) ? data : (data == null ? void 0 : data.data) ?? (data == null ? void 0 : data.ledgers) ?? [];
+    for (const item of Array.isArray(list) ? list : []) {
+      let symbol = item.symbol ?? item.token_symbol ?? "";
+      let decimals = typeof item.decimals === "number" ? item.decimals : 8;
+      if (Array.isArray(item.icrc1_metadata)) {
+        for (const entry of item.icrc1_metadata) {
+          const key = Array.isArray(entry) ? entry[0] : entry.key;
+          const val = Array.isArray(entry) ? entry[1] : entry.value;
+          if (key === "icrc1:symbol" || key === "icrc1_symbol") {
+            symbol = (val == null ? void 0 : val.Text) ?? (val == null ? void 0 : val.text) ?? String(val ?? "");
+          } else if (key === "icrc1:decimals" || key === "icrc1_decimals") {
+            const raw = (val == null ? void 0 : val.Nat) ?? (val == null ? void 0 : val.nat) ?? (val == null ? void 0 : val.Nat64) ?? (val == null ? void 0 : val.nat64) ?? val;
+            const n2 = Number(raw);
+            if (!Number.isNaN(n2)) decimals = n2;
+          }
+        }
+      } else if (item.icrc1_metadata && typeof item.icrc1_metadata === "object") {
+        symbol = item.icrc1_metadata.icrc1_symbol ?? item.icrc1_metadata["icrc1:symbol"] ?? symbol;
+        const d2 = item.icrc1_metadata.icrc1_decimals ?? item.icrc1_metadata["icrc1:decimals"];
+        if (d2 !== void 0) {
+          const n2 = Number(d2);
+          if (!Number.isNaN(n2)) decimals = n2;
         }
       }
+      const canisterId = item.ledger_canister_id ?? item.canister_id ?? item.id ?? "";
+      if (canisterId && symbol) {
+        parsed.push({ canisterId, symbol, decimals });
+      }
     }
+    const nextCursor = (data == null ? void 0 : data.next_cursor) ?? null;
+    if (!nextCursor || list.length === 0) break;
+    cursor = String(nextCursor);
   }
-  if (!symbol) {
-    const flat = item.symbol ?? item.token_symbol ?? item.icrc1_symbol ?? item.ticker ?? item.name ?? "";
-    symbol = clean2(String(flat));
+  console.log(`[ICRC] Parsed ${parsed.length} tokens from list`);
+  if (parsed.length > 0) {
+    console.log(
+      "[ICRC] Sample tokens:",
+      parsed.slice(0, 5).map((t2) => `${t2.symbol}(${t2.canisterId.slice(0, 8)})`).join(", ")
+    );
   }
-  if (decimals === null) {
-    const d2 = Number(item.decimals ?? item.icrc1_decimals ?? 8);
-    decimals = Number.isNaN(d2) ? 8 : d2;
-  }
-  if (!symbol) symbol = "UNKNOWN";
-  return { canisterId, symbol, decimals };
+  return parsed;
 }
-async function fetchIcrcTokenList(principal, accountId) {
-  const p2 = (principal == null ? void 0 : principal.trim()) || "";
-  const a2 = (accountId == null ? void 0 : accountId.trim()) || "";
-  const key = cacheKey("tokenlist", p2, a2);
-  const cached = getCached(tokenListCache, key);
-  if (cached) {
-    console.log(`[ICRC] Token list: ${cached.length} ledgers (cached)`);
-    return cached;
+async function fetchIcrcTokenList() {
+  const now2 = Date.now();
+  if (icrcTokenListCache && icrcTokenListCache.tokens.length >= TOKEN_LIST_MIN_COUNT && now2 - icrcTokenListCache.fetchedAt < TOKEN_LIST_TTL_MS) {
+    console.log(
+      `[ICRC] Token list: ${icrcTokenListCache.tokens.length} tokens (cached)`
+    );
+    return icrcTokenListCache.tokens;
   }
-  const allTokens = [];
-  let offset2 = 0;
-  let fetchError = null;
-  for (let page = 0; page < LEDGERS_MAX_PAGES; page++) {
-    const url = `${ICRC_API_BASE}/api/v1/ledgers?limit=${LEDGERS_PAGE_SIZE}&offset=${offset2}`;
-    let res;
-    try {
-      res = await fetch(url, {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(15e3)
-      });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      fetchError = `fetch error at offset ${offset2}: ${msg}`;
-      console.error(
-        `[ICRC] /api/v1/ledgers fetch failed at offset ${offset2}:`,
-        err
+  try {
+    let parsed = await fetchIcrcTokenListOnce();
+    console.log(`[ICRC] Token list: ${parsed.length} tokens (fresh)`);
+    if (parsed.length < TOKEN_LIST_MIN_COUNT) {
+      console.warn(
+        `[ICRC] Token list suspect (only ${parsed.length} items) — retrying in 2s`
       );
-      break;
+      await new Promise((resolve) => setTimeout(resolve, 2e3));
+      try {
+        const retry = await fetchIcrcTokenListOnce();
+        if (retry.length > parsed.length) {
+          parsed = retry;
+          console.log(
+            `[ICRC] Token list retry: ${parsed.length} tokens (fresh)`
+          );
+        }
+      } catch (retryErr) {
+        console.warn("[ICRC] Token list retry failed:", retryErr);
+      }
     }
-    if (!res.ok) {
-      fetchError = `HTTP ${res.status} ${res.statusText} at offset ${offset2}`;
-      console.error(
-        `[ICRC] /api/v1/ledgers returned HTTP ${res.status} ${res.statusText} at offset ${offset2}`
+    if (parsed.length > 0) {
+      icrcTokenListCache = { tokens: parsed, fetchedAt: now2 };
+    }
+    return parsed;
+  } catch (err) {
+    console.error("[ICRC] Token list fetch failed:", err);
+    if (icrcTokenListCache && icrcTokenListCache.tokens.length > 0) {
+      console.warn(
+        "[ICRC] Returning stale token list cache due to fetch error"
       );
-      break;
+      return icrcTokenListCache.tokens;
     }
-    let data;
-    try {
-      data = await res.json();
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      fetchError = `JSON parse error at offset ${offset2}: ${msg}`;
-      console.error(
-        `[ICRC] /api/v1/ledgers JSON parse failed at offset ${offset2}:`,
-        err
-      );
-      break;
-    }
-    const list = extractTransactionArray(data);
-    if (!Array.isArray(list) || list.length === 0) {
-      break;
-    }
-    for (const item of list) {
-      const { canisterId, symbol, decimals } = parseLedgerMetadata(item);
-      if (!canisterId) continue;
-      allTokens.push({ canisterId, symbol, decimals });
-    }
-    if (list.length < LEDGERS_PAGE_SIZE) break;
-    offset2 += LEDGERS_PAGE_SIZE;
+    return [];
   }
-  console.log(
-    `[ICRC] Token list: ${allTokens.length} ledgers (fresh) for ${p2 || a2}${fetchError ? ` (last error: ${fetchError})` : ""}`
-  );
-  if (allTokens.length > 0) setCached(tokenListCache, key, allTokens);
-  return allTokens;
 }
-function normalizeIcrcTransaction(raw, decimals, symbol) {
+function normalizeIcrcTransaction(raw, decimals) {
   var _a3, _b3, _c2, _d2, _e2, _f2;
   try {
     if (raw.from_owner !== void 0 || raw.to_owner !== void 0) {
       const kind = String(raw.kind ?? "");
-      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
-      const blockIndex = Number(raw.index ?? raw.block_index ?? 0);
-      const timestamp = parseTimestamp(raw.timestamp);
       if (kind === "mint") {
         return {
-          timestamp,
+          timestamp: parseTimestamp(raw.timestamp),
           from: "minting-account",
-          to: principalAddressToHex(
-            extractOwner(raw.to_owner ?? raw.to_account)
-          ),
-          amount,
-          blockIndex,
-          token: symbol,
-          decimals
+          to: extractOwner(raw.to_owner ?? raw.to_account),
+          amount: Number(raw.amount ?? 0) / 10 ** decimals,
+          blockIndex: Number(raw.index ?? raw.block_index ?? 0)
         };
       }
       if (kind === "burn") {
         return {
-          timestamp,
-          from: principalAddressToHex(
-            extractOwner(raw.from_owner ?? raw.from_account)
-          ),
+          timestamp: parseTimestamp(raw.timestamp),
+          from: extractOwner(raw.from_owner ?? raw.from_account),
           to: "burn-address",
-          amount,
-          blockIndex,
-          token: symbol,
-          decimals
+          amount: Number(raw.amount ?? 0) / 10 ** decimals,
+          blockIndex: Number(raw.index ?? raw.block_index ?? 0)
         };
       }
       return {
-        timestamp,
-        from: principalAddressToHex(
-          extractOwner(raw.from_owner ?? raw.from_account)
-        ),
-        to: principalAddressToHex(extractOwner(raw.to_owner ?? raw.to_account)),
-        amount,
-        blockIndex,
-        token: symbol,
-        decimals
+        timestamp: parseTimestamp(raw.timestamp),
+        from: extractOwner(raw.from_owner ?? raw.from_account),
+        to: extractOwner(raw.to_owner ?? raw.to_account),
+        amount: Number(raw.amount ?? 0) / 10 ** decimals,
+        blockIndex: Number(raw.index ?? raw.block_index ?? 0)
       };
     }
     const tx = raw == null ? void 0 : raw.transaction;
     if (!tx) return null;
     if (tx.transfer) {
-      const from = principalAddressToHex(
-        extractOwner(((_a3 = tx.transfer.from) == null ? void 0 : _a3.owner) ?? tx.transfer.from)
-      );
-      const to = principalAddressToHex(
-        extractOwner(((_b3 = tx.transfer.to) == null ? void 0 : _b3.owner) ?? tx.transfer.to)
-      );
+      const from = extractOwner(((_a3 = tx.transfer.from) == null ? void 0 : _a3.owner) ?? tx.transfer.from);
+      const to = extractOwner(((_b3 = tx.transfer.to) == null ? void 0 : _b3.owner) ?? tx.transfer.to);
       const amount = Number(tx.transfer.amount ?? 0) / 10 ** decimals;
       return {
         timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
         from,
         to,
         amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
-        token: symbol,
-        decimals
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
       };
     }
     if (tx.mint) {
-      const to = principalAddressToHex(
-        extractOwner(((_c2 = tx.mint.to) == null ? void 0 : _c2.owner) ?? tx.mint.to)
-      );
+      const to = extractOwner(((_c2 = tx.mint.to) == null ? void 0 : _c2.owner) ?? tx.mint.to);
       const amount = Number(tx.mint.amount ?? 0) / 10 ** decimals;
       return {
         timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
         from: "minting-account",
         to,
         amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
-        token: symbol,
-        decimals
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
       };
     }
     if (tx.burn) {
-      const from = principalAddressToHex(
-        extractOwner(((_d2 = tx.burn.from) == null ? void 0 : _d2.owner) ?? tx.burn.from)
-      );
+      const from = extractOwner(((_d2 = tx.burn.from) == null ? void 0 : _d2.owner) ?? tx.burn.from);
       const amount = Number(tx.burn.amount ?? 0) / 10 ** decimals;
       return {
         timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
         from,
         to: "burn-address",
         amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
-        token: symbol,
-        decimals
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
       };
     }
     if (raw.from !== void 0 && raw.to !== void 0) {
-      const from = principalAddressToHex(
-        extractOwner(((_e2 = raw.from) == null ? void 0 : _e2.owner) ?? raw.from)
-      );
-      const to = principalAddressToHex(extractOwner(((_f2 = raw.to) == null ? void 0 : _f2.owner) ?? raw.to));
+      const from = extractOwner(((_e2 = raw.from) == null ? void 0 : _e2.owner) ?? raw.from);
+      const to = extractOwner(((_f2 = raw.to) == null ? void 0 : _f2.owner) ?? raw.to);
       const amount = Number(raw.amount ?? 0) / 10 ** decimals;
       return {
         timestamp: parseTimestamp(raw.timestamp ?? raw.created_at),
         from,
         to,
         amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0),
-        token: symbol,
-        decimals
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
       };
     }
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error(
-      `[ICRC] normalizeIcrcTransaction failed for ${symbol}: ${msg}`
-    );
-    return null;
+  } catch {
   }
   return null;
 }
-async function fetchLedgerTxs(canisterId, accountId, limit, symbol, decimals, addressFormat) {
-  const urlAccountId = accountId;
-  const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(urlAccountId)}/transactions?limit=${limit}`;
-  try {
-    const res = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(15e3)
-    });
-    if (!res.ok) {
-      const err = `HTTP ${res.status} ${res.statusText}`;
-      console.warn(
-        `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: ${err}`
+async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+async function fetchIcrcTransactions(canisterId, accountId, limit = 100, symbol = "UNKNOWN", decimals = 8, debugEntries, originalPrincipal) {
+  async function tryFetch(acctId, addrFormat) {
+    try {
+      const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(acctId)}/transactions?limit=${limit}`;
+      const res = await fetch(url, {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(15e3)
+      });
+      if (!res.ok) {
+        const errMsg = `HTTP ${res.status}`;
+        if (res.status === 429 || res.status === 503) {
+          console.warn(
+            `[ICRC] FAILED ${symbol} (${canisterId.slice(0, 8)}): ${errMsg} — backoff 1s retry`
+          );
+          await sleep(1e3);
+          const retry = await fetch(url, {
+            headers: { Accept: "application/json" },
+            signal: AbortSignal.timeout(15e3)
+          });
+          if (!retry.ok) {
+            return {
+              txs: [],
+              httpStatus: retry.status,
+              error: `HTTP ${retry.status}`
+            };
+          }
+          const retryData = await retry.json();
+          return {
+            txs: parseTxs(retryData, decimals, symbol, addrFormat),
+            httpStatus: retry.status
+          };
+        }
+        return { txs: [], httpStatus: res.status, error: errMsg };
+      }
+      const data = await res.json();
+      return {
+        txs: parseTxs(data, decimals, symbol, addrFormat),
+        httpStatus: res.status
+      };
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.error(
+        `[ICRC] Failed ${symbol} (${canisterId.slice(0, 8)}) [${addrFormat}]:`,
+        errMsg
       );
-      return { txs: [], httpStatus: res.status, error: err };
+      return { txs: [], error: errMsg };
     }
-    const data = await res.json();
+  }
+  function parseTxs(data, dec, sym, addrFormat) {
     const rawList = extractTransactionArray(data);
-    if (rawList.length === 0) {
-      console.log(
-        `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: 0 txs`
-      );
-      return { txs: [], httpStatus: res.status, error: null };
-    }
+    if (rawList.length === 0) return [];
     const txs = [];
     for (const raw of rawList) {
-      const tx = normalizeIcrcTransaction(raw, decimals, symbol);
-      if (tx) txs.push(tx);
-    }
-    console.log(
-      `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)}: ${txs.length} txs`
-    );
-    return { txs, httpStatus: res.status, error: null };
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error(
-      `[ICRC] ${symbol} (${canisterId.slice(0, 8)}) ${addressFormat} account ${accountId.slice(0, 12)} fetch error: ${msg}`,
-      err
-    );
-    return { txs: [], httpStatus: null, error: msg };
-  }
-}
-async function fetchIcrcTransactions(address, limit = DEFAULT_TX_LIMIT, debugEntries, originalPrincipal) {
-  const addr = address.trim();
-  if (!addr) return [];
-  const isHex = /^[0-9a-fA-F]{64}$/.test(addr);
-  const principal = isHex ? (originalPrincipal == null ? void 0 : originalPrincipal.trim()) || "" : addr;
-  const hexAccountId = isHex ? addr : principalToAccountIdentifier(addr) ?? "";
-  const key = cacheKey("txs", principal, hexAccountId);
-  const cached = getCached(txCache, key);
-  if (cached) {
-    console.log(`[ICRC] Tx fetch: ${cached.length} txs (cached)`);
-    if (debugEntries) {
-      const byToken = /* @__PURE__ */ new Map();
-      for (const tx of cached) {
-        const sym = tx.token || "ICP";
-        const entry = byToken.get(sym);
-        if (entry) entry.count += 1;
-        else byToken.set(sym, { count: 1, canisterId: "" });
-      }
-      for (const [sym, info] of byToken) {
-        debugEntries.push({
-          symbol: sym,
-          canisterId: info.canisterId || sym,
-          resultCount: info.count,
-          addressFormat: "none"
-        });
+      const tx = normalizeIcrcTransaction(raw, dec);
+      if (tx) {
+        tx.token = sym;
+        tx.decimals = dec;
+        tx.from = principalAddressToHex(tx.from);
+        tx.to = principalAddressToHex(tx.to);
+        txs.push(tx);
       }
     }
-    return cached;
+    return txs;
   }
-  const tokenList = await fetchIcrcTokenList(principal, hexAccountId);
-  if (tokenList.length === 0) {
-    console.warn(
-      `[ICRC] No ledgers available from token list for ${principal || hexAccountId}`
-    );
-    if (debugEntries) {
-      debugEntries.push({
-        symbol: "ICRC",
-        canisterId: principal || hexAccountId || "",
-        resultCount: 0,
-        addressFormat: "none",
-        error: "no ledgers available from token list"
+  const trimmed = accountId.trim();
+  const isHex = /^[0-9a-fA-F]{64}$/.test(trimmed);
+  const addressesToTry = [];
+  addressesToTry.push({ id: trimmed, format: isHex ? "hex" : "principal" });
+  if (!isHex) {
+    const hexId = principalToAccountIdentifier(trimmed);
+    if (hexId && hexId !== trimmed) {
+      addressesToTry.push({ id: hexId, format: "hex" });
+    }
+  }
+  if (originalPrincipal) {
+    const origTrimmed = originalPrincipal.trim();
+    const origIsHex = /^[0-9a-fA-F]{64}$/.test(origTrimmed);
+    if (!addressesToTry.some((a2) => a2.id === origTrimmed)) {
+      addressesToTry.push({
+        id: origTrimmed,
+        format: origIsHex ? "hex" : "principal"
       });
     }
-    return [];
+    if (!origIsHex) {
+      const origHexId = principalToAccountIdentifier(origTrimmed);
+      if (origHexId && !addressesToTry.some((a2) => a2.id === origHexId)) {
+        addressesToTry.push({ id: origHexId, format: "hex" });
+      }
+    }
   }
-  console.log(
-    `[ICRC] Querying ${tokenList.length} ledgers for ${principal || hexAccountId} (batch size ${TX_FETCH_BATCH_SIZE})`
+  const principalCandidates = addressesToTry.filter(
+    (a2) => a2.format === "principal"
   );
-  const allTxs = [];
-  let totalQueried = 0;
-  let totalWithResults = 0;
-  let totalErrored = 0;
-  for (let i = 0; i < tokenList.length; i += TX_FETCH_BATCH_SIZE) {
-    const batch = tokenList.slice(i, i + TX_FETCH_BATCH_SIZE);
-    const batchResults = await Promise.all(
-      batch.map(async (token) => {
-        totalQueried += 1;
-        const { canisterId, symbol, decimals } = token;
-        let result = {
-          txs: [],
-          httpStatus: null,
-          error: null
-        };
-        let usedFormat = "principal";
-        if (principal) {
-          result = await fetchLedgerTxs(
-            canisterId,
-            principal,
-            limit,
-            symbol,
-            decimals,
-            "principal"
-          );
-        }
-        if (result.txs.length === 0 && hexAccountId) {
-          const altResult = await fetchLedgerTxs(
-            canisterId,
-            hexAccountId,
-            limit,
-            symbol,
-            decimals,
-            "hex"
-          );
-          if (altResult.txs.length > 0) {
-            result = altResult;
-            usedFormat = "hex";
-          } else if (altResult.error && !result.error) {
-            result.error = altResult.error;
-            result.httpStatus = altResult.httpStatus;
-          }
-        }
+  const hexCandidates = addressesToTry.filter((a2) => a2.format === "hex");
+  const ordered = [...principalCandidates, ...hexCandidates];
+  let lastError;
+  let lastHttpStatus;
+  const first = ordered[0];
+  if (first) {
+    const result = await tryFetch(first.id, first.format);
+    if (result.txs.length > 0) {
+      if (debugEntries) {
+        debugEntries.push({
+          symbol,
+          canisterId,
+          resultCount: result.txs.length,
+          addressFormat: first.format
+        });
+      }
+      return result.txs;
+    }
+    if (result.error) lastError = result.error;
+    if (result.httpStatus) lastHttpStatus = result.httpStatus;
+  }
+  const fallbacks = ordered.slice(1);
+  if (fallbacks.length > 0) {
+    const results = await Promise.all(
+      fallbacks.map((attempt) => tryFetch(attempt.id, attempt.format))
+    );
+    for (let i = 0; i < results.length; i++) {
+      const result = results[i];
+      if (result.txs.length > 0) {
         if (debugEntries) {
           debugEntries.push({
             symbol,
             canisterId,
             resultCount: result.txs.length,
-            addressFormat: result.txs.length > 0 ? usedFormat : "none",
-            error: result.error ?? void 0,
-            httpStatus: result.httpStatus ?? void 0
+            addressFormat: fallbacks[i].format
           });
         }
-        if (result.txs.length > 0) totalWithResults += 1;
-        if (result.error) totalErrored += 1;
         return result.txs;
-      })
-    );
-    for (const txs of batchResults) {
-      for (const tx of txs) allTxs.push(tx);
-    }
-    if (i + TX_FETCH_BATCH_SIZE < tokenList.length) {
-      await sleep(TX_BATCH_DELAY_MS);
+      }
+      if (result.error) lastError = result.error;
+      if (result.httpStatus) lastHttpStatus = result.httpStatus;
     }
   }
-  console.log(
-    `[ICRC] Tx fetch complete: ${allTxs.length} txs across ${totalWithResults}/${totalQueried} ledgers (${totalErrored} errored) for ${principal || hexAccountId}`
-  );
   if (debugEntries) {
     debugEntries.push({
-      symbol: "__SUMMARY__",
-      canisterId: principal || hexAccountId || "",
-      resultCount: allTxs.length,
+      symbol,
+      canisterId,
+      resultCount: 0,
       addressFormat: "none",
-      error: totalErrored > 0 ? `${totalQueried} queried, ${totalWithResults} with results, ${totalErrored} errored` : void 0
+      error: lastError,
+      httpStatus: lastHttpStatus
     });
   }
-  if (allTxs.length > 0) setCached(txCache, key, allTxs);
-  return allTxs;
-}
-const COLORS = {
-  user: "#94A3B8",
-  sns: "#3FE08C",
-  dex: "#F0B35A",
-  nns: "#60A5FA",
-  neuron: "#C084FC"
-};
-const ICONS = {
-  user: "👤",
-  sns: "🌐",
-  dex: "⚡",
-  nns: "🔷",
-  neuron: "💎"
-};
-const KNOWN_CANISTERS = [
-  // ── NNS ─────────────────────────────────────────────────────────────────
-  {
-    id: "rrkah-fqaaa-aaaaa-aaaaq-cai",
-    name: "NNS Governance",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "ryjl3-tyaaa-aaaaa-aaaba-cai",
-    name: "ICP Ledger",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "qoctq-giaaa-aaaaa-aaaea-cai",
-    name: "NNS Root",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "rkp4c-7iaaa-aaaaa-aaaca-cai",
-    name: "NNS Lifeline",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "r7inp-6aaaa-aaaaa-aaabq-cai",
-    name: "NNS Registry",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "rdmx6-jaaaa-aaaaa-aaadq-cai",
-    name: "NNS Identity",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "aaaaa-aa",
-    name: "IC Management",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  {
-    id: "6s3za-cqaaa-aaaaa-aaacq-cai",
-    name: "Cycles Minting",
-    type: "nns",
-    icon: ICONS.nns,
-    ringColor: COLORS.nns
-  },
-  // ── SNS Governance Canisters ─────────────────────────────────────────────
-  {
-    id: "3e3x2-xyaaa-aaaaq-aaalq-cai",
-    name: "OpenChat",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "7jkta-eyaaa-aaaaq-aaa6q-cai",
-    name: "Kinic",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "6rdgd-kyaaa-aaaaq-aaavq-cai",
-    name: "Hot or Not",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "tw2vt-hqaaa-aaaaq-aab6a-cai",
-    name: "Gold DAO",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "xjngq-yaaaa-aaaaq-aabha-cai",
-    name: "BOOM DAO",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "extk5-gaaaa-aaaaq-aadaq-cai",
-    name: "Neutrinite",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "jfnic-kaaaa-aaaaq-aadla-cai",
-    name: "WaterNeuron",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "2hx64-daaaa-aaaaq-aaana-cai",
-    name: "Dragginz",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "yc3ey-aiaaa-aaaaq-aabgq-cai",
-    name: "DecideAI",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "u67kc-jyaaa-aaaaq-aabpq-cai",
-    name: "YRAL",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "6syxn-4yaaa-aaaaq-aaboq-cai",
-    name: "NTN",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "h4j5e-7iaaa-aaaaq-aacca-cai",
-    name: "ICLighthouse",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "uly3p-iqaaa-aaaaq-aabma-cai",
-    name: "Sonic DAO",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "fnnai-ryaaa-aaaaq-aabna-cai",
-    name: "Funnai",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  // ── SNS Ledger Canisters ────────────────────────────────────────────────
-  {
-    id: "2ouva-viaaa-aaaaq-aaamq-cai",
-    name: "OpenChat Ledger",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "73mez-iiaaa-aaaaq-aaasq-cai",
-    name: "Kinic Ledger",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  {
-    id: "tyyy3-4aaaa-aaaaq-aab7a-cai",
-    name: "Gold DAO Ledger",
-    type: "sns",
-    icon: ICONS.sns,
-    ringColor: COLORS.sns
-  },
-  // ── DEX Canisters ────────────────────────────────────────────────────────
-  {
-    id: "5ucrv-taaaa-aaaag-qb2uq-cai",
-    name: "ICPSwap",
-    type: "dex",
-    icon: ICONS.dex,
-    ringColor: COLORS.dex
-  },
-  {
-    id: "3xwpq-ziaaa-aaaah-qcn4a-cai",
-    name: "Sonic DEX",
-    type: "dex",
-    icon: ICONS.dex,
-    ringColor: COLORS.dex
-  },
-  {
-    id: "ltyfs-qiaaa-aaaak-aan3a-cai",
-    name: "ICPSwap Pool",
-    type: "dex",
-    icon: ICONS.dex,
-    ringColor: COLORS.dex
-  },
-  {
-    id: "4mmnk-kiaaa-aaaag-qbllq-cai",
-    name: "ICDex",
-    type: "dex",
-    icon: ICONS.dex,
-    ringColor: COLORS.dex
-  },
-  // ── NNS Neurons ────────────────────────────────────────────────────────
-  {
-    id: "yh2sk-raaaa-aaaaa-aacfq-cai",
-    name: "NNS Treasury",
-    type: "neuron",
-    icon: ICONS.neuron,
-    ringColor: COLORS.neuron
-  }
-];
-const CANISTER_MAP = new Map(
-  KNOWN_CANISTERS.map((c2) => [c2.id.toLowerCase(), c2])
-);
-const CANISTER_MAP_BY_HEX = /* @__PURE__ */ new Map();
-for (const c2 of KNOWN_CANISTERS) {
-  const hex2 = principalToAccountIdentifier(c2.id);
-  if (hex2) CANISTER_MAP_BY_HEX.set(hex2.toLowerCase(), c2);
-}
-function toCanonicalId(id2) {
-  const lower2 = id2.toLowerCase().trim();
-  if (CANISTER_MAP.has(lower2)) return lower2;
-  const hexEntry = CANISTER_MAP_BY_HEX.get(lower2);
-  if (hexEntry) return hexEntry.id.toLowerCase();
-  return lower2;
-}
-const SNS_TOKENS = {
-  CHAT: "OpenChat",
-  KINIC: "Kinic",
-  WTN: "WaterNeuron",
-  GOLD: "Gold DAO",
-  BOOM: "BOOM DAO",
-  NTN: "NTN",
-  SNEED: "ICLighthouse",
-  HOT: "Hot or Not",
-  DRAG: "Dragginz",
-  DCD: "DecideAI",
-  YRAL: "YRAL",
-  SONIC: "Sonic DAO",
-  GLDGov: "Gold DAO Gov",
-  FUNNAI: "Funnai"
-};
-function getNodeIdentity(id2, _transactions) {
-  const lower2 = id2.toLowerCase().trim();
-  const entry = CANISTER_MAP.get(lower2);
-  if (entry) {
-    return {
-      type: entry.type,
-      label: entry.name,
-      icon: entry.icon,
-      ringColor: entry.ringColor
-    };
-  }
-  const hexEntry = CANISTER_MAP_BY_HEX.get(lower2);
-  if (hexEntry) {
-    return {
-      type: hexEntry.type,
-      label: hexEntry.name,
-      icon: hexEntry.icon,
-      ringColor: hexEntry.ringColor
-    };
-  }
-  const idTrimmed = id2.trim();
-  if (idTrimmed.length === 64 && /^[0-9a-f]+$/i.test(idTrimmed)) {
-    console.warn(
-      "[getNodeIdentity] Wallet fallback:",
-      "raw id:",
-      id2,
-      "| lookup id (lowercased/trimmed):",
-      lower2,
-      "| reason: 64-char hex heuristic branch — neither CANISTER_MAP nor CANISTER_MAP_BY_HEX matched"
-    );
-    return {
-      type: "user",
-      label: "Wallet",
-      icon: ICONS.user,
-      ringColor: COLORS.user
-    };
-  }
-  console.warn(
-    "[getNodeIdentity] Wallet fallback:",
-    "raw id:",
-    id2,
-    "| lookup id (lowercased/trimmed):",
-    lower2,
-    "| reason: final catch-all — neither CANISTER_MAP nor CANISTER_MAP_BY_HEX matched"
-  );
-  return {
-    type: "user",
-    label: "Wallet",
-    icon: ICONS.user,
-    ringColor: COLORS.user
-  };
-}
-function getSnsParticipation(_address, transactions) {
-  const tokens = /* @__PURE__ */ new Set();
-  for (const tx of transactions) {
-    if (tx.token && tx.token !== "ICP" && SNS_TOKENS[tx.token]) {
-      tokens.add(SNS_TOKENS[tx.token]);
-    }
-  }
-  return [...tokens];
-}
-function addTokenAmount(map2, token, amount) {
-  map2[token] = (map2[token] ?? 0) + amount;
-}
-function buildEdgeFromTx(acctLower, displayIdLower, displayId, tx, edgeMap) {
-  const fromLower = tx.from.toLowerCase();
-  const toLower = tx.to.toLowerCase();
-  const isFrom = fromLower === acctLower || fromLower === displayIdLower;
-  const isTo = toLower === acctLower || toLower === displayIdLower;
-  const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
-  if (!counterparty) return null;
-  const counterpartyLower = toCanonicalId(counterparty);
-  const edgeKey = [toCanonicalId(acctLower), counterpartyLower].sort().join("|");
-  const token = tx.token ?? "ICP";
-  const isIcp = token === "ICP";
-  const existing = edgeMap.get(edgeKey);
-  if (existing) {
-    existing.tx_count += 1;
-    if (isIcp) existing.total_amount += tx.amount;
-    if (isTo) {
-      existing.inCount += 1;
-      addTokenAmount(existing.inAmountByToken, token, tx.amount);
-      addTokenAmount(existing.inCountByToken, token, 1);
-    } else {
-      existing.outCount += 1;
-      addTokenAmount(existing.outAmountByToken, token, tx.amount);
-      addTokenAmount(existing.outCountByToken, token, 1);
-    }
-  } else {
-    const inAmountByToken = {};
-    const outAmountByToken = {};
-    const inCountByToken = {};
-    const outCountByToken = {};
-    if (isTo) {
-      inAmountByToken[token] = tx.amount;
-      inCountByToken[token] = 1;
-    } else {
-      outAmountByToken[token] = tx.amount;
-      outCountByToken[token] = 1;
-    }
-    edgeMap.set(edgeKey, {
-      source: displayId,
-      target: counterparty,
-      counterpartyId: counterpartyLower,
-      // canonical id — consistent node identity regardless of hex/principal first-seen format
-      tx_count: 1,
-      total_amount: isIcp ? tx.amount : 0,
-      inCount: isTo ? 1 : 0,
-      outCount: isFrom ? 1 : 0,
-      inAmountByToken,
-      outAmountByToken,
-      inCountByToken,
-      outCountByToken
-    });
-  }
-  return counterpartyLower;
-}
-function enrichEdge(edge) {
-  var _a3, _b3, _c2, _d2;
-  const netFlowByToken = {};
-  const allTokens = /* @__PURE__ */ new Set([
-    ...Object.keys(edge.inAmountByToken ?? {}),
-    ...Object.keys(edge.outAmountByToken ?? {})
-  ]);
-  for (const token of allTokens) {
-    const inAmt = ((_a3 = edge.inAmountByToken) == null ? void 0 : _a3[token]) ?? 0;
-    const outAmt = ((_b3 = edge.outAmountByToken) == null ? void 0 : _b3[token]) ?? 0;
-    netFlowByToken[token] = inAmt - outAmt;
-  }
-  return {
-    ...edge,
-    netFlowByToken,
-    totalVolumeICP: (((_c2 = edge.inAmountByToken) == null ? void 0 : _c2.ICP) ?? 0) + (((_d2 = edge.outAmountByToken) == null ? void 0 : _d2.ICP) ?? 0)
-  };
-}
-function getSavedAddresses() {
-  try {
-    const raw = localStorage.getItem("icpath_saved_wallets");
-    if (!raw) return /* @__PURE__ */ new Set();
-    const wallets = JSON.parse(raw);
-    return new Set(wallets.map((w2) => w2.address.toLowerCase()));
-  } catch {
-    return /* @__PURE__ */ new Set();
-  }
-}
-function enrichNode(node, allTransactions, allAddresses, savedAddresses) {
-  const identity4 = getNodeIdentity(node.id);
-  const snsTokens = getSnsParticipation(node.id, allTransactions);
-  if (snsTokens.length > 0) {
-    identity4.snsTokens = snsTokens;
-  }
-  const sparklineData = getWeeklyActivity(allTransactions, node.id);
-  const netFlowICP = computeNetFlow(allTransactions, node.id);
-  const isWhale = detectWhale(allTransactions, node.id, allAddresses);
-  const isPinned = savedAddresses.has(node.id.toLowerCase());
-  return {
-    ...node,
-    identity: identity4,
-    sparklineData,
-    netFlowICP,
-    isWhale,
-    isPinned
-  };
-}
-function buildGraph(displayId, accountIdentifier, transactions, maxCounterparties = 20) {
-  const acctLower = accountIdentifier.toLowerCase();
-  const displayIdLower = displayId.toLowerCase();
-  const edgeMap = /* @__PURE__ */ new Map();
-  const counterpartyTx = /* @__PURE__ */ new Map();
-  const icrcCounterparties = /* @__PURE__ */ new Set();
-  for (const tx of transactions) {
-    const cpLower = buildEdgeFromTx(
-      acctLower,
-      displayIdLower,
-      displayId,
-      tx,
-      edgeMap
-    );
-    if (cpLower) {
-      counterpartyTx.set(cpLower, (counterpartyTx.get(cpLower) ?? 0) + 1);
-      if (tx.token && tx.token !== "ICP") {
-        icrcCounterparties.add(cpLower);
-      }
-    }
-  }
-  const sortedCounterparties = [...counterpartyTx.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, maxCounterparties).map(([id2]) => id2);
-  const allowedSet = new Set(sortedCounterparties);
-  for (const cp of icrcCounterparties) {
-    if (!allowedSet.has(cp)) {
-      allowedSet.add(cp);
-      sortedCounterparties.push(cp);
-    }
-  }
-  const savedAddresses = getSavedAddresses();
-  const allAddresses = [displayId, ...sortedCounterparties];
-  const centerNode = {
-    id: displayId,
-    isCenter: true,
-    txCount: transactions.length,
-    totalAmount: transactions.reduce((s2, t2) => s2 + t2.amount, 0),
-    depth: 0
-  };
-  const counterpartyNodes = sortedCounterparties.map((id2) => {
-    const original = transactions.find(
-      (t2) => toCanonicalId(t2.from) === id2 || toCanonicalId(t2.to) === id2
-    );
-    const originalId = original ? toCanonicalId(original.from) === id2 ? original.from : original.to : id2;
-    return {
-      id: originalId,
-      isCenter: false,
-      txCount: counterpartyTx.get(id2) ?? 0,
-      totalAmount: 0,
-      depth: 1
-    };
-  });
-  const rawNodes = [centerNode, ...counterpartyNodes];
-  const nodes = rawNodes.map(
-    (n2) => enrichNode(n2, transactions, allAddresses, savedAddresses)
-  );
-  const edges = [...edgeMap.values()].filter(
-    (e3) => allowedSet.has(toCanonicalId(e3.source)) || allowedSet.has(toCanonicalId(e3.target))
-  ).map(({ counterpartyId: _cid, ...rest }) => enrichEdge(rest));
-  return { nodes, edges };
-}
-function processTransactionsForDepth(txs, acctLower, displayIdLower, existingNodes, skipExisting = false) {
-  const txCount = /* @__PURE__ */ new Map();
-  const edgeData = /* @__PURE__ */ new Map();
-  const icrcCounterparties = /* @__PURE__ */ new Set();
-  for (const tx of txs) {
-    const fromLower = tx.from.toLowerCase();
-    const toLower = tx.to.toLowerCase();
-    const isFrom = fromLower === acctLower || fromLower === displayIdLower;
-    const isTo = toLower === acctLower || toLower === displayIdLower;
-    const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
-    if (!counterparty) continue;
-    const cpLower = toCanonicalId(counterparty);
-    if (skipExisting && existingNodes.has(cpLower)) continue;
-    const token = tx.token ?? "ICP";
-    const isIcp = token === "ICP";
-    txCount.set(cpLower, (txCount.get(cpLower) ?? 0) + 1);
-    if (!isIcp) {
-      icrcCounterparties.add(cpLower);
-    }
-    const edge = edgeData.get(cpLower) ?? {
-      inCount: 0,
-      outCount: 0,
-      tx_count: 0,
-      total_amount: 0,
-      counterpartyId: counterparty,
-      inAmountByToken: {},
-      outAmountByToken: {},
-      inCountByToken: {},
-      outCountByToken: {}
-    };
-    edge.tx_count += 1;
-    if (isIcp) edge.total_amount += tx.amount;
-    if (isTo) {
-      edge.inCount += 1;
-      addTokenAmount(edge.inAmountByToken, token, tx.amount);
-      addTokenAmount(edge.inCountByToken, token, 1);
-    } else {
-      edge.outCount += 1;
-      addTokenAmount(edge.outAmountByToken, token, tx.amount);
-      addTokenAmount(edge.outCountByToken, token, 1);
-    }
-    edgeData.set(cpLower, edge);
-  }
-  return { txCount, edgeData, icrcCounterparties };
-}
-function addCrossEdges(allTxs, allNodes, allEdges) {
-  for (const tx of allTxs) {
-    const fromLower = toCanonicalId(tx.from);
-    const toLower = toCanonicalId(tx.to);
-    if (fromLower === toLower) continue;
-    const fromNode = allNodes.get(fromLower);
-    const toNode = allNodes.get(toLower);
-    if (!fromNode || !toNode) continue;
-    const key1 = `${fromLower}|${toLower}`;
-    const key2 = `${toLower}|${fromLower}`;
-    const token = tx.token ?? "ICP";
-    const isIcp = token === "ICP";
-    const existingKey = allEdges.has(key1) ? key1 : allEdges.has(key2) ? key2 : null;
-    if (existingKey) {
-      const e3 = allEdges.get(existingKey);
-      e3.tx_count += 1;
-      if (isIcp) e3.total_amount += tx.amount;
-      const isInbound = existingKey === key2;
-      if (isInbound) {
-        e3.inCount += 1;
-        addTokenAmount(e3.inAmountByToken, token, tx.amount);
-        addTokenAmount(e3.inCountByToken, token, 1);
-      } else {
-        e3.outCount += 1;
-        addTokenAmount(e3.outAmountByToken, token, tx.amount);
-        addTokenAmount(e3.outCountByToken, token, 1);
-      }
-    } else {
-      allEdges.set(
-        key1,
-        enrichEdge({
-          source: fromNode.id,
-          target: toNode.id,
-          tx_count: 1,
-          total_amount: isIcp ? tx.amount : 0,
-          inCount: 0,
-          outCount: 1,
-          inAmountByToken: {},
-          outAmountByToken: { [token]: tx.amount },
-          inCountByToken: {},
-          outCountByToken: { [token]: 1 }
-        })
-      );
-    }
-  }
-}
-function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterparties, showCrossEdges = false) {
-  const allNodes = /* @__PURE__ */ new Map();
-  const allEdges = /* @__PURE__ */ new Map();
-  const savedAddresses = getSavedAddresses();
-  const centerIdLower = center2.accountId.toLowerCase();
-  const centerDisplayIdLower = center2.displayId.toLowerCase();
-  allNodes.set(toCanonicalId(center2.displayId), {
-    id: center2.displayId,
-    isCenter: true,
-    txCount: center2.transactions.length,
-    totalAmount: center2.transactions.reduce((s2, t2) => s2 + t2.amount, 0),
-    depth: 0
-  });
-  const {
-    txCount: d1TxCount,
-    edgeData: d1EdgeData,
-    icrcCounterparties: d1IcrcCps
-  } = processTransactionsForDepth(
-    center2.transactions,
-    centerIdLower,
-    centerDisplayIdLower,
-    allNodes,
-    false
-  );
-  const sortedD1 = [...d1TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, maxCounterparties);
-  const d1AllowedSet = new Set(sortedD1.map(([id2]) => id2));
-  for (const cp of d1IcrcCps) {
-    if (!d1AllowedSet.has(cp)) {
-      d1AllowedSet.add(cp);
-      const txCnt = d1TxCount.get(cp) ?? 0;
-      sortedD1.push([cp, txCnt]);
-    }
-  }
-  for (const [cpLower] of sortedD1) {
-    const edgeInfo = d1EdgeData.get(cpLower);
-    allNodes.set(cpLower, {
-      id: edgeInfo.counterpartyId,
-      isCenter: false,
-      txCount: edgeInfo.tx_count,
-      totalAmount: edgeInfo.total_amount,
-      depth: 1
-    });
-    allEdges.set(
-      `${toCanonicalId(center2.displayId)}|${cpLower}`,
-      enrichEdge({
-        source: center2.displayId,
-        target: edgeInfo.counterpartyId,
-        tx_count: edgeInfo.tx_count,
-        total_amount: edgeInfo.total_amount,
-        inCount: edgeInfo.inCount,
-        outCount: edgeInfo.outCount,
-        inAmountByToken: edgeInfo.inAmountByToken,
-        outAmountByToken: edgeInfo.outAmountByToken,
-        inCountByToken: edgeInfo.inCountByToken,
-        outCountByToken: edgeInfo.outCountByToken
-      })
-    );
-  }
-  for (const d1Fetch of depth1Fetches) {
-    if (!allNodes.has(toCanonicalId(d1Fetch.nodeId))) continue;
-    const d1AcctLower = d1Fetch.accountId.toLowerCase();
-    const d1DisplayIdLower = d1Fetch.nodeId.toLowerCase();
-    const { txCount: d2TxCount, edgeData: d2EdgeData } = processTransactionsForDepth(
-      d1Fetch.transactions,
-      d1AcctLower,
-      d1DisplayIdLower,
-      allNodes,
-      true
-    );
-    const top3 = [...d2TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, 3);
-    const d1Node = allNodes.get(toCanonicalId(d1Fetch.nodeId));
-    for (const [cpLower] of top3) {
-      if (allNodes.has(cpLower)) continue;
-      const edgeInfo = d2EdgeData.get(cpLower);
-      allNodes.set(cpLower, {
-        id: edgeInfo.counterpartyId,
-        isCenter: false,
-        txCount: edgeInfo.tx_count,
-        totalAmount: edgeInfo.total_amount,
-        depth: 2
-      });
-      allEdges.set(
-        `${toCanonicalId(d1Node.id)}|${cpLower}`,
-        enrichEdge({
-          source: d1Node.id,
-          target: edgeInfo.counterpartyId,
-          tx_count: edgeInfo.tx_count,
-          total_amount: edgeInfo.total_amount,
-          inCount: edgeInfo.inCount,
-          outCount: edgeInfo.outCount,
-          inAmountByToken: edgeInfo.inAmountByToken,
-          outAmountByToken: edgeInfo.outAmountByToken,
-          inCountByToken: edgeInfo.inCountByToken,
-          outCountByToken: edgeInfo.outCountByToken
-        })
-      );
-    }
-  }
-  for (const d2Fetch of depth2Fetches) {
-    if (!allNodes.has(toCanonicalId(d2Fetch.nodeId))) continue;
-    const d2AcctLower = d2Fetch.accountId.toLowerCase();
-    const d2DisplayIdLower = d2Fetch.nodeId.toLowerCase();
-    const { txCount: d3TxCount, edgeData: d3EdgeData } = processTransactionsForDepth(
-      d2Fetch.transactions,
-      d2AcctLower,
-      d2DisplayIdLower,
-      allNodes,
-      true
-    );
-    const top2 = [...d3TxCount.entries()].sort((a2, b2) => b2[1] - a2[1]).slice(0, 2);
-    const d2Node = allNodes.get(toCanonicalId(d2Fetch.nodeId));
-    for (const [cpLower] of top2) {
-      if (allNodes.has(cpLower)) continue;
-      const edgeInfo = d3EdgeData.get(cpLower);
-      allNodes.set(cpLower, {
-        id: edgeInfo.counterpartyId,
-        isCenter: false,
-        txCount: edgeInfo.tx_count,
-        totalAmount: edgeInfo.total_amount,
-        depth: 3
-      });
-      allEdges.set(
-        `${toCanonicalId(d2Node.id)}|${cpLower}`,
-        enrichEdge({
-          source: d2Node.id,
-          target: edgeInfo.counterpartyId,
-          tx_count: edgeInfo.tx_count,
-          total_amount: edgeInfo.total_amount,
-          inCount: edgeInfo.inCount,
-          outCount: edgeInfo.outCount,
-          inAmountByToken: edgeInfo.inAmountByToken,
-          outAmountByToken: edgeInfo.outAmountByToken,
-          inCountByToken: edgeInfo.inCountByToken,
-          outCountByToken: edgeInfo.outCountByToken
-        })
-      );
-    }
-  }
-  if (showCrossEdges) {
-    const allTxs = [
-      ...center2.transactions,
-      ...depth1Fetches.flatMap((f2) => f2.transactions),
-      ...depth2Fetches.flatMap((f2) => f2.transactions)
-    ];
-    addCrossEdges(allTxs, allNodes, allEdges);
-  }
-  const allTxsForEnrich = [
-    ...center2.transactions,
-    ...depth1Fetches.flatMap((f2) => f2.transactions),
-    ...depth2Fetches.flatMap((f2) => f2.transactions)
-  ];
-  const allAddresses = [...allNodes.values()].map((n2) => n2.id);
-  const enrichedNodes = [...allNodes.values()].map(
-    (n2) => enrichNode(n2, allTxsForEnrich, allAddresses, savedAddresses)
-  );
-  return {
-    nodes: enrichedNodes,
-    edges: [...allEdges.values()]
-  };
-}
-function computeSummary(accountId, transactions) {
-  const acctLower = accountId.toLowerCase();
-  let totalIn = 0;
-  let totalOut = 0;
-  const counterparties = /* @__PURE__ */ new Set();
-  const icpTxs = transactions.filter((tx) => !tx.token || tx.token === "ICP");
-  for (const tx of icpTxs) {
-    const isTo = tx.to.toLowerCase() === acctLower;
-    const isFrom = tx.from.toLowerCase() === acctLower;
-    if (isTo) {
-      totalIn += tx.amount;
-      if (tx.from) counterparties.add(tx.from.toLowerCase());
-    } else if (isFrom) {
-      totalOut += tx.amount;
-      if (tx.to) counterparties.add(tx.to.toLowerCase());
-    }
-  }
-  return {
-    totalTx: icpTxs.length,
-    totalIn,
-    totalOut,
-    counterpartyCount: counterparties.size
-  };
-}
-function getTopCounterparties(accountId, transactions, limit = 5, displayId) {
-  const acctLower = accountId.toLowerCase();
-  const displayIdLower = (displayId == null ? void 0 : displayId.toLowerCase()) ?? "";
-  const map2 = /* @__PURE__ */ new Map();
-  for (const tx of transactions) {
-    const fromLower = tx.from.toLowerCase();
-    const toLower = tx.to.toLowerCase();
-    const isFrom = fromLower === acctLower || fromLower === displayIdLower;
-    const isTo = toLower === acctLower || toLower === displayIdLower;
-    const counterparty = isFrom ? tx.to : isTo ? tx.from : null;
-    if (!counterparty) continue;
-    const existing = map2.get(counterparty);
-    if (existing) {
-      existing.txCount += 1;
-      existing.volume += tx.amount;
-    } else {
-      map2.set(counterparty, { txCount: 1, volume: tx.amount });
-    }
-  }
-  return [...map2.entries()].sort((a2, b2) => b2[1].txCount - a2[1].txCount).slice(0, limit).map(([address, stats]) => ({ address, ...stats }));
-}
-let cache = null;
-const CACHE_TTL = 5 * 60 * 1e3;
-async function fetchFromCoinbase() {
-  var _a3;
-  try {
-    const res = await fetch("https://api.coinbase.com/v2/prices/ICP-USD/spot", {
-      cache: "no-store"
-    });
-    if (!res.ok) return null;
-    const json = await res.json();
-    const amount = (_a3 = json == null ? void 0 : json.data) == null ? void 0 : _a3.amount;
-    if (!amount) return null;
-    const price = Number.parseFloat(amount);
-    return Number.isFinite(price) ? price : null;
-  } catch {
-    return null;
-  }
-}
-async function fetchFromIcpApi() {
-  try {
-    const res = await fetch(
-      "https://uvevg-iyaaa-aaaak-ac27q-cai.raw.ic0.app/ticker",
-      { cache: "no-store" }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!Array.isArray(data)) return null;
-    const pair = data.find(
-      (t2) => t2.ticker_id && (t2.ticker_id.includes("ICP") || t2.ticker_id.includes("icp")) || t2.base_id && t2.base_id === "ryjl3-tyaaa-aaaaa-aaaba-cai"
-    );
-    if ((pair == null ? void 0 : pair.last_price) && Number.isFinite(pair.last_price)) {
-      return pair.last_price;
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
-async function fetchIcpUsdPrice() {
-  if (cache && Date.now() - cache.fetchedAt < CACHE_TTL) {
-    return cache.price;
-  }
-  let price = await fetchFromCoinbase();
-  if (price === null) {
-    price = await fetchFromIcpApi();
-  }
-  if (price !== null) {
-    cache = { price, fetchedAt: Date.now() };
-  }
-  return price;
-}
-function shortenId$1(id2) {
-  if (id2.length <= 14) return id2;
-  return `${id2.slice(0, 8)}…${id2.slice(-4)}`;
-}
-function formatIcp(val) {
-  if (val >= 1e6) return `${(val / 1e6).toFixed(2)}M`;
-  if (val >= 1e3) return `${(val / 1e3).toFixed(2)}K`;
-  return val.toFixed(4);
-}
-function formatWalletAge(firstTxDate) {
-  const now2 = /* @__PURE__ */ new Date();
-  const diffMs = now2.getTime() - firstTxDate.getTime();
-  if (diffMs <= 0) return null;
-  const diffDays = Math.floor(diffMs / (1e3 * 60 * 60 * 24));
-  const diffMonths = Math.floor(diffDays / 30.44);
-  const diffYears = Math.floor(diffDays / 365.25);
-  if (diffDays === 0 && diffMonths === 0 && diffYears === 0) return null;
-  let age;
-  if (diffYears >= 1) {
-    const remainMonths = Math.floor((diffDays - diffYears * 365.25) / 30.44);
-    age = remainMonths > 0 ? `${diffYears}y ${remainMonths}mo` : `${diffYears} year${diffYears > 1 ? "s" : ""}`;
-  } else if (diffMonths >= 1) {
-    age = `${diffMonths} month${diffMonths > 1 ? "s" : ""}`;
-  } else {
-    age = `${diffDays} day${diffDays !== 1 ? "s" : ""}`;
-  }
-  const since = firstTxDate.toLocaleDateString("en-US", {
-    month: "short",
-    year: "numeric"
-  });
-  return { age, since };
-}
-function OverviewPanel({
-  principal,
-  walletData,
-  onNavigate,
-  timeRange,
-  onTimeRangeChange
-}) {
-  const [copied, setCopied] = reactExports.useState(false);
-  const [icpPrice, setIcpPrice] = reactExports.useState(null);
-  reactExports.useEffect(() => {
-    let cancelled = false;
-    fetchIcpUsdPrice().then((p2) => {
-      if (!cancelled && p2 !== null) setIcpPrice(p2);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-  const handleCopy = () => {
-    navigator.clipboard.writeText(principal).catch(() => {
-    });
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1e3);
-    ue.success("Address copied!", { duration: 2e3 });
-  };
-  const allTxsForAge = (walletData == null ? void 0 : walletData.allTransactions) ?? [];
-  const walletAge = reactExports.useMemo(() => {
-    if (!allTxsForAge.length) return null;
-    let earliest = Number.POSITIVE_INFINITY;
-    for (const tx of allTxsForAge) {
-      const ts = new Date(tx.timestamp).getTime();
-      if (!Number.isNaN(ts) && ts > 0 && ts < earliest) earliest = ts;
-    }
-    if (!Number.isFinite(earliest) || earliest <= 0) return null;
-    return formatWalletAge(new Date(earliest));
-  }, [allTxsForAge]);
-  const walletIsOlderThanYear = reactExports.useMemo(() => {
-    if (!allTxsForAge.length) return false;
-    let earliest = Number.POSITIVE_INFINITY;
-    for (const tx of allTxsForAge) {
-      const ts = new Date(tx.timestamp).getTime();
-      if (!Number.isNaN(ts) && ts < earliest) earliest = ts;
-    }
-    if (!Number.isFinite(earliest)) return false;
-    return Date.now() - earliest >= 365 * 24 * 60 * 60 * 1e3;
-  }, [allTxsForAge]);
-  const topCounterparties = walletData ? getTopCounterparties(principal, walletData.transactions) : [];
-  const activityScore = walletData ? Math.min(100, walletData.summary.totalTx / 100 * 100) : 0;
-  const snsParticipation = walletData && walletData.transactions.length > 0 ? getSnsParticipation(principal, walletData.transactions) : [];
-  const timeRangeLabels = {
-    all: "All time",
-    day: "Day",
-    week: "Week",
-    "1mo": "1 month",
-    "3mo": "3 months",
-    "6mo": "6 months",
-    "1y": "1 year"
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "flex flex-col gap-3 w-full", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Wallet Info" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4 space-y-2", children: principal ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-xs text-foreground truncate flex-1", children: shortenId$1(principal) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              type: "button",
-              "data-ocid": "wallet.copy_address",
-              onClick: handleCopy,
-              className: "shrink-0 p-1 rounded hover:bg-muted/50 transition-colors",
-              title: copied ? "Copied!" : "Copy address",
-              "aria-label": "Copy wallet address",
-              children: copied ? /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "h-3.5 w-3.5 text-neon-green" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { className: "h-3.5 w-3.5 text-muted-foreground" })
-            }
-          )
-        ] }),
-        icpPrice !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground/70", children: [
-          "1 ICP =",
-          " ",
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-neon-amber font-medium", children: [
-            "$",
-            icpPrice.toFixed(2)
-          ] })
-        ] }),
-        walletAge && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1 border-t border-border/40 space-y-0.5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: "Wallet age" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-medium text-foreground", children: walletAge.age })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: "Since" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground/80", children: walletAge.since })
-          ] })
-        ] }),
-        onTimeRangeChange && timeRange && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pt-1 border-t border-border/40", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mb-1.5", children: "Time filter" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            Select,
-            {
-              value: timeRange,
-              onValueChange: (v2) => onTimeRangeChange(v2),
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  SelectTrigger,
-                  {
-                    className: "h-7 text-xs bg-muted/40 border-border/60 text-foreground w-full",
-                    "data-ocid": "wallet.time_range_select",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { children: timeRangeLabels[timeRange] })
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(SelectContent, { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "all", children: "All time" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "day", children: "Day (24h)" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "week", children: "Week (7d)" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "1mo", children: "1 month" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "3mo", children: "3 months" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "6mo", children: "6 months" }),
-                  walletIsOlderThanYear && /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: "1y", children: "1 year" })
-                ] })
-              ]
-            }
-          )
-        ] })
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "No wallet loaded" }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Transaction Summary" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "px-4 pb-4 space-y-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Txs" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (walletData == null ? void 0 : walletData.summary.totalTx) ?? 0 })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowDownLeft, { className: "h-3 w-3 text-neon-green" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total In" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-green", children: [
-            walletData ? formatIcp(walletData.summary.totalIn) : "—",
-            " ICP"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowUpRight, { className: "h-3 w-3 text-neon-red" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Out" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-red", children: [
-            walletData ? formatIcp(walletData.summary.totalOut) : "—",
-            " ICP"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { className: "h-3 w-3 text-neon-blue" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Counterparties" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (walletData == null ? void 0 : walletData.summary.counterpartyCount) ?? 0 })
-        ] }),
-        snsParticipation.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pt-1 border-t border-border/50", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-1.5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground shrink-0 mt-0.5", children: "DAOs:" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-neon-green font-medium leading-snug", children: snsParticipation.join(", ") })
-        ] }) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Top Counterparties" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: topCounterparties.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "No data" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("ol", { className: "space-y-2", children: topCounterparties.map((cp, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "li",
-        {
-          "data-ocid": `wallet.item.${i + 1}`,
-          className: "flex items-center gap-2",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground w-4 text-right", children: [
-              i + 1,
-              "."
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                "data-ocid": "wallet.link",
-                onClick: () => onNavigate(cp.address),
-                className: "font-mono text-xs text-neon-blue hover:text-neon-blue/70 truncate flex-1 text-left transition-colors",
-                title: cp.address,
-                children: shortenId$1(cp.address)
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground shrink-0", children: [
-              cp.txCount,
-              " txs"
-            ] })
-          ]
-        },
-        cp.address
-      )) }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { className: "h-3 w-3 text-neon-amber" }),
-        "Activity Score"
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "px-4 pb-4 space-y-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { value: activityScore, className: "h-2 bg-muted" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-xs text-muted-foreground", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Low" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-neon-amber font-medium", children: [
-            activityScore.toFixed(0),
-            "%"
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "High" })
-        ] })
-      ] })
-    ] })
-  ] });
+  return [];
 }
 const DEFAULT_MAX_COUNTERPARTIES = 20;
 const HISTORY_KEY = "icpath_search_history";
@@ -65712,16 +65264,52 @@ function saveToSearchHistory(address, label) {
   ].slice(0, MAX_HISTORY);
   safeSetJSON$1(HISTORY_KEY, deduped);
 }
-async function fetchAllIcrcForAddress(address, limit, cancelledRef, debugEntries, originalPrincipal) {
+async function fetchIcrcInParallel(tokens, principal, limit, cancelledRef, debugEntries, originalPrincipal) {
   if (cancelledRef.current) return [];
-  const txs = await fetchIcrcTransactions(
-    address,
+  console.log(`[ICRC] Fetching ${tokens.length} tokens in parallel...`);
+  const results = await Promise.all(
+    tokens.map(
+      (token) => fetchIcrcTransactions(
+        token.canisterId,
+        principal,
+        limit,
+        token.symbol,
+        token.decimals,
+        debugEntries,
+        originalPrincipal
+      ).catch((err) => {
+        console.warn(
+          `[ICRC] FAILED ${token.symbol} (${token.canisterId.slice(0, 8)}): ${err instanceof Error ? err.message : String(err)}`
+        );
+        return [];
+      })
+    )
+  );
+  const found = tokens.filter((_2, idx) => results[idx].length > 0).map((t2) => t2.symbol);
+  console.log(
+    `[ICRC] Parallel fetch done: ${found.length} tokens returned results${found.length > 0 ? ` (${found.join(", ")})` : ""}`
+  );
+  return results.flat();
+}
+async function fetchAllIcrcForAddress(principal, limit, cancelledRef, debugEntries, originalPrincipal) {
+  const tokenList = await fetchIcrcTokenList();
+  if (cancelledRef.current) return [];
+  if (tokenList.length === 0) {
+    console.warn(
+      "[ICRC] Token list empty — skipping ICRC fetch for",
+      principal.slice(0, 12)
+    );
+    return [];
+  }
+  const allIcrcTxs = await fetchIcrcInParallel(
+    tokenList,
+    principal,
     limit,
+    cancelledRef,
     debugEntries,
     originalPrincipal
   );
-  if (cancelledRef.current) return [];
-  return txs;
+  return allIcrcTxs;
 }
 function useWallet() {
   const [historyStack, setHistoryStack] = reactExports.useState([]);
@@ -65733,12 +65321,7 @@ function useWallet() {
   const [txLimit, setTxLimit] = reactExports.useState(DEFAULT_TX_LIMIT);
   const [loading, setLoading] = reactExports.useState(false);
   const [errorType, setErrorType] = reactExports.useState(null);
-  const [icpTransactions, setIcpTransactions] = reactExports.useState([]);
-  const [icrcTransactions, setIcrcTransactions] = reactExports.useState([]);
-  const rawTransactions = reactExports.useMemo(
-    () => [...icpTransactions, ...icrcTransactions],
-    [icpTransactions, icrcTransactions]
-  );
+  const [rawTransactions, setRawTransactions] = reactExports.useState([]);
   const [accountIdentifier, setAccountIdentifier] = reactExports.useState("");
   const [proxyUrl, setProxyUrl] = reactExports.useState("");
   const [graphDepth, setGraphDepth] = reactExports.useState(1);
@@ -65748,6 +65331,7 @@ function useWallet() {
   const [depth2Fetches, setDepth2Fetches] = reactExports.useState([]);
   const [icrcLoading, setIcrcLoading] = reactExports.useState(false);
   const [icrcError, setIcrcError] = reactExports.useState(false);
+  const [tokenCoverage, setTokenCoverage] = reactExports.useState(0);
   const [pinnedVersion, setPinnedVersion] = reactExports.useState(0);
   const proxyUrlRef = reactExports.useRef(proxyUrl);
   proxyUrlRef.current = proxyUrl;
@@ -65775,13 +65359,13 @@ function useWallet() {
   const loadPrincipal = reactExports.useCallback(async (principal) => {
     setLoading(true);
     setErrorType(null);
-    setIcpTransactions([]);
-    setIcrcTransactions([]);
+    setRawTransactions([]);
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
     setIcrcLoading(false);
     setIcrcError(false);
+    setTokenCoverage(0);
     icrcCancelledRef.current = true;
     const result = await fetchWalletTransactions(
       principal.trim(),
@@ -65793,77 +65377,86 @@ function useWallet() {
       console.log(
         `[ICP] Loaded ${result.transactions.length} transactions, accountId=${acctId}`
       );
-      setIcpTransactions(result.transactions);
+      setRawTransactions(result.transactions);
       setAccountIdentifier(acctId);
       if (result.transactions.length === 0) {
         setErrorType("empty");
-      }
-      icrcCancelledRef.current = false;
-      setIcrcLoading(true);
-      const icpTxCount = result.transactions.length;
-      (async () => {
-        try {
-          const tokenList = await fetchIcrcTokenList(principal.trim(), acctId);
-          if (icrcCancelledRef.current) return;
-          console.log(
-            `[ICRC] Portfolio loaded: ${tokenList.length} tokens from IC Explorer`
-          );
-          const debugEntries = [];
-          const allIcrcTxs = await fetchIcrcTransactions(
-            principal.trim(),
-            txLimitRef.current,
-            debugModeRef.current ? debugEntries : void 0,
-            principal.trim()
-          );
-          if (icrcCancelledRef.current) return;
-          console.log(
-            `[ICRC] Merging: ICP=${icpTxCount}, ICRC_total=${allIcrcTxs.length}, combined=${icpTxCount + allIcrcTxs.length}`
-          );
-          if (allIcrcTxs.length > 0) {
-            setIcrcTransactions((prev) => {
-              const merged = [...prev, ...allIcrcTxs];
-              console.log(
-                `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} prior ICRC txs → ${merged.length} total`
-              );
-              if (debugModeRef.current) {
-                window.__ICRC_DEBUG = {
-                  tokenListCount: tokenList.length,
-                  tokenListSource: "IC Explorer",
-                  tokenListTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                  perToken: debugEntries,
-                  icpTxCount,
-                  icrcTotalTxCount: allIcrcTxs.length,
-                  mergedTxCount: icpTxCount + merged.length,
-                  icrcCounterpartyCount: 0,
-                  // updated by graph builder
-                  icrcUnconditionalCount: 0,
-                  lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
-                };
+      } else {
+        icrcCancelledRef.current = false;
+        setIcrcLoading(true);
+        const icpTxCount = result.transactions.length;
+        (async () => {
+          try {
+            const tokenList = await fetchIcrcTokenList();
+            if (icrcCancelledRef.current) return;
+            console.log(`[ICRC] Token list loaded: ${tokenList.length} tokens`);
+            setTokenCoverage(tokenList.length);
+            if (tokenList.length === 0) {
+              if (!icrcCancelledRef.current) {
+                setIcrcError(true);
+                setIcrcLoading(false);
               }
-              return merged;
-            });
-          } else if (debugModeRef.current) {
-            window.__ICRC_DEBUG = {
-              tokenListCount: tokenList.length,
-              tokenListSource: "IC Explorer",
-              tokenListTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-              perToken: debugEntries,
-              icpTxCount,
-              icrcTotalTxCount: 0,
-              mergedTxCount: icpTxCount,
-              icrcCounterpartyCount: 0,
-              icrcUnconditionalCount: 0,
-              lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
-            };
+              return;
+            }
+            const debugEntries = [];
+            const allIcrcTxs = await fetchIcrcInParallel(
+              tokenList,
+              principal.trim(),
+              txLimitRef.current,
+              icrcCancelledRef,
+              debugModeRef.current ? debugEntries : void 0,
+              acctId !== principal.trim() ? acctId : void 0
+            );
+            if (icrcCancelledRef.current) return;
+            console.log(
+              `[ICRC] Merging: ICP=${icpTxCount}, ICRC_total=${allIcrcTxs.length}, combined=${icpTxCount + allIcrcTxs.length}`
+            );
+            if (allIcrcTxs.length > 0) {
+              setRawTransactions((prev) => {
+                const merged = [...prev, ...allIcrcTxs];
+                console.log(
+                  `[ICRC] Merged ${allIcrcTxs.length} ICRC txs with ${prev.length} ICP txs → ${merged.length} total`
+                );
+                if (debugModeRef.current) {
+                  window.__ICRC_DEBUG = {
+                    tokenListCount: tokenList.length,
+                    tokenListSource: "fresh",
+                    tokenListTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                    perToken: debugEntries,
+                    icpTxCount,
+                    icrcTotalTxCount: allIcrcTxs.length,
+                    mergedTxCount: merged.length,
+                    icrcCounterpartyCount: 0,
+                    // updated by graph builder
+                    icrcUnconditionalCount: 0,
+                    lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
+                  };
+                }
+                return merged;
+              });
+            } else if (debugModeRef.current) {
+              window.__ICRC_DEBUG = {
+                tokenListCount: tokenList.length,
+                tokenListSource: "fresh",
+                tokenListTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                perToken: debugEntries,
+                icpTxCount,
+                icrcTotalTxCount: 0,
+                mergedTxCount: icpTxCount,
+                icrcCounterpartyCount: 0,
+                icrcUnconditionalCount: 0,
+                lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
+              };
+            }
+          } catch (err) {
+            console.error("[ICRC] Unexpected error during ICRC fetch:", err);
+          } finally {
+            if (!icrcCancelledRef.current) {
+              setIcrcLoading(false);
+            }
           }
-        } catch (err) {
-          console.error("[ICRC] Unexpected error during ICRC fetch:", err);
-        } finally {
-          if (!icrcCancelledRef.current) {
-            setIcrcLoading(false);
-          }
-        }
-      })();
+        })();
+      }
     } else {
       setErrorType(result.error);
     }
@@ -65913,8 +65506,7 @@ function useWallet() {
     icrcCancelledRef.current = true;
     setHistoryStack([]);
     setCurrentPrincipal("");
-    setIcpTransactions([]);
-    setIcrcTransactions([]);
+    setRawTransactions([]);
     setAccountIdentifier("");
     setErrorType(null);
     setLoading(false);
@@ -65924,6 +65516,7 @@ function useWallet() {
     setShowCrossEdges(false);
     setIcrcLoading(false);
     setIcrcError(false);
+    setTokenCoverage(0);
   }, []);
   const togglePin = reactExports.useCallback((address, label) => {
     const current = getSavedWallets();
@@ -65957,7 +65550,7 @@ function useWallet() {
     [rawTransactions, timeRange]
   );
   reactExports.useEffect(() => {
-    if (!accountIdentifier || icpTransactions.length === 0 || graphDepth === 1) {
+    if (!accountIdentifier || rawTransactions.length === 0 || graphDepth === 1) {
       setDepth1Fetches([]);
       setDepth2Fetches([]);
       return;
@@ -65965,20 +65558,14 @@ function useWallet() {
     let cancelled = false;
     const cancelledRef = { current: false };
     setDepthLoading(true);
-    const top5 = getTopCounterparties(
-      accountIdentifier,
-      icpTransactions,
-      5,
-      currentPrincipal
-    );
-    const existingIds = /* @__PURE__ */ new Set([
-      accountIdentifier.toLowerCase(),
-      ...top5.map((cp) => cp.address.toLowerCase())
-    ]);
     (async () => {
-      const d1Results = [];
-      const d2Results = [];
-      await Promise.all(
+      const top5 = getTopCounterparties(
+        accountIdentifier,
+        rawTransactions,
+        5,
+        currentPrincipal
+      );
+      const d1Results = await Promise.all(
         top5.map(async (cp) => {
           const icpRes = await fetchWalletTransactions(
             cp.address,
@@ -65993,9 +65580,7 @@ function useWallet() {
               icrcTxs = await fetchAllIcrcForAddress(
                 cp.address,
                 txLimitRef.current,
-                cancelledRef,
-                void 0,
-                currentPrincipal
+                cancelledRef
               );
             } catch {
             }
@@ -66004,69 +65589,76 @@ function useWallet() {
           console.log(
             `[Depth-1] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`
           );
-          const d1Result = {
+          return {
             nodeId: cp.address,
             accountId: acctId,
             transactions: allTxs
           };
-          d1Results.push(d1Result);
-          if (graphDepth === 3 && allTxs.length > 0) {
-            const cpList = getTopCounterparties(acctId, allTxs, 3);
-            const localD2Targets = [];
-            for (const d2cp of cpList) {
-              const cpLower = d2cp.address.toLowerCase();
-              if (!existingIds.has(cpLower)) {
-                existingIds.add(cpLower);
-                localD2Targets.push({
-                  address: d2cp.address,
-                  accountId: acctId
-                });
-              }
-            }
-            await Promise.all(
-              localD2Targets.map(async ({ address }) => {
-                if (cancelled) return;
-                const [icpRes2, icrcTxs2] = await Promise.all([
-                  fetchWalletTransactions(
-                    address,
-                    proxyUrlRef.current || void 0,
-                    txLimitRef.current
-                  ),
-                  cancelled ? Promise.resolve([]) : fetchAllIcrcForAddress(
-                    address,
-                    txLimitRef.current,
-                    cancelledRef,
-                    void 0,
-                    currentPrincipal
-                  ).catch(() => [])
-                ]);
-                if (cancelled) return;
-                const icpTxs2 = icpRes2.ok ? icpRes2.transactions : [];
-                const acctId2 = icpRes2.ok ? icpRes2.accountIdentifier ?? address : address;
-                const allTxs2 = [...icpTxs2, ...icrcTxs2];
-                console.log(
-                  `[Depth-2] ${address.slice(0, 12)}: ICP=${icpTxs2.length}, ICRC=${icrcTxs2.length}, total=${allTxs2.length}`
-                );
-                d2Results.push({
-                  nodeId: address,
-                  accountId: acctId2,
-                  transactions: allTxs2
-                });
-              })
-            );
-          }
         })
       );
       if (cancelled) return;
+      cancelledRef.current = false;
       setDepth1Fetches(d1Results);
-      setDepth2Fetches(d2Results);
+      if (graphDepth === 3) {
+        const existingIds = /* @__PURE__ */ new Set([
+          accountIdentifier.toLowerCase(),
+          ...top5.map((cp) => cp.address.toLowerCase())
+        ]);
+        const d2Promises = [];
+        for (const d1 of d1Results) {
+          if (d1.transactions.length === 0) continue;
+          const cpList = getTopCounterparties(d1.accountId, d1.transactions, 3);
+          for (const cp of cpList) {
+            const cpLower = cp.address.toLowerCase();
+            if (!existingIds.has(cpLower)) {
+              existingIds.add(cpLower);
+              d2Promises.push(
+                (async () => {
+                  const icpRes = await fetchWalletTransactions(
+                    cp.address,
+                    proxyUrlRef.current || void 0,
+                    txLimitRef.current
+                  );
+                  const icpTxs = icpRes.ok ? icpRes.transactions : [];
+                  const acctId = icpRes.ok ? icpRes.accountIdentifier ?? cp.address : cp.address;
+                  let icrcTxs = [];
+                  if (!cancelled) {
+                    try {
+                      icrcTxs = await fetchAllIcrcForAddress(
+                        cp.address,
+                        txLimitRef.current,
+                        cancelledRef
+                      );
+                    } catch {
+                    }
+                  }
+                  const allTxs = [...icpTxs, ...icrcTxs];
+                  console.log(
+                    `[Depth-2] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`
+                  );
+                  return {
+                    nodeId: cp.address,
+                    accountId: acctId,
+                    transactions: allTxs
+                  };
+                })()
+              );
+            }
+          }
+        }
+        const d2Results = await Promise.all(d2Promises);
+        if (cancelled) return;
+        setDepth2Fetches(d2Results);
+      } else {
+        setDepth2Fetches([]);
+      }
       if (!cancelled) setDepthLoading(false);
     })();
     return () => {
       cancelled = true;
       cancelledRef.current = true;
     };
-  }, [accountIdentifier, icpTransactions, graphDepth]);
+  }, [accountIdentifier, rawTransactions, graphDepth]);
   const walletData = reactExports.useMemo(() => {
     console.log(
       `[Graph] walletData memo: principal=${currentPrincipal.slice(0, 12)}, rawTx=${rawTransactions.length}, acctId=${accountIdentifier.slice(0, 12)}`
@@ -66143,6 +65735,7 @@ function useWallet() {
     depthLoading,
     icrcLoading,
     icrcError,
+    tokenCoverage,
     togglePin,
     isPinned,
     getSearchHistory,
@@ -66374,8 +65967,6 @@ function statusColor(status) {
 function StatusPanel() {
   const [explorerStatus, setExplorerStatus] = reactExports.useState("checking");
   const [parserStatus, setParserStatus] = reactExports.useState("checking");
-  const [icExplorerStatus, setIcExplorerStatus] = reactExports.useState("checking");
-  const [icExplorerError, setIcExplorerError] = reactExports.useState(null);
   reactExports.useEffect(() => {
     setExplorerStatus("checking");
     checkExplorerReachable().then(
@@ -66383,38 +65974,17 @@ function StatusPanel() {
     );
   }, []);
   reactExports.useEffect(() => {
-    setIcExplorerStatus("checking");
-    checkIcExplorerReachable().then((ok) => {
-      setIcExplorerStatus(ok ? "ok" : "error");
-      setIcExplorerError(ok ? null : getLastIcExplorerError());
-    });
-  }, []);
-  reactExports.useEffect(() => {
     setParserStatus(testParser() ? "ok" : "error");
   }, []);
   const rows = [
-    { label: "Explorer", status: explorerStatus, error: null },
-    {
-      label: "IC Explorer",
-      status: icExplorerStatus,
-      error: icExplorerError
-    },
-    { label: "Parser", status: parserStatus, error: null }
+    { label: "Explorer", status: explorerStatus },
+    { label: "Parser", status: parserStatus }
   ];
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-3 flex-wrap", "data-ocid": "wallet.panel", children: rows.map((row, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
     i > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-border text-xs select-none mr-1.5", children: "|" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(StatusDot, { status: row.status }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: row.label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-xs font-medium ${statusColor(row.status)}`, children: statusLabel(row.status) }),
-    row.error && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "span",
-      {
-        className: "text-[10px] text-neon-red/80 max-w-[180px] truncate",
-        title: row.error,
-        "data-ocid": "wallet.ic_explorer.error_state",
-        children: row.error
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-xs font-medium ${statusColor(row.status)}`, children: statusLabel(row.status) })
   ] }, row.label)) });
 }
 function relativeTime(ts) {
@@ -66699,7 +66269,7 @@ function TopBar({
           "button",
           {
             type: "button",
-            onClick: () => setAuthMenuOpen((o) => !o),
+            onClick: () => setAuthMenuOpen((o2) => !o2),
             title: "Account",
             "aria-label": "Account menu",
             "data-ocid": "wallet.toggle",
@@ -66877,6 +66447,17 @@ function formatDate(ts) {
     return ts;
   }
 }
+function isChainKeyBtc(token) {
+  return /btc/i.test(token);
+}
+function formatAmount(tx) {
+  const token = tx.token ?? "ICP";
+  if (isChainKeyBtc(token)) {
+    const sats = Math.round(tx.amount * 1e8);
+    return `${sats.toLocaleString()} sats`;
+  }
+  return `${tx.amount.toFixed(4)} ${token}`;
+}
 function TransactionTable({
   transactions,
   principal,
@@ -66939,16 +66520,8 @@ function TransactionTable({
                       className: `text-xs font-mono font-medium ${isIncoming ? "text-neon-green" : isOutgoing ? "text-neon-red" : "text-foreground"}`,
                       children: [
                         isIncoming ? "+" : isOutgoing ? "-" : "",
-                        tx.amount.toFixed(4)
+                        formatAmount(tx)
                       ]
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    Badge,
-                    {
-                      variant: "outline",
-                      className: "ml-1.5 text-[10px] px-1 py-0 border-border text-muted-foreground",
-                      children: tx.token || "ICP"
                     }
                   ),
                   (isIncoming || isOutgoing) && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -67579,29 +67152,11 @@ const Favorite = Record({
   "address": Text$1,
   "pinnedAt": Int
 });
-const HttpHeader = Record({ "value": Text$1, "name": Text$1 });
-const HttpRequestResult = Record({
-  "status": Nat,
-  "body": Vec(Nat8),
-  "headers": Vec(HttpHeader)
-});
 Service({
   "addFavorite": Func([Text$1], [], []),
   "getAllLabels": Func([], [Vec(WalletLabel)], ["query"]),
   "getFavorites": Func([], [Vec(Favorite)], ["query"]),
   "getLabel": Func([Text$1], [Opt(Text$1)], ["query"]),
-  "icexplorer_portfolio": Func([Text$1], [Text$1], []),
-  "icexplorer_transform": Func(
-    [
-      Record({
-        "context": Vec(Nat8),
-        "response": HttpRequestResult
-      })
-    ],
-    [HttpRequestResult],
-    ["query"]
-  ),
-  "icexplorer_txlist": Func([Text$1], [Text$1], []),
   "ping": Func([], [Record({ "status": Text$1 })], ["query"]),
   "removeFavorite": Func([Text$1], [], []),
   "removeLabel": Func([Text$1], [], []),
@@ -67613,29 +67168,11 @@ const idlFactory = ({ IDL: IDL2 }) => {
     "walletLabel": IDL2.Text
   });
   const Favorite2 = IDL2.Record({ "address": IDL2.Text, "pinnedAt": IDL2.Int });
-  const HttpHeader2 = IDL2.Record({ "value": IDL2.Text, "name": IDL2.Text });
-  const HttpRequestResult2 = IDL2.Record({
-    "status": IDL2.Nat,
-    "body": IDL2.Vec(IDL2.Nat8),
-    "headers": IDL2.Vec(HttpHeader2)
-  });
   return IDL2.Service({
     "addFavorite": IDL2.Func([IDL2.Text], [], []),
     "getAllLabels": IDL2.Func([], [IDL2.Vec(WalletLabel2)], ["query"]),
     "getFavorites": IDL2.Func([], [IDL2.Vec(Favorite2)], ["query"]),
     "getLabel": IDL2.Func([IDL2.Text], [IDL2.Opt(IDL2.Text)], ["query"]),
-    "icexplorer_portfolio": IDL2.Func([IDL2.Text], [IDL2.Text], []),
-    "icexplorer_transform": IDL2.Func(
-      [
-        IDL2.Record({
-          "context": IDL2.Vec(IDL2.Nat8),
-          "response": HttpRequestResult2
-        })
-      ],
-      [HttpRequestResult2],
-      ["query"]
-    ),
-    "icexplorer_txlist": IDL2.Func([IDL2.Text], [IDL2.Text], []),
     "ping": IDL2.Func([], [IDL2.Record({ "status": IDL2.Text })], ["query"]),
     "removeFavorite": IDL2.Func([IDL2.Text], [], []),
     "removeLabel": IDL2.Func([IDL2.Text], [], []),
@@ -67751,48 +67288,6 @@ class Backend {
     } else {
       const result = await this.actor.getLabel(arg0);
       return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async icexplorer_portfolio(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.icexplorer_portfolio(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.icexplorer_portfolio(arg0);
-      return result;
-    }
-  }
-  async icexplorer_transform(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.icexplorer_transform(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.icexplorer_transform(arg0);
-      return result;
-    }
-  }
-  async icexplorer_txlist(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.icexplorer_txlist(arg0);
-        return result;
-      } catch (e3) {
-        this.processError(e3);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.icexplorer_txlist(arg0);
-      return result;
     }
   }
   async ping() {
@@ -67972,33 +67467,43 @@ function useAuth() {
   }, []);
   return { isLoggedIn, principal, actor, login, logout, isLoading };
 }
-async function fetchAllTransactionsForAddress(address, limit = DEFAULT_TX_LIMIT, originalPrincipal) {
+const BATCH_SIZE = 8;
+const BATCH_DELAY_MS = 120;
+async function fetchAllTransactionsForAddress(address, limit = DEFAULT_TX_LIMIT) {
   const icpResult = await fetchWalletTransactions(address, void 0, limit);
   const icpTransactions = icpResult.ok ? icpResult.transactions : [];
   const accountIdentifier = icpResult.ok && icpResult.accountIdentifier ? icpResult.accountIdentifier : principalToAccountIdentifier(address.trim()) ?? address.trim();
   let allTransactions = [...icpTransactions];
   try {
-    const icrcTransactions = await fetchIcrcTransactions(
-      address.trim(),
-      limit,
-      void 0,
-      originalPrincipal
-    );
-    if (icrcTransactions.length > 0) {
-      allTransactions = allTransactions.concat(icrcTransactions);
+    const tokens = await fetchIcrcTokenList();
+    for (let i = 0; i < tokens.length; i += BATCH_SIZE) {
+      const batch = tokens.slice(i, i + BATCH_SIZE);
+      const results = await Promise.all(
+        batch.map(
+          (t2) => fetchIcrcTransactions(
+            t2.canisterId,
+            accountIdentifier,
+            limit,
+            t2.symbol,
+            t2.decimals
+          ).then(
+            (txs) => txs.map((tx) => ({ ...tx, token: t2.symbol, decimals: t2.decimals }))
+          )
+        )
+      );
+      for (const txs of results) allTransactions = allTransactions.concat(txs);
+      if (i + BATCH_SIZE < tokens.length) {
+        await new Promise((resolve) => setTimeout(resolve, BATCH_DELAY_MS));
+      }
     }
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error(
-      `[ICRC] comparisonService fetchAllTransactionsForAddress failed for ${address.slice(0, 12)}: ${msg}`
-    );
+  } catch {
   }
   return { transactions: allTransactions, accountIdentifier };
 }
 async function compareWallets(address1, address2, limit = DEFAULT_TX_LIMIT) {
   const [data1, data2] = await Promise.all([
-    fetchAllTransactionsForAddress(address1, limit, address1),
-    fetchAllTransactionsForAddress(address2, limit, address2)
+    fetchAllTransactionsForAddress(address1, limit),
+    fetchAllTransactionsForAddress(address2, limit)
   ]);
   const graph1 = buildGraph(
     address1.trim(),
@@ -68424,8 +67929,6 @@ function App() {
     isLoading: authLoading
   } = useAuth();
   const userData = useUserData(isLoggedIn, actor);
-  reactExports.useEffect(() => {
-  }, [actor]);
   const {
     historyStack,
     currentPrincipal,
@@ -68451,6 +67954,7 @@ function App() {
     setShowCrossEdges,
     depthLoading,
     icrcLoading,
+    tokenCoverage,
     togglePin,
     debugMode
   } = useWallet();
@@ -68552,7 +68056,7 @@ function App() {
         currentPrincipal,
         theme,
         onToggleTheme: toggleTheme,
-        onToggleSavedPanel: () => setSavedPanelOpen((o) => !o),
+        onToggleSavedPanel: () => setSavedPanelOpen((o2) => !o2),
         savedPanelOpen,
         onOpenCompare: () => setCompareModalOpen(true),
         isLoggedIn,
@@ -68586,22 +68090,23 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-bold text-foreground mb-1", children: "Enter Principal ID or Account ID" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: "Visualize ICP wallet transaction networks as interactive constellations" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end order-3 lg:order-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {}) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col lg:flex-row gap-4 order-1 lg:order-none", children: [
-        (hasData || loading) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full lg:w-72 shrink-0 order-1 lg:order-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col lg:flex-row gap-4", children: [
+        (hasData || loading) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full lg:w-72 shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           OverviewPanel,
           {
             principal: currentPrincipal,
             walletData,
             onNavigate: navigate,
             timeRange,
-            onTimeRangeChange: setTimeRange
+            onTimeRangeChange: setTimeRange,
+            tokenCoverage
           }
         ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: "flex-1 relative order-2 lg:order-none",
+            className: "flex-1 relative",
             style: { minHeight: "520px", height: "520px" },
             children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
@@ -68654,7 +68159,7 @@ function App() {
           }
         )
       ] }),
-      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border order-2 lg:order-none", children: [
+      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "text-sm font-semibold", children: [
           "Recent Transactions",
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-2 text-xs font-normal text-muted-foreground", children: [
@@ -68672,7 +68177,7 @@ function App() {
           }
         ) })
       ] }),
-      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4 order-4 lg:order-none", children: [
+      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Daily Transaction Activity" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(

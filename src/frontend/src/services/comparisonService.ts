@@ -1,18 +1,20 @@
 import type { ComparisonData, SharedCounterparty, WalletData } from "../types";
 import {
   DEFAULT_TX_LIMIT,
+  fetchIcrcTokenList,
   fetchIcrcTransactions,
   fetchWalletTransactions,
   principalToAccountIdentifier,
 } from "./explorerService";
 import { buildGraph, computeSummary } from "./graphBuilder";
 
+const BATCH_SIZE = 8;
+const BATCH_DELAY_MS = 120;
+
 async function fetchAllTransactionsForAddress(
   address: string,
   limit = DEFAULT_TX_LIMIT,
-  originalPrincipal?: string,
 ) {
-  // ICP ledger fetch first — unchanged.
   const icpResult = await fetchWalletTransactions(address, undefined, limit);
   const icpTransactions = icpResult.ok ? icpResult.transactions : [];
   const accountIdentifier =
@@ -20,28 +22,31 @@ async function fetchAllTransactionsForAddress(
       ? icpResult.accountIdentifier
       : (principalToAccountIdentifier(address.trim()) ?? address.trim());
 
-  // IC Explorer's fetchIcrcTransactions hits /api/tx/list once for the whole
-  // wallet (cross-token, paginated). No token-list fetch or per-token iteration
-  // is needed. Pass the wallet address (principal or account id), not a
-  // canister id. Thread originalPrincipal through so hex account-id wallets
-  // resolve their principal for the request body, matching the depth-0 path in
-  // useWallet.ts.
+  // Fetch ICRC tokens in batches
   let allTransactions = [...icpTransactions];
   try {
-    const icrcTransactions = await fetchIcrcTransactions(
-      address.trim(),
-      limit,
-      undefined,
-      originalPrincipal,
-    );
-    if (icrcTransactions.length > 0) {
-      allTransactions = allTransactions.concat(icrcTransactions);
+    const tokens = await fetchIcrcTokenList();
+    for (let i = 0; i < tokens.length; i += BATCH_SIZE) {
+      const batch = tokens.slice(i, i + BATCH_SIZE);
+      const results = await Promise.all(
+        batch.map((t) =>
+          fetchIcrcTransactions(
+            t.canisterId,
+            accountIdentifier,
+            limit,
+            t.symbol,
+            t.decimals,
+          ).then((txs) =>
+            txs.map((tx) => ({ ...tx, token: t.symbol, decimals: t.decimals })),
+          ),
+        ),
+      );
+      for (const txs of results) allTransactions = allTransactions.concat(txs);
+      if (i + BATCH_SIZE < tokens.length) {
+        await new Promise((resolve) => setTimeout(resolve, BATCH_DELAY_MS));
+      }
     }
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error(
-      `[ICRC] comparisonService fetchAllTransactionsForAddress failed for ${address.slice(0, 12)}: ${msg}`,
-    );
+  } catch {
     // ICRC fetch failure is non-fatal; proceed with ICP-only data
   }
 
@@ -54,8 +59,8 @@ export async function compareWallets(
   limit = DEFAULT_TX_LIMIT,
 ): Promise<{ comparison: ComparisonData; shared: SharedCounterparty[] }> {
   const [data1, data2] = await Promise.all([
-    fetchAllTransactionsForAddress(address1, limit, address1),
-    fetchAllTransactionsForAddress(address2, limit, address2),
+    fetchAllTransactionsForAddress(address1, limit),
+    fetchAllTransactionsForAddress(address2, limit),
   ]);
 
   const graph1 = buildGraph(
