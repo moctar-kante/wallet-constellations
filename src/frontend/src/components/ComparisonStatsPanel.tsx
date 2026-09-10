@@ -5,9 +5,16 @@ import { useMemo } from "react";
 import type { WalletData } from "../types";
 import { ActivityChart } from "./ActivityChart";
 
-// Raw hex for chart contexts (allowed per design system)
-const NEON_BLUE = "#4AA8FF";
-const NEON_AMBER = "#FFB300";
+// Theme-aware accent colors — read from the semantic CSS variables in index.css
+// (:root dark vs .light) so the comparison view follows the theme system.
+function cssVar(name: string): string {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+}
+
+const NEON_BLUE = cssVar("--chart-donut-1");
+const NEON_AMBER = cssVar("--chart-donut-3");
 
 // Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
 // satoshis (integer units) rather than decimal BTC.
@@ -15,8 +22,15 @@ function isChainKeyBtc(token: string): boolean {
   return /btc/i.test(token);
 }
 
-function fmt(n: number, token = "ICP"): string {
+function fmt(
+  n: number,
+  token = "ICP",
+  btcUnit: "btc" | "sats" = "sats",
+): string {
   if (isChainKeyBtc(token)) {
+    if (btcUnit === "btc") {
+      return `${n.toFixed(8)} BTC`;
+    }
     const sats = Math.round(n * 100_000_000);
     return `${sats.toLocaleString()} sats`;
   }
@@ -67,6 +81,8 @@ interface WalletStatCardProps {
   label: string;
   accentColor: string;
   otherTokens?: string[];
+  btcUnit: "btc" | "sats";
+  onBtcUnitChange: (u: "btc" | "sats") => void;
 }
 
 function WalletStatCard({
@@ -75,6 +91,8 @@ function WalletStatCard({
   label,
   accentColor,
   otherTokens = [],
+  btcUnit,
+  onBtcUnitChange,
 }: WalletStatCardProps) {
   const { summary } = walletData;
   const portfolio = useMemo(
@@ -143,17 +161,17 @@ function WalletStatCard({
                   variant="outline"
                   className={`text-[10px] h-5 border-0 gap-1 ${
                     isShared
-                      ? "bg-[#00FF88]/15 text-[#00FF88]"
+                      ? "bg-neon-green/15 text-neon-green"
                       : "bg-muted/50 text-muted-foreground"
                   }`}
-                  title={`${entry.token}: ${fmt(entry.volume, entry.token)} total`}
+                  title={`${entry.token}: ${fmt(entry.volume, entry.token, btcUnit)}`}
                 >
                   {isShared && (
                     <span className="text-[8px] font-bold leading-none">★</span>
                   )}
                   {entry.token}
                   <span className="opacity-60 text-[9px]">
-                    {fmt(entry.volume, entry.token)}
+                    {fmt(entry.volume, entry.token, btcUnit)}
                   </span>
                 </Badge>
               );
@@ -165,7 +183,7 @@ function WalletStatCard({
             )}
           </div>
           {otherTokens.length > 0 && (
-            <div className="text-[9px] text-[#00FF88]/70 mt-1">
+            <div className="text-[9px] text-neon-green/70 mt-1">
               ★ tokens shared with the other wallet
             </div>
           )}
@@ -180,6 +198,8 @@ function WalletStatCard({
         <ActivityChart
           transactions={walletData.transactions}
           principal={address}
+          btcUnit={btcUnit}
+          onBtcUnitChange={onBtcUnitChange}
         />
       </div>
     </div>
@@ -191,6 +211,8 @@ interface ComparisonStatsPanelProps {
   wallet2Data: WalletData;
   addr1: string;
   addr2: string;
+  btcUnit: "btc" | "sats";
+  onBtcUnitChange: (u: "btc" | "sats") => void;
 }
 
 export function ComparisonStatsPanel({
@@ -198,6 +220,8 @@ export function ComparisonStatsPanel({
   wallet2Data,
   addr1,
   addr2,
+  btcUnit,
+  onBtcUnitChange,
 }: ComparisonStatsPanelProps) {
   const tokens1 = useMemo(
     () => buildTokenPortfolio(wallet1Data).map((e) => e.token),
@@ -213,6 +237,9 @@ export function ComparisonStatsPanel({
     [tokens1, tokens2],
   );
 
+  // Whether any BTC-pegged token appears in either wallet — gates the unit toggle
+  const hasBtc = [...tokens1, ...tokens2].some((t) => isChainKeyBtc(t));
+
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
@@ -221,10 +248,38 @@ export function ComparisonStatsPanel({
           Wallet Statistics
         </h3>
         {sharedTokens.length > 0 && (
-          <span className="text-[11px] text-[#00FF88]/80">
+          <span className="text-[11px] text-neon-green/80">
             {sharedTokens.length} token{sharedTokens.length !== 1 ? "s" : ""} in
             common
           </span>
+        )}
+        {hasBtc && (
+          <div className="ml-auto flex items-center gap-1 rounded-md border border-border p-0.5">
+            <button
+              type="button"
+              data-ocid="compare.btc_unit_toggle"
+              onClick={() => onBtcUnitChange("btc")}
+              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                btcUnit === "btc"
+                  ? "bg-neon-blue/20 text-neon-blue"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              BTC
+            </button>
+            <button
+              type="button"
+              data-ocid="compare.btc_unit_toggle"
+              onClick={() => onBtcUnitChange("sats")}
+              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                btcUnit === "sats"
+                  ? "bg-neon-blue/20 text-neon-blue"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              sats
+            </button>
+          </div>
         )}
       </div>
 
@@ -242,6 +297,8 @@ export function ComparisonStatsPanel({
               label="Wallet 1"
               accentColor={NEON_BLUE}
               otherTokens={tokens2}
+              btcUnit={btcUnit}
+              onBtcUnitChange={onBtcUnitChange}
             />
           </CardContent>
         </Card>
@@ -259,6 +316,8 @@ export function ComparisonStatsPanel({
               label="Wallet 2"
               accentColor={NEON_AMBER}
               otherTokens={tokens1}
+              btcUnit={btcUnit}
+              onBtcUnitChange={onBtcUnitChange}
             />
           </CardContent>
         </Card>

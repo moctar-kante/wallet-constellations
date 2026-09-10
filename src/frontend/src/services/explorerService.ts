@@ -177,18 +177,6 @@ export function principalToAccountIdentifier(input: string): string | null {
   }
 }
 
-// Convert a principal-format address to hex account ID.
-// Returns the original string if it's already a hex account ID or not a valid principal.
-function principalAddressToHex(addr: string): string {
-  if (!addr || addr === "minting-account" || addr === "burn-address")
-    return addr;
-  // Already a 64-char hex account ID
-  if (/^[0-9a-fA-F]{64}$/.test(addr.trim())) return addr.toLowerCase();
-  // Try to convert principal to hex account ID
-  const hex = principalToAccountIdentifier(addr);
-  return hex ?? addr;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function normalizeTransaction(raw: any): Transaction | null {
   try {
@@ -781,8 +769,10 @@ export async function fetchIcrcTransactions(
       if (tx) {
         tx.token = sym;
         tx.decimals = dec;
-        tx.from = principalAddressToHex(tx.from);
-        tx.to = principalAddressToHex(tx.to);
+        // ICRC-1 identifies accounts by principal (default subaccount), not by
+        // hex account ID. Keep from/to as the raw principal strings so
+        // downstream principal-string matching (getDailyActivity, table,
+        // counterparties) works for non-NNS/SNS tokens.
         txs.push(tx);
       }
     }

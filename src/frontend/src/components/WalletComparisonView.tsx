@@ -22,6 +22,8 @@ type ComparisonHook = ReturnType<typeof useComparison>;
 interface WalletComparisonViewProps {
   comparison: ComparisonHook;
   onBack: () => void;
+  btcUnit: "btc" | "sats";
+  onBtcUnitChange: (u: "btc" | "sats") => void;
 }
 
 function shortenAddr(addr: string) {
@@ -52,6 +54,8 @@ function GraphSkeleton({ label }: { label: string }) {
 export function WalletComparisonView({
   comparison,
   onBack,
+  btcUnit,
+  onBtcUnitChange,
 }: WalletComparisonViewProps) {
   const {
     isLoading,
@@ -230,6 +234,8 @@ export function WalletComparisonView({
             wallet2Data={data.wallet2}
             addr1={address1}
             addr2={address2}
+            btcUnit={btcUnit}
+            onBtcUnitChange={onBtcUnitChange}
           />
         </Card>
       )}

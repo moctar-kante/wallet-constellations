@@ -39,11 +39,14 @@ function isChainKeyBtc(token: string): boolean {
   return /btc/i.test(token);
 }
 
-function formatAmount(tx: Transaction): string {
+function formatAmount(tx: Transaction, btcUnit: "btc" | "sats"): string {
   const token = tx.token ?? "ICP";
   if (isChainKeyBtc(token)) {
-    const sats = Math.round(tx.amount * 100_000_000);
-    return `${sats.toLocaleString()} sats`;
+    if (btcUnit === "sats") {
+      const sats = Math.round(tx.amount * 100_000_000);
+      return `${sats.toLocaleString()} sats`;
+    }
+    return `${tx.amount.toFixed(8)} BTC`;
   }
   return `${tx.amount.toFixed(4)} ${token}`;
 }
@@ -52,21 +55,57 @@ interface TransactionTableProps {
   transactions: Transaction[];
   principal: string;
   onNavigate: (p: string) => void;
+  btcUnit: "btc" | "sats";
+  onBtcUnitChange: (u: "btc" | "sats") => void;
 }
 
 export function TransactionTable({
   transactions,
   principal,
   onNavigate,
+  btcUnit,
+  onBtcUnitChange,
 }: TransactionTableProps) {
   const [page, setPage] = useState(0);
   const principalLower = principal.toLowerCase();
   const total = transactions.length;
   const totalPages = Math.ceil(total / PAGE_SIZE);
   const slice = transactions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const hasBtc = transactions.some((tx) => isChainKeyBtc(tx.token ?? "ICP"));
 
   return (
     <div className="space-y-2">
+      {hasBtc && (
+        <div className="flex items-center justify-end gap-1.5">
+          <span className="text-[10px] text-muted-foreground">BTC units</span>
+          <div className="flex items-center gap-1 rounded-md border border-border p-0.5">
+            <button
+              type="button"
+              data-ocid="wallet.btc_unit_toggle"
+              onClick={() => onBtcUnitChange("btc")}
+              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                btcUnit === "btc"
+                  ? "bg-neon-blue/20 text-neon-blue"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              BTC
+            </button>
+            <button
+              type="button"
+              data-ocid="wallet.btc_unit_toggle"
+              onClick={() => onBtcUnitChange("sats")}
+              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                btcUnit === "sats"
+                  ? "bg-neon-blue/20 text-neon-blue"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              sats
+            </button>
+          </div>
+        </div>
+      )}
       <div className="rounded-lg border border-border overflow-hidden">
         <Table>
           <TableHeader>
@@ -137,7 +176,7 @@ export function TransactionTable({
                       }`}
                     >
                       {isIncoming ? "+" : isOutgoing ? "-" : ""}
-                      {formatAmount(tx)}
+                      {formatAmount(tx, btcUnit)}
                     </span>
                     {(isIncoming || isOutgoing) && (
                       <Badge

@@ -56,9 +56,17 @@ export interface GraphEdge {
 
 export interface WalletSummary {
   totalTx: number;
-  totalIn: number;
-  totalOut: number;
+  /** True when the fetched transaction count hit the fetch cap, so totalTx is a floor, not exact. */
+  totalTxCapped?: boolean;
+  totalIn: number; // sum of incoming amounts across all tokens
+  totalOut: number; // sum of outgoing amounts across all tokens
+  totalInCount: number; // count of incoming transactions across all tokens
+  totalOutCount: number; // count of outgoing transactions across all tokens
   counterpartyCount: number;
+  totalTxByToken: Record<string, number>;
+  totalInByToken: Record<string, number>;
+  totalOutByToken: Record<string, number>;
+  counterpartyCountByToken: Record<string, number>;
   whaleThreshold?: number; // ICP amount at 90th percentile
   priceUSD?: number; // current ICP/USD price
 }

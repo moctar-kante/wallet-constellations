@@ -1,4 +1,5 @@
 import type { TimeRange, Transaction } from "../types";
+import { principalToAccountIdentifier } from "./explorerService";
 
 export function filterByTimeRange(
   transactions: Transaction[],
@@ -25,9 +26,38 @@ export function filterByTimeRange(
   });
 }
 
+export type ActivityInterval = "hour" | "day" | "week";
+
+/**
+ * Compute the bucket key for a transaction timestamp at the chosen interval.
+ * - hour: "YYYY-MM-DDTHH" (e.g. "2026-09-10T14")
+ * - day:  "YYYY-MM-DD"   (e.g. "2026-09-10")
+ * - week: ISO week key   (e.g. "2026-W37")
+ */
+function bucketKey(timestamp: string, interval: ActivityInterval): string {
+  if (interval === "hour") return timestamp.slice(0, 13);
+  if (interval === "day") return timestamp.slice(0, 10);
+
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) return timestamp.slice(0, 10);
+  // ISO 8601 week number: shift to the Thursday of the week, then count weeks
+  // from the first Thursday of the year.
+  const d = new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+  );
+  const dayNum = d.getUTCDay() || 7; // Monday = 1 ... Sunday = 7
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNum = Math.ceil(
+    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7,
+  );
+  return `${d.getUTCFullYear()}-W${String(weekNum).padStart(2, "0")}`;
+}
+
 export function getDailyActivity(
   transactions: Transaction[],
   principal: string,
+  interval: ActivityInterval = "day",
 ): Array<{
   date: string;
   txIn: number;
@@ -36,27 +66,41 @@ export function getDailyActivity(
   volOut: number;
 }> {
   const principalLower = principal.toLowerCase();
-  const byDay = new Map<
+  // ICP transactions carry hex account identifiers (from principalToAccountIdentifier)
+  // while ICRC transactions carry principal strings. Match against BOTH forms so
+  // per-day counts are real regardless of which format a transaction uses.
+  const accountIdLower = (
+    principalToAccountIdentifier(principal) ?? ""
+  ).toLowerCase();
+  const byBucket = new Map<
     string,
     { txIn: number; txOut: number; volIn: number; volOut: number }
   >();
 
   for (const tx of transactions) {
-    const day = tx.timestamp.slice(0, 10);
-    if (!byDay.has(day)) {
-      byDay.set(day, { txIn: 0, txOut: 0, volIn: 0, volOut: 0 });
+    const key = bucketKey(tx.timestamp, interval);
+    if (!byBucket.has(key)) {
+      byBucket.set(key, { txIn: 0, txOut: 0, volIn: 0, volOut: 0 });
     }
-    const entry = byDay.get(day)!;
-    if (tx.to.toLowerCase() === principalLower) {
+    const entry = byBucket.get(key)!;
+    const toLower = tx.to.toLowerCase();
+    const fromLower = tx.from.toLowerCase();
+    const isIn =
+      toLower === principalLower ||
+      (accountIdLower !== "" && toLower === accountIdLower);
+    const isOut =
+      fromLower === principalLower ||
+      (accountIdLower !== "" && fromLower === accountIdLower);
+    if (isIn) {
       entry.txIn += 1;
       entry.volIn += tx.amount;
-    } else if (tx.from.toLowerCase() === principalLower) {
+    } else if (isOut) {
       entry.txOut += 1;
       entry.volOut += tx.amount;
     }
   }
 
-  return [...byDay.entries()]
+  return [...byBucket.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, v]) => ({ date, ...v }));
 }

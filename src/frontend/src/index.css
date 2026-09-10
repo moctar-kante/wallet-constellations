@@ -1,4 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: "GeistMono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 100 900;
+}
 
 @tailwind base;
 @tailwind components;
@@ -54,6 +68,94 @@
     --graph-bg: oklch(0.07 0.015 260);
     --graph-bg-gradient-start: oklch(0.1 0.025 250);
     --graph-bg-gradient-end: oklch(0.05 0.01 265);
+
+    /* Nebula gradient stops (background ambient glow) — refined, smoother 5-stop ramp */
+    --graph-nebula-1: #141d3c;
+    --graph-nebula-2: #0f1834;
+    --graph-nebula-3: #0a1126;
+    --graph-nebula-4: #060b1b;
+    --graph-nebula-mid: #111b38;
+
+    /* Parallax depth: fraction of graph pan speed per layer (graph = 1.0) */
+    --graph-parallax-nebula: 0.06;
+    --graph-parallax-distant: 0.18;
+    --graph-parallax-near: 0.45;
+
+    /* Star field fill — base + distant/near parallax variants */
+    --graph-star: #ffffff;
+    --graph-star-distant: #6d80a8;
+    --graph-star-near: #b8c9ee;
+
+    /* Token accent colors (non-ICP token symbols) */
+    --graph-token-1: #ff6b6b;
+    --graph-token-2: #ffd166;
+    --graph-token-3: #4ecdc4;
+    --graph-token-4: #9b8cff;
+    --graph-token-5: #ff9f43;
+    --graph-token-6: #6bc5ff;
+
+    /* Graph node / edge / label tokens */
+    --graph-node-center: #00c8ff;
+    --graph-node-whale: #ff9800;
+    --graph-node-sns: #4caf50;
+    --graph-node-dex: #ffc107;
+    --graph-node-neuron: #3f51b5;
+    --graph-node-nns: #9c27b0;
+    --graph-node-default: #4a6fa5;
+    --graph-node-glow-default: #5577ff;
+    --graph-level-0: #00c8ff;
+    --graph-level-1: #7b68ee;
+    --graph-level-2: #ff9800;
+    --graph-level-3: #4caf50;
+    --graph-edge: rgba(100, 140, 220, 0.55);
+    --graph-edge-icp: rgba(85, 119, 255, 0.85);
+    --graph-edge-hover: rgba(180, 210, 255, 0.85);
+    --graph-label: rgba(180, 200, 240, 0.75);
+    --graph-text: #7799cc;
+    --graph-legend-bg: rgba(7, 11, 28, 0.88);
+    --graph-legend-border: rgba(40, 60, 120, 0.5);
+    --graph-panel-bg: rgba(8, 13, 36, 0.97);
+    --graph-panel-border: rgba(60, 80, 140, 0.65);
+
+    /* Graph overlay tokens (node info, tooltips, settings, labels) */
+    --graph-overlay-bg: rgba(20, 40, 90, 0.55);
+    --graph-overlay-bg-strong: rgba(20, 40, 90, 0.7);
+    --graph-overlay-border: rgba(50, 80, 160, 0.5);
+    --graph-overlay-text: #aaccff;
+    --graph-overlay-text-dim: #7799cc;
+    --graph-accent: #4488ff;
+    --graph-in: #44ff88;
+    --graph-out: #ffaa44;
+    --graph-fav: #ffcc00;
+    --graph-icon: #ffffff;
+    --graph-pill-bg: rgba(0, 100, 200, 0.75);
+    --graph-pill-border: rgba(100, 180, 255, 0.5);
+    --graph-pill-text: #ccddff;
+    --graph-pencil-bg: rgba(20, 40, 80, 0.85);
+    --graph-pencil-border: rgba(100, 160, 255, 0.5);
+    --graph-pencil-icon: #aaccff;
+    --graph-btn-solid: #1a3a80;
+    --graph-breadcrumb-bg: rgba(20, 30, 60, 0.88);
+    --graph-breadcrumb-border: rgba(60, 80, 140, 0.7);
+    --graph-breadcrumb-active: #88bbff;
+    --graph-breadcrumb-inactive: #7799cc;
+
+    /* Chart tokens */
+    --chart-grid: #22324a;
+    --chart-text: #9fb0c8;
+    --chart-tooltip-bg: #0e1626;
+    --chart-tooltip-border: #22324a;
+    --chart-tooltip-text: #e9eef7;
+    --chart-in: #3fe08c;
+    --chart-out: #f0b35a;
+
+    /* Donut / pie chart segment colors */
+    --chart-donut-1: #4488ff;
+    --chart-donut-2: #44cc88;
+    --chart-donut-3: #ffaa44;
+    --chart-donut-4: #9b8cff;
+    --chart-donut-5: #ff6b6b;
+    --chart-donut-6: #4ecdc4;
   }
 
   .light {
@@ -102,6 +204,94 @@
     --graph-bg: oklch(0.93 0.01 240);
     --graph-bg-gradient-start: oklch(0.95 0.015 235);
     --graph-bg-gradient-end: oklch(0.9 0.01 245);
+
+    /* Nebula gradient stops (background ambient glow) — refined, smoother 5-stop ramp */
+    --graph-nebula-1: #b9c6f2;
+    --graph-nebula-2: #cdd7f7;
+    --graph-nebula-3: #e3e9fb;
+    --graph-nebula-4: #f0f3fc;
+    --graph-nebula-mid: #c3cff2;
+
+    /* Parallax depth: fraction of graph pan speed per layer (graph = 1.0) */
+    --graph-parallax-nebula: 0.06;
+    --graph-parallax-distant: 0.18;
+    --graph-parallax-near: 0.45;
+
+    /* Star field fill — base + distant/near parallax variants */
+    --graph-star: #8899bb;
+    --graph-star-distant: #9aa8c4;
+    --graph-star-near: #5a6b85;
+
+    /* Token accent colors (non-ICP token symbols) */
+    --graph-token-1: #d64545;
+    --graph-token-2: #c9971f;
+    --graph-token-3: #1f9d55;
+    --graph-token-4: #6a5acd;
+    --graph-token-5: #c2601f;
+    --graph-token-6: #2a6496;
+
+    /* Graph node / edge / label tokens */
+    --graph-node-center: #00c8ff;
+    --graph-node-whale: #b85c00;
+    --graph-node-sns: #2a7a40;
+    --graph-node-dex: #b87c00;
+    --graph-node-neuron: #283593;
+    --graph-node-nns: #9c27b0;
+    --graph-node-default: #2a6496;
+    --graph-node-glow-default: #2a6496;
+    --graph-level-0: #00c8ff;
+    --graph-level-1: #7b3fb0;
+    --graph-level-2: #c45e00;
+    --graph-level-3: #0e7a6e;
+    --graph-edge: #888888;
+    --graph-edge-icp: rgba(60, 100, 180, 0.7);
+    --graph-edge-hover: rgba(60, 100, 180, 0.7);
+    --graph-label: #111111;
+    --graph-text: #334466;
+    --graph-legend-bg: rgba(255, 255, 255, 0.92);
+    --graph-legend-border: rgba(180, 190, 220, 0.5);
+    --graph-panel-bg: rgba(255, 255, 255, 0.97);
+    --graph-panel-border: rgba(180, 190, 220, 0.65);
+
+    /* Graph overlay tokens (node info, tooltips, settings, labels) */
+    --graph-overlay-bg: rgba(235, 240, 250, 0.9);
+    --graph-overlay-bg-strong: rgba(225, 232, 245, 0.95);
+    --graph-overlay-border: rgba(160, 175, 205, 0.6);
+    --graph-overlay-text: #2a3a5c;
+    --graph-overlay-text-dim: #5a6b85;
+    --graph-accent: #2a6496;
+    --graph-in: #1f9d55;
+    --graph-out: #b85c00;
+    --graph-fav: #d99a00;
+    --graph-icon: #1a1a2e;
+    --graph-pill-bg: rgba(40, 100, 200, 0.85);
+    --graph-pill-border: rgba(90, 140, 220, 0.6);
+    --graph-pill-text: #ffffff;
+    --graph-pencil-bg: rgba(225, 232, 245, 0.95);
+    --graph-pencil-border: rgba(120, 150, 200, 0.6);
+    --graph-pencil-icon: #2a3a5c;
+    --graph-btn-solid: #2a6496;
+    --graph-breadcrumb-bg: rgba(255, 255, 255, 0.9);
+    --graph-breadcrumb-border: rgba(180, 190, 220, 0.6);
+    --graph-breadcrumb-active: #2a6496;
+    --graph-breadcrumb-inactive: #5a6b85;
+
+    /* Chart tokens */
+    --chart-grid: #d5dce8;
+    --chart-text: #5a6b85;
+    --chart-tooltip-bg: #ffffff;
+    --chart-tooltip-border: #d5dce8;
+    --chart-tooltip-text: #1a1a2e;
+    --chart-in: #1f9d55;
+    --chart-out: #c2601f;
+
+    /* Donut / pie chart segment colors */
+    --chart-donut-1: #2a6496;
+    --chart-donut-2: #1f9d55;
+    --chart-donut-3: #c2601f;
+    --chart-donut-4: #6a5acd;
+    --chart-donut-5: #d64545;
+    --chart-donut-6: #1f9d8f;
   }
 
   * {
@@ -319,5 +509,78 @@
     outline: none;
     border-color: oklch(var(--primary));
     box-shadow: 0 0 8px oklch(var(--primary) / 0.3);
+  }
+
+  /* Graph nebula ambient gradient */
+  .graph-nebula {
+    background: radial-gradient(
+      ellipse at 30% 30%,
+      var(--graph-nebula-1) 0%,
+      var(--graph-nebula-2) 55%,
+      var(--graph-nebula-3) 100%
+    );
+  }
+
+  /* Smoother, premium 5-stop nebula ramp for parallax depth layers */
+  .graph-nebula-smooth {
+    background: radial-gradient(
+      ellipse at 50% 42%,
+      var(--graph-nebula-1) 0%,
+      var(--graph-nebula-mid) 28%,
+      var(--graph-nebula-2) 52%,
+      var(--graph-nebula-3) 76%,
+      var(--graph-nebula-4) 100%
+    );
+  }
+
+  /* Parallax background layer base — oversized so panning never reveals an edge */
+  .graph-parallax-layer {
+    position: absolute;
+    inset: -25%;
+    pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Layer speeds are read from tokens by the frontend zoom handler */
+  .graph-parallax-nebula {
+    --graph-layer-speed: var(--graph-parallax-nebula);
+  }
+  .graph-parallax-distant {
+    --graph-layer-speed: var(--graph-parallax-distant);
+  }
+  .graph-parallax-near {
+    --graph-layer-speed: var(--graph-parallax-near);
+  }
+
+  /* Star field fill */
+  .graph-star {
+    fill: var(--graph-star);
+  }
+  .graph-star-distant {
+    fill: var(--graph-star-distant);
+  }
+  .graph-star-near {
+    fill: var(--graph-star-near);
+  }
+
+  /* Donut segment fills (NetworkBreakdown pie) */
+  .donut-segment-1 {
+    fill: oklch(var(--chart-donut-1));
+  }
+  .donut-segment-2 {
+    fill: oklch(var(--chart-donut-2));
+  }
+  .donut-segment-3 {
+    fill: oklch(var(--chart-donut-3));
+  }
+  .donut-segment-4 {
+    fill: oklch(var(--chart-donut-4));
+  }
+  .donut-segment-5 {
+    fill: oklch(var(--chart-donut-5));
+  }
+  .donut-segment-6 {
+    fill: oklch(var(--chart-donut-6));
   }
 }

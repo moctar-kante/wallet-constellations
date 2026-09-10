@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { DEFAULT_TX_LIMIT } from "../services/explorerService";
 import { getTopCounterparties } from "../services/graphBuilder";
 import { getSnsParticipation } from "../services/identityService";
 import { fetchIcpUsdPrice } from "../services/priceService";
@@ -28,10 +29,50 @@ function shortenId(id: string) {
   return `${id.slice(0, 8)}…${id.slice(-4)}`;
 }
 
-function formatIcp(val: number) {
-  if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(2)}M`;
-  if (val >= 1_000) return `${(val / 1_000).toFixed(2)}K`;
-  return val.toFixed(4);
+// Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
+// satoshis (integer units) rather than decimal BTC.
+function isChainKeyBtc(token: string): boolean {
+  return /btc/i.test(token);
+}
+
+function formatTokenAmount(
+  amount: number,
+  token: string,
+  btcUnit: "btc" | "sats",
+): string {
+  if (isChainKeyBtc(token)) {
+    if (btcUnit === "sats") {
+      const sats = Math.round(amount * 100_000_000);
+      return `${sats.toLocaleString()} sats`;
+    }
+    return `${amount.toFixed(8)} BTC`;
+  }
+  return `${amount.toFixed(4)} ${token}`;
+}
+
+function TokenBreakdown({
+  entries,
+  format,
+}: {
+  entries: Array<[string, number]>;
+  format: (value: number, token: string) => string;
+}) {
+  if (entries.length === 0) return null;
+  return (
+    <div className="pl-3 space-y-0.5 border-l border-border/40">
+      {entries.map(([token, value]) => (
+        <div
+          key={token}
+          className="flex items-center justify-between text-[10px]"
+        >
+          <span className="text-muted-foreground">{token}</span>
+          <span className="font-mono text-foreground/90">
+            {format(value, token)}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 interface OverviewPanelProps {
@@ -41,6 +82,8 @@ interface OverviewPanelProps {
   timeRange?: TimeRange;
   onTimeRangeChange?: (r: TimeRange) => void;
   tokenCoverage?: number;
+  btcUnit: "btc" | "sats";
+  onBtcUnitChange: (u: "btc" | "sats") => void;
 }
 
 function formatWalletAge(
@@ -86,6 +129,8 @@ export function OverviewPanel({
   timeRange,
   onTimeRangeChange,
   tokenCoverage = 0,
+  btcUnit,
+  onBtcUnitChange,
 }: OverviewPanelProps) {
   const [copied, setCopied] = useState(false);
   const [icpPrice, setIcpPrice] = useState<number | null>(null);
@@ -150,6 +195,33 @@ export function OverviewPanel({
     walletData && walletData.transactions.length > 0
       ? getSnsParticipation(principal, walletData.transactions)
       : [];
+
+  const summary = walletData?.summary;
+
+  // Per-token breakdowns for each summary metric
+  const totalTxEntries = summary
+    ? Object.entries(summary.totalTxByToken ?? {})
+    : [];
+  const totalInEntries = summary
+    ? Object.entries(summary.totalInByToken ?? {})
+    : [];
+  const totalOutEntries = summary
+    ? Object.entries(summary.totalOutByToken ?? {})
+    : [];
+  const counterpartyEntries = summary
+    ? Object.entries(summary.counterpartyCountByToken ?? {})
+    : [];
+
+  // Whether any BTC-pegged token appears in the summary — gates the unit toggle
+  const hasBtc = [...totalInEntries, ...totalOutEntries].some(([token]) =>
+    isChainKeyBtc(token),
+  );
+
+  // '100+' cap label: when the fetched transaction count hits the fetch cap
+  // exactly, the Total Txs count is capped, not exact.
+  const fetchedCount = walletData?.allTransactions?.length ?? 0;
+  const isCapped = fetchedCount >= DEFAULT_TX_LIMIT;
+  const totalTxDisplay = isCapped ? "100+" : String(summary?.totalTx ?? 0);
 
   const timeRangeLabels: Record<TimeRange, string> = {
     all: "All time",
@@ -283,45 +355,99 @@ export function OverviewPanel({
       {/* Transaction Summary */}
       <Card className="bg-card border-border">
         <CardHeader className="pb-2 pt-4 px-4">
-          <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Transaction Summary
-          </CardTitle>
+          <div className="flex items-center justify-between gap-2">
+            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Transaction Summary
+            </CardTitle>
+            {hasBtc && (
+              <div className="flex items-center gap-1 rounded-md border border-border p-0.5">
+                <button
+                  type="button"
+                  data-ocid="wallet.btc_unit_toggle"
+                  onClick={() => onBtcUnitChange("btc")}
+                  className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                    btcUnit === "btc"
+                      ? "bg-neon-blue/20 text-neon-blue"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  BTC
+                </button>
+                <button
+                  type="button"
+                  data-ocid="wallet.btc_unit_toggle"
+                  onClick={() => onBtcUnitChange("sats")}
+                  className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                    btcUnit === "sats"
+                      ? "bg-neon-blue/20 text-neon-blue"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  sats
+                </button>
+              </div>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="px-4 pb-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Total Txs</span>
-            <span className="text-sm font-bold text-foreground">
-              {walletData?.summary.totalTx ?? 0}
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <ArrowDownLeft className="h-3 w-3 text-neon-green" />
-              <span className="text-xs text-muted-foreground">Total In</span>
-            </div>
-            <span className="text-sm font-bold text-neon-green">
-              {walletData ? formatIcp(walletData.summary.totalIn) : "—"} ICP
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <ArrowUpRight className="h-3 w-3 text-neon-red" />
-              <span className="text-xs text-muted-foreground">Total Out</span>
-            </div>
-            <span className="text-sm font-bold text-neon-red">
-              {walletData ? formatIcp(walletData.summary.totalOut) : "—"} ICP
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <Users className="h-3 w-3 text-neon-blue" />
-              <span className="text-xs text-muted-foreground">
-                Counterparties
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Total Txs</span>
+              <span className="text-sm font-bold text-foreground">
+                {totalTxDisplay}
               </span>
             </div>
-            <span className="text-sm font-bold text-foreground">
-              {walletData?.summary.counterpartyCount ?? 0}
-            </span>
+            <TokenBreakdown
+              entries={totalTxEntries}
+              format={(v) => String(v)}
+            />
+          </div>
+          <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <ArrowDownLeft className="h-3 w-3 text-neon-green" />
+                <span className="text-xs text-muted-foreground">Total In</span>
+              </div>
+              <span className="text-sm font-bold text-neon-green">
+                {summary ? summary.totalInCount : 0} txs
+              </span>
+            </div>
+            <TokenBreakdown
+              entries={totalInEntries}
+              format={(v, t) => formatTokenAmount(v, t, btcUnit)}
+            />
+          </div>
+          <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <ArrowUpRight className="h-3 w-3 text-neon-red" />
+                <span className="text-xs text-muted-foreground">Total Out</span>
+              </div>
+              <span className="text-sm font-bold text-neon-red">
+                {summary ? summary.totalOutCount : 0} txs
+              </span>
+            </div>
+            <TokenBreakdown
+              entries={totalOutEntries}
+              format={(v, t) => formatTokenAmount(v, t, btcUnit)}
+            />
+          </div>
+          <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <Users className="h-3 w-3 text-neon-blue" />
+                <span className="text-xs text-muted-foreground">
+                  Counterparties
+                </span>
+              </div>
+              <span className="text-sm font-bold text-foreground">
+                {summary?.counterpartyCount ?? 0}
+              </span>
+            </div>
+            <TokenBreakdown
+              entries={counterpartyEntries}
+              format={(v) => String(v)}
+            />
           </div>
 
           {/* SNS DAO participation */}

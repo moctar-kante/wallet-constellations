@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/sonner";
-import { Loader2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Coins, Loader2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Cell,
   Legend,
@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "recharts";
 import { ActivityChart } from "./components/ActivityChart";
+import { AddTokenModal } from "./components/AddTokenModal";
 import { BreadcrumbNav } from "./components/Breadcrumb";
 import { ComparisonModeModal } from "./components/ComparisonModeModal";
 import { ConstellationGraph } from "./components/ConstellationGraph";
@@ -28,11 +29,16 @@ import { useComparison } from "./hooks/useComparison";
 import { useTheme } from "./hooks/useTheme";
 import { useUserData } from "./hooks/useUserData";
 import { useWallet } from "./hooks/useWallet";
+import { getDailyActivity } from "./services/filters";
 import { fetchIcpUsdPrice } from "./services/priceService";
-import type { ExplorerError, GraphEdge, GraphNode } from "./types";
+import type { ExplorerError, GraphEdge, GraphNode, Transaction } from "./types";
 
-// Raw hex values for recharts drawing context (allowed per design-system rules)
-const DONUT_COLORS = ["#66C7FF", "#F0B35A", "#3FE08C", "#FF5A5F", "#C084FC"];
+// Theme-aware chart colors — read from the semantic CSS variables in index.css
+function cssVar(name: string): string {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+}
 
 function NetworkBreakdown({
   nodes,
@@ -109,24 +115,179 @@ function NetworkBreakdown({
               {data.map((entry, i) => (
                 <Cell
                   key={entry.name}
-                  fill={DONUT_COLORS[i % DONUT_COLORS.length]}
+                  fill={cssVar(`--chart-donut-${(i % 6) + 1}`)}
                   opacity={0.85}
                 />
               ))}
             </Pie>
             <Tooltip
               contentStyle={{
-                background: "#0E1626",
-                border: "1px solid #22324A",
+                background: cssVar("--chart-tooltip-bg"),
+                border: `1px solid ${cssVar("--chart-tooltip-border")}`,
                 borderRadius: "6px",
                 fontSize: "11px",
-                color: "#E9EEF7",
+                color: cssVar("--chart-tooltip-text"),
               }}
             />
-            <Legend wrapperStyle={{ fontSize: "10px", color: "#9FB0C8" }} />
+            <Legend
+              wrapperStyle={{ fontSize: "10px", color: cssVar("--chart-text") }}
+            />
           </PieChart>
         </ResponsiveContainer>
       )}
+    </div>
+  );
+}
+
+// Chain-key BTC-pegged tokens (e.g. ckBTC, ckTESTBTC) are displayed in
+// satoshis (integer units) or decimal BTC depending on the selected unit.
+function formatTokenAmount(
+  token: string,
+  amount: number,
+  btcUnit: "btc" | "sats",
+): string {
+  if (/btc/i.test(token)) {
+    if (btcUnit === "sats") {
+      return `${Math.round(amount * 100_000_000).toLocaleString()} sats`;
+    }
+    return `${amount.toFixed(8)} BTC`;
+  }
+  return `${amount.toFixed(4)} ${token}`;
+}
+
+function formatShortDate(ts: string): string {
+  try {
+    return new Date(ts).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return ts;
+  }
+}
+
+// Token-holdings breakdown derived from per-token amounts already on each
+// GraphEdge (inAmountByToken / outAmountByToken). No new API calls.
+function TokenHoldings({
+  edges,
+  btcUnit,
+}: {
+  edges: GraphEdge[];
+  btcUnit: "btc" | "sats";
+}) {
+  const rows = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const e of edges) {
+      for (const [token, amt] of Object.entries(e.inAmountByToken ?? {})) {
+        map.set(token, (map.get(token) ?? 0) + amt);
+      }
+      for (const [token, amt] of Object.entries(e.outAmountByToken ?? {})) {
+        map.set(token, (map.get(token) ?? 0) + amt);
+      }
+    }
+    return [...map.entries()].sort((a, b) => b[1] - a[1]);
+  }, [edges]);
+
+  if (rows.length === 0) {
+    return (
+      <div
+        className="flex items-center justify-center h-32 text-xs text-muted-foreground"
+        data-ocid="wallet.empty_state"
+      >
+        No token data
+      </div>
+    );
+  }
+
+  const max = rows[0][1];
+
+  return (
+    <div className="space-y-2.5">
+      {rows.map(([token, amount]) => (
+        <div key={token} className="space-y-1">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-medium text-foreground">{token}</span>
+            <span className="font-mono text-muted-foreground">
+              {formatTokenAmount(token, amount, btcUnit)}
+            </span>
+          </div>
+          <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-full rounded-full bg-neon-blue/70"
+              style={{ width: `${max > 0 ? (amount / max) * 100 : 0}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Callout panel derived from the existing transactions and daily activity.
+// Shows the largest single transaction and the most active day. No new API calls.
+function Highlights({
+  transactions,
+  principal,
+  btcUnit,
+}: {
+  transactions: Transaction[];
+  principal: string;
+  btcUnit: "btc" | "sats";
+}) {
+  const largest = useMemo(() => {
+    if (!transactions.length) return null;
+    return transactions.reduce((a, b) => (b.amount > a.amount ? b : a));
+  }, [transactions]);
+
+  const mostActiveDay = useMemo(() => {
+    const daily = getDailyActivity(transactions, principal);
+    if (!daily.length) return null;
+    return daily.reduce((a, b) =>
+      a.txIn + a.txOut >= b.txIn + b.txOut ? a : b,
+    );
+  }, [transactions, principal]);
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="rounded-lg border border-border bg-muted/30 p-3">
+        <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+          Largest Transaction
+        </div>
+        {largest ? (
+          <>
+            <div className="text-sm font-bold text-foreground">
+              {formatTokenAmount(
+                largest.token ?? "ICP",
+                largest.amount,
+                btcUnit,
+              )}
+            </div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">
+              {formatShortDate(largest.timestamp)}
+            </div>
+          </>
+        ) : (
+          <div className="text-xs text-muted-foreground">No data</div>
+        )}
+      </div>
+      <div className="rounded-lg border border-border bg-muted/30 p-3">
+        <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+          Most Active Day
+        </div>
+        {mostActiveDay ? (
+          <>
+            <div className="text-sm font-bold text-foreground">
+              {mostActiveDay.txIn + mostActiveDay.txOut} txs
+            </div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">
+              {formatShortDate(mostActiveDay.date)}
+            </div>
+          </>
+        ) : (
+          <div className="text-xs text-muted-foreground">No data</div>
+        )}
+      </div>
     </div>
   );
 }
@@ -171,6 +332,8 @@ export default function App() {
     tokenCoverage,
     togglePin,
     debugMode,
+    addTokenByCanisterId,
+    depth3LatencyMs,
   } = useWallet();
 
   const comparison = useComparison();
@@ -185,14 +348,40 @@ export default function App() {
     comparison.reset();
   };
 
+  // Manual "add token by canister ID" flow. The ICRC API only serves
+  // SNS-governed and chain-key tokens automatically, so this queries the
+  // user-supplied ledger canister directly (via HttpAgent to ic0.app) and
+  // merges its transactions into the graph.
+  const handleAddToken = async (canisterId: string) => {
+    if (!currentPrincipal) {
+      throw new Error("Load a wallet first to add a token.");
+    }
+    const result = await addTokenByCanisterId(canisterId);
+    if (!result.ok) {
+      if (result.error === "invalid") {
+        throw new Error("Invalid canister ID or no wallet loaded.");
+      }
+      if (result.error === "empty") {
+        throw new Error("No transactions found for this token and wallet.");
+      }
+      throw new Error(
+        "Could not reach the ledger canister. Check the ID and try again.",
+      );
+    }
+  };
+
   const [edgeWeight, setEdgeWeight] = useState<"tx_count" | "total_amount">(
     "tx_count",
   );
+  // Shared BTC/sats unit — lifted here so every amount display (table,
+  // overview, graph, charts, and the App formatter) stays consistent.
+  const [btcUnit, setBtcUnit] = useState<"btc" | "sats">("sats");
   const [icpUsdPrice, setIcpUsdPrice] = useState<number | undefined>(undefined);
   const [savedPanelOpen, setSavedPanelOpen] = useState(false);
   const [compareModalOpen, setCompareModalOpen] = useState(false);
   const [comparisonActive, setComparisonActive] = useState(false);
   const [pinTrigger, setPinTrigger] = useState(0);
+  const [addTokenOpen, setAddTokenOpen] = useState(false);
 
   // Refs so the txLimit-change effect doesn't re-run on principal/navigate changes
   const currentPrincipalRef = useRef(currentPrincipal);
@@ -274,6 +463,14 @@ export default function App() {
         />
       )}
 
+      {/* Add token by canister ID modal */}
+      {addTokenOpen && (
+        <AddTokenModal
+          onAddToken={handleAddToken}
+          onClose={() => setAddTokenOpen(false)}
+        />
+      )}
+
       {/* Saved wallets panel — slide-in from left */}
       <SavedWalletsPanel
         open={savedPanelOpen}
@@ -321,6 +518,8 @@ export default function App() {
           <WalletComparisonView
             comparison={comparison}
             onBack={handleBackFromComparison}
+            btcUnit={btcUnit}
+            onBtcUnitChange={setBtcUnit}
           />
           <Footer />
         </main>
@@ -339,14 +538,38 @@ export default function App() {
           )}
 
           {/* System status bar — one line above the graph */}
-          <div className="flex justify-end">
+          <div className="flex justify-end items-center gap-2">
+            {hasData && (
+              <button
+                type="button"
+                data-ocid="wallet.add_token_button"
+                onClick={() => setAddTokenOpen(true)}
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded border border-border bg-card text-muted-foreground hover:text-foreground hover:border-neon-blue/40 transition-colors"
+              >
+                <Coins className="h-3.5 w-3.5 text-neon-blue" />
+                Add Token
+              </button>
+            )}
             <StatusPanel />
           </div>
 
-          {/* Main layout — stacks on mobile, side-by-side on lg+ */}
-          <div className="flex flex-col lg:flex-row gap-4">
+          {/* Depth-3 fetch latency — reports whether the third fetch wave
+              meaningfully increases load latency */}
+          {depth3LatencyMs !== null && (
+            <div className="flex justify-end" data-ocid="wallet.depth3_latency">
+              <span
+                className="text-[11px] text-muted-foreground"
+                title="Time spent fetching the third wave of counterparty data (depth-3 nodes)"
+              >
+                Depth-3 load: {depth3LatencyMs.toLocaleString()} ms
+              </span>
+            </div>
+          )}
+
+          {/* Main layout — stacks on mobile, side-by-side on md+ */}
+          <div className="flex flex-col md:flex-row gap-4">
             {(hasData || loading) && (
-              <div className="w-full lg:w-72 shrink-0">
+              <div className="w-full md:w-64 lg:w-72 shrink-0">
                 <OverviewPanel
                   principal={currentPrincipal}
                   walletData={walletData}
@@ -354,64 +577,138 @@ export default function App() {
                   timeRange={timeRange}
                   onTimeRangeChange={setTimeRange}
                   tokenCoverage={tokenCoverage}
+                  btcUnit={btcUnit}
+                  onBtcUnitChange={setBtcUnit}
                 />
               </div>
             )}
 
-            <div
-              className="flex-1 relative"
-              style={{ minHeight: "520px", height: "520px" }}
-            >
-              {loading ? (
-                <div
-                  className="flex items-center justify-center h-full min-h-[520px] rounded-lg border border-border bg-card"
-                  data-ocid="wallet.loading_state"
-                >
-                  <div className="flex flex-col items-center gap-3 text-muted-foreground">
-                    <Loader2 className="h-8 w-8 animate-spin text-neon-blue" />
-                    <span className="text-sm">
-                      Fetching constellation data…
-                    </span>
+            <div className="flex-1 flex flex-col gap-4">
+              <div
+                className="relative"
+                style={{ minHeight: "520px", height: "520px" }}
+              >
+                {loading ? (
+                  <div
+                    className="flex items-center justify-center h-full min-h-[520px] rounded-lg border border-border bg-card"
+                    data-ocid="wallet.loading_state"
+                  >
+                    <div className="flex flex-col items-center gap-3 text-muted-foreground">
+                      <Loader2 className="h-8 w-8 animate-spin text-neon-blue" />
+                      <span className="text-sm">
+                        Fetching constellation data…
+                      </span>
+                    </div>
                   </div>
+                ) : hasData ? (
+                  <div className="relative h-full min-h-[520px]">
+                    <ConstellationGraph
+                      nodes={graphNodes}
+                      edges={graphEdges}
+                      centerPrincipal={currentPrincipal}
+                      onNavigate={navigate}
+                      edgeWeight={edgeWeight}
+                      onMaxCounterpartiesChange={setMaxCounterparties}
+                      maxCounterparties={maxCounterparties}
+                      graphDepth={graphDepth}
+                      onDepthChange={(d) => setGraphDepth(d as 1 | 2 | 3)}
+                      depthLoading={depthLoading}
+                      txLimit={txLimit}
+                      onTxLimitChange={setTxLimit}
+                      icrcLoading={icrcLoading}
+                      showCrossEdges={showCrossEdges}
+                      onShowCrossEdgesChange={setShowCrossEdges}
+                      transactions={walletData?.transactions}
+                      icpUsdPrice={icpUsdPrice}
+                      onPinToggle={() => setPinTrigger((n) => n + 1)}
+                      externalLabels={userData.labels}
+                      onSetLabel={userData.setLabel}
+                      onToggleFavorite={(address) => {
+                        userData.toggleFavorite(address);
+                        togglePin(address);
+                        setPinTrigger((n) => n + 1);
+                      }}
+                      isFavorite={userData.isFavorite}
+                      btcUnit={btcUnit}
+                      onBtcUnitChange={setBtcUnit}
+                    />
+                  </div>
+                ) : (
+                  <div className="relative h-full min-h-[520px] rounded-lg border border-border bg-card overflow-hidden">
+                    <EmptyState
+                      variant={emptyVariant}
+                      onProxySet={setProxyUrl}
+                      proxyUrl={proxyUrl}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Charts row — directly under the graph */}
+              {hasData && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card className="bg-card border-border">
+                    <CardHeader className="pb-3 pt-4 px-4">
+                      <CardTitle className="text-sm font-semibold">
+                        Daily Transaction Activity
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="px-4 pb-4">
+                      <ActivityChart
+                        transactions={walletData.transactions}
+                        principal={currentPrincipal}
+                        btcUnit={btcUnit}
+                        onBtcUnitChange={setBtcUnit}
+                      />
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-card border-border">
+                    <CardHeader className="pb-3 pt-4 px-4">
+                      <CardTitle className="text-sm font-semibold">
+                        Network Breakdown
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="px-4 pb-4">
+                      <NetworkBreakdown
+                        nodes={graphNodes}
+                        edges={graphEdges}
+                        edgeWeight={edgeWeight}
+                        onEdgeWeightChange={setEdgeWeight}
+                      />
+                    </CardContent>
+                  </Card>
                 </div>
-              ) : hasData ? (
-                <div className="relative h-full min-h-[520px]">
-                  <ConstellationGraph
-                    nodes={graphNodes}
-                    edges={graphEdges}
-                    centerPrincipal={currentPrincipal}
-                    onNavigate={navigate}
-                    edgeWeight={edgeWeight}
-                    onMaxCounterpartiesChange={setMaxCounterparties}
-                    maxCounterparties={maxCounterparties}
-                    graphDepth={graphDepth}
-                    onDepthChange={(d) => setGraphDepth(d as 1 | 2 | 3)}
-                    depthLoading={depthLoading}
-                    txLimit={txLimit}
-                    onTxLimitChange={setTxLimit}
-                    icrcLoading={icrcLoading}
-                    showCrossEdges={showCrossEdges}
-                    onShowCrossEdgesChange={setShowCrossEdges}
-                    transactions={walletData?.transactions}
-                    icpUsdPrice={icpUsdPrice}
-                    onPinToggle={() => setPinTrigger((n) => n + 1)}
-                    externalLabels={userData.labels}
-                    onSetLabel={userData.setLabel}
-                    onToggleFavorite={(address) => {
-                      userData.toggleFavorite(address);
-                      togglePin(address);
-                      setPinTrigger((n) => n + 1);
-                    }}
-                    isFavorite={userData.isFavorite}
-                  />
-                </div>
-              ) : (
-                <div className="relative h-full min-h-[520px] rounded-lg border border-border bg-card overflow-hidden">
-                  <EmptyState
-                    variant={emptyVariant}
-                    onProxySet={setProxyUrl}
-                    proxyUrl={proxyUrl}
-                  />
+              )}
+
+              {/* New data-driven panels — fill the gap above the table */}
+              {hasData && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card className="bg-card border-border">
+                    <CardHeader className="pb-3 pt-4 px-4">
+                      <CardTitle className="text-sm font-semibold">
+                        Token Holdings
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="px-4 pb-4">
+                      <TokenHoldings edges={graphEdges} btcUnit={btcUnit} />
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-card border-border">
+                    <CardHeader className="pb-3 pt-4 px-4">
+                      <CardTitle className="text-sm font-semibold">
+                        Highlights
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="px-4 pb-4">
+                      <Highlights
+                        transactions={walletData.transactions}
+                        principal={currentPrincipal}
+                        btcUnit={btcUnit}
+                      />
+                    </CardContent>
+                  </Card>
                 </div>
               )}
             </div>
@@ -433,44 +730,11 @@ export default function App() {
                   transactions={walletData.transactions}
                   principal={currentPrincipal}
                   onNavigate={navigate}
+                  btcUnit={btcUnit}
+                  onBtcUnitChange={setBtcUnit}
                 />
               </CardContent>
             </Card>
-          )}
-
-          {/* Charts row */}
-          {hasData && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <Card className="bg-card border-border">
-                <CardHeader className="pb-3 pt-4 px-4">
-                  <CardTitle className="text-sm font-semibold">
-                    Daily Transaction Activity
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <ActivityChart
-                    transactions={walletData.transactions}
-                    principal={currentPrincipal}
-                  />
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card border-border">
-                <CardHeader className="pb-3 pt-4 px-4">
-                  <CardTitle className="text-sm font-semibold">
-                    Network Breakdown
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <NetworkBreakdown
-                    nodes={graphNodes}
-                    edges={graphEdges}
-                    edgeWeight={edgeWeight}
-                    onEdgeWeightChange={setEdgeWeight}
-                  />
-                </CardContent>
-              </Card>
-            </div>
           )}
         </main>
       )}

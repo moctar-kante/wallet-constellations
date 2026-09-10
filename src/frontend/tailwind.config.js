@@ -13,6 +13,13 @@ export default {
       screens: { "2xl": "1400px" },
     },
     extend: {
+      screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+      },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'sans-serif'],
       },
@@ -56,6 +63,14 @@ export default {
           3: "oklch(var(--chart-3))",
           4: "oklch(var(--chart-4))",
           5: "oklch(var(--chart-5))",
+        },
+        "chart-donut": {
+          1: "oklch(var(--chart-donut-1))",
+          2: "oklch(var(--chart-donut-2))",
+          3: "oklch(var(--chart-donut-3))",
+          4: "oklch(var(--chart-donut-4))",
+          5: "oklch(var(--chart-donut-5))",
+          6: "oklch(var(--chart-donut-6))",
         },
         sidebar: {
           DEFAULT: "oklch(var(--sidebar))",

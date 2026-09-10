@@ -1,3 +1,11 @@
+import {
+  Actor,
+  type ActorMethod,
+  type ActorSubclass,
+  HttpAgent,
+} from "@dfinity/agent";
+import { IDL } from "@dfinity/candid";
+import { Principal } from "@dfinity/principal";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   DEFAULT_TX_LIMIT,
@@ -35,6 +43,167 @@ type DepthFetch = {
   accountId: string;
   transactions: Transaction[];
 };
+
+// ── Manual "add token by canister ID" support ────────────────────────────────
+// The public ICRC API only serves SNS-governed and chain-key tokens (a hard
+// limit — there is no broader aggregate endpoint). To include a user-supplied
+// non-SNS/non-ck token in the graph we query its ledger canister directly via
+// the IC with a minimal ICRC-1 + ICRC-3 interface.
+type LedgerActor = ActorSubclass<Record<string, ActorMethod>>;
+
+const ICRC3AccountIdl = IDL.Record({
+  owner: IDL.Principal,
+  subaccount: IDL.Opt(IDL.Vec(IDL.Nat8)),
+});
+
+const ICRC3TxIdl = IDL.Variant({
+  Burn: IDL.Record({
+    from: ICRC3AccountIdl,
+    memo: IDL.Opt(IDL.Vec(IDL.Nat8)),
+    created_at_time: IDL.Opt(IDL.Record({ timestamp_nanos: IDL.Nat64 })),
+    amount: IDL.Nat,
+  }),
+  Mint: IDL.Record({
+    to: ICRC3AccountIdl,
+    memo: IDL.Opt(IDL.Vec(IDL.Nat8)),
+    created_at_time: IDL.Opt(IDL.Record({ timestamp_nanos: IDL.Nat64 })),
+    amount: IDL.Nat,
+  }),
+  Transfer: IDL.Record({
+    from: ICRC3AccountIdl,
+    to: ICRC3AccountIdl,
+    memo: IDL.Opt(IDL.Vec(IDL.Nat8)),
+    created_at_time: IDL.Opt(IDL.Record({ timestamp_nanos: IDL.Nat64 })),
+    amount: IDL.Nat,
+    fee: IDL.Opt(IDL.Nat),
+  }),
+});
+
+const ICRC3BlockIdl = IDL.Record({
+  id: IDL.Nat,
+  timestamp: IDL.Nat64,
+  transaction: ICRC3TxIdl,
+});
+
+const LedgerIdl: IDL.InterfaceFactory = ({ IDL: I }) =>
+  I.Service({
+    icrc1_symbol: I.Func([], [I.Text], ["query"]),
+    icrc1_decimals: I.Func([], [I.Nat8], ["query"]),
+    get_transactions: I.Func(
+      [I.Record({ start: I.Nat, length: I.Nat })],
+      [
+        I.Record({
+          log_length: I.Nat,
+          blocks: I.Vec(ICRC3BlockIdl),
+          archived_blocks: I.Vec(
+            I.Record({
+              args: I.Vec(I.Record({ start: I.Nat, length: I.Nat })),
+              callback: I.Func(
+                [I.Vec(I.Record({ start: I.Nat, length: I.Nat }))],
+                [I.Vec(ICRC3BlockIdl)],
+                ["query"],
+              ),
+            }),
+          ),
+        }),
+      ],
+      ["query"],
+    ),
+  });
+
+type ICRC3Block = {
+  id: bigint;
+  timestamp: bigint;
+  transaction: {
+    Burn?: { from: { owner: Principal }; amount: bigint };
+    Mint?: { to: { owner: Principal }; amount: bigint };
+    Transfer?: {
+      from: { owner: Principal };
+      to: { owner: Principal };
+      amount: bigint;
+    };
+  };
+};
+
+function normalizeIcrc3Block(
+  block: ICRC3Block,
+  decimals: number,
+  symbol: string,
+): Transaction | null {
+  const timestamp = new Date(
+    Number(block.timestamp / 1_000_000n),
+  ).toISOString();
+  const tx = block.transaction;
+  if (tx.Transfer) {
+    return {
+      timestamp,
+      from: tx.Transfer.from.owner.toString(),
+      to: tx.Transfer.to.owner.toString(),
+      amount: Number(tx.Transfer.amount) / 10 ** decimals,
+      blockIndex: Number(block.id),
+      token: symbol,
+      decimals,
+    };
+  }
+  if (tx.Mint) {
+    return {
+      timestamp,
+      from: "minting-account",
+      to: tx.Mint.to.owner.toString(),
+      amount: Number(tx.Mint.amount) / 10 ** decimals,
+      blockIndex: Number(block.id),
+      token: symbol,
+      decimals,
+    };
+  }
+  if (tx.Burn) {
+    return {
+      timestamp,
+      from: tx.Burn.from.owner.toString(),
+      to: "burn-address",
+      amount: Number(tx.Burn.amount) / 10 ** decimals,
+      blockIndex: Number(block.id),
+      token: symbol,
+      decimals,
+    };
+  }
+  return null;
+}
+
+/** Pull the most recent ledger blocks and keep those involving `principal`. */
+async function fetchDirectLedgerTransactions(
+  actor: LedgerActor,
+  principal: string,
+  symbol: string,
+  decimals: number,
+  limit: number,
+): Promise<Transaction[]> {
+  const ownerLower = principal.trim().toLowerCase();
+  const head = (await actor.get_transactions({
+    start: 0n,
+    length: 0n,
+  })) as { log_length: bigint };
+  const logLength = Number(head.log_length);
+  if (logLength === 0) return [];
+
+  const start = Math.max(0, logLength - limit);
+  const res = (await actor.get_transactions({
+    start: BigInt(start),
+    length: BigInt(limit),
+  })) as { blocks: ICRC3Block[] };
+
+  const txs: Transaction[] = [];
+  for (const block of res.blocks) {
+    const tx = normalizeIcrc3Block(block, decimals, symbol);
+    if (!tx) continue;
+    const fromLower = tx.from.toLowerCase();
+    const toLower = tx.to.toLowerCase();
+    if (fromLower === ownerLower || toLower === ownerLower) {
+      txs.push(tx);
+    }
+  }
+  return txs;
+}
 
 // Debug state written to window.__ICRC_DEBUG when debug mode is active
 export interface IcrcDebugState {
@@ -193,6 +362,17 @@ export function useWallet() {
   const [depthLoading, setDepthLoading] = useState(false);
   const [depth1Fetches, setDepth1Fetches] = useState<DepthFetch[]>([]);
   const [depth2Fetches, setDepth2Fetches] = useState<DepthFetch[]>([]);
+  const [depth3Fetches, setDepth3Fetches] = useState<DepthFetch[]>([]);
+  // Duration of the third fetch wave in ms — used to report whether depth-3
+  // fetching meaningfully increases load latency.
+  const [depth3LatencyMs, setDepth3LatencyMs] = useState<number | null>(null);
+  // Manually added non-SNS/non-ck tokens (by canister ID) and their txs.
+  const [customTokens, setCustomTokens] = useState<
+    Array<{ canisterId: string; symbol: string; decimals: number }>
+  >([]);
+  const [customTokenTransactions, setCustomTokenTransactions] = useState<
+    Transaction[]
+  >([]);
   const [icrcLoading, setIcrcLoading] = useState(false);
   const [icrcError, setIcrcError] = useState(false);
   // Number of ICRC tokens loaded for the current wallet — used by the UI to
@@ -237,6 +417,10 @@ export function useWallet() {
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
+    setDepth3Fetches([]);
+    setDepth3LatencyMs(null);
+    setCustomTokens([]);
+    setCustomTokenTransactions([]);
     setIcrcLoading(false);
     setIcrcError(false);
     setTokenCoverage(0);
@@ -403,6 +587,10 @@ export function useWallet() {
     setLoading(false);
     setDepth1Fetches([]);
     setDepth2Fetches([]);
+    setDepth3Fetches([]);
+    setDepth3LatencyMs(null);
+    setCustomTokens([]);
+    setCustomTokenTransactions([]);
     setGraphDepth(1);
     setShowCrossEdges(false);
     setIcrcLoading(false);
@@ -442,12 +630,74 @@ export function useWallet() {
     [pinnedVersion],
   );
 
-  // Merged view of ICP + ICRC transactions for consumers that need the full set.
-  // The depth-1/2 effect depends only on icpTransactions so the ICRC merge
-  // landing does not restart the in-flight per-node sweep.
+  // Manual "add token by canister ID" flow. The ICRC API only serves SNS and
+  // chain-key tokens, so a user-supplied non-SNS/non-ck token is queried
+  // directly against its ledger canister and its transactions are merged into
+  // the graph data.
+  const addTokenByCanisterId = useCallback(
+    async (
+      canisterId: string,
+    ): Promise<
+      | { ok: true; symbol: string; decimals: number; count: number }
+      | { ok: false; error: "invalid" | "empty" | "network" }
+    > => {
+      const trimmed = canisterId.trim();
+      if (!trimmed || !currentPrincipal) {
+        return { ok: false, error: "invalid" };
+      }
+      try {
+        Principal.fromText(trimmed);
+      } catch {
+        return { ok: false, error: "invalid" };
+      }
+      try {
+        const agent = await HttpAgent.create({ host: "https://ic0.app" });
+        const actor = Actor.createActor(LedgerIdl, {
+          agent,
+          canisterId: trimmed,
+        }) as LedgerActor;
+        const symbol = (await actor.icrc1_symbol()) as string;
+        const decimals = Number(await actor.icrc1_decimals());
+        const txs = await fetchDirectLedgerTransactions(
+          actor,
+          currentPrincipal,
+          symbol,
+          decimals,
+          txLimitRef.current,
+        );
+        if (txs.length === 0) {
+          return { ok: false, error: "empty" };
+        }
+        setCustomTokenTransactions((prev) => [...prev, ...txs]);
+        setCustomTokens((prev) => {
+          if (
+            prev.some(
+              (t) => t.canisterId.toLowerCase() === trimmed.toLowerCase(),
+            )
+          ) {
+            return prev;
+          }
+          return [...prev, { canisterId: trimmed, symbol, decimals }];
+        });
+        return { ok: true, symbol, decimals, count: txs.length };
+      } catch (err) {
+        console.error(
+          "[CustomToken] Failed to fetch token by canister ID:",
+          err,
+        );
+        return { ok: false, error: "network" };
+      }
+    },
+    [currentPrincipal],
+  );
+
+  // Merged view of ICP + ICRC + manually-added custom token transactions for
+  // consumers that need the full set. The depth-1/2 effect depends only on
+  // icpTransactions so the ICRC merge landing does not restart the in-flight
+  // per-node sweep.
   const rawTransactions = useMemo(
-    () => [...icpTransactions, ...icrcTransactions],
-    [icpTransactions, icrcTransactions],
+    () => [...icpTransactions, ...icrcTransactions, ...customTokenTransactions],
+    [icpTransactions, icrcTransactions, customTokenTransactions],
   );
 
   const filteredTransactions = useMemo(
@@ -465,6 +715,8 @@ export function useWallet() {
     ) {
       setDepth1Fetches([]);
       setDepth2Fetches([]);
+      setDepth3Fetches([]);
+      setDepth3LatencyMs(null);
       return;
     }
 
@@ -632,8 +884,103 @@ export function useWallet() {
         const d2Results = await Promise.all(d2Promises);
         if (cancelled) return;
         setDepth2Fetches(d2Results);
+
+        // Depth-3 wave: independently fetch ICP + ICRC for the top-2
+        // counterparties of each depth-2 node so depth-3 nodes match depth-1
+        // in token coverage and whale/color classification.
+        const wave3Start = performance.now();
+        const existingIds3 = new Set<string>([
+          accountIdentifier.toLowerCase(),
+          ...top5.map((cp) => cp.address.toLowerCase()),
+          ...d2Results.map((f) => f.nodeId.toLowerCase()),
+        ]);
+        const d3Promises: Promise<DepthFetch>[] = [];
+        for (const d2 of d2Results) {
+          if (d2.transactions.length === 0) continue;
+          const cpList = getTopCounterparties(d2.accountId, d2.transactions, 2);
+          for (const cp of cpList) {
+            const cpLower = cp.address.toLowerCase();
+            if (existingIds3.has(cpLower)) continue;
+            existingIds3.add(cpLower);
+            d3Promises.push(
+              (async () => {
+                const icpRes = await fetchWalletTransactions(
+                  cp.address,
+                  proxyUrlRef.current || undefined,
+                  txLimitRef.current,
+                );
+
+                const icpTxs = icpRes.ok ? icpRes.transactions : [];
+                const acctId = icpRes.ok
+                  ? (icpRes.accountIdentifier ?? cp.address)
+                  : cp.address;
+
+                // Set ICP data immediately per node — do not block on the ICRC sweep
+                const node: DepthFetch = {
+                  nodeId: cp.address,
+                  accountId: acctId,
+                  transactions: icpTxs,
+                };
+                if (!cancelled) {
+                  setDepth3Fetches((prev) => {
+                    const next = prev.filter((f) => f.nodeId !== cp.address);
+                    return [...next, node];
+                  });
+                }
+
+                // Patch ICRC results in via functional state update as each
+                // node's sweep resolves — do not block the state update
+                let icrcTxs: Transaction[] = [];
+                if (!cancelled) {
+                  try {
+                    icrcTxs = await fetchAllIcrcForAddress(
+                      cp.address,
+                      txLimitRef.current,
+                      cancelledRef,
+                    );
+                    if (!cancelled && icrcTxs.length > 0) {
+                      setDepth3Fetches((prev) =>
+                        prev.map((f) =>
+                          f.nodeId === cp.address
+                            ? {
+                                ...f,
+                                transactions: [...f.transactions, ...icrcTxs],
+                              }
+                            : f,
+                        ),
+                      );
+                    }
+                  } catch {
+                    // non-critical
+                  }
+                }
+
+                const allTxs = [...icpTxs, ...icrcTxs];
+                console.log(
+                  `[Depth-3] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`,
+                );
+
+                return {
+                  nodeId: cp.address,
+                  accountId: acctId,
+                  transactions: allTxs,
+                };
+              })(),
+            );
+          }
+        }
+        const d3Results = await Promise.all(d3Promises);
+        if (cancelled) return;
+        setDepth3Fetches(d3Results);
+        const wave3Duration = performance.now() - wave3Start;
+        setDepth3LatencyMs(wave3Duration);
+        console.log(
+          `[Depth-3] Third fetch wave took ${wave3Duration.toFixed(0)}ms for ${d3Results.length} nodes`,
+        );
       } else {
         setDepth2Fetches([]);
+        setDepth3Fetches([]);
+        setDepth3LatencyMs(null);
       }
 
       if (!cancelled) setDepthLoading(false);
@@ -676,6 +1023,10 @@ export function useWallet() {
               ...f,
               transactions: filterByTimeRange(f.transactions, timeRange),
             })),
+            depth3Fetches.map((f) => ({
+              ...f,
+              transactions: filterByTimeRange(f.transactions, timeRange),
+            })),
             maxCounterparties,
             showCrossEdges,
           );
@@ -697,6 +1048,7 @@ export function useWallet() {
     graphDepth,
     depth1Fetches,
     depth2Fetches,
+    depth3Fetches,
     showCrossEdges,
   ]);
 
@@ -726,6 +1078,10 @@ export function useWallet() {
     showCrossEdges,
     setShowCrossEdges,
     depthLoading,
+    depth3Fetches,
+    depth3LatencyMs,
+    customTokens,
+    addTokenByCanisterId,
     icrcLoading,
     icrcError,
     tokenCoverage,

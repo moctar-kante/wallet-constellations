@@ -6,12 +6,24 @@ import { toast } from "sonner";
 import { useTheme } from "../hooks/useTheme";
 import type { GraphEdge, GraphNode } from "../types";
 
-// ─── Unified level palette ──────────────────────────────────────────────────
+// ─── Theme-aware color helpers ───────────────────────────────────────────────
+// All graph colors are read from the semantic CSS variables in index.css
+// (:root dark vs .light), so the graph switches together with the page theme.
+function cssVar(name: string): string {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+}
+
 // Levels rendered are depth 0-3 only, so the palette holds exactly 4 colors.
-const LEVEL_PALETTE = {
-  dark: ["#00c8ff", "#7b68ee", "#ff9800", "#4caf50"],
-  light: ["#00c8ff", "#7b3fb0", "#c45e00", "#0e7a6e"],
-};
+function levelPalette(): string[] {
+  return [
+    cssVar("--graph-level-0"),
+    cssVar("--graph-level-1"),
+    cssVar("--graph-level-2"),
+    cssVar("--graph-level-3"),
+  ];
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -77,6 +89,8 @@ export interface ConstellationGraphProps {
   highlightNodeIds?: string[];
   highlightColor?: string;
   accentColor?: string;
+  btcUnit?: "btc" | "sats";
+  onBtcUnitChange?: (u: "btc" | "sats") => void;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -87,10 +101,26 @@ function isChainKeyBtc(token: string): boolean {
   return /btc/i.test(token);
 }
 
-function formatAmount(n: number, token = "ICP"): string {
+// Whether a specific edge carries a chain-key BTC-pegged token (e.g. ckBTC).
+// Gates the BTC/sats unit toggle so it only appears for the selected edge.
+function edgeHasBtc(edge: GraphEdge): boolean {
+  return [
+    ...Object.keys(edge.inAmountByToken || {}),
+    ...Object.keys(edge.outAmountByToken || {}),
+  ].some((t) => isChainKeyBtc(t));
+}
+
+function formatAmount(
+  n: number,
+  token = "ICP",
+  btcUnit: "btc" | "sats" = "sats",
+): string {
   if (isChainKeyBtc(token)) {
-    const sats = Math.round(n * 100_000_000);
-    return `${sats.toLocaleString()} sats`;
+    if (btcUnit === "sats") {
+      const sats = Math.round(n * 100_000_000);
+      return `${sats.toLocaleString()} sats`;
+    }
+    return `${n.toFixed(8)} BTC`;
   }
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(3)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(3)}k`;
@@ -103,63 +133,60 @@ function truncateAddress(addr: string): string {
 }
 
 function tokenColor(token: string): string {
-  if (token === "ICP") return "rgba(85,119,255,0.85)";
-  // Hash-based color for ICRC tokens
+  if (token === "ICP") return cssVar("--graph-edge-icp");
+  // Hash-based color for ICRC tokens — pick from the theme's token palette
   let hash = 0;
   for (let i = 0; i < token.length; i++)
     hash = (hash * 31 + token.charCodeAt(i)) >>> 0;
-  const hue = hash % 360;
-  return `hsl(${hue},70%,65%)`;
+  const idx = (hash % 6) + 1;
+  return cssVar(`--graph-token-${idx}`);
 }
 
-function nodeColor(
-  node: Node2D,
-  isDark: boolean,
-): {
+function nodeColor(node: Node2D): {
   fill: string;
   glow: string;
   ring?: string;
 } {
   if (node.isCenter)
     return {
-      fill: "#00c8ff",
-      glow: "#00c8ff",
+      fill: cssVar("--graph-node-center"),
+      glow: cssVar("--graph-node-center"),
     };
   if (node.isWhale)
     return {
-      fill: isDark ? "#ff9800" : "#b85c00",
-      glow: isDark ? "#ff9800" : "#b85c00",
+      fill: cssVar("--graph-node-whale"),
+      glow: cssVar("--graph-node-whale"),
     };
   const id = node.identity;
   if (id) {
     switch (id.type) {
       case "sns":
         return {
-          fill: isDark ? "#4caf50" : "#2a7a40",
-          glow: isDark ? "#4caf50" : "#2a7a40",
+          fill: cssVar("--graph-node-sns"),
+          glow: cssVar("--graph-node-sns"),
         };
       case "dex":
         return {
-          fill: isDark ? "#ffc107" : "#b87c00",
-          glow: isDark ? "#ffc107" : "#b87c00",
+          fill: cssVar("--graph-node-dex"),
+          glow: cssVar("--graph-node-dex"),
         };
       case "neuron":
         return {
-          fill: isDark ? "#3f51b5" : "#283593",
-          glow: isDark ? "#3f51b5" : "#283593",
+          fill: cssVar("--graph-node-neuron"),
+          glow: cssVar("--graph-node-neuron"),
         };
       case "nns":
         return {
-          fill: "#9c27b0",
-          glow: "#9c27b0",
+          fill: cssVar("--graph-node-nns"),
+          glow: cssVar("--graph-node-nns"),
         };
       default:
         break;
     }
   }
   return {
-    fill: isDark ? "#4a6fa5" : "#2a6496",
-    glow: isDark ? "#5577ff" : "#2a6496",
+    fill: cssVar("--graph-node-default"),
+    glow: cssVar("--graph-node-glow-default"),
   };
 }
 
@@ -196,14 +223,23 @@ function bezierControlPoint(
   return { cx: mx + px * bulge * sign, cy: my + py * bulge * sign };
 }
 
-// ─── Star field (memoised, static) ───────────────────────────────────────────
-
-const STARS = Array.from({ length: 220 }, (_, i) => ({
+// ─── Parallax star fields (memoised, static) ─────────────────────────────────
+// Distant stars are small and dim (move slowly, ~18% of graph pan speed);
+// near stars are larger and brighter (move faster, ~45% of graph pan speed).
+const DISTANT_STARS = Array.from({ length: 150 }, (_, i) => ({
   id: i,
   cx: Math.sin(i * 137.508 * (Math.PI / 180)) * 50 + 50,
   cy: Math.cos(i * 97.3 * (Math.PI / 180)) * 50 + 50,
-  r: 0.5 + (i % 5) * 0.35,
-  opacity: 0.2 + (i % 7) * 0.085,
+  r: 0.4 + (i % 4) * 0.25,
+  opacity: 0.18 + (i % 6) * 0.06,
+}));
+
+const NEAR_STARS = Array.from({ length: 70 }, (_, i) => ({
+  id: i,
+  cx: Math.sin(i * 137.508 * (Math.PI / 180) + 40) * 50 + 50,
+  cy: Math.cos(i * 97.3 * (Math.PI / 180) + 40) * 50 + 50,
+  r: 0.8 + (i % 5) * 0.4,
+  opacity: 0.35 + (i % 5) * 0.1,
 }));
 
 // ─── Legend rows (defined inside component for theme-awareness) ─────────────
@@ -232,6 +268,8 @@ export function ConstellationGraph({
   depthLoading,
   showCrossEdges,
   onShowCrossEdgesChange,
+  btcUnit = "sats",
+  onBtcUnitChange,
 }: ConstellationGraphProps) {
   // ── Merged state helpers ──
   const labels: Record<string, string> = externalLabels ?? _labelsLegacy ?? {};
@@ -264,13 +302,13 @@ export function ConstellationGraph({
   }, [setTheme]);
   const isDark = theme === "dark";
   const LEGEND_ITEMS = [
-    { dark: "#00c8ff", light: "#00c8ff", label: "Center wallet" },
-    { dark: "#4a6fa5", light: "#2a6496", label: "Counterparty" },
-    { dark: "#ff9800", light: "#b85c00", label: "Whale: > 10k ICP" },
-    { dark: "#4caf50", light: "#2a7a40", label: "SNS / Project" },
-    { dark: "#ffc107", light: "#b87c00", label: "DEX / Exchange" },
-    { dark: "#3f51b5", light: "#283593", label: "Neuron" },
-    { dark: "#9c27b0", light: "#9c27b0", label: "NNS" },
+    { color: cssVar("--graph-node-center"), label: "Center wallet" },
+    { color: cssVar("--graph-node-default"), label: "Counterparty" },
+    { color: cssVar("--graph-node-whale"), label: "Whale: > 10k ICP" },
+    { color: cssVar("--graph-node-sns"), label: "SNS / Project" },
+    { color: cssVar("--graph-node-dex"), label: "DEX / Exchange" },
+    { color: cssVar("--graph-node-neuron"), label: "Neuron" },
+    { color: cssVar("--graph-node-nns"), label: "NNS" },
   ];
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
   const [showLabels, setShowLabels] = useState(true);
@@ -441,13 +479,47 @@ export function ConstellationGraph({
     simNodesRef.current = simNodes;
   }, [simNodes]);
 
+  // ── Zoom-driven node redistribution ──
+  // As the user zooms in, increase repulsion (charge magnitude) and collision
+  // radius so nodes spread apart instead of just magnifying overlap. The reheat
+  // is debounced so it fires on zoom settling, not on every wheel tick.
+  const zoomSettleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (zoomSettleTimerRef.current) clearTimeout(zoomSettleTimerRef.current);
+    zoomSettleTimerRef.current = setTimeout(() => {
+      const sim = simRef.current;
+      if (!sim) return;
+      const k = transform.k;
+      // Base charge -420 at k=1; scale repulsion up as zoom increases.
+      const charge = -420 * (0.6 + k * 0.7);
+      // Collision radius grows with zoom so nodes keep clear of each other.
+      const collideScale = 0.7 + k * 0.5;
+      sim.force("charge", d3Force.forceManyBody<Node2D>().strength(charge));
+      sim.force(
+        "collide",
+        d3Force
+          .forceCollide<Node2D>()
+          .radius((d) => (d.isCenter ? 30 : 22) * collideScale),
+      );
+      sim.alpha(1).restart();
+    }, 300);
+    return () => {
+      if (zoomSettleTimerRef.current) clearTimeout(zoomSettleTimerRef.current);
+    };
+  }, [transform.k]);
+
   // Re-paint D3 elements when theme or color mode changes (Bug 1 & 2)
   useEffect(() => {
     if (!gRef.current || simNodesRef.current.length === 0) return;
 
     const g = d3Selection.select(gRef.current);
-    const levelPalette = isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light;
-
+    // theme drives :root vs .light — re-read the CSS variables on theme change
+    // so the graph re-paints with the active theme's palette.
+    const palette = levelPalette();
+    const labelColor = cssVar("--graph-label");
+    // Reference theme so the effect re-runs when the page switches dark/light.
+    const themeColors =
+      theme === "dark" ? { label: labelColor } : { label: labelColor };
     // Update node circles — select all groups with data-node-id, then their first circle
     g.selectAll<SVGCircleElement, unknown>("circle").each(function () {
       const circle = d3Selection.select<SVGCircleElement, unknown>(this);
@@ -463,37 +535,38 @@ export function ConstellationGraph({
       if (circle.attr("data-role") === "node-fill") {
         // Main node circle
         const fill = colorByLevel
-          ? levelPalette[(node.depth ?? 0) % levelPalette.length]
-          : nodeColor(node, isDark).fill;
+          ? palette[(node.depth ?? 0) % palette.length]
+          : nodeColor(node).fill;
         circle.attr("fill", fill);
       } else if (circle.attr("data-role") === "node-glow") {
         // Glow halo
         if (colorByLevel) {
-          const levelCol =
-            levelPalette[(node.depth ?? 0) % levelPalette.length];
+          const levelCol = palette[(node.depth ?? 0) % palette.length];
           circle.attr("fill", `${levelCol}4d`); // ~30% opacity tint
         } else {
-          const { glow } = nodeColor(node, isDark);
+          const { glow } = nodeColor(node);
           circle.attr("fill", glow);
         }
       }
     });
 
-    // Update edge paths
+    // Update edge paths — re-read theme tokens but preserve the per-token
+    // coloring (tokenColor reads theme-aware --graph-edge-icp / --graph-token-*).
     g.selectAll<SVGPathElement, unknown>("path").each(function () {
       const path = d3Selection.select<SVGPathElement, unknown>(this);
       if (path.attr("stroke") === "transparent") return;
-      path.attr("stroke", isDark ? "rgba(100,140,220,0.55)" : "#888888");
+      const token = path.attr("data-token") || "ICP";
+      path.attr("stroke", tokenColor(token));
     });
 
     // Update text labels
     g.selectAll<SVGTextElement, unknown>("text").each(function () {
       const text = d3Selection.select<SVGTextElement, unknown>(this);
       if (text.attr("fontSize") === "9") {
-        text.attr("fill", isDark ? "rgba(180,200,240,0.75)" : "#111111");
+        text.attr("fill", themeColors.label);
       }
     });
-  }, [isDark, colorByLevel]);
+  }, [theme, colorByLevel]);
 
   // ── Node ID → position map ──
   const nodeMap = useMemo(() => {
@@ -716,7 +789,11 @@ export function ConstellationGraph({
     );
     if (tokens.length === 0)
       return (
-        <div style={{ color: "#7799cc", fontSize: 11 }}>No token data</div>
+        <div
+          style={{ color: cssVar("--graph-overlay-text-dim"), fontSize: 11 }}
+        >
+          No token data
+        </div>
       );
     return tokens.map((token) => {
       const inAmt = edge.inAmountByToken?.[token] || 0;
@@ -731,14 +808,26 @@ export function ConstellationGraph({
             {token}
           </span>
           {inAmt > 0 && (
-            <div style={{ color: "#44ff88", fontSize: 11, paddingLeft: 8 }}>
-              ↓ {formatAmount(inAmt, token)}
+            <div
+              style={{
+                color: cssVar("--graph-in"),
+                fontSize: 11,
+                paddingLeft: 8,
+              }}
+            >
+              ↓ {formatAmount(inAmt, token, btcUnit)}
               <span style={{ opacity: 0.7 }}> ({inCnt})</span>
             </div>
           )}
           {outAmt > 0 && (
-            <div style={{ color: "#ffaa44", fontSize: 11, paddingLeft: 8 }}>
-              ↑ {formatAmount(outAmt, token)}
+            <div
+              style={{
+                color: cssVar("--graph-out"),
+                fontSize: 11,
+                paddingLeft: 8,
+              }}
+            >
+              ↑ {formatAmount(outAmt, token, btcUnit)}
               <span style={{ opacity: 0.7 }}> ({outCnt})</span>
             </div>
           )}
@@ -750,6 +839,14 @@ export function ConstellationGraph({
   // ── SVG rendering ──
   const svgTransform = `translate(${transform.x},${transform.y}) scale(${transform.k})`;
 
+  // Parallax speed fractions read from the design tokens (graph pan = 1.0).
+  // Each background layer moves at a fraction of the graph's pan offset.
+  const parallaxSpeeds = {
+    nebula: Number.parseFloat(cssVar("--graph-parallax-nebula")) || 0.06,
+    distant: Number.parseFloat(cssVar("--graph-parallax-distant")) || 0.18,
+    near: Number.parseFloat(cssVar("--graph-parallax-near")) || 0.45,
+  };
+
   return (
     <div
       data-ocid="graph.canvas_target"
@@ -758,83 +855,90 @@ export function ConstellationGraph({
         width: "100%",
         height: "100%",
         overflow: "hidden",
-        background: isDark ? "#070b14" : "#f0f4ff",
+        background: cssVar("--graph-bg"),
       }}
     >
-      {/* Star field background canvas */}
-      <svg
-        aria-hidden="true"
+      {/* Parallax background layers — move at fractions of graph pan speed.
+          Depth comes from parallax motion alone (no twinkle animation). */}
+      <div
+        className="graph-parallax-layer graph-parallax-nebula"
         style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
+          transform: `translate3d(${transform.x * parallaxSpeeds.nebula}px, ${transform.y * parallaxSpeeds.nebula}px, 0)`,
         }}
-        preserveAspectRatio="none"
       >
-        <defs>
-          <radialGradient
-            id={isDark ? "nebula1" : "nebula1-light"}
-            cx="40%"
-            cy="45%"
-            r="50%"
-          >
-            <stop
-              offset="0%"
-              stopColor={isDark ? "#1e2878" : "#a8b8ff"}
-              stopOpacity={isDark ? 0.35 : 0.12}
-            />
-            <stop
-              offset="50%"
-              stopColor={isDark ? "#321450" : "#c8d0ff"}
-              stopOpacity={isDark ? 0.18 : 0.06}
-            />
-            <stop
-              offset="100%"
-              stopColor={isDark ? "#000" : "#fff"}
-              stopOpacity={0}
-            />
-          </radialGradient>
-          <radialGradient
-            id={isDark ? "nebula2" : "nebula2-light"}
-            cx="70%"
-            cy="65%"
-            r="40%"
-          >
-            <stop
-              offset="0%"
-              stopColor={isDark ? "#0a2a50" : "#b0c8e8"}
-              stopOpacity={isDark ? 0.28 : 0.08}
-            />
-            <stop
-              offset="100%"
-              stopColor={isDark ? "#000" : "#fff"}
-              stopOpacity={0}
-            />
-          </radialGradient>
-        </defs>
-        <rect
-          width="100%"
-          height="100%"
-          fill={isDark ? "url(#nebula1)" : "url(#nebula1-light)"}
+        {/* Smooth 5-stop nebula ramp for a premium ambient glow */}
+        <div
+          className="graph-nebula-smooth"
+          style={{ position: "absolute", inset: 0 }}
         />
-        <rect
-          width="100%"
-          height="100%"
-          fill={isDark ? "url(#nebula2)" : "url(#nebula2-light)"}
+        {/* Secondary nebula blob for richer depth */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(ellipse at 74% 64%, ${cssVar("--graph-nebula-2")} 0%, transparent 62%)`,
+            opacity: isDark ? 0.5 : 0.3,
+          }}
         />
-        {STARS.map((s) => (
-          <circle
-            key={s.id}
-            cx={`${s.cx}%`}
-            cy={`${s.cy}%`}
-            r={s.r}
-            fill={isDark ? "white" : "#8899bb"}
-            opacity={s.opacity}
-          />
-        ))}
-      </svg>
+      </div>
+
+      <div
+        className="graph-parallax-layer graph-parallax-distant"
+        style={{
+          transform: `translate3d(${transform.x * parallaxSpeeds.distant}px, ${transform.y * parallaxSpeeds.distant}px, 0)`,
+        }}
+      >
+        <svg
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          preserveAspectRatio="none"
+        >
+          {DISTANT_STARS.map((s) => (
+            <circle
+              key={s.id}
+              cx={`${s.cx}%`}
+              cy={`${s.cy}%`}
+              r={s.r}
+              className="graph-star-distant"
+              opacity={s.opacity}
+            />
+          ))}
+        </svg>
+      </div>
+
+      <div
+        className="graph-parallax-layer graph-parallax-near"
+        style={{
+          transform: `translate3d(${transform.x * parallaxSpeeds.near}px, ${transform.y * parallaxSpeeds.near}px, 0)`,
+        }}
+      >
+        <svg
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          preserveAspectRatio="none"
+        >
+          {NEAR_STARS.map((s) => (
+            <circle
+              key={s.id}
+              cx={`${s.cx}%`}
+              cy={`${s.cy}%`}
+              r={s.r}
+              className="graph-star-near"
+              opacity={s.opacity}
+            />
+          ))}
+        </svg>
+      </div>
 
       {/* Main graph SVG */}
       <svg
@@ -945,15 +1049,9 @@ export function ConstellationGraph({
               );
               const primaryToken = tokenKeys[0] || "ICP";
               const stroke = isHovered
-                ? isDark
-                  ? "rgba(180,210,255,0.85)"
-                  : "rgba(60,100,180,0.7)"
-                : // Use tokenColor() for both dark and light mode — same vivid palette
-                  tokenColor(primaryToken).startsWith("hsl")
-                  ? isDark
-                    ? tokenColor(primaryToken).replace("65%)", "70%)")
-                    : tokenColor(primaryToken).replace("65%)", "50%)")
-                  : tokenColor(primaryToken);
+                ? cssVar("--graph-edge-hover")
+                : // tokenColor() reads theme-aware tokens, so it adapts to dark/light
+                  tokenColor(primaryToken);
 
               return (
                 <g key={edgeKey}>
@@ -961,6 +1059,7 @@ export function ConstellationGraph({
                   <path
                     d={pathD}
                     stroke={stroke}
+                    data-token={primaryToken}
                     strokeWidth={isHovered ? strokeW + 1 : strokeW}
                     fill="none"
                     strokeOpacity={isHovered ? 0.9 : 0.55}
@@ -995,17 +1094,15 @@ export function ConstellationGraph({
           {/* Nodes */}
           {simNodes.map((node) => {
             if (node.x == null || node.y == null) return null;
-            const levelPalette = isDark
-              ? LEVEL_PALETTE.dark
-              : LEVEL_PALETTE.light;
+            const palette = levelPalette();
             const resolvedColor = (n: GraphNode) =>
               colorByLevel
-                ? levelPalette[
+                ? palette[
                     ((n as GraphNode & { depth?: number }).depth ?? 0) %
-                      levelPalette.length
+                      palette.length
                   ]
-                : nodeColor(n, isDark).fill;
-            const { glow } = nodeColor(node, isDark);
+                : nodeColor(n).fill;
+            const { glow } = nodeColor(node);
             const fill = resolvedColor(node);
             const r = node.isCenter ? 22 : 16;
             const isHovered = hoveredNodeId === node.id;
@@ -1064,7 +1161,7 @@ export function ConstellationGraph({
                     y={-r - 5}
                     textAnchor="middle"
                     fontSize="10"
-                    fill="#ffcc00"
+                    fill={cssVar("--graph-fav")}
                     style={{ pointerEvents: "none", userSelect: "none" }}
                   >
                     ★
@@ -1077,7 +1174,7 @@ export function ConstellationGraph({
                     textAnchor="middle"
                     dominantBaseline="central"
                     fontSize={node.isCenter ? 13 : 10}
-                    fill="white"
+                    fill={cssVar("--graph-icon")}
                     style={{ pointerEvents: "none", userSelect: "none" }}
                   >
                     {node.identity.icon}
@@ -1093,15 +1190,15 @@ export function ConstellationGraph({
                       width={36}
                       height={13}
                       rx={3}
-                      fill="rgba(0,100,200,0.75)"
-                      stroke="rgba(100,180,255,0.5)"
+                      fill={cssVar("--graph-pill-bg")}
+                      stroke={cssVar("--graph-pill-border")}
                       strokeWidth={0.8}
                     />
                     <text
                       textAnchor="middle"
                       dominantBaseline="central"
                       fontSize="8"
-                      fill="#ccddff"
+                      fill={cssVar("--graph-pill-text")}
                       style={{ pointerEvents: "none", userSelect: "none" }}
                     >
                       {customLabel}
@@ -1115,7 +1212,7 @@ export function ConstellationGraph({
                     y={r + 14}
                     textAnchor="middle"
                     fontSize="9"
-                    fill={isDark ? "rgba(180,200,240,0.75)" : "#111111"}
+                    fill={cssVar("--graph-label")}
                     style={{ pointerEvents: "none", userSelect: "none" }}
                   >
                     {nodeLabel}
@@ -1135,15 +1232,15 @@ export function ConstellationGraph({
                   >
                     <circle
                       r={8}
-                      fill="rgba(20,40,80,0.85)"
-                      stroke="rgba(100,160,255,0.5)"
+                      fill={cssVar("--graph-pencil-bg")}
+                      stroke={cssVar("--graph-pencil-border")}
                       strokeWidth={0.8}
                     />
                     {/* Pencil SVG path (no fill) */}
                     <path
                       d="M-3 2 L0 -3 L3 2 L0 3 Z M0 -3 L2 -5 L5 -2 L3 2 Z"
                       fill="none"
-                      stroke="#aaccff"
+                      stroke={cssVar("--graph-pencil-icon")}
                       strokeWidth={0.9}
                       strokeLinejoin="round"
                     />
@@ -1164,14 +1261,18 @@ export function ConstellationGraph({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: isDark
-              ? "rgba(7,11,20,0.72)"
-              : "rgba(240,244,255,0.72)",
+            background: cssVar("--graph-panel-bg"),
             zIndex: 50,
             pointerEvents: "none",
           }}
         >
-          <div style={{ color: "#4488ff", fontSize: 15, letterSpacing: 1 }}>
+          <div
+            style={{
+              color: cssVar("--graph-accent"),
+              fontSize: 15,
+              letterSpacing: 1,
+            }}
+          >
             Loading constellation…
           </div>
         </div>
@@ -1199,9 +1300,12 @@ export function ConstellationGraph({
               data-ocid={`graph.breadcrumb.item.${i + 1}`}
               onClick={() => onBreadcrumbClick?.(i)}
               style={{
-                background: "rgba(20,30,60,0.88)",
-                border: "1px solid rgba(60,80,140,0.7)",
-                color: i === breadcrumbs.length - 1 ? "#88bbff" : "#7799cc",
+                background: cssVar("--graph-breadcrumb-bg"),
+                border: `1px solid ${cssVar("--graph-breadcrumb-border")}`,
+                color:
+                  i === breadcrumbs.length - 1
+                    ? cssVar("--graph-breadcrumb-active")
+                    : cssVar("--graph-breadcrumb-inactive"),
                 padding: "3px 8px",
                 borderRadius: 4,
                 fontSize: 11,
@@ -1225,11 +1329,9 @@ export function ConstellationGraph({
           position: "absolute",
           top: 10,
           right: 10,
-          background: isDark ? "rgba(15,22,50,0.92)" : "rgba(240,242,248,0.95)",
-          border: isDark
-            ? "1px solid rgba(60,80,140,0.6)"
-            : "1px solid rgba(180,190,220,0.6)",
-          color: isDark ? "#7799cc" : "#334466",
+          background: cssVar("--graph-panel-bg"),
+          border: `1px solid ${cssVar("--graph-panel-border")}`,
+          color: cssVar("--graph-text"),
           padding: "5px 11px",
           borderRadius: 5,
           fontSize: 12,
@@ -1250,12 +1352,8 @@ export function ConstellationGraph({
             position: "absolute",
             top: 42,
             right: 10,
-            background: isDark
-              ? "rgba(8,13,36,0.97)"
-              : "rgba(255,255,255,0.97)",
-            border: isDark
-              ? "1px solid rgba(60,80,140,0.65)"
-              : "1px solid rgba(180,190,220,0.65)",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
             borderRadius: 8,
             padding: 14,
             width: 210,
@@ -1267,7 +1365,7 @@ export function ConstellationGraph({
         >
           <div
             style={{
-              color: isDark ? "#5577aa" : "#1a1a2e",
+              color: cssVar("--graph-overlay-text-dim"),
               fontSize: 10,
               marginBottom: 12,
               fontWeight: 700,
@@ -1283,7 +1381,7 @@ export function ConstellationGraph({
               display: "flex",
               alignItems: "center",
               gap: 8,
-              color: isDark ? "#aaccff" : "#1a1a2e",
+              color: cssVar("--graph-overlay-text"),
               fontSize: 12,
               marginBottom: 12,
               cursor: "pointer",
@@ -1294,7 +1392,7 @@ export function ConstellationGraph({
               type="checkbox"
               checked={showLabels}
               onChange={(e) => setShowLabels(e.target.checked)}
-              style={{ accentColor: "#4488ff" }}
+              style={{ accentColor: cssVar("--graph-accent") }}
             />
             Show labels
           </label>
@@ -1305,7 +1403,7 @@ export function ConstellationGraph({
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                color: isDark ? "#8aaacf" : "#1a1a2e",
+                color: cssVar("--graph-overlay-text-dim"),
                 fontSize: 11,
                 marginBottom: 4,
               }}
@@ -1313,7 +1411,7 @@ export function ConstellationGraph({
               <span>Max nodes</span>
               <span
                 style={{
-                  color: isDark ? "#aaccff" : "#1a1a2e",
+                  color: cssVar("--graph-overlay-text"),
                   fontWeight: 600,
                 }}
               >
@@ -1330,7 +1428,7 @@ export function ConstellationGraph({
               onChange={(e) =>
                 onMaxCounterpartiesChange?.(Number(e.target.value))
               }
-              style={{ width: "100%", accentColor: "#4488ff" }}
+              style={{ width: "100%", accentColor: cssVar("--graph-accent") }}
             />
           </div>
 
@@ -1340,7 +1438,7 @@ export function ConstellationGraph({
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                color: isDark ? "#8aaacf" : "#1a1a2e",
+                color: cssVar("--graph-overlay-text-dim"),
                 fontSize: 11,
                 marginBottom: 4,
               }}
@@ -1348,7 +1446,7 @@ export function ConstellationGraph({
               <span>Min edge volume</span>
               <span
                 style={{
-                  color: isDark ? "#aaccff" : "#1a1a2e",
+                  color: cssVar("--graph-overlay-text"),
                   fontWeight: 600,
                 }}
               >
@@ -1365,7 +1463,7 @@ export function ConstellationGraph({
               step={10}
               value={minEdgeVolume}
               onChange={(e) => setMinEdgeVolume(Number(e.target.value))}
-              style={{ width: "100%", accentColor: "#4488ff" }}
+              style={{ width: "100%", accentColor: cssVar("--graph-accent") }}
             />
           </div>
 
@@ -1373,7 +1471,7 @@ export function ConstellationGraph({
           <div style={{ marginBottom: 12 }}>
             <div
               style={{
-                color: isDark ? "#8aaacf" : "#1a1a2e",
+                color: cssVar("--graph-overlay-text-dim"),
                 fontSize: 11,
                 marginBottom: 6,
               }}
@@ -1391,17 +1489,17 @@ export function ConstellationGraph({
                     flex: 1,
                     background:
                       (graphDepth ?? 1) === d
-                        ? "rgba(40,80,200,0.75)"
-                        : "rgba(20,30,70,0.55)",
-                    border: `1px solid ${(graphDepth ?? 1) === d ? "rgba(80,140,255,0.7)" : "rgba(50,70,130,0.4)"}`,
+                        ? cssVar("--graph-btn-solid")
+                        : cssVar("--graph-overlay-bg-strong"),
+                    border: `1px solid ${
+                      (graphDepth ?? 1) === d
+                        ? cssVar("--graph-accent")
+                        : cssVar("--graph-overlay-border")
+                    }`,
                     color:
                       (graphDepth ?? 1) === d
-                        ? isDark
-                          ? "#cce0ff"
-                          : "#1a1a2e"
-                        : isDark
-                          ? "#7799bb"
-                          : "#1a1a2e",
+                        ? cssVar("--graph-overlay-text")
+                        : cssVar("--graph-overlay-text-dim"),
                     borderRadius: 4,
                     fontSize: 12,
                     padding: "4px 0",
@@ -1424,7 +1522,7 @@ export function ConstellationGraph({
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
-                color: isDark ? "#aaccff" : "#1a1a2e",
+                color: cssVar("--graph-overlay-text"),
                 fontSize: 12,
                 marginBottom: 12,
                 cursor: "pointer",
@@ -1435,7 +1533,7 @@ export function ConstellationGraph({
                 type="checkbox"
                 checked={showCrossEdges ?? false}
                 onChange={(e) => onShowCrossEdgesChange?.(e.target.checked)}
-                style={{ accentColor: "#4488ff" }}
+                style={{ accentColor: cssVar("--graph-accent") }}
               />
               Full network
             </label>
@@ -1448,7 +1546,7 @@ export function ConstellationGraph({
               gap: "6px",
               cursor: "pointer",
               fontSize: "13px",
-              color: isDark ? "#aaccff" : "#1a1a2e",
+              color: cssVar("--graph-overlay-text"),
             }}
           >
             <input
@@ -1466,7 +1564,7 @@ export function ConstellationGraph({
               gap: "6px",
               fontSize: "13px",
               marginTop: "4px",
-              color: isDark ? "#aaccff" : "#1a1a2e",
+              color: cssVar("--graph-overlay-text"),
             }}
           >
             <span>Weight by</span>
@@ -1511,9 +1609,9 @@ export function ConstellationGraph({
             onClick={handleFitView}
             style={{
               width: "100%",
-              background: "rgba(20,40,90,0.7)",
-              border: "1px solid rgba(60,80,160,0.5)",
-              color: "#aaccff",
+              background: cssVar("--graph-overlay-bg-strong"),
+              border: `1px solid ${cssVar("--graph-overlay-border")}`,
+              color: cssVar("--graph-overlay-text"),
               padding: "5px 0",
               borderRadius: 4,
               fontSize: 12,
@@ -1545,13 +1643,9 @@ export function ConstellationGraph({
           style={{
             width: 34,
             height: 34,
-            background: isDark
-              ? "rgba(15,22,50,0.92)"
-              : "rgba(240,242,248,0.95)",
-            border: isDark
-              ? "1px solid rgba(60,80,140,0.6)"
-              : "1px solid rgba(180,190,220,0.6)",
-            color: isDark ? "#aaccff" : "#334466",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
+            color: cssVar("--graph-text"),
             borderRadius: 5,
             fontSize: 20,
             cursor: "pointer",
@@ -1570,13 +1664,9 @@ export function ConstellationGraph({
           style={{
             width: 34,
             height: 34,
-            background: isDark
-              ? "rgba(15,22,50,0.92)"
-              : "rgba(240,242,248,0.95)",
-            border: isDark
-              ? "1px solid rgba(60,80,140,0.6)"
-              : "1px solid rgba(180,190,220,0.6)",
-            color: isDark ? "#aaccff" : "#334466",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
+            color: cssVar("--graph-text"),
             borderRadius: 5,
             fontSize: 20,
             cursor: "pointer",
@@ -1596,13 +1686,9 @@ export function ConstellationGraph({
           style={{
             width: 34,
             height: 34,
-            background: isDark
-              ? "rgba(15,22,50,0.92)"
-              : "rgba(240,242,248,0.95)",
-            border: isDark
-              ? "1px solid rgba(60,80,140,0.6)"
-              : "1px solid rgba(180,190,220,0.6)",
-            color: isDark ? "#7799cc" : "#556688",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
+            color: cssVar("--graph-text"),
             borderRadius: 5,
             fontSize: 13,
             cursor: "pointer",
@@ -1630,16 +1716,12 @@ export function ConstellationGraph({
             left: nodeInfo.x,
             top: nodeInfo.y,
             width: 224,
-            background: isDark
-              ? "rgba(8,13,36,0.98)"
-              : "rgba(255,255,255,0.97)",
-            border: isDark
-              ? "1px solid rgba(60,100,200,0.55)"
-              : "1px solid rgba(180,190,220,0.55)",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
             borderRadius: 9,
             padding: 14,
             zIndex: 100,
-            color: isDark ? "#ccddff" : "#1a1a2e",
+            color: cssVar("--graph-overlay-text"),
             boxShadow: isDark
               ? "0 4px 32px rgba(0,80,200,0.18)"
               : "0 4px 32px rgba(0,80,200,0.08)",
@@ -1659,7 +1741,7 @@ export function ConstellationGraph({
               right: 8,
               background: "none",
               border: "none",
-              color: isDark ? "#5577aa" : "#4466aa",
+              color: cssVar("--graph-overlay-text-dim"),
               fontSize: 15,
               cursor: "pointer",
               lineHeight: 1,
@@ -1672,7 +1754,7 @@ export function ConstellationGraph({
           <div
             style={{
               fontSize: 10,
-              color: isDark ? "#4466aa" : "#5577aa",
+              color: cssVar("--graph-overlay-text-dim"),
               marginBottom: 5,
               letterSpacing: 1,
             }}
@@ -1685,7 +1767,7 @@ export function ConstellationGraph({
               fontFamily: "monospace",
               marginBottom: 10,
               wordBreak: "break-all",
-              color: isDark ? "#99bbee" : "#334466",
+              color: cssVar("--graph-overlay-text"),
               lineHeight: 1.4,
             }}
           >
@@ -1704,9 +1786,12 @@ export function ConstellationGraph({
             }}
             style={{
               width: "100%",
-              background: "rgba(20,40,90,0.55)",
-              border: "1px solid rgba(50,80,160,0.5)",
-              color: copiedNodeId === nodeInfo.node.id ? "#44ff88" : "#aaccff",
+              background: cssVar("--graph-overlay-bg"),
+              border: `1px solid ${cssVar("--graph-overlay-border")}`,
+              color:
+                copiedNodeId === nodeInfo.node.id
+                  ? cssVar("--graph-in")
+                  : cssVar("--graph-overlay-text"),
               padding: "4px 0",
               borderRadius: 4,
               fontSize: 11,
@@ -1732,9 +1817,9 @@ export function ConstellationGraph({
                 onKeyDown={(e) => e.key === "Enter" && handleLabelSave()}
                 style={{
                   flex: 1,
-                  background: "rgba(20,40,100,0.75)",
-                  border: "1px solid rgba(80,120,220,0.5)",
-                  color: "#fff",
+                  background: cssVar("--graph-overlay-bg-strong"),
+                  border: `1px solid ${cssVar("--graph-overlay-border")}`,
+                  color: cssVar("--graph-overlay-text"),
                   padding: "3px 7px",
                   borderRadius: 4,
                   fontSize: 12,
@@ -1746,7 +1831,7 @@ export function ConstellationGraph({
                 data-ocid="graph.node_info.label_save_button"
                 onClick={handleLabelSave}
                 style={{
-                  background: "#1a3a80",
+                  background: cssVar("--graph-btn-solid"),
                   border: "none",
                   color: "#fff",
                   padding: "3px 9px",
@@ -1765,9 +1850,9 @@ export function ConstellationGraph({
               onClick={() => handleLabelEdit(nodeInfo.node.id)}
               style={{
                 width: "100%",
-                background: "rgba(20,40,90,0.55)",
-                border: "1px solid rgba(50,80,160,0.5)",
-                color: "#aaccff",
+                background: cssVar("--graph-overlay-bg"),
+                border: `1px solid ${cssVar("--graph-overlay-border")}`,
+                color: cssVar("--graph-overlay-text"),
                 padding: "4px 0",
                 borderRadius: 4,
                 fontSize: 11,
@@ -1791,9 +1876,11 @@ export function ConstellationGraph({
             onClick={() => handleFavoriteToggle(nodeInfo.node.id)}
             style={{
               width: "100%",
-              background: "rgba(20,40,90,0.55)",
-              border: "1px solid rgba(50,80,160,0.5)",
-              color: checkFavorite(nodeInfo.node.id) ? "#ffcc00" : "#aaccff",
+              background: cssVar("--graph-overlay-bg"),
+              border: `1px solid ${cssVar("--graph-overlay-border")}`,
+              color: checkFavorite(nodeInfo.node.id)
+                ? cssVar("--graph-fav")
+                : cssVar("--graph-overlay-text"),
               padding: "4px 0",
               borderRadius: 4,
               fontSize: 11,
@@ -1817,8 +1904,8 @@ export function ConstellationGraph({
             }}
             style={{
               width: "100%",
-              background: "rgba(20,60,180,0.8)",
-              border: "1px solid rgba(80,120,240,0.6)",
+              background: cssVar("--graph-btn-solid"),
+              border: `1px solid ${cssVar("--graph-accent")}`,
               color: "#ffffff",
               padding: "6px 0",
               borderRadius: 5,
@@ -1861,12 +1948,8 @@ export function ConstellationGraph({
             position: "fixed",
             left: edgeTooltip.x,
             top: edgeTooltip.y,
-            background: isDark
-              ? "rgba(8,13,36,0.98)"
-              : "rgba(255,255,255,0.97)",
-            border: isDark
-              ? "1px solid rgba(60,100,200,0.55)"
-              : "1px solid rgba(180,190,220,0.55)",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
             borderRadius: 8,
             padding: "10px 12px",
             maxWidth: 240,
@@ -1894,7 +1977,7 @@ export function ConstellationGraph({
               right: 7,
               background: "none",
               border: "none",
-              color: isDark ? "#5577aa" : "#4466aa",
+              color: cssVar("--graph-overlay-text-dim"),
               fontSize: 14,
               cursor: "pointer",
               lineHeight: 1,
@@ -1905,14 +1988,80 @@ export function ConstellationGraph({
           </button>
           <div
             style={{
-              color: isDark ? "#4466aa" : "#5577aa",
-              fontSize: 10,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 8,
               marginBottom: 7,
-              letterSpacing: 1,
               paddingRight: 16,
             }}
           >
-            TRANSACTION TOKENS
+            <span
+              style={{
+                color: cssVar("--graph-overlay-text-dim"),
+                fontSize: 10,
+                letterSpacing: 1,
+              }}
+            >
+              TRANSACTION TOKENS
+            </span>
+            {edgeHasBtc(edgeTooltip.edge) && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  borderRadius: 4,
+                  border: `1px solid ${cssVar("--graph-panel-border")}`,
+                  padding: 1,
+                }}
+              >
+                <button
+                  type="button"
+                  data-ocid="graph.btc_unit_toggle"
+                  onClick={() => onBtcUnitChange?.("btc")}
+                  style={{
+                    fontSize: 9,
+                    padding: "1px 5px",
+                    borderRadius: 3,
+                    border: "none",
+                    cursor: "pointer",
+                    background:
+                      btcUnit === "btc"
+                        ? cssVar("--graph-accent")
+                        : "transparent",
+                    color:
+                      btcUnit === "btc"
+                        ? "#ffffff"
+                        : cssVar("--graph-overlay-text-dim"),
+                  }}
+                >
+                  BTC
+                </button>
+                <button
+                  type="button"
+                  data-ocid="graph.btc_unit_toggle"
+                  onClick={() => onBtcUnitChange?.("sats")}
+                  style={{
+                    fontSize: 9,
+                    padding: "1px 5px",
+                    borderRadius: 3,
+                    border: "none",
+                    cursor: "pointer",
+                    background:
+                      btcUnit === "sats"
+                        ? cssVar("--graph-accent")
+                        : "transparent",
+                    color:
+                      btcUnit === "sats"
+                        ? "#ffffff"
+                        : cssVar("--graph-overlay-text-dim"),
+                  }}
+                >
+                  sats
+                </button>
+              </div>
+            )}
           </div>
           {renderEdgeTooltipContent(edgeTooltip.edge)}
         </div>
@@ -1924,65 +2073,61 @@ export function ConstellationGraph({
           position: "absolute",
           bottom: 10,
           left: 10,
-          background: isDark ? "rgba(7,11,28,0.88)" : "rgba(255,255,255,0.92)",
-          border: isDark
-            ? "1px solid rgba(40,60,120,0.5)"
-            : "1px solid rgba(180,190,220,0.5)",
+          background: cssVar("--graph-legend-bg"),
+          border: `1px solid ${cssVar("--graph-legend-border")}`,
           borderRadius: 7,
           padding: "8px 12px",
           fontSize: 10,
-          color: isDark ? "#7799cc" : "#334466",
+          color: cssVar("--graph-text"),
           zIndex: 10,
           lineHeight: 1.7,
         }}
       >
         {colorByLevel
-          ? (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).map(
-              (color, i) => (
+          ? levelPalette().map((color, i) => (
+              <div
+                // biome-ignore lint/suspicious/noArrayIndexKey: static list with fixed order
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  marginBottom: 2,
+                }}
+              >
+                {/* Circle with depth number visible inside */}
                 <div
-                  // biome-ignore lint/suspicious/noArrayIndexKey: static list with fixed order
-                  key={i}
                   style={{
+                    width: 18,
+                    height: 18,
+                    borderRadius: "50%",
+                    background: color,
+                    flexShrink: 0,
                     display: "flex",
                     alignItems: "center",
-                    gap: 6,
-                    marginBottom: 2,
+                    justifyContent: "center",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#fff",
+                    boxShadow: isDark ? `0 0 5px ${color}80` : "none",
+                    border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
                   }}
                 >
-                  {/* Circle with depth number visible inside */}
-                  <div
-                    style={{
-                      width: 18,
-                      height: 18,
-                      borderRadius: "50%",
-                      background: color,
-                      flexShrink: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: "#fff",
-                      boxShadow: isDark ? `0 0 5px ${color}80` : "none",
-                      border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
-                    }}
-                  >
-                    {i}
-                  </div>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: isDark ? "#a0b4c8" : "#1a1a2e",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {i === 0 ? "Center" : `Depth ${i}`}
-                  </span>
+                  {i}
                 </div>
-              ),
-            )
+                <span
+                  style={{
+                    fontSize: 11,
+                    color: cssVar("--graph-text"),
+                    fontWeight: 500,
+                  }}
+                >
+                  {i === 0 ? "Center" : `Depth ${i}`}
+                </span>
+              </div>
+            ))
           : LEGEND_ITEMS.map((item) => {
-              const swatchColor = isDark ? item.dark : item.light;
+              const swatchColor = item.color;
               return (
                 <div
                   key={item.label}
@@ -2000,7 +2145,7 @@ export function ConstellationGraph({
                       border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
                     }}
                   />
-                  <span style={{ color: isDark ? "#7799cc" : "#1a1a2e" }}>
+                  <span style={{ color: cssVar("--graph-text") }}>
                     {item.label}
                   </span>
                 </div>
@@ -2009,7 +2154,7 @@ export function ConstellationGraph({
         <div
           style={{
             marginTop: 4,
-            borderTop: "1px solid rgba(60,80,140,0.3)",
+            borderTop: `1px solid ${cssVar("--graph-legend-border")}`,
             paddingTop: 4,
             fontSize: 9,
           }}
@@ -2027,12 +2172,8 @@ export function ConstellationGraph({
             top: "50%",
             left: "50%",
             transform: "translate(-50%,-50%)",
-            background: isDark
-              ? "rgba(8,13,36,0.99)"
-              : "rgba(255,255,255,0.99)",
-            border: isDark
-              ? "1px solid rgba(60,100,200,0.6)"
-              : "1px solid rgba(180,190,220,0.6)",
+            background: cssVar("--graph-panel-bg"),
+            border: `1px solid ${cssVar("--graph-panel-border")}`,
             borderRadius: 9,
             padding: 20,
             zIndex: 200,
@@ -2041,7 +2182,13 @@ export function ConstellationGraph({
               : "0 8px 48px rgba(0,40,140,0.1)",
           }}
         >
-          <div style={{ color: "#aaccff", marginBottom: 10, fontSize: 13 }}>
+          <div
+            style={{
+              color: cssVar("--graph-overlay-text"),
+              marginBottom: 10,
+              fontSize: 13,
+            }}
+          >
             Set label (max 6 chars)
           </div>
           <input
@@ -2052,9 +2199,9 @@ export function ConstellationGraph({
             onChange={(e) => setLabelInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleLabelSave()}
             style={{
-              background: "rgba(20,40,100,0.75)",
-              border: "1px solid rgba(80,120,220,0.5)",
-              color: "#fff",
+              background: cssVar("--graph-overlay-bg-strong"),
+              border: `1px solid ${cssVar("--graph-overlay-border")}`,
+              color: cssVar("--graph-overlay-text"),
               padding: "5px 10px",
               borderRadius: 4,
               fontSize: 14,
@@ -2068,7 +2215,7 @@ export function ConstellationGraph({
               data-ocid="graph.label_modal.save_button"
               onClick={handleLabelSave}
               style={{
-                background: "#1a3a80",
+                background: cssVar("--graph-btn-solid"),
                 border: "none",
                 color: "#fff",
                 padding: "5px 14px",
@@ -2085,8 +2232,8 @@ export function ConstellationGraph({
               onClick={() => setEditingLabel(null)}
               style={{
                 background: "none",
-                border: "1px solid rgba(60,80,160,0.5)",
-                color: "#aaccff",
+                border: `1px solid ${cssVar("--graph-overlay-border")}`,
+                color: cssVar("--graph-overlay-text"),
                 padding: "5px 14px",
                 borderRadius: 4,
                 cursor: "pointer",

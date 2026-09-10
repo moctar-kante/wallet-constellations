@@ -1,17 +1,19 @@
 {
-  "overview": "Wallet Constellations is a single-page app for visualizing ICP and ICRC token wallet transactions as an interactive constellation graph.",
+  "overview": "An interactive wallet transaction visualizer that maps ICP wallet activity as a force-directed constellation graph with layered depth, activity charts, and token coverage.",
   "features": [
-    "Visualize ICP and ICRC wallet transactions as an interactive graph",
-    "Load every available SNS and chain-key token",
-    "Compare two wallets side by side",
-    "Save labels and favorite wallets"
+    "Visualize wallet transactions as an interactive constellation graph",
+    "Explore multi-depth counterparty relationships",
+    "Chart daily transaction activity with adjustable intervals",
+    "Compare wallets side by side",
+    "Track token holdings and whale activity"
   ],
-  "category": "productivity",
+  "category": "data-visualization",
   "tags": [
-    "icp",
-    "blockchain",
     "wallet",
-    "visualization"
+    "blockchain",
+    "graph",
+    "visualization",
+    "icp"
   ],
-  "last_updated": "2026-09-07T23:51:59.644Z"
+  "last_updated": "2026-09-10T01:26:09.825Z"
 }

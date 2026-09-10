@@ -5,6 +5,7 @@ import type {
   WalletGraph,
   WalletSummary,
 } from "../types";
+import { DEFAULT_TX_LIMIT } from "./explorerService";
 import { computeNetFlow, detectWhale, getWeeklyActivity } from "./filters";
 import { getNodeIdentity, getSnsParticipation } from "./identityService";
 
@@ -370,6 +371,11 @@ export function buildMultiDepthGraph(
     accountId: string;
     transactions: Transaction[];
   }>,
+  depth3Fetches: Array<{
+    nodeId: string;
+    accountId: string;
+    transactions: Transaction[];
+  }>,
   maxCounterparties: number,
   showCrossEdges = false,
 ): WalletGraph {
@@ -488,7 +494,15 @@ export function buildMultiDepthGraph(
     }
   }
 
-  // Depth-3
+  // Depth-3 — consume the independently-fetched depth-3 data so depth-3 nodes
+  // get full token coverage and whale/color classification matching depth-1/2.
+  // The node set and edges are derived from each depth-2 node's transactions,
+  // while each depth-3 node's own fetched transactions feed enrichment.
+  const depth3ByNode = new Map(
+    depth3Fetches.map((f) => [f.nodeId.toLowerCase(), f]),
+  );
+  const depth3Txs: Transaction[] = [];
+
   for (const d2Fetch of depth2Fetches) {
     if (!allNodes.has(d2Fetch.nodeId.toLowerCase())) continue;
 
@@ -533,6 +547,10 @@ export function buildMultiDepthGraph(
           outCountByToken: edgeInfo.outCountByToken,
         }),
       );
+      // Collect the independently-fetched depth-3 transactions so the node's
+      // own activity drives its whale/color classification.
+      const d3Fetch = depth3ByNode.get(cpLower);
+      if (d3Fetch) depth3Txs.push(...d3Fetch.transactions);
     }
   }
 
@@ -541,6 +559,7 @@ export function buildMultiDepthGraph(
       ...center.transactions,
       ...depth1Fetches.flatMap((f) => f.transactions),
       ...depth2Fetches.flatMap((f) => f.transactions),
+      ...depth3Txs,
     ];
     addCrossEdges(allTxs, allNodes, allEdges);
   }
@@ -550,6 +569,7 @@ export function buildMultiDepthGraph(
     ...center.transactions,
     ...depth1Fetches.flatMap((f) => f.transactions),
     ...depth2Fetches.flatMap((f) => f.transactions),
+    ...depth3Txs,
   ];
   const allAddresses = [...allNodes.values()].map((n) => n.id);
 
@@ -570,28 +590,54 @@ export function computeSummary(
   const acctLower = accountId.toLowerCase();
   let totalIn = 0;
   let totalOut = 0;
+  let totalInCount = 0;
+  let totalOutCount = 0;
   const counterparties = new Set<string>();
+  const totalTxByToken: Record<string, number> = {};
+  const totalInByToken: Record<string, number> = {};
+  const totalOutByToken: Record<string, number> = {};
+  const counterpartyCountByToken: Record<string, number> = {};
 
-  // Only ICP transactions count toward ALL four metrics
-  const icpTxs = transactions.filter((tx) => !tx.token || tx.token === "ICP");
+  // Aggregate across ALL tokens (ICP + ICRC), not just ICP.
+  for (const tx of transactions) {
+    const token = tx.token ?? "ICP";
+    totalTxByToken[token] = (totalTxByToken[token] ?? 0) + 1;
 
-  for (const tx of icpTxs) {
     const isTo = tx.to.toLowerCase() === acctLower;
     const isFrom = tx.from.toLowerCase() === acctLower;
     if (isTo) {
       totalIn += tx.amount;
-      if (tx.from) counterparties.add(tx.from.toLowerCase());
+      totalInCount += 1;
+      totalInByToken[token] = (totalInByToken[token] ?? 0) + tx.amount;
+      if (tx.from) {
+        counterparties.add(tx.from.toLowerCase());
+        counterpartyCountByToken[token] =
+          (counterpartyCountByToken[token] ?? 0) + 1;
+      }
     } else if (isFrom) {
       totalOut += tx.amount;
-      if (tx.to) counterparties.add(tx.to.toLowerCase());
+      totalOutCount += 1;
+      totalOutByToken[token] = (totalOutByToken[token] ?? 0) + tx.amount;
+      if (tx.to) {
+        counterparties.add(tx.to.toLowerCase());
+        counterpartyCountByToken[token] =
+          (counterpartyCountByToken[token] ?? 0) + 1;
+      }
     }
   }
 
   return {
-    totalTx: icpTxs.length,
+    totalTx: transactions.length,
+    totalTxCapped: transactions.length >= DEFAULT_TX_LIMIT,
     totalIn,
     totalOut,
+    totalInCount,
+    totalOutCount,
     counterpartyCount: counterparties.size,
+    totalTxByToken,
+    totalInByToken,
+    totalOutByToken,
+    counterpartyCountByToken,
   };
 }
 

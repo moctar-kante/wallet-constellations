@@ -29100,11 +29100,22 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$t = [
+const __iconNode$u = [
   ["path", { d: "M17 7 7 17", key: "15tmo1" }],
   ["path", { d: "M17 17H7V7", key: "1org7z" }]
 ];
-const ArrowDownLeft = createLucideIcon("arrow-down-left", __iconNode$t);
+const ArrowDownLeft = createLucideIcon("arrow-down-left", __iconNode$u);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$t = [
+  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
+  ["path", { d: "M19 12H5", key: "x3x0zl" }]
+];
+const ArrowLeft = createLucideIcon("arrow-left", __iconNode$t);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29112,10 +29123,12 @@ const ArrowDownLeft = createLucideIcon("arrow-down-left", __iconNode$t);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$s = [
-  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
-  ["path", { d: "M19 12H5", key: "x3x0zl" }]
+  ["path", { d: "m21 16-4 4-4-4", key: "f6ql7i" }],
+  ["path", { d: "M17 20V4", key: "1ejh1v" }],
+  ["path", { d: "m3 8 4-4 4 4", key: "11wl7u" }],
+  ["path", { d: "M7 4v16", key: "1glfcx" }]
 ];
-const ArrowLeft = createLucideIcon("arrow-left", __iconNode$s);
+const ArrowUpDown = createLucideIcon("arrow-up-down", __iconNode$s);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29123,12 +29136,10 @@ const ArrowLeft = createLucideIcon("arrow-left", __iconNode$s);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$r = [
-  ["path", { d: "m21 16-4 4-4-4", key: "f6ql7i" }],
-  ["path", { d: "M17 20V4", key: "1ejh1v" }],
-  ["path", { d: "m3 8 4-4 4 4", key: "11wl7u" }],
-  ["path", { d: "M7 4v16", key: "1glfcx" }]
+  ["path", { d: "M7 7h10v10", key: "1tivn9" }],
+  ["path", { d: "M7 17 17 7", key: "1vkiza" }]
 ];
-const ArrowUpDown = createLucideIcon("arrow-up-down", __iconNode$r);
+const ArrowUpRight = createLucideIcon("arrow-up-right", __iconNode$r);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29136,10 +29147,9 @@ const ArrowUpDown = createLucideIcon("arrow-up-down", __iconNode$r);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$q = [
-  ["path", { d: "M7 7h10v10", key: "1tivn9" }],
-  ["path", { d: "M7 17 17 7", key: "1vkiza" }]
+  ["path", { d: "m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z", key: "1fy3hk" }]
 ];
-const ArrowUpRight = createLucideIcon("arrow-up-right", __iconNode$q);
+const Bookmark = createLucideIcon("bookmark", __iconNode$q);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29147,62 +29157,64 @@ const ArrowUpRight = createLucideIcon("arrow-up-right", __iconNode$q);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$p = [
-  ["path", { d: "m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z", key: "1fy3hk" }]
-];
-const Bookmark = createLucideIcon("bookmark", __iconNode$p);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$o = [
   ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
   ["path", { d: "M18 17V9", key: "2bz60n" }],
   ["path", { d: "M13 17V5", key: "1frdt8" }],
   ["path", { d: "M8 17v-3", key: "17ska0" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$o);
+const ChartColumn = createLucideIcon("chart-column", __iconNode$p);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$n = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("check", __iconNode$n);
+const __iconNode$o = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("check", __iconNode$o);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$m = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-const ChevronDown = createLucideIcon("chevron-down", __iconNode$m);
+const __iconNode$n = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+const ChevronDown = createLucideIcon("chevron-down", __iconNode$n);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$l = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("chevron-left", __iconNode$l);
+const __iconNode$m = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("chevron-left", __iconNode$m);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$k = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("chevron-right", __iconNode$k);
+const __iconNode$l = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("chevron-right", __iconNode$l);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$j = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
-const ChevronUp = createLucideIcon("chevron-up", __iconNode$j);
+const __iconNode$k = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
+const ChevronUp = createLucideIcon("chevron-up", __iconNode$k);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$j = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+];
+const CircleAlert = createLucideIcon("circle-alert", __iconNode$j);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29211,10 +29223,9 @@ const ChevronUp = createLucideIcon("chevron-up", __iconNode$j);
  */
 const __iconNode$i = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
-  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
 ];
-const CircleAlert = createLucideIcon("circle-alert", __iconNode$i);
+const Clock = createLucideIcon("clock", __iconNode$i);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29222,10 +29233,12 @@ const CircleAlert = createLucideIcon("circle-alert", __iconNode$i);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$h = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
+  ["circle", { cx: "8", cy: "8", r: "6", key: "3yglwk" }],
+  ["path", { d: "M18.09 10.37A6 6 0 1 1 10.34 18", key: "t5s6rm" }],
+  ["path", { d: "M7 6h1v4", key: "1obek4" }],
+  ["path", { d: "m16.71 13.88.7.71-2.82 2.82", key: "1rbuyh" }]
 ];
-const Clock = createLucideIcon("clock", __iconNode$h);
+const Coins = createLucideIcon("coins", __iconNode$h);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -52699,6 +52712,742 @@ var PieChart = generateCategoricalChart({
     outerRadius: "80%"
   }
 });
+const LEDGER_API_BASE = "https://ledger-api.internetcomputer.org";
+const ICRC_API_BASE = "https://icrc-api.internetcomputer.org";
+const DEFAULT_TX_LIMIT = 100;
+function e8sToIcp(val) {
+  const n2 = typeof val === "bigint" ? Number(val) : Number(val);
+  return n2 / 1e8;
+}
+function parseTimestamp(raw) {
+  if (!raw) return (/* @__PURE__ */ new Date()).toISOString();
+  if (typeof raw === "number") {
+    const asMs = raw > 1e15 ? Math.floor(raw / 1e6) : raw > 1e12 ? raw : raw * 1e3;
+    return new Date(asMs).toISOString();
+  }
+  if (typeof raw === "string" && /^\d{18,19}$/.test(raw)) {
+    return new Date(Math.floor(Number(raw) / 1e6)).toISOString();
+  }
+  return new Date(raw).toISOString();
+}
+function extractOwner(val) {
+  if (!val) return "";
+  if (typeof val === "string") return val;
+  if (typeof val === "object") {
+    return String(val.owner ?? val.address ?? "");
+  }
+  return String(val);
+}
+function sha224(data) {
+  let h0 = 3238371032 | 0;
+  let h1 = 914150663 | 0;
+  let h2 = 812702999 | 0;
+  let h3 = 4144912697 | 0;
+  let h4 = 4290775857 | 0;
+  let h5 = 1750603025 | 0;
+  let h6 = 1694076839 | 0;
+  let h7 = 3204075428 | 0;
+  const K2 = [
+    1116352408,
+    1899447441,
+    3049323471,
+    3921009573,
+    961987163,
+    1508970993,
+    2453635748,
+    2870763221,
+    3624381080,
+    310598401,
+    607225278,
+    1426881987,
+    1925078388,
+    2162078206,
+    2614888103,
+    3248222580,
+    3835390401,
+    4022224774,
+    264347078,
+    604807628,
+    770255983,
+    1249150122,
+    1555081692,
+    1996064986,
+    2554220882,
+    2821834349,
+    2952996808,
+    3210313671,
+    3336571891,
+    3584528711,
+    113926993,
+    338241895,
+    666307205,
+    773529912,
+    1294757372,
+    1396182291,
+    1695183700,
+    1986661051,
+    2177026350,
+    2456956037,
+    2730485921,
+    2820302411,
+    3259730800,
+    3345764771,
+    3516065817,
+    3600352804,
+    4094571909,
+    275423344,
+    430227734,
+    506948616,
+    659060556,
+    883997877,
+    958139571,
+    1322822218,
+    1537002063,
+    1747873779,
+    1955562222,
+    2024104815,
+    2227730452,
+    2361852424,
+    2428436474,
+    2756734187,
+    3204031479,
+    3329325298
+  ];
+  const rotr2 = (x3, n2) => (x3 >>> n2 | x3 << 32 - n2) >>> 0;
+  const msgLen = data.length;
+  const bitLen2 = msgLen * 8;
+  const padLen = msgLen + 9 + 63 & -64;
+  const msg = new Uint8Array(padLen);
+  msg.set(data);
+  msg[msgLen] = 128;
+  const view = new DataView(msg.buffer);
+  view.setUint32(padLen - 4, bitLen2 >>> 0, false);
+  view.setUint32(padLen - 8, Math.floor(bitLen2 / 4294967296), false);
+  for (let i = 0; i < padLen; i += 64) {
+    const w2 = new Int32Array(64);
+    for (let j2 = 0; j2 < 16; j2++) {
+      w2[j2] = view.getInt32(i + j2 * 4, false);
+    }
+    for (let j2 = 16; j2 < 64; j2++) {
+      const s0 = rotr2(w2[j2 - 15] >>> 0, 7) ^ rotr2(w2[j2 - 15] >>> 0, 18) ^ w2[j2 - 15] >>> 0 >>> 3;
+      const s1 = rotr2(w2[j2 - 2] >>> 0, 17) ^ rotr2(w2[j2 - 2] >>> 0, 19) ^ w2[j2 - 2] >>> 0 >>> 10;
+      w2[j2] = w2[j2 - 16] + s0 + w2[j2 - 7] + s1 | 0;
+    }
+    let a2 = h0, b2 = h1, c2 = h2, d2 = h3, e3 = h4, f2 = h5, g2 = h6, h8 = h7;
+    for (let j2 = 0; j2 < 64; j2++) {
+      const S1 = rotr2(e3 >>> 0, 6) ^ rotr2(e3 >>> 0, 11) ^ rotr2(e3 >>> 0, 25);
+      const ch = e3 & f2 ^ ~e3 & g2 | 0;
+      const temp1 = h8 + S1 + ch + K2[j2] + w2[j2] | 0;
+      const S0 = rotr2(a2 >>> 0, 2) ^ rotr2(a2 >>> 0, 13) ^ rotr2(a2 >>> 0, 22);
+      const maj = a2 & b2 ^ a2 & c2 ^ b2 & c2 | 0;
+      const temp2 = S0 + maj | 0;
+      h8 = g2;
+      g2 = f2;
+      f2 = e3;
+      e3 = d2 + temp1 | 0;
+      d2 = c2;
+      c2 = b2;
+      b2 = a2;
+      a2 = temp1 + temp2 | 0;
+    }
+    h0 = h0 + a2 | 0;
+    h1 = h1 + b2 | 0;
+    h2 = h2 + c2 | 0;
+    h3 = h3 + d2 | 0;
+    h4 = h4 + e3 | 0;
+    h5 = h5 + f2 | 0;
+    h6 = h6 + g2 | 0;
+    h7 = h7 + h8 | 0;
+  }
+  const result = new Uint8Array(28);
+  const rv = new DataView(result.buffer);
+  rv.setUint32(0, h0 >>> 0, false);
+  rv.setUint32(4, h1 >>> 0, false);
+  rv.setUint32(8, h2 >>> 0, false);
+  rv.setUint32(12, h3 >>> 0, false);
+  rv.setUint32(16, h4 >>> 0, false);
+  rv.setUint32(20, h5 >>> 0, false);
+  rv.setUint32(24, h6 >>> 0, false);
+  return result;
+}
+function crc32(data) {
+  let crc = 4294967295;
+  const table = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c2 = i;
+    for (let j2 = 0; j2 < 8; j2++) c2 = c2 & 1 ? 3988292384 ^ c2 >>> 1 : c2 >>> 1;
+    table[i] = c2;
+  }
+  for (const byte of data) crc = table[(crc ^ byte) & 255] ^ crc >>> 8;
+  return (crc ^ 4294967295) >>> 0;
+}
+function principalToAccountIdentifier(input) {
+  const trimmed = input.trim();
+  if (/^[0-9a-fA-F]{64}$/.test(trimmed)) return trimmed.toLowerCase();
+  try {
+    const principal = Principal$1.fromText(trimmed);
+    const principalBytes = principal.toUint8Array();
+    const domainSep = new TextEncoder().encode("\naccount-id");
+    const subaccount = new Uint8Array(32);
+    const msg = new Uint8Array(
+      domainSep.length + principalBytes.length + subaccount.length
+    );
+    msg.set(domainSep, 0);
+    msg.set(principalBytes, domainSep.length);
+    msg.set(subaccount, domainSep.length + principalBytes.length);
+    const hash = sha224(msg);
+    const checksum = crc32(hash);
+    const checksumBytes = new Uint8Array(4);
+    new DataView(checksumBytes.buffer).setUint32(0, checksum, false);
+    const accountIdBytes = new Uint8Array(32);
+    accountIdBytes.set(checksumBytes, 0);
+    accountIdBytes.set(hash, 4);
+    return Array.from(accountIdBytes).map((b2) => b2.toString(16).padStart(2, "0")).join("");
+  } catch {
+    return null;
+  }
+}
+function normalizeTransaction(raw) {
+  var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z;
+  try {
+    if ((raw == null ? void 0 : raw.from_account_identifier) !== void 0 || (raw == null ? void 0 : raw.to_account_identifier) !== void 0) {
+      const amount = raw.amount ? e8sToIcp(raw.amount) : 0;
+      return {
+        timestamp: parseTimestamp(raw.created_at ?? raw.timestamp),
+        from: String(raw.from_account_identifier ?? ""),
+        to: String(raw.to_account_identifier ?? ""),
+        amount,
+        blockIndex: Number(
+          raw.block_height ?? ((_a3 = raw.block_identifier) == null ? void 0 : _a3.index) ?? raw.block_index ?? 0
+        )
+      };
+    }
+    if ((_b3 = raw == null ? void 0 : raw.transaction) == null ? void 0 : _b3.operations) {
+      const ops = raw.transaction.operations;
+      const txOps = ops.filter(
+        (o2) => o2.type === "TRANSACTION" || o2.type === "Transfer"
+      );
+      const feeOps = ops.filter((o2) => o2.type === "FEE" || o2.type === "Fee");
+      if (txOps.length >= 2) {
+        const senderOp = txOps.find(
+          (o2) => {
+            var _a4;
+            return String(((_a4 = o2.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
+          }
+        );
+        const receiverOp = txOps.find(
+          (o2) => {
+            var _a4;
+            return !String(((_a4 = o2.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
+          }
+        );
+        if (senderOp && receiverOp) {
+          const amountRaw = Math.abs(
+            Number.parseFloat(((_c2 = receiverOp.amount) == null ? void 0 : _c2.value) ?? "0")
+          );
+          const decimals = ((_e2 = (_d2 = receiverOp.amount) == null ? void 0 : _d2.currency) == null ? void 0 : _e2.decimals) ?? 8;
+          return {
+            timestamp: parseTimestamp(raw.timestamp),
+            from: ((_f2 = senderOp.account) == null ? void 0 : _f2.address) ?? "",
+            to: ((_g2 = receiverOp.account) == null ? void 0 : _g2.address) ?? "",
+            amount: amountRaw / 10 ** decimals,
+            blockIndex: ((_h2 = raw.block_identifier) == null ? void 0 : _h2.index) ?? raw.block_index ?? 0
+          };
+        }
+      }
+      const nonFeeOps = ops.filter(
+        (o2) => {
+          var _a4;
+          return !feeOps.includes(o2) && ((_a4 = o2.account) == null ? void 0 : _a4.address);
+        }
+      );
+      if (nonFeeOps.length >= 2) {
+        const amountRaw = Math.abs(
+          Number.parseFloat(((_i2 = nonFeeOps[0].amount) == null ? void 0 : _i2.value) ?? "0")
+        );
+        const decimals = ((_k = (_j2 = nonFeeOps[0].amount) == null ? void 0 : _j2.currency) == null ? void 0 : _k.decimals) ?? 8;
+        return {
+          timestamp: parseTimestamp(raw.timestamp),
+          from: ((_l = nonFeeOps[0].account) == null ? void 0 : _l.address) ?? "",
+          to: ((_m = nonFeeOps[1].account) == null ? void 0 : _m.address) ?? "",
+          amount: amountRaw / 10 ** decimals,
+          blockIndex: ((_n = raw.block_identifier) == null ? void 0 : _n.index) ?? raw.block_index ?? 0
+        };
+      }
+    }
+    if ((raw == null ? void 0 : raw.from) && (raw == null ? void 0 : raw.to)) {
+      let amount = 0;
+      if (typeof raw.amount === "object" && raw.amount !== null) {
+        amount = e8sToIcp(raw.amount.e8s ?? raw.amount.value ?? 0);
+      } else if (typeof raw.amount === "number" || typeof raw.amount === "string") {
+        const numAmt = Number(raw.amount);
+        amount = numAmt > 1e3 ? e8sToIcp(numAmt) : numAmt;
+      }
+      return {
+        timestamp: parseTimestamp(
+          raw.timestamp ?? raw.created_at_time ?? raw.date
+        ),
+        from: String(raw.from),
+        to: String(raw.to),
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? raw.blockIndex ?? 0)
+      };
+    }
+    const op = ((_o = raw == null ? void 0 : raw.transaction) == null ? void 0 : _o.operation) ?? ((_q = (_p = raw == null ? void 0 : raw.transaction) == null ? void 0 : _p.operations) == null ? void 0 : _q[0]);
+    const transfer = (op == null ? void 0 : op.Transfer) ?? (op == null ? void 0 : op.transfer) ?? ((_r = raw == null ? void 0 : raw.transaction) == null ? void 0 : _r.transfer);
+    if (transfer) {
+      const amountVal = ((_s = transfer.amount) == null ? void 0 : _s.e8s) ?? ((_t2 = transfer.amount) == null ? void 0 : _t2.value) ?? transfer.amount ?? 0;
+      return {
+        timestamp: parseTimestamp(
+          ((_v = (_u = raw == null ? void 0 : raw.transaction) == null ? void 0 : _u.created_at_time) == null ? void 0 : _v.timestamp_nanos) ?? (raw == null ? void 0 : raw.created_at_time) ?? (raw == null ? void 0 : raw.timestamp)
+        ),
+        from: String(
+          ((_w = transfer.from) == null ? void 0 : _w.address) ?? transfer.from ?? ((_x = raw == null ? void 0 : raw.transaction) == null ? void 0 : _x.from) ?? ""
+        ),
+        to: String(
+          ((_y = transfer.to) == null ? void 0 : _y.address) ?? transfer.to ?? ((_z = raw == null ? void 0 : raw.transaction) == null ? void 0 : _z.to) ?? ""
+        ),
+        amount: e8sToIcp(amountVal),
+        blockIndex: Number((raw == null ? void 0 : raw.id) ?? (raw == null ? void 0 : raw.block_index) ?? 0)
+      };
+    }
+  } catch {
+  }
+  return null;
+}
+function extractTransactionArray(data) {
+  var _a3, _b3, _c2;
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data == null ? void 0 : data.data)) return data.data;
+  if (Array.isArray(data == null ? void 0 : data.blocks)) return data.blocks;
+  if (Array.isArray(data == null ? void 0 : data.transactions)) return data.transactions;
+  if (Array.isArray((_a3 = data == null ? void 0 : data.data) == null ? void 0 : _a3.transactions)) return data.data.transactions;
+  if (Array.isArray((_b3 = data == null ? void 0 : data.data) == null ? void 0 : _b3.blocks)) return data.data.blocks;
+  if (Array.isArray((_c2 = data == null ? void 0 : data.data) == null ? void 0 : _c2.data)) return data.data.data;
+  if (Array.isArray(data == null ? void 0 : data.result)) return data.result;
+  return [];
+}
+async function fetchWalletTransactions(principal, proxyUrl, limit = DEFAULT_TX_LIMIT) {
+  if (!principal || principal.trim() === "") {
+    return { ok: false, error: "invalid" };
+  }
+  const accountId = principalToAccountIdentifier(principal.trim());
+  if (!accountId) {
+    return { ok: false, error: "invalid" };
+  }
+  const base = proxyUrl ? proxyUrl.replace(/\/$/, "") : LEDGER_API_BASE;
+  const url = `${base}/accounts/${encodeURIComponent(accountId)}/transactions?limit=${limit}`;
+  let response;
+  try {
+    response = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(15e3)
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (err instanceof TypeError && (msg.toLowerCase().includes("failed to fetch") || msg.toLowerCase().includes("networkerror") || msg.toLowerCase().includes("network request failed"))) {
+      return { ok: false, error: "cors" };
+    }
+    return { ok: false, error: "network" };
+  }
+  if (!response.ok) {
+    return { ok: false, error: "http" };
+  }
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    return { ok: false, error: "parse" };
+  }
+  const rawList = extractTransactionArray(data);
+  const transactions = [];
+  for (const raw of rawList) {
+    const tx = normalizeTransaction(raw);
+    if (tx) transactions.push(tx);
+  }
+  if (transactions.length === 0 && rawList.length > 0) {
+    return { ok: false, error: "parse" };
+  }
+  return { ok: true, transactions, accountIdentifier: accountId };
+}
+async function checkExplorerReachable() {
+  try {
+    const r2 = await fetch(`${LEDGER_API_BASE}/`, {
+      method: "HEAD",
+      signal: AbortSignal.timeout(5e3)
+    });
+    return r2.status < 500;
+  } catch {
+    try {
+      const r2 = await fetch(LEDGER_API_BASE, {
+        signal: AbortSignal.timeout(5e3)
+      });
+      return r2.status < 500;
+    } catch {
+      return false;
+    }
+  }
+}
+function testParser() {
+  try {
+    const sample = [
+      {
+        block_height: "1",
+        from_account_identifier: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00",
+        to_account_identifier: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00",
+        amount: "100000000",
+        created_at: 17e8,
+        transfer_type: "send"
+      }
+    ];
+    for (const r2 of sample) {
+      const tx = normalizeTransaction(r2);
+      if (!tx) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+let icrcTokenListCache = null;
+const TOKEN_LIST_TTL_MS = 5 * 60 * 1e3;
+const TOKEN_LIST_MIN_COUNT = 10;
+const TOKEN_LIST_PAGE_SIZE = 100;
+async function fetchIcrcTokenListOnce() {
+  const parsed = [];
+  let cursor = null;
+  for (; ; ) {
+    const url = `${ICRC_API_BASE}/api/v2/ledgers?limit=${TOKEN_LIST_PAGE_SIZE}${cursor ? `&after=${encodeURIComponent(cursor)}` : ""}`;
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(15e3)
+    });
+    if (!res.ok) {
+      throw new Error(`ICRC token list HTTP ${res.status}: ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log(
+      "[ICRC] Raw token list response shape:",
+      typeof data,
+      Array.isArray(data) ? "array" : Object.keys(data ?? {}).join(",")
+    );
+    const list = Array.isArray(data) ? data : (data == null ? void 0 : data.data) ?? (data == null ? void 0 : data.ledgers) ?? [];
+    for (const item of Array.isArray(list) ? list : []) {
+      let symbol = item.symbol ?? item.token_symbol ?? "";
+      let decimals = typeof item.decimals === "number" ? item.decimals : 8;
+      if (Array.isArray(item.icrc1_metadata)) {
+        for (const entry of item.icrc1_metadata) {
+          const key = Array.isArray(entry) ? entry[0] : entry.key;
+          const val = Array.isArray(entry) ? entry[1] : entry.value;
+          if (key === "icrc1:symbol" || key === "icrc1_symbol") {
+            symbol = (val == null ? void 0 : val.Text) ?? (val == null ? void 0 : val.text) ?? String(val ?? "");
+          } else if (key === "icrc1:decimals" || key === "icrc1_decimals") {
+            const raw = (val == null ? void 0 : val.Nat) ?? (val == null ? void 0 : val.nat) ?? (val == null ? void 0 : val.Nat64) ?? (val == null ? void 0 : val.nat64) ?? val;
+            const n2 = Number(raw);
+            if (!Number.isNaN(n2)) decimals = n2;
+          }
+        }
+      } else if (item.icrc1_metadata && typeof item.icrc1_metadata === "object") {
+        symbol = item.icrc1_metadata.icrc1_symbol ?? item.icrc1_metadata["icrc1:symbol"] ?? symbol;
+        const d2 = item.icrc1_metadata.icrc1_decimals ?? item.icrc1_metadata["icrc1:decimals"];
+        if (d2 !== void 0) {
+          const n2 = Number(d2);
+          if (!Number.isNaN(n2)) decimals = n2;
+        }
+      }
+      const canisterId = item.ledger_canister_id ?? item.canister_id ?? item.id ?? "";
+      if (canisterId && symbol) {
+        parsed.push({ canisterId, symbol, decimals });
+      }
+    }
+    const nextCursor = (data == null ? void 0 : data.next_cursor) ?? null;
+    if (!nextCursor || list.length === 0) break;
+    cursor = String(nextCursor);
+  }
+  console.log(`[ICRC] Parsed ${parsed.length} tokens from list`);
+  if (parsed.length > 0) {
+    console.log(
+      "[ICRC] Sample tokens:",
+      parsed.slice(0, 5).map((t2) => `${t2.symbol}(${t2.canisterId.slice(0, 8)})`).join(", ")
+    );
+  }
+  return parsed;
+}
+async function fetchIcrcTokenList() {
+  const now2 = Date.now();
+  if (icrcTokenListCache && icrcTokenListCache.tokens.length >= TOKEN_LIST_MIN_COUNT && now2 - icrcTokenListCache.fetchedAt < TOKEN_LIST_TTL_MS) {
+    console.log(
+      `[ICRC] Token list: ${icrcTokenListCache.tokens.length} tokens (cached)`
+    );
+    return icrcTokenListCache.tokens;
+  }
+  try {
+    let parsed = await fetchIcrcTokenListOnce();
+    console.log(`[ICRC] Token list: ${parsed.length} tokens (fresh)`);
+    if (parsed.length < TOKEN_LIST_MIN_COUNT) {
+      console.warn(
+        `[ICRC] Token list suspect (only ${parsed.length} items) — retrying in 2s`
+      );
+      await new Promise((resolve) => setTimeout(resolve, 2e3));
+      try {
+        const retry = await fetchIcrcTokenListOnce();
+        if (retry.length > parsed.length) {
+          parsed = retry;
+          console.log(
+            `[ICRC] Token list retry: ${parsed.length} tokens (fresh)`
+          );
+        }
+      } catch (retryErr) {
+        console.warn("[ICRC] Token list retry failed:", retryErr);
+      }
+    }
+    if (parsed.length > 0) {
+      icrcTokenListCache = { tokens: parsed, fetchedAt: now2 };
+    }
+    return parsed;
+  } catch (err) {
+    console.error("[ICRC] Token list fetch failed:", err);
+    if (icrcTokenListCache && icrcTokenListCache.tokens.length > 0) {
+      console.warn(
+        "[ICRC] Returning stale token list cache due to fetch error"
+      );
+      return icrcTokenListCache.tokens;
+    }
+    return [];
+  }
+}
+function normalizeIcrcTransaction(raw, decimals) {
+  var _a3, _b3, _c2, _d2, _e2, _f2;
+  try {
+    if (raw.from_owner !== void 0 || raw.to_owner !== void 0) {
+      const kind = String(raw.kind ?? "");
+      if (kind === "mint") {
+        return {
+          timestamp: parseTimestamp(raw.timestamp),
+          from: "minting-account",
+          to: extractOwner(raw.to_owner ?? raw.to_account),
+          amount: Number(raw.amount ?? 0) / 10 ** decimals,
+          blockIndex: Number(raw.index ?? raw.block_index ?? 0)
+        };
+      }
+      if (kind === "burn") {
+        return {
+          timestamp: parseTimestamp(raw.timestamp),
+          from: extractOwner(raw.from_owner ?? raw.from_account),
+          to: "burn-address",
+          amount: Number(raw.amount ?? 0) / 10 ** decimals,
+          blockIndex: Number(raw.index ?? raw.block_index ?? 0)
+        };
+      }
+      return {
+        timestamp: parseTimestamp(raw.timestamp),
+        from: extractOwner(raw.from_owner ?? raw.from_account),
+        to: extractOwner(raw.to_owner ?? raw.to_account),
+        amount: Number(raw.amount ?? 0) / 10 ** decimals,
+        blockIndex: Number(raw.index ?? raw.block_index ?? 0)
+      };
+    }
+    const tx = raw == null ? void 0 : raw.transaction;
+    if (!tx) return null;
+    if (tx.transfer) {
+      const from = extractOwner(((_a3 = tx.transfer.from) == null ? void 0 : _a3.owner) ?? tx.transfer.from);
+      const to = extractOwner(((_b3 = tx.transfer.to) == null ? void 0 : _b3.owner) ?? tx.transfer.to);
+      const amount = Number(tx.transfer.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from,
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
+      };
+    }
+    if (tx.mint) {
+      const to = extractOwner(((_c2 = tx.mint.to) == null ? void 0 : _c2.owner) ?? tx.mint.to);
+      const amount = Number(tx.mint.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from: "minting-account",
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
+      };
+    }
+    if (tx.burn) {
+      const from = extractOwner(((_d2 = tx.burn.from) == null ? void 0 : _d2.owner) ?? tx.burn.from);
+      const amount = Number(tx.burn.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
+        from,
+        to: "burn-address",
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
+      };
+    }
+    if (raw.from !== void 0 && raw.to !== void 0) {
+      const from = extractOwner(((_e2 = raw.from) == null ? void 0 : _e2.owner) ?? raw.from);
+      const to = extractOwner(((_f2 = raw.to) == null ? void 0 : _f2.owner) ?? raw.to);
+      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
+      return {
+        timestamp: parseTimestamp(raw.timestamp ?? raw.created_at),
+        from,
+        to,
+        amount,
+        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
+      };
+    }
+  } catch {
+  }
+  return null;
+}
+async function sleep$1(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+async function fetchIcrcTransactions(canisterId, accountId, limit = 100, symbol = "UNKNOWN", decimals = 8, debugEntries, originalPrincipal) {
+  async function tryFetch(acctId, addrFormat) {
+    try {
+      const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(acctId)}/transactions?limit=${limit}`;
+      const res = await fetch(url, {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(15e3)
+      });
+      if (!res.ok) {
+        const errMsg = `HTTP ${res.status}`;
+        if (res.status === 429 || res.status === 503) {
+          console.warn(
+            `[ICRC] FAILED ${symbol} (${canisterId.slice(0, 8)}): ${errMsg} — backoff 1s retry`
+          );
+          await sleep$1(1e3);
+          const retry = await fetch(url, {
+            headers: { Accept: "application/json" },
+            signal: AbortSignal.timeout(15e3)
+          });
+          if (!retry.ok) {
+            return {
+              txs: [],
+              httpStatus: retry.status,
+              error: `HTTP ${retry.status}`
+            };
+          }
+          const retryData = await retry.json();
+          return {
+            txs: parseTxs(retryData, decimals, symbol, addrFormat),
+            httpStatus: retry.status
+          };
+        }
+        return { txs: [], httpStatus: res.status, error: errMsg };
+      }
+      const data = await res.json();
+      return {
+        txs: parseTxs(data, decimals, symbol, addrFormat),
+        httpStatus: res.status
+      };
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.error(
+        `[ICRC] Failed ${symbol} (${canisterId.slice(0, 8)}) [${addrFormat}]:`,
+        errMsg
+      );
+      return { txs: [], error: errMsg };
+    }
+  }
+  function parseTxs(data, dec, sym, addrFormat) {
+    const rawList = extractTransactionArray(data);
+    if (rawList.length === 0) return [];
+    const txs = [];
+    for (const raw of rawList) {
+      const tx = normalizeIcrcTransaction(raw, dec);
+      if (tx) {
+        tx.token = sym;
+        tx.decimals = dec;
+        txs.push(tx);
+      }
+    }
+    return txs;
+  }
+  const trimmed = accountId.trim();
+  const isHex = /^[0-9a-fA-F]{64}$/.test(trimmed);
+  const addressesToTry = [];
+  addressesToTry.push({ id: trimmed, format: isHex ? "hex" : "principal" });
+  if (!isHex) {
+    const hexId = principalToAccountIdentifier(trimmed);
+    if (hexId && hexId !== trimmed) {
+      addressesToTry.push({ id: hexId, format: "hex" });
+    }
+  }
+  if (originalPrincipal) {
+    const origTrimmed = originalPrincipal.trim();
+    const origIsHex = /^[0-9a-fA-F]{64}$/.test(origTrimmed);
+    if (!addressesToTry.some((a2) => a2.id === origTrimmed)) {
+      addressesToTry.push({
+        id: origTrimmed,
+        format: origIsHex ? "hex" : "principal"
+      });
+    }
+    if (!origIsHex) {
+      const origHexId = principalToAccountIdentifier(origTrimmed);
+      if (origHexId && !addressesToTry.some((a2) => a2.id === origHexId)) {
+        addressesToTry.push({ id: origHexId, format: "hex" });
+      }
+    }
+  }
+  const principalCandidates = addressesToTry.filter(
+    (a2) => a2.format === "principal"
+  );
+  const hexCandidates = addressesToTry.filter((a2) => a2.format === "hex");
+  const ordered = [...principalCandidates, ...hexCandidates];
+  let lastError;
+  let lastHttpStatus;
+  const first = ordered[0];
+  if (first) {
+    const result = await tryFetch(first.id, first.format);
+    if (result.txs.length > 0) {
+      if (debugEntries) {
+        debugEntries.push({
+          symbol,
+          canisterId,
+          resultCount: result.txs.length,
+          addressFormat: first.format
+        });
+      }
+      return result.txs;
+    }
+    if (result.error) lastError = result.error;
+    if (result.httpStatus) lastHttpStatus = result.httpStatus;
+  }
+  const fallbacks = ordered.slice(1);
+  if (fallbacks.length > 0) {
+    const results = await Promise.all(
+      fallbacks.map((attempt) => tryFetch(attempt.id, attempt.format))
+    );
+    for (let i = 0; i < results.length; i++) {
+      const result = results[i];
+      if (result.txs.length > 0) {
+        if (debugEntries) {
+          debugEntries.push({
+            symbol,
+            canisterId,
+            resultCount: result.txs.length,
+            addressFormat: fallbacks[i].format
+          });
+        }
+        return result.txs;
+      }
+      if (result.error) lastError = result.error;
+      if (result.httpStatus) lastHttpStatus = result.httpStatus;
+    }
+  }
+  if (debugEntries) {
+    debugEntries.push({
+      symbol,
+      canisterId,
+      resultCount: 0,
+      addressFormat: "none",
+      error: lastError,
+      httpStatus: lastHttpStatus
+    });
+  }
+  return [];
+}
 function filterByTimeRange(transactions, range3) {
   if (range3 === "all") return transactions;
   const now2 = Date.now();
@@ -52718,24 +53467,45 @@ function filterByTimeRange(transactions, range3) {
     return !Number.isNaN(ts) && ts >= cutoff;
   });
 }
-function getDailyActivity(transactions, principal) {
+function bucketKey(timestamp, interval2) {
+  if (interval2 === "hour") return timestamp.slice(0, 13);
+  if (interval2 === "day") return timestamp.slice(0, 10);
+  const date2 = new Date(timestamp);
+  if (Number.isNaN(date2.getTime())) return timestamp.slice(0, 10);
+  const d2 = new Date(
+    Date.UTC(date2.getUTCFullYear(), date2.getUTCMonth(), date2.getUTCDate())
+  );
+  const dayNum = d2.getUTCDay() || 7;
+  d2.setUTCDate(d2.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d2.getUTCFullYear(), 0, 1));
+  const weekNum = Math.ceil(
+    ((d2.getTime() - yearStart.getTime()) / 864e5 + 1) / 7
+  );
+  return `${d2.getUTCFullYear()}-W${String(weekNum).padStart(2, "0")}`;
+}
+function getDailyActivity(transactions, principal, interval2 = "day") {
   const principalLower = principal.toLowerCase();
-  const byDay = /* @__PURE__ */ new Map();
+  const accountIdLower = (principalToAccountIdentifier(principal) ?? "").toLowerCase();
+  const byBucket = /* @__PURE__ */ new Map();
   for (const tx of transactions) {
-    const day = tx.timestamp.slice(0, 10);
-    if (!byDay.has(day)) {
-      byDay.set(day, { txIn: 0, txOut: 0, volIn: 0, volOut: 0 });
+    const key = bucketKey(tx.timestamp, interval2);
+    if (!byBucket.has(key)) {
+      byBucket.set(key, { txIn: 0, txOut: 0, volIn: 0, volOut: 0 });
     }
-    const entry = byDay.get(day);
-    if (tx.to.toLowerCase() === principalLower) {
+    const entry = byBucket.get(key);
+    const toLower = tx.to.toLowerCase();
+    const fromLower = tx.from.toLowerCase();
+    const isIn = toLower === principalLower || accountIdLower !== "" && toLower === accountIdLower;
+    const isOut = fromLower === principalLower || accountIdLower !== "" && fromLower === accountIdLower;
+    if (isIn) {
       entry.txIn += 1;
       entry.volIn += tx.amount;
-    } else if (tx.from.toLowerCase() === principalLower) {
+    } else if (isOut) {
       entry.txOut += 1;
       entry.volOut += tx.amount;
     }
   }
-  return [...byDay.entries()].sort(([a2], [b2]) => a2.localeCompare(b2)).map(([date2, v2]) => ({ date: date2, ...v2 }));
+  return [...byBucket.entries()].sort(([a2], [b2]) => a2.localeCompare(b2)).map(([date2, v2]) => ({ date: date2, ...v2 }));
 }
 function getWeeklyActivity(transactions, principal) {
   const principalLower = principal.toLowerCase();
@@ -52792,12 +53562,23 @@ function detectWhale(transactions, address, allAddresses) {
   const myVolume = volumes.get(address.toLowerCase()) ?? 0;
   return myVolume > 1e4;
 }
-const GREEN = "#3FE08C";
-const AMBER = "#F0B35A";
-const GRID_COLOR = "#22324A";
-const TEXT_COLOR = "#9FB0C8";
-function isChainKeyBtc$3(token) {
+function cssVar$3(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+const GREEN = cssVar$3("--chart-in");
+const AMBER = cssVar$3("--chart-out");
+const GRID_COLOR = cssVar$3("--chart-grid");
+const TEXT_COLOR = cssVar$3("--chart-text");
+const INTERVALS = [
+  { value: "hour", label: "Hour" },
+  { value: "day", label: "Day" },
+  { value: "week", label: "Week" }
+];
+function isChainKeyBtc$4(token) {
   return /btc/i.test(token);
+}
+function hasChainKeyBtc(transactions) {
+  return transactions.some((tx) => isChainKeyBtc$4(tx.token ?? "ICP"));
 }
 function dominantToken(transactions) {
   const vol = /* @__PURE__ */ new Map();
@@ -52815,19 +53596,35 @@ function dominantToken(transactions) {
   }
   return best;
 }
-function ActivityChart({ transactions, principal }) {
+function formatBucketLabel(date2, interval2) {
+  if (interval2 === "hour") {
+    return `${date2.slice(5, 10)} ${date2.slice(11, 13)}:00`;
+  }
+  if (interval2 === "week") {
+    return date2.slice(5);
+  }
+  return date2.slice(5);
+}
+function ActivityChart({
+  transactions,
+  principal,
+  btcUnit,
+  onBtcUnitChange
+}) {
   const [mode, setMode] = reactExports.useState("tx");
-  const daily = getDailyActivity(transactions, principal);
+  const [interval2, setInterval2] = reactExports.useState("day");
+  const daily = getDailyActivity(transactions, principal, interval2);
   const token = dominantToken(transactions);
-  const isBtc = isChainKeyBtc$3(token);
+  const isBtc = isChainKeyBtc$4(token);
+  const showBtcToggle = hasChainKeyBtc(transactions);
   const chartData = daily.map((d2) => ({
-    date: d2.date.slice(5),
-    // MM-DD
-    in: mode === "tx" ? d2.txIn : isBtc ? Math.round(d2.volIn * 1e8) : d2.volIn,
-    out: mode === "tx" ? d2.txOut : isBtc ? Math.round(d2.volOut * 1e8) : d2.volOut
+    date: formatBucketLabel(d2.date, interval2),
+    in: mode === "tx" ? d2.txIn : isBtc && btcUnit === "sats" ? Math.round(d2.volIn * 1e8) : d2.volIn,
+    out: mode === "tx" ? d2.txOut : isBtc && btcUnit === "sats" ? Math.round(d2.volOut * 1e8) : d2.volOut
   }));
+  const volumeUnitLabel = isBtc ? btcUnit === "sats" ? "sats" : "BTC" : "ICP";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-2 items-center", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
@@ -52835,7 +53632,7 @@ function ActivityChart({ transactions, principal }) {
           "data-ocid": "wallet.toggle",
           onClick: () => setMode("tx"),
           className: `text-xs px-3 py-1 rounded border transition-colors ${mode === "tx" ? "bg-neon-blue/20 border-neon-blue/50 text-neon-blue" : "bg-muted/50 border-border text-muted-foreground hover:text-foreground"}`,
-          children: "Daily Tx Count"
+          children: "Tx Count"
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -52845,9 +53642,49 @@ function ActivityChart({ transactions, principal }) {
           "data-ocid": "wallet.toggle",
           onClick: () => setMode("volume"),
           className: `text-xs px-3 py-1 rounded border transition-colors ${mode === "volume" ? "bg-neon-amber/20 border-neon-amber/50 text-neon-amber" : "bg-muted/50 border-border text-muted-foreground hover:text-foreground"}`,
-          children: "Daily Volume"
+          children: "Volume"
         }
-      )
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className: "flex items-center gap-0.5 rounded-md border border-border p-0.5",
+          "data-ocid": "wallet.interval_toggle",
+          children: INTERVALS.map(({ value, label }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              "data-ocid": "wallet.interval_toggle",
+              onClick: () => setInterval2(value),
+              className: `text-[10px] px-2 py-0.5 rounded transition-colors ${interval2 === value ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+              children: label
+            },
+            value
+          ))
+        }
+      ),
+      mode === "volume" && showBtcToggle && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 rounded-md border border-border p-0.5 ml-auto", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "wallet.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("btc"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "BTC"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "wallet.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("sats"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "sats"
+          }
+        )
+      ] })
     ] }),
     chartData.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center h-48 text-xs text-muted-foreground", children: "No chart data available" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: 220, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
       LineChart,
@@ -52877,11 +53714,11 @@ function ActivityChart({ transactions, principal }) {
             Tooltip,
             {
               contentStyle: {
-                background: "#0E1626",
-                border: "1px solid #22324A",
+                background: cssVar$3("--chart-tooltip-bg"),
+                border: `1px solid ${cssVar$3("--chart-tooltip-border")}`,
                 borderRadius: "6px",
                 fontSize: "11px",
-                color: "#E9EEF7"
+                color: cssVar$3("--chart-tooltip-text")
               },
               labelStyle: { color: TEXT_COLOR }
             }
@@ -52892,7 +53729,7 @@ function ActivityChart({ transactions, principal }) {
             {
               type: "monotone",
               dataKey: "in",
-              name: mode === "tx" ? "Incoming Txs" : isBtc ? "Volume In (sats)" : "Volume In (ICP)",
+              name: mode === "tx" ? "Incoming Txs" : `Volume In (${volumeUnitLabel})`,
               stroke: GREEN,
               strokeWidth: 2,
               dot: false,
@@ -52904,7 +53741,7 @@ function ActivityChart({ transactions, principal }) {
             {
               type: "monotone",
               dataKey: "out",
-              name: mode === "tx" ? "Outgoing Txs" : isBtc ? "Volume Out (sats)" : "Volume Out (ICP)",
+              name: mode === "tx" ? "Outgoing Txs" : `Volume Out (${volumeUnitLabel})`,
               stroke: AMBER,
               strokeWidth: 2,
               dot: false,
@@ -53130,65 +53967,6 @@ function Button({
     }
   );
 }
-function shortenId$2(id2) {
-  if (id2.length <= 14) return id2;
-  return `${id2.slice(0, 8)}…${id2.slice(-4)}`;
-}
-function BreadcrumbNav({
-  historyStack,
-  currentPrincipal,
-  onBack,
-  onReset,
-  onJumpTo
-}) {
-  if (historyStack.length === 0) return null;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sticky top-[60px] z-30 flex items-center gap-2 px-4 py-2 border-b border-border bg-muted/30 text-xs text-muted-foreground", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      Button,
-      {
-        "data-ocid": "wallet.secondary_button",
-        variant: "ghost",
-        size: "sm",
-        onClick: onBack,
-        className: "h-6 px-2 text-xs text-neon-blue hover:text-neon-blue/80 hover:bg-neon-blue/10",
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { className: "h-3 w-3 mr-1" }),
-          "Back"
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 overflow-x-auto", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
-        {
-          type: "button",
-          "data-ocid": "wallet.link",
-          onClick: onReset,
-          className: "text-muted-foreground hover:text-foreground transition-colors cursor-pointer",
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(House, { className: "h-3 w-3" })
-        }
-      ),
-      historyStack.map((p2, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: history positions are stable indices
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-3 w-3" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              type: "button",
-              "data-ocid": "wallet.link",
-              onClick: () => onJumpTo(i),
-              className: "font-mono opacity-60 hover:opacity-100 hover:text-foreground cursor-pointer transition-colors",
-              children: shortenId$2(p2)
-            }
-          )
-        ] }, i)
-      )),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-3 w-3" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-neon-blue", children: shortenId$2(currentPrincipal) })
-    ] })
-  ] });
-}
 function Input({ className, type, ...props }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "input",
@@ -53271,6 +54049,200 @@ function Label({
       ...props
     }
   );
+}
+function AddTokenModal({ onAddToken, onClose }) {
+  const [canisterId, setCanisterId] = reactExports.useState("");
+  const [submitting, setSubmitting] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState(null);
+  const inputRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    var _a3;
+    (_a3 = inputRef.current) == null ? void 0 : _a3.focus();
+  }, []);
+  reactExports.useEffect(() => {
+    const onKey = (e3) => {
+      if (e3.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  const trimmed = canisterId.trim();
+  const canSubmit = trimmed.length > 0 && !submitting;
+  const handleSubmit = async (e3) => {
+    e3.preventDefault();
+    if (!canSubmit) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      await onAddToken(trimmed);
+      onClose();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Could not add this token."
+      );
+      setSubmitting(false);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "dialog",
+    {
+      open: true,
+      className: "fixed inset-0 z-50 flex items-center justify-center m-0 w-full h-full max-w-none max-h-none bg-transparent border-0",
+      "aria-label": "Add token by canister ID",
+      "data-ocid": "add_token.dialog",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "absolute inset-0 bg-background/80 backdrop-blur-sm",
+            onClick: onClose,
+            onKeyDown: (e3) => e3.key === "Enter" && onClose()
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 w-full max-w-md bg-card border border-border rounded-xl shadow-2xl p-6", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-8 w-8 items-center justify-center rounded-full border border-neon-blue/30 bg-neon-blue/10", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Coins, { className: "h-4 w-4 text-neon-blue" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-semibold text-foreground", children: "Add Token" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: onClose,
+                "aria-label": "Close add token modal",
+                "data-ocid": "add_token.close_button",
+                className: "flex items-center justify-center w-7 h-7 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1.5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Label,
+                {
+                  htmlFor: "add-token-canister",
+                  className: "text-xs font-medium text-muted-foreground",
+                  children: "Ledger Canister ID"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Input,
+                {
+                  id: "add-token-canister",
+                  ref: inputRef,
+                  "data-ocid": "add_token.input",
+                  placeholder: "e.g. mxzaz-hqaaa-aaaar-qaada-cai",
+                  value: canisterId,
+                  onChange: (e3) => setCanisterId(e3.target.value),
+                  className: "bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-neon-blue/50 focus:border-neon-blue/50 font-mono text-sm"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-muted-foreground", children: "Add any ICRC-1 ledger by its canister ID. The ICRC API only serves SNS-governed and chain-key tokens automatically — this manual flow covers the rest." })
+            ] }),
+            error && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-400",
+                "data-ocid": "add_token.error_state",
+                children: error
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2 pt-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button,
+                {
+                  type: "button",
+                  variant: "ghost",
+                  onClick: onClose,
+                  disabled: submitting,
+                  "data-ocid": "add_token.cancel_button",
+                  className: "flex-1 text-muted-foreground hover:text-foreground",
+                  children: "Cancel"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button,
+                {
+                  type: "submit",
+                  disabled: !canSubmit,
+                  "data-ocid": "add_token.submit_button",
+                  className: "flex-1 bg-neon-blue/20 border border-neon-blue/40 text-neon-blue hover:bg-neon-blue/30 hover:border-neon-blue/60 disabled:opacity-40",
+                  children: submitting ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "h-4 w-4 mr-1.5 animate-spin" }),
+                    "Adding…"
+                  ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Coins, { className: "h-4 w-4 mr-1.5" }),
+                    "Add Token"
+                  ] })
+                }
+              )
+            ] })
+          ] })
+        ] })
+      ]
+    }
+  );
+}
+function shortenId$2(id2) {
+  if (id2.length <= 14) return id2;
+  return `${id2.slice(0, 8)}…${id2.slice(-4)}`;
+}
+function BreadcrumbNav({
+  historyStack,
+  currentPrincipal,
+  onBack,
+  onReset,
+  onJumpTo
+}) {
+  if (historyStack.length === 0) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sticky top-[60px] z-30 flex items-center gap-2 px-4 py-2 border-b border-border bg-muted/30 text-xs text-muted-foreground", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      Button,
+      {
+        "data-ocid": "wallet.secondary_button",
+        variant: "ghost",
+        size: "sm",
+        onClick: onBack,
+        className: "h-6 px-2 text-xs text-neon-blue hover:text-neon-blue/80 hover:bg-neon-blue/10",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { className: "h-3 w-3 mr-1" }),
+          "Back"
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 overflow-x-auto", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          type: "button",
+          "data-ocid": "wallet.link",
+          onClick: onReset,
+          className: "text-muted-foreground hover:text-foreground transition-colors cursor-pointer",
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(House, { className: "h-3 w-3" })
+        }
+      ),
+      historyStack.map((p2, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: history positions are stable indices
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-3 w-3" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              "data-ocid": "wallet.link",
+              onClick: () => onJumpTo(i),
+              className: "font-mono opacity-60 hover:opacity-100 hover:text-foreground cursor-pointer transition-colors",
+              children: shortenId$2(p2)
+            }
+          )
+        ] }, i)
+      )),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-3 w-3" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-neon-blue", children: shortenId$2(currentPrincipal) })
+    ] })
+  ] });
 }
 function ComparisonModeModal({
   onCompare,
@@ -53962,13 +54934,13 @@ Timer.prototype = timer.prototype = {
     }
     this._call = callback;
     this._time = time2;
-    sleep$1();
+    sleep();
   },
   stop: function() {
     if (this._call) {
       this._call = null;
       this._time = Infinity;
-      sleep$1();
+      sleep();
     }
   }
 };
@@ -54014,9 +54986,9 @@ function nap() {
     }
   }
   taskTail = t02;
-  sleep$1(time2);
+  sleep(time2);
 }
-function sleep$1(time2) {
+function sleep(time2) {
   if (frame) return;
   if (timeout$1) timeout$1 = clearTimeout(timeout$1);
   var delay = time2 - clockNow;
@@ -56025,17 +56997,33 @@ function useTheme() {
   }, []);
   return { theme, setTheme, toggleTheme };
 }
-const LEVEL_PALETTE = {
-  dark: ["#00c8ff", "#7b68ee", "#ff9800", "#4caf50"],
-  light: ["#00c8ff", "#7b3fb0", "#c45e00", "#0e7a6e"]
-};
-function isChainKeyBtc$2(token) {
+function cssVar$2(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+function levelPalette() {
+  return [
+    cssVar$2("--graph-level-0"),
+    cssVar$2("--graph-level-1"),
+    cssVar$2("--graph-level-2"),
+    cssVar$2("--graph-level-3")
+  ];
+}
+function isChainKeyBtc$3(token) {
   return /btc/i.test(token);
 }
-function formatAmount$1(n2, token = "ICP") {
-  if (isChainKeyBtc$2(token)) {
-    const sats = Math.round(n2 * 1e8);
-    return `${sats.toLocaleString()} sats`;
+function edgeHasBtc(edge) {
+  return [
+    ...Object.keys(edge.inAmountByToken || {}),
+    ...Object.keys(edge.outAmountByToken || {})
+  ].some((t2) => isChainKeyBtc$3(t2));
+}
+function formatAmount$1(n2, token = "ICP", btcUnit = "sats") {
+  if (isChainKeyBtc$3(token)) {
+    if (btcUnit === "sats") {
+      const sats = Math.round(n2 * 1e8);
+      return `${sats.toLocaleString()} sats`;
+    }
+    return `${n2.toFixed(8)} BTC`;
   }
   if (n2 >= 1e6) return `${(n2 / 1e6).toFixed(3)}M`;
   if (n2 >= 1e3) return `${(n2 / 1e3).toFixed(3)}k`;
@@ -56046,52 +57034,52 @@ function truncateAddress(addr) {
   return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 }
 function tokenColor(token) {
-  if (token === "ICP") return "rgba(85,119,255,0.85)";
+  if (token === "ICP") return cssVar$2("--graph-edge-icp");
   let hash = 0;
   for (let i = 0; i < token.length; i++)
     hash = hash * 31 + token.charCodeAt(i) >>> 0;
-  const hue = hash % 360;
-  return `hsl(${hue},70%,65%)`;
+  const idx = hash % 6 + 1;
+  return cssVar$2(`--graph-token-${idx}`);
 }
-function nodeColor(node, isDark) {
+function nodeColor(node) {
   if (node.isCenter)
     return {
-      fill: "#00c8ff",
-      glow: "#00c8ff"
+      fill: cssVar$2("--graph-node-center"),
+      glow: cssVar$2("--graph-node-center")
     };
   if (node.isWhale)
     return {
-      fill: isDark ? "#ff9800" : "#b85c00",
-      glow: isDark ? "#ff9800" : "#b85c00"
+      fill: cssVar$2("--graph-node-whale"),
+      glow: cssVar$2("--graph-node-whale")
     };
   const id2 = node.identity;
   if (id2) {
     switch (id2.type) {
       case "sns":
         return {
-          fill: isDark ? "#4caf50" : "#2a7a40",
-          glow: isDark ? "#4caf50" : "#2a7a40"
+          fill: cssVar$2("--graph-node-sns"),
+          glow: cssVar$2("--graph-node-sns")
         };
       case "dex":
         return {
-          fill: isDark ? "#ffc107" : "#b87c00",
-          glow: isDark ? "#ffc107" : "#b87c00"
+          fill: cssVar$2("--graph-node-dex"),
+          glow: cssVar$2("--graph-node-dex")
         };
       case "neuron":
         return {
-          fill: isDark ? "#3f51b5" : "#283593",
-          glow: isDark ? "#3f51b5" : "#283593"
+          fill: cssVar$2("--graph-node-neuron"),
+          glow: cssVar$2("--graph-node-neuron")
         };
       case "nns":
         return {
-          fill: "#9c27b0",
-          glow: "#9c27b0"
+          fill: cssVar$2("--graph-node-nns"),
+          glow: cssVar$2("--graph-node-nns")
         };
     }
   }
   return {
-    fill: isDark ? "#4a6fa5" : "#2a6496",
-    glow: isDark ? "#5577ff" : "#2a6496"
+    fill: cssVar$2("--graph-node-default"),
+    glow: cssVar$2("--graph-node-glow-default")
   };
 }
 function edgeStrokeWidth(edge, mode = "volume") {
@@ -56110,12 +57098,19 @@ function bezierControlPoint(x1, y1, x22, y2, edgeIndex) {
   const sign2 = edgeIndex % 2 === 0 ? 1 : -1;
   return { cx: mx + px * bulge * sign2, cy: my + py * bulge * sign2 };
 }
-const STARS = Array.from({ length: 220 }, (_2, i) => ({
+const DISTANT_STARS = Array.from({ length: 150 }, (_2, i) => ({
   id: i,
   cx: Math.sin(i * 137.508 * (Math.PI / 180)) * 50 + 50,
   cy: Math.cos(i * 97.3 * (Math.PI / 180)) * 50 + 50,
-  r: 0.5 + i % 5 * 0.35,
-  opacity: 0.2 + i % 7 * 0.085
+  r: 0.4 + i % 4 * 0.25,
+  opacity: 0.18 + i % 6 * 0.06
+}));
+const NEAR_STARS = Array.from({ length: 70 }, (_2, i) => ({
+  id: i,
+  cx: Math.sin(i * 137.508 * (Math.PI / 180) + 40) * 50 + 50,
+  cy: Math.cos(i * 97.3 * (Math.PI / 180) + 40) * 50 + 50,
+  r: 0.8 + i % 5 * 0.4,
+  opacity: 0.35 + i % 5 * 0.1
 }));
 function ConstellationGraph({
   nodes,
@@ -56138,7 +57133,9 @@ function ConstellationGraph({
   onDepthChange,
   depthLoading,
   showCrossEdges,
-  onShowCrossEdgesChange
+  onShowCrossEdgesChange,
+  btcUnit = "sats",
+  onBtcUnitChange
 }) {
   const labels = externalLabels ?? _labelsLegacy ?? {};
   const favorites = _favoritesLegacy ?? /* @__PURE__ */ new Set();
@@ -56163,13 +57160,13 @@ function ConstellationGraph({
   }, [setTheme]);
   const isDark = theme === "dark";
   const LEGEND_ITEMS = [
-    { dark: "#00c8ff", light: "#00c8ff", label: "Center wallet" },
-    { dark: "#4a6fa5", light: "#2a6496", label: "Counterparty" },
-    { dark: "#ff9800", light: "#b85c00", label: "Whale: > 10k ICP" },
-    { dark: "#4caf50", light: "#2a7a40", label: "SNS / Project" },
-    { dark: "#ffc107", light: "#b87c00", label: "DEX / Exchange" },
-    { dark: "#3f51b5", light: "#283593", label: "Neuron" },
-    { dark: "#9c27b0", light: "#9c27b0", label: "NNS" }
+    { color: cssVar$2("--graph-node-center"), label: "Center wallet" },
+    { color: cssVar$2("--graph-node-default"), label: "Counterparty" },
+    { color: cssVar$2("--graph-node-whale"), label: "Whale: > 10k ICP" },
+    { color: cssVar$2("--graph-node-sns"), label: "SNS / Project" },
+    { color: cssVar$2("--graph-node-dex"), label: "DEX / Exchange" },
+    { color: cssVar$2("--graph-node-neuron"), label: "Neuron" },
+    { color: cssVar$2("--graph-node-nns"), label: "NNS" }
   ];
   const [settingsPanelOpen, setSettingsPanelOpen] = reactExports.useState(false);
   const [showLabels, setShowLabels] = reactExports.useState(true);
@@ -56289,10 +57286,32 @@ function ConstellationGraph({
   reactExports.useEffect(() => {
     simNodesRef.current = simNodes;
   }, [simNodes]);
+  const zoomSettleTimerRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    if (zoomSettleTimerRef.current) clearTimeout(zoomSettleTimerRef.current);
+    zoomSettleTimerRef.current = setTimeout(() => {
+      const sim = simRef.current;
+      if (!sim) return;
+      const k2 = transform.k;
+      const charge = -420 * (0.6 + k2 * 0.7);
+      const collideScale = 0.7 + k2 * 0.5;
+      sim.force("charge", manyBody().strength(charge));
+      sim.force(
+        "collide",
+        collide().radius((d2) => (d2.isCenter ? 30 : 22) * collideScale)
+      );
+      sim.alpha(1).restart();
+    }, 300);
+    return () => {
+      if (zoomSettleTimerRef.current) clearTimeout(zoomSettleTimerRef.current);
+    };
+  }, [transform.k]);
   reactExports.useEffect(() => {
     if (!gRef.current || simNodesRef.current.length === 0) return;
     const g2 = select(gRef.current);
-    const levelPalette = isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light;
+    const palette = levelPalette();
+    const labelColor = cssVar$2("--graph-label");
+    const themeColors = theme === "dark" ? { label: labelColor } : { label: labelColor };
     g2.selectAll("circle").each(function() {
       var _a3;
       const circle = select(this);
@@ -56303,14 +57322,14 @@ function ConstellationGraph({
       const node = simNodesRef.current.find((n2) => n2.id === nodeId);
       if (!node) return;
       if (circle.attr("data-role") === "node-fill") {
-        const fill = colorByLevel ? levelPalette[(node.depth ?? 0) % levelPalette.length] : nodeColor(node, isDark).fill;
+        const fill = colorByLevel ? palette[(node.depth ?? 0) % palette.length] : nodeColor(node).fill;
         circle.attr("fill", fill);
       } else if (circle.attr("data-role") === "node-glow") {
         if (colorByLevel) {
-          const levelCol = levelPalette[(node.depth ?? 0) % levelPalette.length];
+          const levelCol = palette[(node.depth ?? 0) % palette.length];
           circle.attr("fill", `${levelCol}4d`);
         } else {
-          const { glow } = nodeColor(node, isDark);
+          const { glow } = nodeColor(node);
           circle.attr("fill", glow);
         }
       }
@@ -56318,15 +57337,16 @@ function ConstellationGraph({
     g2.selectAll("path").each(function() {
       const path = select(this);
       if (path.attr("stroke") === "transparent") return;
-      path.attr("stroke", isDark ? "rgba(100,140,220,0.55)" : "#888888");
+      const token = path.attr("data-token") || "ICP";
+      path.attr("stroke", tokenColor(token));
     });
     g2.selectAll("text").each(function() {
       const text = select(this);
       if (text.attr("fontSize") === "9") {
-        text.attr("fill", isDark ? "rgba(180,200,240,0.75)" : "#111111");
+        text.attr("fill", themeColors.label);
       }
     });
-  }, [isDark, colorByLevel]);
+  }, [theme, colorByLevel]);
   const nodeMap = reactExports.useMemo(() => {
     const m2 = /* @__PURE__ */ new Map();
     for (const n2 of simNodes) m2.set(n2.id, n2);
@@ -56485,7 +57505,13 @@ function ConstellationGraph({
       ])
     );
     if (tokens.length === 0)
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: "#7799cc", fontSize: 11 }, children: "No token data" });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          style: { color: cssVar$2("--graph-overlay-text-dim"), fontSize: 11 },
+          children: "No token data"
+        }
+      );
     return tokens.map((token) => {
       var _a3, _b3, _c2, _d2;
       const inAmt = ((_a3 = edge.inAmountByToken) == null ? void 0 : _a3[token]) || 0;
@@ -56500,28 +57526,53 @@ function ConstellationGraph({
             children: token
           }
         ),
-        inAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: "#44ff88", fontSize: 11, paddingLeft: 8 }, children: [
-          "↓ ",
-          formatAmount$1(inAmt, token),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
-            " (",
-            inCnt,
-            ")"
-          ] })
-        ] }),
-        outAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { color: "#ffaa44", fontSize: 11, paddingLeft: 8 }, children: [
-          "↑ ",
-          formatAmount$1(outAmt, token),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
-            " (",
-            outCnt,
-            ")"
-          ] })
-        ] })
+        inAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            style: {
+              color: cssVar$2("--graph-in"),
+              fontSize: 11,
+              paddingLeft: 8
+            },
+            children: [
+              "↓ ",
+              formatAmount$1(inAmt, token, btcUnit),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
+                " (",
+                inCnt,
+                ")"
+              ] })
+            ]
+          }
+        ),
+        outAmt > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            style: {
+              color: cssVar$2("--graph-out"),
+              fontSize: 11,
+              paddingLeft: 8
+            },
+            children: [
+              "↑ ",
+              formatAmount$1(outAmt, token, btcUnit),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { opacity: 0.7 }, children: [
+                " (",
+                outCnt,
+                ")"
+              ] })
+            ]
+          }
+        )
       ] }, token);
     });
   };
   const svgTransform = `translate(${transform.x},${transform.y}) scale(${transform.k})`;
+  const parallaxSpeeds = {
+    nebula: Number.parseFloat(cssVar$2("--graph-parallax-nebula")) || 0.06,
+    distant: Number.parseFloat(cssVar$2("--graph-parallax-distant")) || 0.18,
+    near: Number.parseFloat(cssVar$2("--graph-parallax-near")) || 0.45
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
@@ -56531,114 +57582,102 @@ function ConstellationGraph({
         width: "100%",
         height: "100%",
         overflow: "hidden",
-        background: isDark ? "#070b14" : "#f0f4ff"
+        background: cssVar$2("--graph-bg")
       },
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "svg",
+          "div",
           {
-            "aria-hidden": "true",
+            className: "graph-parallax-layer graph-parallax-nebula",
             style: {
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              pointerEvents: "none"
+              transform: `translate3d(${transform.x * parallaxSpeeds.nebula}px, ${transform.y * parallaxSpeeds.nebula}px, 0)`
             },
-            preserveAspectRatio: "none",
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("defs", { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  "radialGradient",
-                  {
-                    id: isDark ? "nebula1" : "nebula1-light",
-                    cx: "40%",
-                    cy: "45%",
-                    r: "50%",
-                    children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "stop",
-                        {
-                          offset: "0%",
-                          stopColor: isDark ? "#1e2878" : "#a8b8ff",
-                          stopOpacity: isDark ? 0.35 : 0.12
-                        }
-                      ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "stop",
-                        {
-                          offset: "50%",
-                          stopColor: isDark ? "#321450" : "#c8d0ff",
-                          stopOpacity: isDark ? 0.18 : 0.06
-                        }
-                      ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "stop",
-                        {
-                          offset: "100%",
-                          stopColor: isDark ? "#000" : "#fff",
-                          stopOpacity: 0
-                        }
-                      )
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  "radialGradient",
-                  {
-                    id: isDark ? "nebula2" : "nebula2-light",
-                    cx: "70%",
-                    cy: "65%",
-                    r: "40%",
-                    children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "stop",
-                        {
-                          offset: "0%",
-                          stopColor: isDark ? "#0a2a50" : "#b0c8e8",
-                          stopOpacity: isDark ? 0.28 : 0.08
-                        }
-                      ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "stop",
-                        {
-                          offset: "100%",
-                          stopColor: isDark ? "#000" : "#fff",
-                          stopOpacity: 0
-                        }
-                      )
-                    ]
-                  }
-                )
-              ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "rect",
+                "div",
                 {
-                  width: "100%",
-                  height: "100%",
-                  fill: isDark ? "url(#nebula1)" : "url(#nebula1-light)"
+                  className: "graph-nebula-smooth",
+                  style: { position: "absolute", inset: 0 }
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "rect",
+                "div",
                 {
-                  width: "100%",
-                  height: "100%",
-                  fill: isDark ? "url(#nebula2)" : "url(#nebula2-light)"
+                  style: {
+                    position: "absolute",
+                    inset: 0,
+                    background: `radial-gradient(ellipse at 74% 64%, ${cssVar$2("--graph-nebula-2")} 0%, transparent 62%)`,
+                    opacity: isDark ? 0.5 : 0.3
+                  }
                 }
-              ),
-              STARS.map((s2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "circle",
-                {
-                  cx: `${s2.cx}%`,
-                  cy: `${s2.cy}%`,
-                  r: s2.r,
-                  fill: isDark ? "white" : "#8899bb",
-                  opacity: s2.opacity
-                },
-                s2.id
-              ))
+              )
             ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "graph-parallax-layer graph-parallax-distant",
+            style: {
+              transform: `translate3d(${transform.x * parallaxSpeeds.distant}px, ${transform.y * parallaxSpeeds.distant}px, 0)`
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "svg",
+              {
+                "aria-hidden": "true",
+                style: {
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%"
+                },
+                preserveAspectRatio: "none",
+                children: DISTANT_STARS.map((s2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "circle",
+                  {
+                    cx: `${s2.cx}%`,
+                    cy: `${s2.cy}%`,
+                    r: s2.r,
+                    className: "graph-star-distant",
+                    opacity: s2.opacity
+                  },
+                  s2.id
+                ))
+              }
+            )
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "graph-parallax-layer graph-parallax-near",
+            style: {
+              transform: `translate3d(${transform.x * parallaxSpeeds.near}px, ${transform.y * parallaxSpeeds.near}px, 0)`
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "svg",
+              {
+                "aria-hidden": "true",
+                style: {
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%"
+                },
+                preserveAspectRatio: "none",
+                children: NEAR_STARS.map((s2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "circle",
+                  {
+                    cx: `${s2.cx}%`,
+                    cy: `${s2.cy}%`,
+                    r: s2.r,
+                    className: "graph-star-near",
+                    opacity: s2.opacity
+                  },
+                  s2.id
+                ))
+              }
+            )
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -56737,9 +57776,9 @@ function ConstellationGraph({
                     Object.keys(edge.outAmountByToken || {})
                   );
                   const primaryToken = tokenKeys[0] || "ICP";
-                  const stroke = isHovered ? isDark ? "rgba(180,210,255,0.85)" : "rgba(60,100,180,0.7)" : (
-                    // Use tokenColor() for both dark and light mode — same vivid palette
-                    tokenColor(primaryToken).startsWith("hsl") ? isDark ? tokenColor(primaryToken).replace("65%)", "70%)") : tokenColor(primaryToken).replace("65%)", "50%)") : tokenColor(primaryToken)
+                  const stroke = isHovered ? cssVar$2("--graph-edge-hover") : (
+                    // tokenColor() reads theme-aware tokens, so it adapts to dark/light
+                    tokenColor(primaryToken)
                   );
                   return /* @__PURE__ */ jsxRuntimeExports.jsxs("g", { children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -56747,6 +57786,7 @@ function ConstellationGraph({
                       {
                         d: pathD,
                         stroke,
+                        "data-token": primaryToken,
                         strokeWidth: isHovered ? strokeW + 1 : strokeW,
                         fill: "none",
                         strokeOpacity: isHovered ? 0.9 : 0.55,
@@ -56781,9 +57821,9 @@ function ConstellationGraph({
                 }),
                 simNodes.map((node) => {
                   if (node.x == null || node.y == null) return null;
-                  const levelPalette = isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light;
-                  const resolvedColor = (n2) => colorByLevel ? levelPalette[(n2.depth ?? 0) % levelPalette.length] : nodeColor(n2, isDark).fill;
-                  const { glow } = nodeColor(node, isDark);
+                  const palette = levelPalette();
+                  const resolvedColor = (n2) => colorByLevel ? palette[(n2.depth ?? 0) % palette.length] : nodeColor(n2).fill;
+                  const { glow } = nodeColor(node);
                   const fill = resolvedColor(node);
                   const r2 = node.isCenter ? 22 : 16;
                   const isHovered = hoveredNodeId === node.id;
@@ -56838,7 +57878,7 @@ function ConstellationGraph({
                             y: -r2 - 5,
                             textAnchor: "middle",
                             fontSize: "10",
-                            fill: "#ffcc00",
+                            fill: cssVar$2("--graph-fav"),
                             style: { pointerEvents: "none", userSelect: "none" },
                             children: "★"
                           }
@@ -56849,7 +57889,7 @@ function ConstellationGraph({
                             textAnchor: "middle",
                             dominantBaseline: "central",
                             fontSize: node.isCenter ? 13 : 10,
-                            fill: "white",
+                            fill: cssVar$2("--graph-icon"),
                             style: { pointerEvents: "none", userSelect: "none" },
                             children: node.identity.icon
                           }
@@ -56863,8 +57903,8 @@ function ConstellationGraph({
                               width: 36,
                               height: 13,
                               rx: 3,
-                              fill: "rgba(0,100,200,0.75)",
-                              stroke: "rgba(100,180,255,0.5)",
+                              fill: cssVar$2("--graph-pill-bg"),
+                              stroke: cssVar$2("--graph-pill-border"),
                               strokeWidth: 0.8
                             }
                           ),
@@ -56874,7 +57914,7 @@ function ConstellationGraph({
                               textAnchor: "middle",
                               dominantBaseline: "central",
                               fontSize: "8",
-                              fill: "#ccddff",
+                              fill: cssVar$2("--graph-pill-text"),
                               style: { pointerEvents: "none", userSelect: "none" },
                               children: customLabel
                             }
@@ -56886,7 +57926,7 @@ function ConstellationGraph({
                             y: r2 + 14,
                             textAnchor: "middle",
                             fontSize: "9",
-                            fill: isDark ? "rgba(180,200,240,0.75)" : "#111111",
+                            fill: cssVar$2("--graph-label"),
                             style: { pointerEvents: "none", userSelect: "none" },
                             children: nodeLabel
                           }
@@ -56907,8 +57947,8 @@ function ConstellationGraph({
                                 "circle",
                                 {
                                   r: 8,
-                                  fill: "rgba(20,40,80,0.85)",
-                                  stroke: "rgba(100,160,255,0.5)",
+                                  fill: cssVar$2("--graph-pencil-bg"),
+                                  stroke: cssVar$2("--graph-pencil-border"),
                                   strokeWidth: 0.8
                                 }
                               ),
@@ -56917,7 +57957,7 @@ function ConstellationGraph({
                                 {
                                   d: "M-3 2 L0 -3 L3 2 L0 3 Z M0 -3 L2 -5 L5 -2 L3 2 Z",
                                   fill: "none",
-                                  stroke: "#aaccff",
+                                  stroke: cssVar$2("--graph-pencil-icon"),
                                   strokeWidth: 0.9,
                                   strokeLinejoin: "round"
                                 }
@@ -56943,11 +57983,21 @@ function ConstellationGraph({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: isDark ? "rgba(7,11,20,0.72)" : "rgba(240,244,255,0.72)",
+              background: cssVar$2("--graph-panel-bg"),
               zIndex: 50,
               pointerEvents: "none"
             },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: "#4488ff", fontSize: 15, letterSpacing: 1 }, children: "Loading constellation…" })
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                style: {
+                  color: cssVar$2("--graph-accent"),
+                  fontSize: 15,
+                  letterSpacing: 1
+                },
+                children: "Loading constellation…"
+              }
+            )
           }
         ),
         breadcrumbs.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -56971,9 +58021,9 @@ function ConstellationGraph({
                 "data-ocid": `graph.breadcrumb.item.${i + 1}`,
                 onClick: () => onBreadcrumbClick == null ? void 0 : onBreadcrumbClick(i),
                 style: {
-                  background: "rgba(20,30,60,0.88)",
-                  border: "1px solid rgba(60,80,140,0.7)",
-                  color: i === breadcrumbs.length - 1 ? "#88bbff" : "#7799cc",
+                  background: cssVar$2("--graph-breadcrumb-bg"),
+                  border: `1px solid ${cssVar$2("--graph-breadcrumb-border")}`,
+                  color: i === breadcrumbs.length - 1 ? cssVar$2("--graph-breadcrumb-active") : cssVar$2("--graph-breadcrumb-inactive"),
                   padding: "3px 8px",
                   borderRadius: 4,
                   fontSize: 11,
@@ -56997,9 +58047,9 @@ function ConstellationGraph({
               position: "absolute",
               top: 10,
               right: 10,
-              background: isDark ? "rgba(15,22,50,0.92)" : "rgba(240,242,248,0.95)",
-              border: isDark ? "1px solid rgba(60,80,140,0.6)" : "1px solid rgba(180,190,220,0.6)",
-              color: isDark ? "#7799cc" : "#334466",
+              background: cssVar$2("--graph-panel-bg"),
+              border: `1px solid ${cssVar$2("--graph-panel-border")}`,
+              color: cssVar$2("--graph-text"),
               padding: "5px 11px",
               borderRadius: 5,
               fontSize: 12,
@@ -57019,8 +58069,8 @@ function ConstellationGraph({
               position: "absolute",
               top: 42,
               right: 10,
-              background: isDark ? "rgba(8,13,36,0.97)" : "rgba(255,255,255,0.97)",
-              border: isDark ? "1px solid rgba(60,80,140,0.65)" : "1px solid rgba(180,190,220,0.65)",
+              background: cssVar$2("--graph-panel-bg"),
+              border: `1px solid ${cssVar$2("--graph-panel-border")}`,
               borderRadius: 8,
               padding: 14,
               width: 210,
@@ -57032,7 +58082,7 @@ function ConstellationGraph({
                 "div",
                 {
                   style: {
-                    color: isDark ? "#5577aa" : "#1a1a2e",
+                    color: cssVar$2("--graph-overlay-text-dim"),
                     fontSize: 10,
                     marginBottom: 12,
                     fontWeight: 700,
@@ -57048,7 +58098,7 @@ function ConstellationGraph({
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
-                    color: isDark ? "#aaccff" : "#1a1a2e",
+                    color: cssVar$2("--graph-overlay-text"),
                     fontSize: 12,
                     marginBottom: 12,
                     cursor: "pointer"
@@ -57061,7 +58111,7 @@ function ConstellationGraph({
                         type: "checkbox",
                         checked: showLabels,
                         onChange: (e3) => setShowLabels(e3.target.checked),
-                        style: { accentColor: "#4488ff" }
+                        style: { accentColor: cssVar$2("--graph-accent") }
                       }
                     ),
                     "Show labels"
@@ -57075,7 +58125,7 @@ function ConstellationGraph({
                     style: {
                       display: "flex",
                       justifyContent: "space-between",
-                      color: isDark ? "#8aaacf" : "#1a1a2e",
+                      color: cssVar$2("--graph-overlay-text-dim"),
                       fontSize: 11,
                       marginBottom: 4
                     },
@@ -57085,7 +58135,7 @@ function ConstellationGraph({
                         "span",
                         {
                           style: {
-                            color: isDark ? "#aaccff" : "#1a1a2e",
+                            color: cssVar$2("--graph-overlay-text"),
                             fontWeight: 600
                           },
                           children: maxCounterparties ?? 20
@@ -57104,7 +58154,7 @@ function ConstellationGraph({
                     step: 5,
                     value: maxCounterparties ?? 20,
                     onChange: (e3) => onMaxCounterpartiesChange == null ? void 0 : onMaxCounterpartiesChange(Number(e3.target.value)),
-                    style: { width: "100%", accentColor: "#4488ff" }
+                    style: { width: "100%", accentColor: cssVar$2("--graph-accent") }
                   }
                 )
               ] }),
@@ -57115,7 +58165,7 @@ function ConstellationGraph({
                     style: {
                       display: "flex",
                       justifyContent: "space-between",
-                      color: isDark ? "#8aaacf" : "#1a1a2e",
+                      color: cssVar$2("--graph-overlay-text-dim"),
                       fontSize: 11,
                       marginBottom: 4
                     },
@@ -57125,7 +58175,7 @@ function ConstellationGraph({
                         "span",
                         {
                           style: {
-                            color: isDark ? "#aaccff" : "#1a1a2e",
+                            color: cssVar$2("--graph-overlay-text"),
                             fontWeight: 600
                           },
                           children: minEdgeVolume === 0 ? "All" : formatAmount$1(minEdgeVolume, "ICP")
@@ -57144,7 +58194,7 @@ function ConstellationGraph({
                     step: 10,
                     value: minEdgeVolume,
                     onChange: (e3) => setMinEdgeVolume(Number(e3.target.value)),
-                    style: { width: "100%", accentColor: "#4488ff" }
+                    style: { width: "100%", accentColor: cssVar$2("--graph-accent") }
                   }
                 )
               ] }),
@@ -57153,7 +58203,7 @@ function ConstellationGraph({
                   "div",
                   {
                     style: {
-                      color: isDark ? "#8aaacf" : "#1a1a2e",
+                      color: cssVar$2("--graph-overlay-text-dim"),
                       fontSize: 11,
                       marginBottom: 6
                     },
@@ -57168,9 +58218,9 @@ function ConstellationGraph({
                     onClick: () => onDepthChange == null ? void 0 : onDepthChange(d2),
                     style: {
                       flex: 1,
-                      background: (graphDepth ?? 1) === d2 ? "rgba(40,80,200,0.75)" : "rgba(20,30,70,0.55)",
-                      border: `1px solid ${(graphDepth ?? 1) === d2 ? "rgba(80,140,255,0.7)" : "rgba(50,70,130,0.4)"}`,
-                      color: (graphDepth ?? 1) === d2 ? isDark ? "#cce0ff" : "#1a1a2e" : isDark ? "#7799bb" : "#1a1a2e",
+                      background: (graphDepth ?? 1) === d2 ? cssVar$2("--graph-btn-solid") : cssVar$2("--graph-overlay-bg-strong"),
+                      border: `1px solid ${(graphDepth ?? 1) === d2 ? cssVar$2("--graph-accent") : cssVar$2("--graph-overlay-border")}`,
+                      color: (graphDepth ?? 1) === d2 ? cssVar$2("--graph-overlay-text") : cssVar$2("--graph-overlay-text-dim"),
                       borderRadius: 4,
                       fontSize: 12,
                       padding: "4px 0",
@@ -57191,7 +58241,7 @@ function ConstellationGraph({
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
-                    color: isDark ? "#aaccff" : "#1a1a2e",
+                    color: cssVar$2("--graph-overlay-text"),
                     fontSize: 12,
                     marginBottom: 12,
                     cursor: "pointer"
@@ -57204,7 +58254,7 @@ function ConstellationGraph({
                         type: "checkbox",
                         checked: showCrossEdges ?? false,
                         onChange: (e3) => onShowCrossEdgesChange == null ? void 0 : onShowCrossEdgesChange(e3.target.checked),
-                        style: { accentColor: "#4488ff" }
+                        style: { accentColor: cssVar$2("--graph-accent") }
                       }
                     ),
                     "Full network"
@@ -57220,7 +58270,7 @@ function ConstellationGraph({
                     gap: "6px",
                     cursor: "pointer",
                     fontSize: "13px",
-                    color: isDark ? "#aaccff" : "#1a1a2e"
+                    color: cssVar$2("--graph-overlay-text")
                   },
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -57245,7 +58295,7 @@ function ConstellationGraph({
                     gap: "6px",
                     fontSize: "13px",
                     marginTop: "4px",
-                    color: isDark ? "#aaccff" : "#1a1a2e"
+                    color: cssVar$2("--graph-overlay-text")
                   },
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Weight by" }),
@@ -57296,9 +58346,9 @@ function ConstellationGraph({
                   onClick: handleFitView,
                   style: {
                     width: "100%",
-                    background: "rgba(20,40,90,0.7)",
-                    border: "1px solid rgba(60,80,160,0.5)",
-                    color: "#aaccff",
+                    background: cssVar$2("--graph-overlay-bg-strong"),
+                    border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                    color: cssVar$2("--graph-overlay-text"),
                     padding: "5px 0",
                     borderRadius: 4,
                     fontSize: 12,
@@ -57333,9 +58383,9 @@ function ConstellationGraph({
                   style: {
                     width: 34,
                     height: 34,
-                    background: isDark ? "rgba(15,22,50,0.92)" : "rgba(240,242,248,0.95)",
-                    border: isDark ? "1px solid rgba(60,80,140,0.6)" : "1px solid rgba(180,190,220,0.6)",
-                    color: isDark ? "#aaccff" : "#334466",
+                    background: cssVar$2("--graph-panel-bg"),
+                    border: `1px solid ${cssVar$2("--graph-panel-border")}`,
+                    color: cssVar$2("--graph-text"),
                     borderRadius: 5,
                     fontSize: 20,
                     cursor: "pointer",
@@ -57356,9 +58406,9 @@ function ConstellationGraph({
                   style: {
                     width: 34,
                     height: 34,
-                    background: isDark ? "rgba(15,22,50,0.92)" : "rgba(240,242,248,0.95)",
-                    border: isDark ? "1px solid rgba(60,80,140,0.6)" : "1px solid rgba(180,190,220,0.6)",
-                    color: isDark ? "#aaccff" : "#334466",
+                    background: cssVar$2("--graph-panel-bg"),
+                    border: `1px solid ${cssVar$2("--graph-panel-border")}`,
+                    color: cssVar$2("--graph-text"),
                     borderRadius: 5,
                     fontSize: 20,
                     cursor: "pointer",
@@ -57380,9 +58430,9 @@ function ConstellationGraph({
                   style: {
                     width: 34,
                     height: 34,
-                    background: isDark ? "rgba(15,22,50,0.92)" : "rgba(240,242,248,0.95)",
-                    border: isDark ? "1px solid rgba(60,80,140,0.6)" : "1px solid rgba(180,190,220,0.6)",
-                    color: isDark ? "#7799cc" : "#556688",
+                    background: cssVar$2("--graph-panel-bg"),
+                    border: `1px solid ${cssVar$2("--graph-panel-border")}`,
+                    color: cssVar$2("--graph-text"),
                     borderRadius: 5,
                     fontSize: 13,
                     cursor: "pointer",
@@ -57412,12 +58462,12 @@ function ConstellationGraph({
               left: nodeInfo.x,
               top: nodeInfo.y,
               width: 224,
-              background: isDark ? "rgba(8,13,36,0.98)" : "rgba(255,255,255,0.97)",
-              border: isDark ? "1px solid rgba(60,100,200,0.55)" : "1px solid rgba(180,190,220,0.55)",
+              background: cssVar$2("--graph-panel-bg"),
+              border: `1px solid ${cssVar$2("--graph-panel-border")}`,
               borderRadius: 9,
               padding: 14,
               zIndex: 100,
-              color: isDark ? "#ccddff" : "#1a1a2e",
+              color: cssVar$2("--graph-overlay-text"),
               boxShadow: isDark ? "0 4px 32px rgba(0,80,200,0.18)" : "0 4px 32px rgba(0,80,200,0.08)"
             },
             children: [
@@ -57436,7 +58486,7 @@ function ConstellationGraph({
                     right: 8,
                     background: "none",
                     border: "none",
-                    color: isDark ? "#5577aa" : "#4466aa",
+                    color: cssVar$2("--graph-overlay-text-dim"),
                     fontSize: 15,
                     cursor: "pointer",
                     lineHeight: 1,
@@ -57450,7 +58500,7 @@ function ConstellationGraph({
                 {
                   style: {
                     fontSize: 10,
-                    color: isDark ? "#4466aa" : "#5577aa",
+                    color: cssVar$2("--graph-overlay-text-dim"),
                     marginBottom: 5,
                     letterSpacing: 1
                   },
@@ -57465,7 +58515,7 @@ function ConstellationGraph({
                     fontFamily: "monospace",
                     marginBottom: 10,
                     wordBreak: "break-all",
-                    color: isDark ? "#99bbee" : "#334466",
+                    color: cssVar$2("--graph-overlay-text"),
                     lineHeight: 1.4
                   },
                   children: truncateAddress(nodeInfo.node.id)
@@ -57485,9 +58535,9 @@ function ConstellationGraph({
                   },
                   style: {
                     width: "100%",
-                    background: "rgba(20,40,90,0.55)",
-                    border: "1px solid rgba(50,80,160,0.5)",
-                    color: copiedNodeId === nodeInfo.node.id ? "#44ff88" : "#aaccff",
+                    background: cssVar$2("--graph-overlay-bg"),
+                    border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                    color: copiedNodeId === nodeInfo.node.id ? cssVar$2("--graph-in") : cssVar$2("--graph-overlay-text"),
                     padding: "4px 0",
                     borderRadius: 4,
                     fontSize: 11,
@@ -57510,9 +58560,9 @@ function ConstellationGraph({
                     onKeyDown: (e3) => e3.key === "Enter" && handleLabelSave(),
                     style: {
                       flex: 1,
-                      background: "rgba(20,40,100,0.75)",
-                      border: "1px solid rgba(80,120,220,0.5)",
-                      color: "#fff",
+                      background: cssVar$2("--graph-overlay-bg-strong"),
+                      border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                      color: cssVar$2("--graph-overlay-text"),
                       padding: "3px 7px",
                       borderRadius: 4,
                       fontSize: 12,
@@ -57527,7 +58577,7 @@ function ConstellationGraph({
                     "data-ocid": "graph.node_info.label_save_button",
                     onClick: handleLabelSave,
                     style: {
-                      background: "#1a3a80",
+                      background: cssVar$2("--graph-btn-solid"),
                       border: "none",
                       color: "#fff",
                       padding: "3px 9px",
@@ -57546,9 +58596,9 @@ function ConstellationGraph({
                   onClick: () => handleLabelEdit(nodeInfo.node.id),
                   style: {
                     width: "100%",
-                    background: "rgba(20,40,90,0.55)",
-                    border: "1px solid rgba(50,80,160,0.5)",
-                    color: "#aaccff",
+                    background: cssVar$2("--graph-overlay-bg"),
+                    border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                    color: cssVar$2("--graph-overlay-text"),
                     padding: "4px 0",
                     borderRadius: 4,
                     fontSize: 11,
@@ -57572,9 +58622,9 @@ function ConstellationGraph({
                   onClick: () => handleFavoriteToggle(nodeInfo.node.id),
                   style: {
                     width: "100%",
-                    background: "rgba(20,40,90,0.55)",
-                    border: "1px solid rgba(50,80,160,0.5)",
-                    color: checkFavorite(nodeInfo.node.id) ? "#ffcc00" : "#aaccff",
+                    background: cssVar$2("--graph-overlay-bg"),
+                    border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                    color: checkFavorite(nodeInfo.node.id) ? cssVar$2("--graph-fav") : cssVar$2("--graph-overlay-text"),
                     padding: "4px 0",
                     borderRadius: 4,
                     fontSize: 11,
@@ -57596,8 +58646,8 @@ function ConstellationGraph({
                   },
                   style: {
                     width: "100%",
-                    background: "rgba(20,60,180,0.8)",
-                    border: "1px solid rgba(80,120,240,0.6)",
+                    background: cssVar$2("--graph-btn-solid"),
+                    border: `1px solid ${cssVar$2("--graph-accent")}`,
                     color: "#ffffff",
                     padding: "6px 0",
                     borderRadius: 5,
@@ -57639,8 +58689,8 @@ function ConstellationGraph({
               position: "fixed",
               left: edgeTooltip.x,
               top: edgeTooltip.y,
-              background: isDark ? "rgba(8,13,36,0.98)" : "rgba(255,255,255,0.97)",
-              border: isDark ? "1px solid rgba(60,100,200,0.55)" : "1px solid rgba(180,190,220,0.55)",
+              background: cssVar$2("--graph-panel-bg"),
+              border: `1px solid ${cssVar$2("--graph-panel-border")}`,
               borderRadius: 8,
               padding: "10px 12px",
               maxWidth: 240,
@@ -57667,7 +58717,7 @@ function ConstellationGraph({
                     right: 7,
                     background: "none",
                     border: "none",
-                    color: isDark ? "#5577aa" : "#4466aa",
+                    color: cssVar$2("--graph-overlay-text-dim"),
                     fontSize: 14,
                     cursor: "pointer",
                     lineHeight: 1,
@@ -57676,17 +58726,81 @@ function ConstellationGraph({
                   children: "✕"
                 }
               ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
                 {
                   style: {
-                    color: isDark ? "#4466aa" : "#5577aa",
-                    fontSize: 10,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 8,
                     marginBottom: 7,
-                    letterSpacing: 1,
                     paddingRight: 16
                   },
-                  children: "TRANSACTION TOKENS"
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "span",
+                      {
+                        style: {
+                          color: cssVar$2("--graph-overlay-text-dim"),
+                          fontSize: 10,
+                          letterSpacing: 1
+                        },
+                        children: "TRANSACTION TOKENS"
+                      }
+                    ),
+                    edgeHasBtc(edgeTooltip.edge) && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "div",
+                      {
+                        style: {
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          borderRadius: 4,
+                          border: `1px solid ${cssVar$2("--graph-panel-border")}`,
+                          padding: 1
+                        },
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "button",
+                            {
+                              type: "button",
+                              "data-ocid": "graph.btc_unit_toggle",
+                              onClick: () => onBtcUnitChange == null ? void 0 : onBtcUnitChange("btc"),
+                              style: {
+                                fontSize: 9,
+                                padding: "1px 5px",
+                                borderRadius: 3,
+                                border: "none",
+                                cursor: "pointer",
+                                background: btcUnit === "btc" ? cssVar$2("--graph-accent") : "transparent",
+                                color: btcUnit === "btc" ? "#ffffff" : cssVar$2("--graph-overlay-text-dim")
+                              },
+                              children: "BTC"
+                            }
+                          ),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "button",
+                            {
+                              type: "button",
+                              "data-ocid": "graph.btc_unit_toggle",
+                              onClick: () => onBtcUnitChange == null ? void 0 : onBtcUnitChange("sats"),
+                              style: {
+                                fontSize: 9,
+                                padding: "1px 5px",
+                                borderRadius: 3,
+                                border: "none",
+                                cursor: "pointer",
+                                background: btcUnit === "sats" ? cssVar$2("--graph-accent") : "transparent",
+                                color: btcUnit === "sats" ? "#ffffff" : cssVar$2("--graph-overlay-text-dim")
+                              },
+                              children: "sats"
+                            }
+                          )
+                        ]
+                      }
+                    )
+                  ]
                 }
               ),
               renderEdgeTooltipContent(edgeTooltip.edge)
@@ -57700,65 +58814,63 @@ function ConstellationGraph({
               position: "absolute",
               bottom: 10,
               left: 10,
-              background: isDark ? "rgba(7,11,28,0.88)" : "rgba(255,255,255,0.92)",
-              border: isDark ? "1px solid rgba(40,60,120,0.5)" : "1px solid rgba(180,190,220,0.5)",
+              background: cssVar$2("--graph-legend-bg"),
+              border: `1px solid ${cssVar$2("--graph-legend-border")}`,
               borderRadius: 7,
               padding: "8px 12px",
               fontSize: 10,
-              color: isDark ? "#7799cc" : "#334466",
+              color: cssVar$2("--graph-text"),
               zIndex: 10,
               lineHeight: 1.7
             },
             children: [
-              colorByLevel ? (isDark ? LEVEL_PALETTE.dark : LEVEL_PALETTE.light).map(
-                (color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  "div",
-                  {
-                    style: {
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                      marginBottom: 2
-                    },
-                    children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "div",
-                        {
-                          style: {
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            background: color2,
-                            flexShrink: 0,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            fontSize: 10,
-                            fontWeight: 700,
-                            color: "#fff",
-                            boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
-                            border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
-                          },
-                          children: i
-                        }
-                      ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "span",
-                        {
-                          style: {
-                            fontSize: 11,
-                            color: isDark ? "#a0b4c8" : "#1a1a2e",
-                            fontWeight: 500
-                          },
-                          children: i === 0 ? "Center" : `Depth ${i}`
-                        }
-                      )
-                    ]
+              colorByLevel ? levelPalette().map((color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "div",
+                {
+                  style: {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    marginBottom: 2
                   },
-                  i
-                )
-              ) : LEGEND_ITEMS.map((item) => {
-                const swatchColor = isDark ? item.dark : item.light;
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        style: {
+                          width: 18,
+                          height: 18,
+                          borderRadius: "50%",
+                          background: color2,
+                          flexShrink: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "#fff",
+                          boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
+                          border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
+                        },
+                        children: i
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "span",
+                      {
+                        style: {
+                          fontSize: 11,
+                          color: cssVar$2("--graph-text"),
+                          fontWeight: 500
+                        },
+                        children: i === 0 ? "Center" : `Depth ${i}`
+                      }
+                    )
+                  ]
+                },
+                i
+              )) : LEGEND_ITEMS.map((item) => {
+                const swatchColor = item.color;
                 return /* @__PURE__ */ jsxRuntimeExports.jsxs(
                   "div",
                   {
@@ -57779,7 +58891,7 @@ function ConstellationGraph({
                           }
                         }
                       ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: isDark ? "#7799cc" : "#1a1a2e" }, children: item.label })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: cssVar$2("--graph-text") }, children: item.label })
                     ]
                   },
                   item.label
@@ -57790,7 +58902,7 @@ function ConstellationGraph({
                 {
                   style: {
                     marginTop: 4,
-                    borderTop: "1px solid rgba(60,80,140,0.3)",
+                    borderTop: `1px solid ${cssVar$2("--graph-legend-border")}`,
                     paddingTop: 4,
                     fontSize: 9
                   },
@@ -57809,15 +58921,25 @@ function ConstellationGraph({
               top: "50%",
               left: "50%",
               transform: "translate(-50%,-50%)",
-              background: isDark ? "rgba(8,13,36,0.99)" : "rgba(255,255,255,0.99)",
-              border: isDark ? "1px solid rgba(60,100,200,0.6)" : "1px solid rgba(180,190,220,0.6)",
+              background: cssVar$2("--graph-panel-bg"),
+              border: `1px solid ${cssVar$2("--graph-panel-border")}`,
               borderRadius: 9,
               padding: 20,
               zIndex: 200,
               boxShadow: isDark ? "0 8px 48px rgba(0,40,140,0.3)" : "0 8px 48px rgba(0,40,140,0.1)"
             },
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { color: "#aaccff", marginBottom: 10, fontSize: 13 }, children: "Set label (max 6 chars)" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  style: {
+                    color: cssVar$2("--graph-overlay-text"),
+                    marginBottom: 10,
+                    fontSize: 13
+                  },
+                  children: "Set label (max 6 chars)"
+                }
+              ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "input",
                 {
@@ -57828,9 +58950,9 @@ function ConstellationGraph({
                   onChange: (e3) => setLabelInput(e3.target.value),
                   onKeyDown: (e3) => e3.key === "Enter" && handleLabelSave(),
                   style: {
-                    background: "rgba(20,40,100,0.75)",
-                    border: "1px solid rgba(80,120,220,0.5)",
-                    color: "#fff",
+                    background: cssVar$2("--graph-overlay-bg-strong"),
+                    border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                    color: cssVar$2("--graph-overlay-text"),
                     padding: "5px 10px",
                     borderRadius: 4,
                     fontSize: 14,
@@ -57847,7 +58969,7 @@ function ConstellationGraph({
                     "data-ocid": "graph.label_modal.save_button",
                     onClick: handleLabelSave,
                     style: {
-                      background: "#1a3a80",
+                      background: cssVar$2("--graph-btn-solid"),
                       border: "none",
                       color: "#fff",
                       padding: "5px 14px",
@@ -57866,8 +58988,8 @@ function ConstellationGraph({
                     onClick: () => setEditingLabel(null),
                     style: {
                       background: "none",
-                      border: "1px solid rgba(60,80,160,0.5)",
-                      color: "#aaccff",
+                      border: `1px solid ${cssVar$2("--graph-overlay-border")}`,
+                      color: cssVar$2("--graph-overlay-text"),
                       padding: "5px 14px",
                       borderRadius: 4,
                       cursor: "pointer",
@@ -63982,7 +65104,7 @@ function addCrossEdges(allTxs, allNodes, allEdges) {
     }
   }
 }
-function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterparties, showCrossEdges = false) {
+function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, depth3Fetches, maxCounterparties, showCrossEdges = false) {
   const allNodes = /* @__PURE__ */ new Map();
   const allEdges = /* @__PURE__ */ new Map();
   const savedAddresses = getSavedAddresses();
@@ -64080,6 +65202,10 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
       );
     }
   }
+  const depth3ByNode = new Map(
+    depth3Fetches.map((f2) => [f2.nodeId.toLowerCase(), f2])
+  );
+  const depth3Txs = [];
   for (const d2Fetch of depth2Fetches) {
     if (!allNodes.has(d2Fetch.nodeId.toLowerCase())) continue;
     const d2AcctLower = d2Fetch.accountId.toLowerCase();
@@ -64118,20 +65244,24 @@ function buildMultiDepthGraph(center2, depth1Fetches, depth2Fetches, maxCounterp
           outCountByToken: edgeInfo.outCountByToken
         })
       );
+      const d3Fetch = depth3ByNode.get(cpLower);
+      if (d3Fetch) depth3Txs.push(...d3Fetch.transactions);
     }
   }
   if (showCrossEdges) {
     const allTxs = [
       ...center2.transactions,
       ...depth1Fetches.flatMap((f2) => f2.transactions),
-      ...depth2Fetches.flatMap((f2) => f2.transactions)
+      ...depth2Fetches.flatMap((f2) => f2.transactions),
+      ...depth3Txs
     ];
     addCrossEdges(allTxs, allNodes, allEdges);
   }
   const allTxsForEnrich = [
     ...center2.transactions,
     ...depth1Fetches.flatMap((f2) => f2.transactions),
-    ...depth2Fetches.flatMap((f2) => f2.transactions)
+    ...depth2Fetches.flatMap((f2) => f2.transactions),
+    ...depth3Txs
   ];
   const allAddresses = [...allNodes.values()].map((n2) => n2.id);
   const enrichedNodes = [...allNodes.values()].map(
@@ -64146,24 +65276,48 @@ function computeSummary(accountId, transactions) {
   const acctLower = accountId.toLowerCase();
   let totalIn = 0;
   let totalOut = 0;
+  let totalInCount = 0;
+  let totalOutCount = 0;
   const counterparties = /* @__PURE__ */ new Set();
-  const icpTxs = transactions.filter((tx) => !tx.token || tx.token === "ICP");
-  for (const tx of icpTxs) {
+  const totalTxByToken = {};
+  const totalInByToken = {};
+  const totalOutByToken = {};
+  const counterpartyCountByToken = {};
+  for (const tx of transactions) {
+    const token = tx.token ?? "ICP";
+    totalTxByToken[token] = (totalTxByToken[token] ?? 0) + 1;
     const isTo = tx.to.toLowerCase() === acctLower;
     const isFrom = tx.from.toLowerCase() === acctLower;
     if (isTo) {
       totalIn += tx.amount;
-      if (tx.from) counterparties.add(tx.from.toLowerCase());
+      totalInCount += 1;
+      totalInByToken[token] = (totalInByToken[token] ?? 0) + tx.amount;
+      if (tx.from) {
+        counterparties.add(tx.from.toLowerCase());
+        counterpartyCountByToken[token] = (counterpartyCountByToken[token] ?? 0) + 1;
+      }
     } else if (isFrom) {
       totalOut += tx.amount;
-      if (tx.to) counterparties.add(tx.to.toLowerCase());
+      totalOutCount += 1;
+      totalOutByToken[token] = (totalOutByToken[token] ?? 0) + tx.amount;
+      if (tx.to) {
+        counterparties.add(tx.to.toLowerCase());
+        counterpartyCountByToken[token] = (counterpartyCountByToken[token] ?? 0) + 1;
+      }
     }
   }
   return {
-    totalTx: icpTxs.length,
+    totalTx: transactions.length,
+    totalTxCapped: transactions.length >= DEFAULT_TX_LIMIT,
     totalIn,
     totalOut,
-    counterpartyCount: counterparties.size
+    totalInCount,
+    totalOutCount,
+    counterpartyCount: counterparties.size,
+    totalTxByToken,
+    totalInByToken,
+    totalOutByToken,
+    counterpartyCountByToken
   };
 }
 function getTopCounterparties(accountId, transactions, limit = 5, displayId) {
@@ -64242,10 +65396,35 @@ function shortenId$1(id2) {
   if (id2.length <= 14) return id2;
   return `${id2.slice(0, 8)}…${id2.slice(-4)}`;
 }
-function formatIcp(val) {
-  if (val >= 1e6) return `${(val / 1e6).toFixed(2)}M`;
-  if (val >= 1e3) return `${(val / 1e3).toFixed(2)}K`;
-  return val.toFixed(4);
+function isChainKeyBtc$2(token) {
+  return /btc/i.test(token);
+}
+function formatTokenAmount$1(amount, token, btcUnit) {
+  if (isChainKeyBtc$2(token)) {
+    if (btcUnit === "sats") {
+      const sats = Math.round(amount * 1e8);
+      return `${sats.toLocaleString()} sats`;
+    }
+    return `${amount.toFixed(8)} BTC`;
+  }
+  return `${amount.toFixed(4)} ${token}`;
+}
+function TokenBreakdown({
+  entries,
+  format: format2
+}) {
+  if (entries.length === 0) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pl-3 space-y-0.5 border-l border-border/40", children: entries.map(([token, value]) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "flex items-center justify-between text-[10px]",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-muted-foreground", children: token }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-foreground/90", children: format2(value, token) })
+      ]
+    },
+    token
+  )) });
 }
 function formatWalletAge(firstTxDate) {
   const now2 = /* @__PURE__ */ new Date();
@@ -64276,8 +65455,11 @@ function OverviewPanel({
   onNavigate,
   timeRange,
   onTimeRangeChange,
-  tokenCoverage = 0
+  tokenCoverage = 0,
+  btcUnit,
+  onBtcUnitChange
 }) {
+  var _a3;
   const [copied, setCopied] = reactExports.useState(false);
   const [icpPrice, setIcpPrice] = reactExports.useState(null);
   reactExports.useEffect(() => {
@@ -64320,6 +65502,17 @@ function OverviewPanel({
   const topCounterparties = walletData ? getTopCounterparties(principal, walletData.transactions) : [];
   const activityScore = walletData ? Math.min(100, walletData.summary.totalTx / 100 * 100) : 0;
   const snsParticipation = walletData && walletData.transactions.length > 0 ? getSnsParticipation(principal, walletData.transactions) : [];
+  const summary = walletData == null ? void 0 : walletData.summary;
+  const totalTxEntries = summary ? Object.entries(summary.totalTxByToken ?? {}) : [];
+  const totalInEntries = summary ? Object.entries(summary.totalInByToken ?? {}) : [];
+  const totalOutEntries = summary ? Object.entries(summary.totalOutByToken ?? {}) : [];
+  const counterpartyEntries = summary ? Object.entries(summary.counterpartyCountByToken ?? {}) : [];
+  const hasBtc = [...totalInEntries, ...totalOutEntries].some(
+    ([token]) => isChainKeyBtc$2(token)
+  );
+  const fetchedCount = ((_a3 = walletData == null ? void 0 : walletData.allTransactions) == null ? void 0 : _a3.length) ?? 0;
+  const isCapped = fetchedCount >= DEFAULT_TX_LIMIT;
+  const totalTxDisplay = isCapped ? "100+" : String((summary == null ? void 0 : summary.totalTx) ?? 0);
   const timeRangeLabels = {
     all: "All time",
     day: "Day",
@@ -64415,38 +65608,98 @@ function OverviewPanel({
       ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "No wallet loaded" }) })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Transaction Summary" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground", children: "Transaction Summary" }),
+        hasBtc && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 rounded-md border border-border p-0.5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              "data-ocid": "wallet.btc_unit_toggle",
+              onClick: () => onBtcUnitChange("btc"),
+              className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+              children: "BTC"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              "data-ocid": "wallet.btc_unit_toggle",
+              onClick: () => onBtcUnitChange("sats"),
+              className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+              children: "sats"
+            }
+          )
+        ] })
+      ] }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "px-4 pb-4 space-y-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Txs" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (walletData == null ? void 0 : walletData.summary.totalTx) ?? 0 })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowDownLeft, { className: "h-3 w-3 text-neon-green" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total In" })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Txs" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: totalTxDisplay })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-green", children: [
-            walletData ? formatIcp(walletData.summary.totalIn) : "—",
-            " ICP"
-          ] })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TokenBreakdown,
+            {
+              entries: totalTxEntries,
+              format: (v2) => String(v2)
+            }
+          )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowUpRight, { className: "h-3 w-3 text-neon-red" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Out" })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowDownLeft, { className: "h-3 w-3 text-neon-green" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total In" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-green", children: [
+              summary ? summary.totalInCount : 0,
+              " txs"
+            ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-red", children: [
-            walletData ? formatIcp(walletData.summary.totalOut) : "—",
-            " ICP"
-          ] })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TokenBreakdown,
+            {
+              entries: totalInEntries,
+              format: (v2, t2) => formatTokenAmount$1(v2, t2, btcUnit)
+            }
+          )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { className: "h-3 w-3 text-neon-blue" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Counterparties" })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowUpRight, { className: "h-3 w-3 text-neon-red" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Total Out" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-bold text-neon-red", children: [
+              summary ? summary.totalOutCount : 0,
+              " txs"
+            ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (walletData == null ? void 0 : walletData.summary.counterpartyCount) ?? 0 })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TokenBreakdown,
+            {
+              entries: totalOutEntries,
+              format: (v2, t2) => formatTokenAmount$1(v2, t2, btcUnit)
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { className: "h-3 w-3 text-neon-blue" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground", children: "Counterparties" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: (summary == null ? void 0 : summary.counterpartyCount) ?? 0 })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TokenBreakdown,
+            {
+              entries: counterpartyEntries,
+              format: (v2) => String(v2)
+            }
+          )
         ] }),
         snsParticipation.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pt-1 border-t border-border/50", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-1.5", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-muted-foreground shrink-0 mt-0.5", children: "DAOs:" }),
@@ -64505,751 +65758,6 @@ function OverviewPanel({
     ] })
   ] });
 }
-const LEDGER_API_BASE = "https://ledger-api.internetcomputer.org";
-const ICRC_API_BASE = "https://icrc-api.internetcomputer.org";
-const DEFAULT_TX_LIMIT = 100;
-function e8sToIcp(val) {
-  const n2 = typeof val === "bigint" ? Number(val) : Number(val);
-  return n2 / 1e8;
-}
-function parseTimestamp(raw) {
-  if (!raw) return (/* @__PURE__ */ new Date()).toISOString();
-  if (typeof raw === "number") {
-    const asMs = raw > 1e15 ? Math.floor(raw / 1e6) : raw > 1e12 ? raw : raw * 1e3;
-    return new Date(asMs).toISOString();
-  }
-  if (typeof raw === "string" && /^\d{18,19}$/.test(raw)) {
-    return new Date(Math.floor(Number(raw) / 1e6)).toISOString();
-  }
-  return new Date(raw).toISOString();
-}
-function extractOwner(val) {
-  if (!val) return "";
-  if (typeof val === "string") return val;
-  if (typeof val === "object") {
-    return String(val.owner ?? val.address ?? "");
-  }
-  return String(val);
-}
-function sha224(data) {
-  let h0 = 3238371032 | 0;
-  let h1 = 914150663 | 0;
-  let h2 = 812702999 | 0;
-  let h3 = 4144912697 | 0;
-  let h4 = 4290775857 | 0;
-  let h5 = 1750603025 | 0;
-  let h6 = 1694076839 | 0;
-  let h7 = 3204075428 | 0;
-  const K2 = [
-    1116352408,
-    1899447441,
-    3049323471,
-    3921009573,
-    961987163,
-    1508970993,
-    2453635748,
-    2870763221,
-    3624381080,
-    310598401,
-    607225278,
-    1426881987,
-    1925078388,
-    2162078206,
-    2614888103,
-    3248222580,
-    3835390401,
-    4022224774,
-    264347078,
-    604807628,
-    770255983,
-    1249150122,
-    1555081692,
-    1996064986,
-    2554220882,
-    2821834349,
-    2952996808,
-    3210313671,
-    3336571891,
-    3584528711,
-    113926993,
-    338241895,
-    666307205,
-    773529912,
-    1294757372,
-    1396182291,
-    1695183700,
-    1986661051,
-    2177026350,
-    2456956037,
-    2730485921,
-    2820302411,
-    3259730800,
-    3345764771,
-    3516065817,
-    3600352804,
-    4094571909,
-    275423344,
-    430227734,
-    506948616,
-    659060556,
-    883997877,
-    958139571,
-    1322822218,
-    1537002063,
-    1747873779,
-    1955562222,
-    2024104815,
-    2227730452,
-    2361852424,
-    2428436474,
-    2756734187,
-    3204031479,
-    3329325298
-  ];
-  const rotr2 = (x3, n2) => (x3 >>> n2 | x3 << 32 - n2) >>> 0;
-  const msgLen = data.length;
-  const bitLen2 = msgLen * 8;
-  const padLen = msgLen + 9 + 63 & -64;
-  const msg = new Uint8Array(padLen);
-  msg.set(data);
-  msg[msgLen] = 128;
-  const view = new DataView(msg.buffer);
-  view.setUint32(padLen - 4, bitLen2 >>> 0, false);
-  view.setUint32(padLen - 8, Math.floor(bitLen2 / 4294967296), false);
-  for (let i = 0; i < padLen; i += 64) {
-    const w2 = new Int32Array(64);
-    for (let j2 = 0; j2 < 16; j2++) {
-      w2[j2] = view.getInt32(i + j2 * 4, false);
-    }
-    for (let j2 = 16; j2 < 64; j2++) {
-      const s0 = rotr2(w2[j2 - 15] >>> 0, 7) ^ rotr2(w2[j2 - 15] >>> 0, 18) ^ w2[j2 - 15] >>> 0 >>> 3;
-      const s1 = rotr2(w2[j2 - 2] >>> 0, 17) ^ rotr2(w2[j2 - 2] >>> 0, 19) ^ w2[j2 - 2] >>> 0 >>> 10;
-      w2[j2] = w2[j2 - 16] + s0 + w2[j2 - 7] + s1 | 0;
-    }
-    let a2 = h0, b2 = h1, c2 = h2, d2 = h3, e3 = h4, f2 = h5, g2 = h6, h8 = h7;
-    for (let j2 = 0; j2 < 64; j2++) {
-      const S1 = rotr2(e3 >>> 0, 6) ^ rotr2(e3 >>> 0, 11) ^ rotr2(e3 >>> 0, 25);
-      const ch = e3 & f2 ^ ~e3 & g2 | 0;
-      const temp1 = h8 + S1 + ch + K2[j2] + w2[j2] | 0;
-      const S0 = rotr2(a2 >>> 0, 2) ^ rotr2(a2 >>> 0, 13) ^ rotr2(a2 >>> 0, 22);
-      const maj = a2 & b2 ^ a2 & c2 ^ b2 & c2 | 0;
-      const temp2 = S0 + maj | 0;
-      h8 = g2;
-      g2 = f2;
-      f2 = e3;
-      e3 = d2 + temp1 | 0;
-      d2 = c2;
-      c2 = b2;
-      b2 = a2;
-      a2 = temp1 + temp2 | 0;
-    }
-    h0 = h0 + a2 | 0;
-    h1 = h1 + b2 | 0;
-    h2 = h2 + c2 | 0;
-    h3 = h3 + d2 | 0;
-    h4 = h4 + e3 | 0;
-    h5 = h5 + f2 | 0;
-    h6 = h6 + g2 | 0;
-    h7 = h7 + h8 | 0;
-  }
-  const result = new Uint8Array(28);
-  const rv = new DataView(result.buffer);
-  rv.setUint32(0, h0 >>> 0, false);
-  rv.setUint32(4, h1 >>> 0, false);
-  rv.setUint32(8, h2 >>> 0, false);
-  rv.setUint32(12, h3 >>> 0, false);
-  rv.setUint32(16, h4 >>> 0, false);
-  rv.setUint32(20, h5 >>> 0, false);
-  rv.setUint32(24, h6 >>> 0, false);
-  return result;
-}
-function crc32(data) {
-  let crc = 4294967295;
-  const table = new Uint32Array(256);
-  for (let i = 0; i < 256; i++) {
-    let c2 = i;
-    for (let j2 = 0; j2 < 8; j2++) c2 = c2 & 1 ? 3988292384 ^ c2 >>> 1 : c2 >>> 1;
-    table[i] = c2;
-  }
-  for (const byte of data) crc = table[(crc ^ byte) & 255] ^ crc >>> 8;
-  return (crc ^ 4294967295) >>> 0;
-}
-function principalToAccountIdentifier(input) {
-  const trimmed = input.trim();
-  if (/^[0-9a-fA-F]{64}$/.test(trimmed)) return trimmed.toLowerCase();
-  try {
-    const principal = Principal$1.fromText(trimmed);
-    const principalBytes = principal.toUint8Array();
-    const domainSep = new TextEncoder().encode("\naccount-id");
-    const subaccount = new Uint8Array(32);
-    const msg = new Uint8Array(
-      domainSep.length + principalBytes.length + subaccount.length
-    );
-    msg.set(domainSep, 0);
-    msg.set(principalBytes, domainSep.length);
-    msg.set(subaccount, domainSep.length + principalBytes.length);
-    const hash = sha224(msg);
-    const checksum = crc32(hash);
-    const checksumBytes = new Uint8Array(4);
-    new DataView(checksumBytes.buffer).setUint32(0, checksum, false);
-    const accountIdBytes = new Uint8Array(32);
-    accountIdBytes.set(checksumBytes, 0);
-    accountIdBytes.set(hash, 4);
-    return Array.from(accountIdBytes).map((b2) => b2.toString(16).padStart(2, "0")).join("");
-  } catch {
-    return null;
-  }
-}
-function principalAddressToHex(addr) {
-  if (!addr || addr === "minting-account" || addr === "burn-address")
-    return addr;
-  if (/^[0-9a-fA-F]{64}$/.test(addr.trim())) return addr.toLowerCase();
-  const hex2 = principalToAccountIdentifier(addr);
-  return hex2 ?? addr;
-}
-function normalizeTransaction(raw) {
-  var _a3, _b3, _c2, _d2, _e2, _f2, _g2, _h2, _i2, _j2, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z;
-  try {
-    if ((raw == null ? void 0 : raw.from_account_identifier) !== void 0 || (raw == null ? void 0 : raw.to_account_identifier) !== void 0) {
-      const amount = raw.amount ? e8sToIcp(raw.amount) : 0;
-      return {
-        timestamp: parseTimestamp(raw.created_at ?? raw.timestamp),
-        from: String(raw.from_account_identifier ?? ""),
-        to: String(raw.to_account_identifier ?? ""),
-        amount,
-        blockIndex: Number(
-          raw.block_height ?? ((_a3 = raw.block_identifier) == null ? void 0 : _a3.index) ?? raw.block_index ?? 0
-        )
-      };
-    }
-    if ((_b3 = raw == null ? void 0 : raw.transaction) == null ? void 0 : _b3.operations) {
-      const ops = raw.transaction.operations;
-      const txOps = ops.filter(
-        (o2) => o2.type === "TRANSACTION" || o2.type === "Transfer"
-      );
-      const feeOps = ops.filter((o2) => o2.type === "FEE" || o2.type === "Fee");
-      if (txOps.length >= 2) {
-        const senderOp = txOps.find(
-          (o2) => {
-            var _a4;
-            return String(((_a4 = o2.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
-          }
-        );
-        const receiverOp = txOps.find(
-          (o2) => {
-            var _a4;
-            return !String(((_a4 = o2.amount) == null ? void 0 : _a4.value) ?? "").startsWith("-");
-          }
-        );
-        if (senderOp && receiverOp) {
-          const amountRaw = Math.abs(
-            Number.parseFloat(((_c2 = receiverOp.amount) == null ? void 0 : _c2.value) ?? "0")
-          );
-          const decimals = ((_e2 = (_d2 = receiverOp.amount) == null ? void 0 : _d2.currency) == null ? void 0 : _e2.decimals) ?? 8;
-          return {
-            timestamp: parseTimestamp(raw.timestamp),
-            from: ((_f2 = senderOp.account) == null ? void 0 : _f2.address) ?? "",
-            to: ((_g2 = receiverOp.account) == null ? void 0 : _g2.address) ?? "",
-            amount: amountRaw / 10 ** decimals,
-            blockIndex: ((_h2 = raw.block_identifier) == null ? void 0 : _h2.index) ?? raw.block_index ?? 0
-          };
-        }
-      }
-      const nonFeeOps = ops.filter(
-        (o2) => {
-          var _a4;
-          return !feeOps.includes(o2) && ((_a4 = o2.account) == null ? void 0 : _a4.address);
-        }
-      );
-      if (nonFeeOps.length >= 2) {
-        const amountRaw = Math.abs(
-          Number.parseFloat(((_i2 = nonFeeOps[0].amount) == null ? void 0 : _i2.value) ?? "0")
-        );
-        const decimals = ((_k = (_j2 = nonFeeOps[0].amount) == null ? void 0 : _j2.currency) == null ? void 0 : _k.decimals) ?? 8;
-        return {
-          timestamp: parseTimestamp(raw.timestamp),
-          from: ((_l = nonFeeOps[0].account) == null ? void 0 : _l.address) ?? "",
-          to: ((_m = nonFeeOps[1].account) == null ? void 0 : _m.address) ?? "",
-          amount: amountRaw / 10 ** decimals,
-          blockIndex: ((_n = raw.block_identifier) == null ? void 0 : _n.index) ?? raw.block_index ?? 0
-        };
-      }
-    }
-    if ((raw == null ? void 0 : raw.from) && (raw == null ? void 0 : raw.to)) {
-      let amount = 0;
-      if (typeof raw.amount === "object" && raw.amount !== null) {
-        amount = e8sToIcp(raw.amount.e8s ?? raw.amount.value ?? 0);
-      } else if (typeof raw.amount === "number" || typeof raw.amount === "string") {
-        const numAmt = Number(raw.amount);
-        amount = numAmt > 1e3 ? e8sToIcp(numAmt) : numAmt;
-      }
-      return {
-        timestamp: parseTimestamp(
-          raw.timestamp ?? raw.created_at_time ?? raw.date
-        ),
-        from: String(raw.from),
-        to: String(raw.to),
-        amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? raw.blockIndex ?? 0)
-      };
-    }
-    const op = ((_o = raw == null ? void 0 : raw.transaction) == null ? void 0 : _o.operation) ?? ((_q = (_p = raw == null ? void 0 : raw.transaction) == null ? void 0 : _p.operations) == null ? void 0 : _q[0]);
-    const transfer = (op == null ? void 0 : op.Transfer) ?? (op == null ? void 0 : op.transfer) ?? ((_r = raw == null ? void 0 : raw.transaction) == null ? void 0 : _r.transfer);
-    if (transfer) {
-      const amountVal = ((_s = transfer.amount) == null ? void 0 : _s.e8s) ?? ((_t2 = transfer.amount) == null ? void 0 : _t2.value) ?? transfer.amount ?? 0;
-      return {
-        timestamp: parseTimestamp(
-          ((_v = (_u = raw == null ? void 0 : raw.transaction) == null ? void 0 : _u.created_at_time) == null ? void 0 : _v.timestamp_nanos) ?? (raw == null ? void 0 : raw.created_at_time) ?? (raw == null ? void 0 : raw.timestamp)
-        ),
-        from: String(
-          ((_w = transfer.from) == null ? void 0 : _w.address) ?? transfer.from ?? ((_x = raw == null ? void 0 : raw.transaction) == null ? void 0 : _x.from) ?? ""
-        ),
-        to: String(
-          ((_y = transfer.to) == null ? void 0 : _y.address) ?? transfer.to ?? ((_z = raw == null ? void 0 : raw.transaction) == null ? void 0 : _z.to) ?? ""
-        ),
-        amount: e8sToIcp(amountVal),
-        blockIndex: Number((raw == null ? void 0 : raw.id) ?? (raw == null ? void 0 : raw.block_index) ?? 0)
-      };
-    }
-  } catch {
-  }
-  return null;
-}
-function extractTransactionArray(data) {
-  var _a3, _b3, _c2;
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data == null ? void 0 : data.data)) return data.data;
-  if (Array.isArray(data == null ? void 0 : data.blocks)) return data.blocks;
-  if (Array.isArray(data == null ? void 0 : data.transactions)) return data.transactions;
-  if (Array.isArray((_a3 = data == null ? void 0 : data.data) == null ? void 0 : _a3.transactions)) return data.data.transactions;
-  if (Array.isArray((_b3 = data == null ? void 0 : data.data) == null ? void 0 : _b3.blocks)) return data.data.blocks;
-  if (Array.isArray((_c2 = data == null ? void 0 : data.data) == null ? void 0 : _c2.data)) return data.data.data;
-  if (Array.isArray(data == null ? void 0 : data.result)) return data.result;
-  return [];
-}
-async function fetchWalletTransactions(principal, proxyUrl, limit = DEFAULT_TX_LIMIT) {
-  if (!principal || principal.trim() === "") {
-    return { ok: false, error: "invalid" };
-  }
-  const accountId = principalToAccountIdentifier(principal.trim());
-  if (!accountId) {
-    return { ok: false, error: "invalid" };
-  }
-  const base = proxyUrl ? proxyUrl.replace(/\/$/, "") : LEDGER_API_BASE;
-  const url = `${base}/accounts/${encodeURIComponent(accountId)}/transactions?limit=${limit}`;
-  let response;
-  try {
-    response = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(15e3)
-    });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (err instanceof TypeError && (msg.toLowerCase().includes("failed to fetch") || msg.toLowerCase().includes("networkerror") || msg.toLowerCase().includes("network request failed"))) {
-      return { ok: false, error: "cors" };
-    }
-    return { ok: false, error: "network" };
-  }
-  if (!response.ok) {
-    return { ok: false, error: "http" };
-  }
-  let data;
-  try {
-    data = await response.json();
-  } catch {
-    return { ok: false, error: "parse" };
-  }
-  const rawList = extractTransactionArray(data);
-  const transactions = [];
-  for (const raw of rawList) {
-    const tx = normalizeTransaction(raw);
-    if (tx) transactions.push(tx);
-  }
-  if (transactions.length === 0 && rawList.length > 0) {
-    return { ok: false, error: "parse" };
-  }
-  return { ok: true, transactions, accountIdentifier: accountId };
-}
-async function checkExplorerReachable() {
-  try {
-    const r2 = await fetch(`${LEDGER_API_BASE}/`, {
-      method: "HEAD",
-      signal: AbortSignal.timeout(5e3)
-    });
-    return r2.status < 500;
-  } catch {
-    try {
-      const r2 = await fetch(LEDGER_API_BASE, {
-        signal: AbortSignal.timeout(5e3)
-      });
-      return r2.status < 500;
-    } catch {
-      return false;
-    }
-  }
-}
-function testParser() {
-  try {
-    const sample = [
-      {
-        block_height: "1",
-        from_account_identifier: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00",
-        to_account_identifier: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00",
-        amount: "100000000",
-        created_at: 17e8,
-        transfer_type: "send"
-      }
-    ];
-    for (const r2 of sample) {
-      const tx = normalizeTransaction(r2);
-      if (!tx) return false;
-    }
-    return true;
-  } catch {
-    return false;
-  }
-}
-let icrcTokenListCache = null;
-const TOKEN_LIST_TTL_MS = 5 * 60 * 1e3;
-const TOKEN_LIST_MIN_COUNT = 10;
-const TOKEN_LIST_PAGE_SIZE = 100;
-async function fetchIcrcTokenListOnce() {
-  const parsed = [];
-  let cursor = null;
-  for (; ; ) {
-    const url = `${ICRC_API_BASE}/api/v2/ledgers?limit=${TOKEN_LIST_PAGE_SIZE}${cursor ? `&after=${encodeURIComponent(cursor)}` : ""}`;
-    const res = await fetch(url, {
-      headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(15e3)
-    });
-    if (!res.ok) {
-      throw new Error(`ICRC token list HTTP ${res.status}: ${res.statusText}`);
-    }
-    const data = await res.json();
-    console.log(
-      "[ICRC] Raw token list response shape:",
-      typeof data,
-      Array.isArray(data) ? "array" : Object.keys(data ?? {}).join(",")
-    );
-    const list = Array.isArray(data) ? data : (data == null ? void 0 : data.data) ?? (data == null ? void 0 : data.ledgers) ?? [];
-    for (const item of Array.isArray(list) ? list : []) {
-      let symbol = item.symbol ?? item.token_symbol ?? "";
-      let decimals = typeof item.decimals === "number" ? item.decimals : 8;
-      if (Array.isArray(item.icrc1_metadata)) {
-        for (const entry of item.icrc1_metadata) {
-          const key = Array.isArray(entry) ? entry[0] : entry.key;
-          const val = Array.isArray(entry) ? entry[1] : entry.value;
-          if (key === "icrc1:symbol" || key === "icrc1_symbol") {
-            symbol = (val == null ? void 0 : val.Text) ?? (val == null ? void 0 : val.text) ?? String(val ?? "");
-          } else if (key === "icrc1:decimals" || key === "icrc1_decimals") {
-            const raw = (val == null ? void 0 : val.Nat) ?? (val == null ? void 0 : val.nat) ?? (val == null ? void 0 : val.Nat64) ?? (val == null ? void 0 : val.nat64) ?? val;
-            const n2 = Number(raw);
-            if (!Number.isNaN(n2)) decimals = n2;
-          }
-        }
-      } else if (item.icrc1_metadata && typeof item.icrc1_metadata === "object") {
-        symbol = item.icrc1_metadata.icrc1_symbol ?? item.icrc1_metadata["icrc1:symbol"] ?? symbol;
-        const d2 = item.icrc1_metadata.icrc1_decimals ?? item.icrc1_metadata["icrc1:decimals"];
-        if (d2 !== void 0) {
-          const n2 = Number(d2);
-          if (!Number.isNaN(n2)) decimals = n2;
-        }
-      }
-      const canisterId = item.ledger_canister_id ?? item.canister_id ?? item.id ?? "";
-      if (canisterId && symbol) {
-        parsed.push({ canisterId, symbol, decimals });
-      }
-    }
-    const nextCursor = (data == null ? void 0 : data.next_cursor) ?? null;
-    if (!nextCursor || list.length === 0) break;
-    cursor = String(nextCursor);
-  }
-  console.log(`[ICRC] Parsed ${parsed.length} tokens from list`);
-  if (parsed.length > 0) {
-    console.log(
-      "[ICRC] Sample tokens:",
-      parsed.slice(0, 5).map((t2) => `${t2.symbol}(${t2.canisterId.slice(0, 8)})`).join(", ")
-    );
-  }
-  return parsed;
-}
-async function fetchIcrcTokenList() {
-  const now2 = Date.now();
-  if (icrcTokenListCache && icrcTokenListCache.tokens.length >= TOKEN_LIST_MIN_COUNT && now2 - icrcTokenListCache.fetchedAt < TOKEN_LIST_TTL_MS) {
-    console.log(
-      `[ICRC] Token list: ${icrcTokenListCache.tokens.length} tokens (cached)`
-    );
-    return icrcTokenListCache.tokens;
-  }
-  try {
-    let parsed = await fetchIcrcTokenListOnce();
-    console.log(`[ICRC] Token list: ${parsed.length} tokens (fresh)`);
-    if (parsed.length < TOKEN_LIST_MIN_COUNT) {
-      console.warn(
-        `[ICRC] Token list suspect (only ${parsed.length} items) — retrying in 2s`
-      );
-      await new Promise((resolve) => setTimeout(resolve, 2e3));
-      try {
-        const retry = await fetchIcrcTokenListOnce();
-        if (retry.length > parsed.length) {
-          parsed = retry;
-          console.log(
-            `[ICRC] Token list retry: ${parsed.length} tokens (fresh)`
-          );
-        }
-      } catch (retryErr) {
-        console.warn("[ICRC] Token list retry failed:", retryErr);
-      }
-    }
-    if (parsed.length > 0) {
-      icrcTokenListCache = { tokens: parsed, fetchedAt: now2 };
-    }
-    return parsed;
-  } catch (err) {
-    console.error("[ICRC] Token list fetch failed:", err);
-    if (icrcTokenListCache && icrcTokenListCache.tokens.length > 0) {
-      console.warn(
-        "[ICRC] Returning stale token list cache due to fetch error"
-      );
-      return icrcTokenListCache.tokens;
-    }
-    return [];
-  }
-}
-function normalizeIcrcTransaction(raw, decimals) {
-  var _a3, _b3, _c2, _d2, _e2, _f2;
-  try {
-    if (raw.from_owner !== void 0 || raw.to_owner !== void 0) {
-      const kind = String(raw.kind ?? "");
-      if (kind === "mint") {
-        return {
-          timestamp: parseTimestamp(raw.timestamp),
-          from: "minting-account",
-          to: extractOwner(raw.to_owner ?? raw.to_account),
-          amount: Number(raw.amount ?? 0) / 10 ** decimals,
-          blockIndex: Number(raw.index ?? raw.block_index ?? 0)
-        };
-      }
-      if (kind === "burn") {
-        return {
-          timestamp: parseTimestamp(raw.timestamp),
-          from: extractOwner(raw.from_owner ?? raw.from_account),
-          to: "burn-address",
-          amount: Number(raw.amount ?? 0) / 10 ** decimals,
-          blockIndex: Number(raw.index ?? raw.block_index ?? 0)
-        };
-      }
-      return {
-        timestamp: parseTimestamp(raw.timestamp),
-        from: extractOwner(raw.from_owner ?? raw.from_account),
-        to: extractOwner(raw.to_owner ?? raw.to_account),
-        amount: Number(raw.amount ?? 0) / 10 ** decimals,
-        blockIndex: Number(raw.index ?? raw.block_index ?? 0)
-      };
-    }
-    const tx = raw == null ? void 0 : raw.transaction;
-    if (!tx) return null;
-    if (tx.transfer) {
-      const from = extractOwner(((_a3 = tx.transfer.from) == null ? void 0 : _a3.owner) ?? tx.transfer.from);
-      const to = extractOwner(((_b3 = tx.transfer.to) == null ? void 0 : _b3.owner) ?? tx.transfer.to);
-      const amount = Number(tx.transfer.amount ?? 0) / 10 ** decimals;
-      return {
-        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
-        from,
-        to,
-        amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
-      };
-    }
-    if (tx.mint) {
-      const to = extractOwner(((_c2 = tx.mint.to) == null ? void 0 : _c2.owner) ?? tx.mint.to);
-      const amount = Number(tx.mint.amount ?? 0) / 10 ** decimals;
-      return {
-        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
-        from: "minting-account",
-        to,
-        amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
-      };
-    }
-    if (tx.burn) {
-      const from = extractOwner(((_d2 = tx.burn.from) == null ? void 0 : _d2.owner) ?? tx.burn.from);
-      const amount = Number(tx.burn.amount ?? 0) / 10 ** decimals;
-      return {
-        timestamp: parseTimestamp(tx.timestamp ?? raw.timestamp),
-        from,
-        to: "burn-address",
-        amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
-      };
-    }
-    if (raw.from !== void 0 && raw.to !== void 0) {
-      const from = extractOwner(((_e2 = raw.from) == null ? void 0 : _e2.owner) ?? raw.from);
-      const to = extractOwner(((_f2 = raw.to) == null ? void 0 : _f2.owner) ?? raw.to);
-      const amount = Number(raw.amount ?? 0) / 10 ** decimals;
-      return {
-        timestamp: parseTimestamp(raw.timestamp ?? raw.created_at),
-        from,
-        to,
-        amount,
-        blockIndex: Number(raw.id ?? raw.block_index ?? 0)
-      };
-    }
-  } catch {
-  }
-  return null;
-}
-async function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-async function fetchIcrcTransactions(canisterId, accountId, limit = 100, symbol = "UNKNOWN", decimals = 8, debugEntries, originalPrincipal) {
-  async function tryFetch(acctId, addrFormat) {
-    try {
-      const url = `${ICRC_API_BASE}/api/v1/ledgers/${encodeURIComponent(canisterId)}/accounts/${encodeURIComponent(acctId)}/transactions?limit=${limit}`;
-      const res = await fetch(url, {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(15e3)
-      });
-      if (!res.ok) {
-        const errMsg = `HTTP ${res.status}`;
-        if (res.status === 429 || res.status === 503) {
-          console.warn(
-            `[ICRC] FAILED ${symbol} (${canisterId.slice(0, 8)}): ${errMsg} — backoff 1s retry`
-          );
-          await sleep(1e3);
-          const retry = await fetch(url, {
-            headers: { Accept: "application/json" },
-            signal: AbortSignal.timeout(15e3)
-          });
-          if (!retry.ok) {
-            return {
-              txs: [],
-              httpStatus: retry.status,
-              error: `HTTP ${retry.status}`
-            };
-          }
-          const retryData = await retry.json();
-          return {
-            txs: parseTxs(retryData, decimals, symbol, addrFormat),
-            httpStatus: retry.status
-          };
-        }
-        return { txs: [], httpStatus: res.status, error: errMsg };
-      }
-      const data = await res.json();
-      return {
-        txs: parseTxs(data, decimals, symbol, addrFormat),
-        httpStatus: res.status
-      };
-    } catch (err) {
-      const errMsg = err instanceof Error ? err.message : String(err);
-      console.error(
-        `[ICRC] Failed ${symbol} (${canisterId.slice(0, 8)}) [${addrFormat}]:`,
-        errMsg
-      );
-      return { txs: [], error: errMsg };
-    }
-  }
-  function parseTxs(data, dec, sym, addrFormat) {
-    const rawList = extractTransactionArray(data);
-    if (rawList.length === 0) return [];
-    const txs = [];
-    for (const raw of rawList) {
-      const tx = normalizeIcrcTransaction(raw, dec);
-      if (tx) {
-        tx.token = sym;
-        tx.decimals = dec;
-        tx.from = principalAddressToHex(tx.from);
-        tx.to = principalAddressToHex(tx.to);
-        txs.push(tx);
-      }
-    }
-    return txs;
-  }
-  const trimmed = accountId.trim();
-  const isHex = /^[0-9a-fA-F]{64}$/.test(trimmed);
-  const addressesToTry = [];
-  addressesToTry.push({ id: trimmed, format: isHex ? "hex" : "principal" });
-  if (!isHex) {
-    const hexId = principalToAccountIdentifier(trimmed);
-    if (hexId && hexId !== trimmed) {
-      addressesToTry.push({ id: hexId, format: "hex" });
-    }
-  }
-  if (originalPrincipal) {
-    const origTrimmed = originalPrincipal.trim();
-    const origIsHex = /^[0-9a-fA-F]{64}$/.test(origTrimmed);
-    if (!addressesToTry.some((a2) => a2.id === origTrimmed)) {
-      addressesToTry.push({
-        id: origTrimmed,
-        format: origIsHex ? "hex" : "principal"
-      });
-    }
-    if (!origIsHex) {
-      const origHexId = principalToAccountIdentifier(origTrimmed);
-      if (origHexId && !addressesToTry.some((a2) => a2.id === origHexId)) {
-        addressesToTry.push({ id: origHexId, format: "hex" });
-      }
-    }
-  }
-  const principalCandidates = addressesToTry.filter(
-    (a2) => a2.format === "principal"
-  );
-  const hexCandidates = addressesToTry.filter((a2) => a2.format === "hex");
-  const ordered = [...principalCandidates, ...hexCandidates];
-  let lastError;
-  let lastHttpStatus;
-  const first = ordered[0];
-  if (first) {
-    const result = await tryFetch(first.id, first.format);
-    if (result.txs.length > 0) {
-      if (debugEntries) {
-        debugEntries.push({
-          symbol,
-          canisterId,
-          resultCount: result.txs.length,
-          addressFormat: first.format
-        });
-      }
-      return result.txs;
-    }
-    if (result.error) lastError = result.error;
-    if (result.httpStatus) lastHttpStatus = result.httpStatus;
-  }
-  const fallbacks = ordered.slice(1);
-  if (fallbacks.length > 0) {
-    const results = await Promise.all(
-      fallbacks.map((attempt) => tryFetch(attempt.id, attempt.format))
-    );
-    for (let i = 0; i < results.length; i++) {
-      const result = results[i];
-      if (result.txs.length > 0) {
-        if (debugEntries) {
-          debugEntries.push({
-            symbol,
-            canisterId,
-            resultCount: result.txs.length,
-            addressFormat: fallbacks[i].format
-          });
-        }
-        return result.txs;
-      }
-      if (result.error) lastError = result.error;
-      if (result.httpStatus) lastHttpStatus = result.httpStatus;
-    }
-  }
-  if (debugEntries) {
-    debugEntries.push({
-      symbol,
-      canisterId,
-      resultCount: 0,
-      addressFormat: "none",
-      error: lastError,
-      httpStatus: lastHttpStatus
-    });
-  }
-  return [];
-}
 const DEFAULT_MAX_COUNTERPARTIES = 20;
 const HISTORY_KEY = "icpath_search_history";
 const LABELS_KEY$1 = "wallet-labels";
@@ -65257,6 +65765,126 @@ const SAVED_WALLETS_KEY$1 = "icpath_saved_wallets";
 const MAX_HISTORY = 10;
 const MAX_PINS$1 = 20;
 const DEBUG_KEY = "icpath_debug";
+const ICRC3AccountIdl = Record({
+  owner: Principal2,
+  subaccount: Opt(Vec(Nat8))
+});
+const ICRC3TxIdl = Variant({
+  Burn: Record({
+    from: ICRC3AccountIdl,
+    memo: Opt(Vec(Nat8)),
+    created_at_time: Opt(Record({ timestamp_nanos: Nat64 })),
+    amount: Nat
+  }),
+  Mint: Record({
+    to: ICRC3AccountIdl,
+    memo: Opt(Vec(Nat8)),
+    created_at_time: Opt(Record({ timestamp_nanos: Nat64 })),
+    amount: Nat
+  }),
+  Transfer: Record({
+    from: ICRC3AccountIdl,
+    to: ICRC3AccountIdl,
+    memo: Opt(Vec(Nat8)),
+    created_at_time: Opt(Record({ timestamp_nanos: Nat64 })),
+    amount: Nat,
+    fee: Opt(Nat)
+  })
+});
+const ICRC3BlockIdl = Record({
+  id: Nat,
+  timestamp: Nat64,
+  transaction: ICRC3TxIdl
+});
+const LedgerIdl = ({ IDL: I2 }) => I2.Service({
+  icrc1_symbol: I2.Func([], [I2.Text], ["query"]),
+  icrc1_decimals: I2.Func([], [I2.Nat8], ["query"]),
+  get_transactions: I2.Func(
+    [I2.Record({ start: I2.Nat, length: I2.Nat })],
+    [
+      I2.Record({
+        log_length: I2.Nat,
+        blocks: I2.Vec(ICRC3BlockIdl),
+        archived_blocks: I2.Vec(
+          I2.Record({
+            args: I2.Vec(I2.Record({ start: I2.Nat, length: I2.Nat })),
+            callback: I2.Func(
+              [I2.Vec(I2.Record({ start: I2.Nat, length: I2.Nat }))],
+              [I2.Vec(ICRC3BlockIdl)],
+              ["query"]
+            )
+          })
+        )
+      })
+    ],
+    ["query"]
+  )
+});
+function normalizeIcrc3Block(block, decimals, symbol) {
+  const timestamp = new Date(
+    Number(block.timestamp / 1000000n)
+  ).toISOString();
+  const tx = block.transaction;
+  if (tx.Transfer) {
+    return {
+      timestamp,
+      from: tx.Transfer.from.owner.toString(),
+      to: tx.Transfer.to.owner.toString(),
+      amount: Number(tx.Transfer.amount) / 10 ** decimals,
+      blockIndex: Number(block.id),
+      token: symbol,
+      decimals
+    };
+  }
+  if (tx.Mint) {
+    return {
+      timestamp,
+      from: "minting-account",
+      to: tx.Mint.to.owner.toString(),
+      amount: Number(tx.Mint.amount) / 10 ** decimals,
+      blockIndex: Number(block.id),
+      token: symbol,
+      decimals
+    };
+  }
+  if (tx.Burn) {
+    return {
+      timestamp,
+      from: tx.Burn.from.owner.toString(),
+      to: "burn-address",
+      amount: Number(tx.Burn.amount) / 10 ** decimals,
+      blockIndex: Number(block.id),
+      token: symbol,
+      decimals
+    };
+  }
+  return null;
+}
+async function fetchDirectLedgerTransactions(actor, principal, symbol, decimals, limit) {
+  const ownerLower = principal.trim().toLowerCase();
+  const head = await actor.get_transactions({
+    start: 0n,
+    length: 0n
+  });
+  const logLength = Number(head.log_length);
+  if (logLength === 0) return [];
+  const start2 = Math.max(0, logLength - limit);
+  const res = await actor.get_transactions({
+    start: BigInt(start2),
+    length: BigInt(limit)
+  });
+  const txs = [];
+  for (const block of res.blocks) {
+    const tx = normalizeIcrc3Block(block, decimals, symbol);
+    if (!tx) continue;
+    const fromLower = tx.from.toLowerCase();
+    const toLower = tx.to.toLowerCase();
+    if (fromLower === ownerLower || toLower === ownerLower) {
+      txs.push(tx);
+    }
+  }
+  return txs;
+}
 function safeGetJSON$1(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -65358,6 +65986,10 @@ function useWallet() {
   const [depthLoading, setDepthLoading] = reactExports.useState(false);
   const [depth1Fetches, setDepth1Fetches] = reactExports.useState([]);
   const [depth2Fetches, setDepth2Fetches] = reactExports.useState([]);
+  const [depth3Fetches, setDepth3Fetches] = reactExports.useState([]);
+  const [depth3LatencyMs, setDepth3LatencyMs] = reactExports.useState(null);
+  const [customTokens, setCustomTokens] = reactExports.useState([]);
+  const [customTokenTransactions, setCustomTokenTransactions] = reactExports.useState([]);
   const [icrcLoading, setIcrcLoading] = reactExports.useState(false);
   const [icrcError, setIcrcError] = reactExports.useState(false);
   const [tokenCoverage, setTokenCoverage] = reactExports.useState(0);
@@ -65393,6 +66025,10 @@ function useWallet() {
     setAccountIdentifier("");
     setDepth1Fetches([]);
     setDepth2Fetches([]);
+    setDepth3Fetches([]);
+    setDepth3LatencyMs(null);
+    setCustomTokens([]);
+    setCustomTokenTransactions([]);
     setIcrcLoading(false);
     setIcrcError(false);
     setTokenCoverage(0);
@@ -65541,6 +66177,10 @@ function useWallet() {
     setLoading(false);
     setDepth1Fetches([]);
     setDepth2Fetches([]);
+    setDepth3Fetches([]);
+    setDepth3LatencyMs(null);
+    setCustomTokens([]);
+    setCustomTokenTransactions([]);
     setGraphDepth(1);
     setShowCrossEdges(false);
     setIcrcLoading(false);
@@ -65574,9 +66214,58 @@ function useWallet() {
     },
     [pinnedVersion]
   );
+  const addTokenByCanisterId = reactExports.useCallback(
+    async (canisterId) => {
+      const trimmed = canisterId.trim();
+      if (!trimmed || !currentPrincipal) {
+        return { ok: false, error: "invalid" };
+      }
+      try {
+        Principal$1.fromText(trimmed);
+      } catch {
+        return { ok: false, error: "invalid" };
+      }
+      try {
+        const agent = await HttpAgent.create({ host: "https://ic0.app" });
+        const actor = Actor.createActor(LedgerIdl, {
+          agent,
+          canisterId: trimmed
+        });
+        const symbol = await actor.icrc1_symbol();
+        const decimals = Number(await actor.icrc1_decimals());
+        const txs = await fetchDirectLedgerTransactions(
+          actor,
+          currentPrincipal,
+          symbol,
+          decimals,
+          txLimitRef.current
+        );
+        if (txs.length === 0) {
+          return { ok: false, error: "empty" };
+        }
+        setCustomTokenTransactions((prev) => [...prev, ...txs]);
+        setCustomTokens((prev) => {
+          if (prev.some(
+            (t2) => t2.canisterId.toLowerCase() === trimmed.toLowerCase()
+          )) {
+            return prev;
+          }
+          return [...prev, { canisterId: trimmed, symbol, decimals }];
+        });
+        return { ok: true, symbol, decimals, count: txs.length };
+      } catch (err) {
+        console.error(
+          "[CustomToken] Failed to fetch token by canister ID:",
+          err
+        );
+        return { ok: false, error: "network" };
+      }
+    },
+    [currentPrincipal]
+  );
   const rawTransactions = reactExports.useMemo(
-    () => [...icpTransactions, ...icrcTransactions],
-    [icpTransactions, icrcTransactions]
+    () => [...icpTransactions, ...icrcTransactions, ...customTokenTransactions],
+    [icpTransactions, icrcTransactions, customTokenTransactions]
   );
   const filteredTransactions = reactExports.useMemo(
     () => filterByTimeRange(rawTransactions, timeRange),
@@ -65586,6 +66275,8 @@ function useWallet() {
     if (!accountIdentifier || icpTransactions.length === 0 || graphDepth === 1) {
       setDepth1Fetches([]);
       setDepth2Fetches([]);
+      setDepth3Fetches([]);
+      setDepth3LatencyMs(null);
       return;
     }
     let cancelled = false;
@@ -65721,8 +66412,86 @@ function useWallet() {
         const d2Results = await Promise.all(d2Promises);
         if (cancelled) return;
         setDepth2Fetches(d2Results);
+        const wave3Start = performance.now();
+        const existingIds3 = /* @__PURE__ */ new Set([
+          accountIdentifier.toLowerCase(),
+          ...top5.map((cp) => cp.address.toLowerCase()),
+          ...d2Results.map((f2) => f2.nodeId.toLowerCase())
+        ]);
+        const d3Promises = [];
+        for (const d2 of d2Results) {
+          if (d2.transactions.length === 0) continue;
+          const cpList = getTopCounterparties(d2.accountId, d2.transactions, 2);
+          for (const cp of cpList) {
+            const cpLower = cp.address.toLowerCase();
+            if (existingIds3.has(cpLower)) continue;
+            existingIds3.add(cpLower);
+            d3Promises.push(
+              (async () => {
+                const icpRes = await fetchWalletTransactions(
+                  cp.address,
+                  proxyUrlRef.current || void 0,
+                  txLimitRef.current
+                );
+                const icpTxs = icpRes.ok ? icpRes.transactions : [];
+                const acctId = icpRes.ok ? icpRes.accountIdentifier ?? cp.address : cp.address;
+                const node = {
+                  nodeId: cp.address,
+                  accountId: acctId,
+                  transactions: icpTxs
+                };
+                if (!cancelled) {
+                  setDepth3Fetches((prev) => {
+                    const next = prev.filter((f2) => f2.nodeId !== cp.address);
+                    return [...next, node];
+                  });
+                }
+                let icrcTxs = [];
+                if (!cancelled) {
+                  try {
+                    icrcTxs = await fetchAllIcrcForAddress(
+                      cp.address,
+                      txLimitRef.current,
+                      cancelledRef
+                    );
+                    if (!cancelled && icrcTxs.length > 0) {
+                      setDepth3Fetches(
+                        (prev) => prev.map(
+                          (f2) => f2.nodeId === cp.address ? {
+                            ...f2,
+                            transactions: [...f2.transactions, ...icrcTxs]
+                          } : f2
+                        )
+                      );
+                    }
+                  } catch {
+                  }
+                }
+                const allTxs = [...icpTxs, ...icrcTxs];
+                console.log(
+                  `[Depth-3] ${cp.address.slice(0, 12)}: ICP=${icpTxs.length}, ICRC=${icrcTxs.length}, total=${allTxs.length}`
+                );
+                return {
+                  nodeId: cp.address,
+                  accountId: acctId,
+                  transactions: allTxs
+                };
+              })()
+            );
+          }
+        }
+        const d3Results = await Promise.all(d3Promises);
+        if (cancelled) return;
+        setDepth3Fetches(d3Results);
+        const wave3Duration = performance.now() - wave3Start;
+        setDepth3LatencyMs(wave3Duration);
+        console.log(
+          `[Depth-3] Third fetch wave took ${wave3Duration.toFixed(0)}ms for ${d3Results.length} nodes`
+        );
       } else {
         setDepth2Fetches([]);
+        setDepth3Fetches([]);
+        setDepth3LatencyMs(null);
       }
       if (!cancelled) setDepthLoading(false);
     })();
@@ -65757,6 +66526,10 @@ function useWallet() {
         ...f2,
         transactions: filterByTimeRange(f2.transactions, timeRange)
       })),
+      depth3Fetches.map((f2) => ({
+        ...f2,
+        transactions: filterByTimeRange(f2.transactions, timeRange)
+      })),
       maxCounterparties,
       showCrossEdges
     );
@@ -65777,6 +66550,7 @@ function useWallet() {
     graphDepth,
     depth1Fetches,
     depth2Fetches,
+    depth3Fetches,
     showCrossEdges
   ]);
   return {
@@ -65805,6 +66579,10 @@ function useWallet() {
     showCrossEdges,
     setShowCrossEdges,
     depthLoading,
+    depth3Fetches,
+    depth3LatencyMs,
+    customTokens,
+    addTokenByCanisterId,
     icrcLoading,
     icrcError,
     tokenCoverage,
@@ -66522,25 +67300,56 @@ function formatDate(ts) {
 function isChainKeyBtc$1(token) {
   return /btc/i.test(token);
 }
-function formatAmount(tx) {
+function formatAmount(tx, btcUnit) {
   const token = tx.token ?? "ICP";
   if (isChainKeyBtc$1(token)) {
-    const sats = Math.round(tx.amount * 1e8);
-    return `${sats.toLocaleString()} sats`;
+    if (btcUnit === "sats") {
+      const sats = Math.round(tx.amount * 1e8);
+      return `${sats.toLocaleString()} sats`;
+    }
+    return `${tx.amount.toFixed(8)} BTC`;
   }
   return `${tx.amount.toFixed(4)} ${token}`;
 }
 function TransactionTable({
   transactions,
   principal,
-  onNavigate
+  onNavigate,
+  btcUnit,
+  onBtcUnitChange
 }) {
   const [page, setPage] = reactExports.useState(0);
   const principalLower = principal.toLowerCase();
   const total = transactions.length;
   const totalPages = Math.ceil(total / PAGE_SIZE);
   const slice = transactions.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const hasBtc = transactions.some((tx) => isChainKeyBtc$1(tx.token ?? "ICP"));
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
+    hasBtc && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-end gap-1.5", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: "BTC units" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 rounded-md border border-border p-0.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "wallet.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("btc"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "BTC"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "wallet.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("sats"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "sats"
+          }
+        )
+      ] })
+    ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-lg border border-border overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Table, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(TableHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TableRow, { className: "border-border hover:bg-transparent", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "text-xs text-muted-foreground font-medium", children: "Date" }),
@@ -66592,7 +67401,7 @@ function TransactionTable({
                       className: `text-xs font-mono font-medium ${isIncoming ? "text-neon-green" : isOutgoing ? "text-neon-red" : "text-foreground"}`,
                       children: [
                         isIncoming ? "+" : isOutgoing ? "-" : "",
-                        formatAmount(tx)
+                        formatAmount(tx, btcUnit)
                       ]
                     }
                   ),
@@ -66660,13 +67469,19 @@ function TransactionTable({
     ] })
   ] });
 }
-const NEON_BLUE = "#4AA8FF";
-const NEON_AMBER = "#FFB300";
+function cssVar$1(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+const NEON_BLUE = cssVar$1("--chart-donut-1");
+const NEON_AMBER = cssVar$1("--chart-donut-3");
 function isChainKeyBtc(token) {
   return /btc/i.test(token);
 }
-function fmt(n2, token = "ICP") {
+function fmt(n2, token = "ICP", btcUnit = "sats") {
   if (isChainKeyBtc(token)) {
+    if (btcUnit === "btc") {
+      return `${n2.toFixed(8)} BTC`;
+    }
     const sats = Math.round(n2 * 1e8);
     return `${sats.toLocaleString()} sats`;
   }
@@ -66702,7 +67517,9 @@ function WalletStatCard({
   address,
   label,
   accentColor,
-  otherTokens = []
+  otherTokens = [],
+  btcUnit,
+  onBtcUnitChange
 }) {
   const { summary } = walletData;
   const portfolio = reactExports.useMemo(
@@ -66752,12 +67569,12 @@ function WalletStatCard({
             Badge,
             {
               variant: "outline",
-              className: `text-[10px] h-5 border-0 gap-1 ${isShared ? "bg-[#00FF88]/15 text-[#00FF88]" : "bg-muted/50 text-muted-foreground"}`,
-              title: `${entry.token}: ${fmt(entry.volume, entry.token)} total`,
+              className: `text-[10px] h-5 border-0 gap-1 ${isShared ? "bg-neon-green/15 text-neon-green" : "bg-muted/50 text-muted-foreground"}`,
+              title: `${entry.token}: ${fmt(entry.volume, entry.token, btcUnit)}`,
               children: [
                 isShared && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[8px] font-bold leading-none", children: "★" }),
                 entry.token,
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-60 text-[9px]", children: fmt(entry.volume, entry.token) })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-60 text-[9px]", children: fmt(entry.volume, entry.token, btcUnit) })
               ]
             },
             entry.token
@@ -66769,7 +67586,7 @@ function WalletStatCard({
           " more"
         ] })
       ] }),
-      otherTokens.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[9px] text-[#00FF88]/70 mt-1", children: "★ tokens shared with the other wallet" })
+      otherTokens.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[9px] text-neon-green/70 mt-1", children: "★ tokens shared with the other wallet" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mb-1.5 uppercase tracking-wide font-medium", children: "Activity Timeline" }),
@@ -66777,7 +67594,9 @@ function WalletStatCard({
         ActivityChart,
         {
           transactions: walletData.transactions,
-          principal: address
+          principal: address,
+          btcUnit,
+          onBtcUnitChange
         }
       )
     ] })
@@ -66787,7 +67606,9 @@ function ComparisonStatsPanel({
   wallet1Data,
   wallet2Data,
   addr1,
-  addr2
+  addr2,
+  btcUnit,
+  onBtcUnitChange
 }) {
   const tokens1 = reactExports.useMemo(
     () => buildTokenPortfolio(wallet1Data).map((e3) => e3.token),
@@ -66801,15 +67622,38 @@ function ComparisonStatsPanel({
     () => tokens1.filter((t2) => tokens2.includes(t2)),
     [tokens1, tokens2]
   );
+  const hasBtc = [...tokens1, ...tokens2].some((t2) => isChainKeyBtc(t2));
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(ChartColumn, { className: "h-4 w-4 text-neon-blue" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-semibold text-foreground", children: "Wallet Statistics" }),
-      sharedTokens.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[11px] text-[#00FF88]/80", children: [
+      sharedTokens.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[11px] text-neon-green/80", children: [
         sharedTokens.length,
         " token",
         sharedTokens.length !== 1 ? "s" : "",
         " in common"
+      ] }),
+      hasBtc && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-auto flex items-center gap-1 rounded-md border border-border p-0.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "compare.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("btc"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "BTC"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "compare.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("sats"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "sats"
+          }
+        )
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
@@ -66822,7 +67666,9 @@ function ComparisonStatsPanel({
             address: addr1,
             label: "Wallet 1",
             accentColor: NEON_BLUE,
-            otherTokens: tokens2
+            otherTokens: tokens2,
+            btcUnit,
+            onBtcUnitChange
           }
         ) })
       ] }),
@@ -66835,7 +67681,9 @@ function ComparisonStatsPanel({
             address: addr2,
             label: "Wallet 2",
             accentColor: NEON_AMBER,
-            otherTokens: tokens1
+            otherTokens: tokens1,
+            btcUnit,
+            onBtcUnitChange
           }
         ) })
       ] })
@@ -67041,7 +67889,9 @@ function GraphSkeleton({ label }) {
 }
 function WalletComparisonView({
   comparison,
-  onBack
+  onBack,
+  btcUnit,
+  onBtcUnitChange
 }) {
   const {
     isLoading,
@@ -67218,7 +68068,9 @@ function WalletComparisonView({
         wallet1Data: data.wallet1,
         wallet2Data: data.wallet2,
         addr1: address1,
-        addr2: address2
+        addr2: address2,
+        btcUnit,
+        onBtcUnitChange
       }
     ) })
   ] });
@@ -67922,7 +68774,9 @@ function useUserData(isLoggedIn, actor) {
     refresh
   };
 }
-const DONUT_COLORS = ["#66C7FF", "#F0B35A", "#3FE08C", "#FF5A5F", "#C084FC"];
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
 function NetworkBreakdown({
   nodes,
   edges,
@@ -67974,7 +68828,7 @@ function NetworkBreakdown({
           children: data.map((entry, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             Cell,
             {
-              fill: DONUT_COLORS[i % DONUT_COLORS.length],
+              fill: cssVar(`--chart-donut-${i % 6 + 1}`),
               opacity: 0.85
             },
             entry.name
@@ -67985,16 +68839,122 @@ function NetworkBreakdown({
         Tooltip,
         {
           contentStyle: {
-            background: "#0E1626",
-            border: "1px solid #22324A",
+            background: cssVar("--chart-tooltip-bg"),
+            border: `1px solid ${cssVar("--chart-tooltip-border")}`,
             borderRadius: "6px",
             fontSize: "11px",
-            color: "#E9EEF7"
+            color: cssVar("--chart-tooltip-text")
           }
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Legend, { wrapperStyle: { fontSize: "10px", color: "#9FB0C8" } })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Legend,
+        {
+          wrapperStyle: { fontSize: "10px", color: cssVar("--chart-text") }
+        }
+      )
     ] }) })
+  ] });
+}
+function formatTokenAmount(token, amount, btcUnit) {
+  if (/btc/i.test(token)) {
+    if (btcUnit === "sats") {
+      return `${Math.round(amount * 1e8).toLocaleString()} sats`;
+    }
+    return `${amount.toFixed(8)} BTC`;
+  }
+  return `${amount.toFixed(4)} ${token}`;
+}
+function formatShortDate(ts) {
+  try {
+    return new Date(ts).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  } catch {
+    return ts;
+  }
+}
+function TokenHoldings({
+  edges,
+  btcUnit
+}) {
+  const rows = reactExports.useMemo(() => {
+    const map2 = /* @__PURE__ */ new Map();
+    for (const e3 of edges) {
+      for (const [token, amt] of Object.entries(e3.inAmountByToken ?? {})) {
+        map2.set(token, (map2.get(token) ?? 0) + amt);
+      }
+      for (const [token, amt] of Object.entries(e3.outAmountByToken ?? {})) {
+        map2.set(token, (map2.get(token) ?? 0) + amt);
+      }
+    }
+    return [...map2.entries()].sort((a2, b2) => b2[1] - a2[1]);
+  }, [edges]);
+  if (rows.length === 0) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "flex items-center justify-center h-32 text-xs text-muted-foreground",
+        "data-ocid": "wallet.empty_state",
+        children: "No token data"
+      }
+    );
+  }
+  const max2 = rows[0][1];
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2.5", children: rows.map(([token, amount]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between text-xs", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium text-foreground", children: token }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-muted-foreground", children: formatTokenAmount(token, amount, btcUnit) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-1.5 rounded-full bg-muted overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "h-full rounded-full bg-neon-blue/70",
+        style: { width: `${max2 > 0 ? amount / max2 * 100 : 0}%` }
+      }
+    ) })
+  ] }, token)) });
+}
+function Highlights({
+  transactions,
+  principal,
+  btcUnit
+}) {
+  const largest = reactExports.useMemo(() => {
+    if (!transactions.length) return null;
+    return transactions.reduce((a2, b2) => b2.amount > a2.amount ? b2 : a2);
+  }, [transactions]);
+  const mostActiveDay = reactExports.useMemo(() => {
+    const daily = getDailyActivity(transactions, principal);
+    if (!daily.length) return null;
+    return daily.reduce(
+      (a2, b2) => a2.txIn + a2.txOut >= b2.txIn + b2.txOut ? a2 : b2
+    );
+  }, [transactions, principal]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-3", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg border border-border bg-muted/30 p-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-wider text-muted-foreground mb-1", children: "Largest Transaction" }),
+      largest ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-bold text-foreground", children: formatTokenAmount(
+          largest.token ?? "ICP",
+          largest.amount,
+          btcUnit
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mt-0.5", children: formatShortDate(largest.timestamp) })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground", children: "No data" })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-lg border border-border bg-muted/30 p-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-wider text-muted-foreground mb-1", children: "Most Active Day" }),
+      mostActiveDay ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-sm font-bold text-foreground", children: [
+          mostActiveDay.txIn + mostActiveDay.txOut,
+          " txs"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mt-0.5", children: formatShortDate(mostActiveDay.date) })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-muted-foreground", children: "No data" })
+    ] })
   ] });
 }
 function App() {
@@ -68035,7 +68995,9 @@ function App() {
     icrcLoading,
     tokenCoverage,
     togglePin,
-    debugMode
+    debugMode,
+    addTokenByCanisterId,
+    depth3LatencyMs
   } = useWallet();
   const comparison = useComparison();
   const handleStartComparison = (addr1, addr2) => {
@@ -68046,14 +69008,33 @@ function App() {
     setComparisonActive(false);
     comparison.reset();
   };
+  const handleAddToken = async (canisterId) => {
+    if (!currentPrincipal) {
+      throw new Error("Load a wallet first to add a token.");
+    }
+    const result = await addTokenByCanisterId(canisterId);
+    if (!result.ok) {
+      if (result.error === "invalid") {
+        throw new Error("Invalid canister ID or no wallet loaded.");
+      }
+      if (result.error === "empty") {
+        throw new Error("No transactions found for this token and wallet.");
+      }
+      throw new Error(
+        "Could not reach the ledger canister. Check the ID and try again."
+      );
+    }
+  };
   const [edgeWeight, setEdgeWeight] = reactExports.useState(
     "tx_count"
   );
+  const [btcUnit, setBtcUnit] = reactExports.useState("sats");
   const [icpUsdPrice, setIcpUsdPrice] = reactExports.useState(void 0);
   const [savedPanelOpen, setSavedPanelOpen] = reactExports.useState(false);
   const [compareModalOpen, setCompareModalOpen] = reactExports.useState(false);
   const [comparisonActive, setComparisonActive] = reactExports.useState(false);
   const [pinTrigger, setPinTrigger] = reactExports.useState(0);
+  const [addTokenOpen, setAddTokenOpen] = reactExports.useState(false);
   const currentPrincipalRef = reactExports.useRef(currentPrincipal);
   currentPrincipalRef.current = currentPrincipal;
   const navigateRef = reactExports.useRef(navigate);
@@ -68111,6 +69092,13 @@ function App() {
         onClose: () => setCompareModalOpen(false)
       }
     ),
+    addTokenOpen && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      AddTokenModal,
+      {
+        onAddToken: handleAddToken,
+        onClose: () => setAddTokenOpen(false)
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       SavedWalletsPanel,
       {
@@ -68160,7 +69148,9 @@ function App() {
         WalletComparisonView,
         {
           comparison,
-          onBack: handleBackFromComparison
+          onBack: handleBackFromComparison,
+          btcUnit,
+          onBtcUnitChange: setBtcUnit
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {})
@@ -68169,9 +69159,36 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-bold text-foreground mb-1", children: "Enter Principal ID or Account ID" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: "Visualize ICP wallet transaction networks as interactive constellations" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {}) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col lg:flex-row gap-4", children: [
-        (hasData || loading) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full lg:w-72 shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-end items-center gap-2", children: [
+        hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "wallet.add_token_button",
+            onClick: () => setAddTokenOpen(true),
+            className: "flex items-center gap-1.5 text-xs px-3 py-1.5 rounded border border-border bg-card text-muted-foreground hover:text-foreground hover:border-neon-blue/40 transition-colors",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Coins, { className: "h-3.5 w-3.5 text-neon-blue" }),
+              "Add Token"
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {})
+      ] }),
+      depth3LatencyMs !== null && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", "data-ocid": "wallet.depth3_latency", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "span",
+        {
+          className: "text-[11px] text-muted-foreground",
+          title: "Time spent fetching the third wave of counterparty data (depth-3 nodes)",
+          children: [
+            "Depth-3 load: ",
+            depth3LatencyMs.toLocaleString(),
+            " ms"
+          ]
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row gap-4", children: [
+        (hasData || loading) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full md:w-64 lg:w-72 shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           OverviewPanel,
           {
             principal: currentPrincipal,
@@ -68179,64 +69196,113 @@ function App() {
             onNavigate: navigate,
             timeRange,
             onTimeRangeChange: setTimeRange,
-            tokenCoverage
+            tokenCoverage,
+            btcUnit,
+            onBtcUnitChange: setBtcUnit
           }
         ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "flex-1 relative",
-            style: { minHeight: "520px", height: "520px" },
-            children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                className: "flex items-center justify-center h-full min-h-[520px] rounded-lg border border-border bg-card",
-                "data-ocid": "wallet.loading_state",
-                children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-3 text-muted-foreground", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "h-8 w-8 animate-spin text-neon-blue" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", children: "Fetching constellation data…" })
-                ] })
-              }
-            ) : hasData ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative h-full min-h-[520px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              ConstellationGraph,
-              {
-                nodes: graphNodes,
-                edges: graphEdges,
-                centerPrincipal: currentPrincipal,
-                onNavigate: navigate,
-                edgeWeight,
-                onMaxCounterpartiesChange: setMaxCounterparties,
-                maxCounterparties,
-                graphDepth,
-                onDepthChange: (d2) => setGraphDepth(d2),
-                depthLoading,
-                txLimit,
-                onTxLimitChange: setTxLimit,
-                icrcLoading,
-                showCrossEdges,
-                onShowCrossEdgesChange: setShowCrossEdges,
-                transactions: walletData == null ? void 0 : walletData.transactions,
-                icpUsdPrice,
-                onPinToggle: () => setPinTrigger((n2) => n2 + 1),
-                externalLabels: userData.labels,
-                onSetLabel: userData.setLabel,
-                onToggleFavorite: (address) => {
-                  userData.toggleFavorite(address);
-                  togglePin(address);
-                  setPinTrigger((n2) => n2 + 1);
-                },
-                isFavorite: userData.isFavorite
-              }
-            ) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative h-full min-h-[520px] rounded-lg border border-border bg-card overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              EmptyState,
-              {
-                variant: emptyVariant,
-                onProxySet: setProxyUrl,
-                proxyUrl
-              }
-            ) })
-          }
-        )
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 flex flex-col gap-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "relative",
+              style: { minHeight: "520px", height: "520px" },
+              children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "flex items-center justify-center h-full min-h-[520px] rounded-lg border border-border bg-card",
+                  "data-ocid": "wallet.loading_state",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-3 text-muted-foreground", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "h-8 w-8 animate-spin text-neon-blue" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", children: "Fetching constellation data…" })
+                  ] })
+                }
+              ) : hasData ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative h-full min-h-[520px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ConstellationGraph,
+                {
+                  nodes: graphNodes,
+                  edges: graphEdges,
+                  centerPrincipal: currentPrincipal,
+                  onNavigate: navigate,
+                  edgeWeight,
+                  onMaxCounterpartiesChange: setMaxCounterparties,
+                  maxCounterparties,
+                  graphDepth,
+                  onDepthChange: (d2) => setGraphDepth(d2),
+                  depthLoading,
+                  txLimit,
+                  onTxLimitChange: setTxLimit,
+                  icrcLoading,
+                  showCrossEdges,
+                  onShowCrossEdgesChange: setShowCrossEdges,
+                  transactions: walletData == null ? void 0 : walletData.transactions,
+                  icpUsdPrice,
+                  onPinToggle: () => setPinTrigger((n2) => n2 + 1),
+                  externalLabels: userData.labels,
+                  onSetLabel: userData.setLabel,
+                  onToggleFavorite: (address) => {
+                    userData.toggleFavorite(address);
+                    togglePin(address);
+                    setPinTrigger((n2) => n2 + 1);
+                  },
+                  isFavorite: userData.isFavorite,
+                  btcUnit,
+                  onBtcUnitChange: setBtcUnit
+                }
+              ) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative h-full min-h-[520px] rounded-lg border border-border bg-card overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                EmptyState,
+                {
+                  variant: emptyVariant,
+                  onProxySet: setProxyUrl,
+                  proxyUrl
+                }
+              ) })
+            }
+          ),
+          hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Daily Transaction Activity" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ActivityChart,
+                {
+                  transactions: walletData.transactions,
+                  principal: currentPrincipal,
+                  btcUnit,
+                  onBtcUnitChange: setBtcUnit
+                }
+              ) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Network Breakdown" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                NetworkBreakdown,
+                {
+                  nodes: graphNodes,
+                  edges: graphEdges,
+                  edgeWeight,
+                  onEdgeWeightChange: setEdgeWeight
+                }
+              ) })
+            ] })
+          ] }),
+          hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Token Holdings" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHoldings, { edges: graphEdges, btcUnit }) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Highlights" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Highlights,
+                {
+                  transactions: walletData.transactions,
+                  principal: currentPrincipal,
+                  btcUnit
+                }
+              ) })
+            ] })
+          ] })
+        ] })
       ] }),
       hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "text-sm font-semibold", children: [
@@ -68252,33 +69318,11 @@ function App() {
           {
             transactions: walletData.transactions,
             principal: currentPrincipal,
-            onNavigate: navigate
+            onNavigate: navigate,
+            btcUnit,
+            onBtcUnitChange: setBtcUnit
           }
         ) })
-      ] }),
-      hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Daily Transaction Activity" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ActivityChart,
-            {
-              transactions: walletData.transactions,
-              principal: currentPrincipal
-            }
-          ) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Network Breakdown" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            NetworkBreakdown,
-            {
-              nodes: graphNodes,
-              edges: graphEdges,
-              edgeWeight,
-              onEdgeWeightChange: setEdgeWeight
-            }
-          ) })
-        ] })
       ] })
     ] }),
     !comparisonActive && /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {}),
