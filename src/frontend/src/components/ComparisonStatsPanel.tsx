@@ -258,18 +258,6 @@ export function ComparisonStatsPanel({
             <button
               type="button"
               data-ocid="compare.btc_unit_toggle"
-              onClick={() => onBtcUnitChange("btc")}
-              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
-                btcUnit === "btc"
-                  ? "bg-neon-blue/20 text-neon-blue"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              BTC
-            </button>
-            <button
-              type="button"
-              data-ocid="compare.btc_unit_toggle"
               onClick={() => onBtcUnitChange("sats")}
               className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
                 btcUnit === "sats"
@@ -278,6 +266,18 @@ export function ComparisonStatsPanel({
               }`}
             >
               sats
+            </button>
+            <button
+              type="button"
+              data-ocid="compare.btc_unit_toggle"
+              onClick={() => onBtcUnitChange("btc")}
+              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                btcUnit === "btc"
+                  ? "bg-neon-blue/20 text-neon-blue"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              btc
             </button>
           </div>
         )}

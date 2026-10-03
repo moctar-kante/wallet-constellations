@@ -70,13 +70,3 @@ export async function fetchIcpUsdPrice(): Promise<number | null> {
 
   return price;
 }
-
-/**
- * Format a USD amount with k/M suffixes and 3 decimals.
- * Examples: $1.234k, $1.234M, $0.500
- */
-export function formatUsd(usd: number): string {
-  if (usd >= 1_000_000) return `$${(usd / 1_000_000).toFixed(3)}M`;
-  if (usd >= 1_000) return `$${(usd / 1_000).toFixed(3)}k`;
-  return `$${usd.toFixed(3)}`;
-}

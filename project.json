@@ -1,19 +1,20 @@
 {
-  "overview": "An interactive wallet transaction visualizer that maps ICP wallet activity as a force-directed constellation graph with layered depth, activity charts, and token coverage.",
+  "overview": "A single-page visualizer that maps an Internet Computer wallet's transaction network as an interactive constellation graph.",
   "features": [
     "Visualize wallet transactions as an interactive constellation graph",
-    "Explore multi-depth counterparty relationships",
-    "Chart daily transaction activity with adjustable intervals",
-    "Compare wallets side by side",
-    "Track token holdings and whale activity"
+    "Search any wallet by address or principal",
+    "Filter by time range and weight edges by count or amount",
+    "Compare two wallets side by side",
+    "Add custom ICRC tokens",
+    "Read a built-in user manual"
   ],
   "category": "data-visualization",
   "tags": [
-    "wallet",
+    "icp",
     "blockchain",
+    "wallet",
     "graph",
-    "visualization",
-    "icp"
+    "visualization"
   ],
-  "last_updated": "2026-09-10T01:26:09.825Z"
+  "last_updated": "2026-09-21T23:10:05.044Z"
 }

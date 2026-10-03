@@ -7,9 +7,11 @@ import {
 import { IDL } from "@dfinity/candid";
 import { Principal } from "@dfinity/principal";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { backendInterface } from "../backend.d";
 import {
   DEFAULT_TX_LIMIT,
   type IcrcFetchDebugEntry,
+  fetchCustomIcrcToken,
   fetchIcrcTokenList,
   fetchIcrcTransactions,
   fetchWalletTransactions,
@@ -34,9 +36,18 @@ const DEFAULT_MAX_COUNTERPARTIES = 20;
 const HISTORY_KEY = "icpath_search_history";
 const LABELS_KEY = "wallet-labels";
 const SAVED_WALLETS_KEY = "icpath_saved_wallets";
+const CUSTOM_TOKENS_KEY = "icpath_custom_tokens";
 const MAX_HISTORY = 10;
 const MAX_PINS = 20;
 const DEBUG_KEY = "icpath_debug";
+
+/** A user-supplied ICRC-1 token tracked for the current wallet. */
+export interface CustomTokenEntry {
+  ledgerCanisterId: string;
+  indexCanisterId?: string;
+  symbol: string;
+  decimals: number;
+}
 
 type DepthFetch = {
   nodeId: string;
@@ -255,6 +266,14 @@ export function getSavedWallets(): SavedWallet[] {
   return safeGetJSON<SavedWallet[]>(SAVED_WALLETS_KEY, []);
 }
 
+export function getCustomTokens(): CustomTokenEntry[] {
+  return safeGetJSON<CustomTokenEntry[]>(CUSTOM_TOKENS_KEY, []);
+}
+
+function saveCustomTokens(tokens: CustomTokenEntry[]): void {
+  safeSetJSON(CUSTOM_TOKENS_KEY, tokens);
+}
+
 export function clearSearchHistory(): void {
   safeSetJSON(HISTORY_KEY, []);
 }
@@ -343,7 +362,10 @@ async function fetchAllIcrcForAddress(
   return allIcrcTxs;
 }
 
-export function useWallet() {
+export function useWallet(
+  isLoggedIn = false,
+  actor: backendInterface | null = null,
+) {
   const [historyStack, setHistoryStack] = useState<string[]>([]);
   const [currentPrincipal, setCurrentPrincipal] = useState("");
   const [timeRange, setTimeRange] = useState<TimeRange>("week");
@@ -367,9 +389,9 @@ export function useWallet() {
   // fetching meaningfully increases load latency.
   const [depth3LatencyMs, setDepth3LatencyMs] = useState<number | null>(null);
   // Manually added non-SNS/non-ck tokens (by canister ID) and their txs.
-  const [customTokens, setCustomTokens] = useState<
-    Array<{ canisterId: string; symbol: string; decimals: number }>
-  >([]);
+  const [customTokens, setCustomTokens] = useState<CustomTokenEntry[]>(() =>
+    getCustomTokens(),
+  );
   const [customTokenTransactions, setCustomTokenTransactions] = useState<
     Transaction[]
   >([]);
@@ -386,6 +408,11 @@ export function useWallet() {
   const txLimitRef = useRef(txLimit);
   txLimitRef.current = txLimit;
   const icrcCancelledRef = useRef(false);
+  // Guards the custom-token rehydration sweep: keys are
+  // `${ledgerCanisterId}:${address}` so each restored token is fetched at most
+  // once per searched address, and a token added in the current session (which
+  // already populated its transactions) is never re-fetched.
+  const rehydratedCustomTokensRef = useRef<Set<string>>(new Set());
 
   // Debug mode state
   const [debugMode, setDebugMode] = useState<boolean>(() =>
@@ -393,6 +420,159 @@ export function useWallet() {
   );
   const debugModeRef = useRef(debugMode);
   debugModeRef.current = debugMode;
+
+  // Custom-token persistence: mirror to localStorage always, and sync to the
+  // backend canister when logged in. `migratedCustomTokensRef` guards the
+  // one-time local→backend push so it runs once per session.
+  const migratedCustomTokensRef = useRef(false);
+
+  // On login: union-merge backend tokens over the local list, then push any
+  // local-only tokens to the backend once (mirrors the useUserData pattern).
+  useEffect(() => {
+    if (!isLoggedIn || !actor) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const backendTokens = await actor.listCustomTokens().catch(() => []);
+        if (cancelled) return;
+
+        const local = getCustomTokens();
+        const backendIds = new Set(
+          backendTokens.map((t) => t.ledgerCanisterId.toLowerCase()),
+        );
+        const merged: CustomTokenEntry[] = [
+          ...backendTokens.map((t) => ({
+            ledgerCanisterId: t.ledgerCanisterId,
+            indexCanisterId: t.indexCanisterId,
+            symbol: t.symbol,
+            decimals: Number(t.decimals),
+          })),
+          ...local.filter(
+            (t) => !backendIds.has(t.ledgerCanisterId.toLowerCase()),
+          ),
+        ];
+        setCustomTokens(merged);
+        saveCustomTokens(merged);
+
+        // First-time migration: push local-only tokens to the backend.
+        if (!migratedCustomTokensRef.current) {
+          migratedCustomTokensRef.current = true;
+          const localOnly = local.filter(
+            (t) => !backendIds.has(t.ledgerCanisterId.toLowerCase()),
+          );
+          await Promise.all(
+            localOnly.map((t) =>
+              actor
+                .addCustomToken(
+                  t.ledgerCanisterId,
+                  t.indexCanisterId ?? null,
+                  t.symbol,
+                  t.decimals,
+                )
+                .catch(() => {}),
+            ),
+          );
+        }
+      } catch (err) {
+        console.warn("[CustomToken] sync failed:", err);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn, actor]);
+
+  // Rehydrate transactions for persisted custom tokens. `customTokens` is
+  // restored from localStorage (and union-merged with the backend on login),
+  // but `customTokenTransactions` is intentionally not persisted — so after a
+  // reload the chip is present while its transactions are missing from the
+  // graph, sidebar, and table. Once the searched address is known, re-fetch
+  // each restored token through the same `fetchCustomIcrcToken` path used by
+  // `addTokenByCanisterId` and merge the results in, tagged with the ledger
+  // canister ID. The ref guard makes this idempotent per token + address.
+  useEffect(() => {
+    if (!currentPrincipal || customTokens.length === 0) return;
+
+    const address = currentPrincipal.trim();
+    const pending = customTokens.filter(
+      (t) =>
+        !rehydratedCustomTokensRef.current.has(
+          `${t.ledgerCanisterId.toLowerCase()}:${address.toLowerCase()}`,
+        ),
+    );
+    if (pending.length === 0) return;
+
+    let cancelled = false;
+    (async () => {
+      const results = await Promise.all(
+        pending.map(
+          async (
+            token,
+          ): Promise<{ key: string; txs: Transaction[] } | null> => {
+            const key = `${token.ledgerCanisterId.toLowerCase()}:${address.toLowerCase()}`;
+            try {
+              const custom = await fetchCustomIcrcToken(
+                token.ledgerCanisterId,
+                token.indexCanisterId,
+                address,
+              );
+              if (!custom.ok) return null;
+              return {
+                key,
+                txs: custom.transactions.map((tx) => ({
+                  ...tx,
+                  ledgerCanisterId: token.ledgerCanisterId,
+                })),
+              };
+            } catch (err) {
+              console.warn(
+                "[CustomToken] rehydrate failed for",
+                token.ledgerCanisterId,
+                err,
+              );
+              return null;
+            }
+          },
+        ),
+      );
+
+      if (cancelled) return;
+
+      const restored = results.filter(
+        (r): r is { key: string; txs: Transaction[] } => r !== null,
+      );
+      if (restored.length === 0) return;
+
+      // Mark only successful fetches so a transient failure can retry on the
+      // next address change rather than being permanently skipped.
+      for (const r of restored) {
+        rehydratedCustomTokensRef.current.add(r.key);
+      }
+
+      const merged = restored.flatMap((r) => r.txs);
+      if (merged.length === 0) return;
+
+      setCustomTokenTransactions((prev) => {
+        const seen = new Set(
+          prev.map(
+            (tx) =>
+              `${(tx.ledgerCanisterId ?? "").toLowerCase()}:${tx.blockIndex ?? ""}`,
+          ),
+        );
+        const additions = merged.filter(
+          (tx) =>
+            !seen.has(
+              `${(tx.ledgerCanisterId ?? "").toLowerCase()}:${tx.blockIndex ?? ""}`,
+            ),
+        );
+        return additions.length > 0 ? [...prev, ...additions] : prev;
+      });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentPrincipal, customTokens]);
 
   // Toggle debug mode on Shift+D
   useEffect(() => {
@@ -419,7 +599,9 @@ export function useWallet() {
     setDepth2Fetches([]);
     setDepth3Fetches([]);
     setDepth3LatencyMs(null);
-    setCustomTokens([]);
+    // Custom tokens are persisted per user — restore the saved list rather
+    // than clearing it, so a wallet reload keeps the user's tracked tokens.
+    setCustomTokens(getCustomTokens());
     setCustomTokenTransactions([]);
     setIcrcLoading(false);
     setIcrcError(false);
@@ -578,6 +760,7 @@ export function useWallet() {
 
   const reset = useCallback(() => {
     icrcCancelledRef.current = true;
+    rehydratedCustomTokensRef.current.clear();
     setHistoryStack([]);
     setCurrentPrincipal("");
     setIcpTransactions([]);
@@ -589,7 +772,7 @@ export function useWallet() {
     setDepth2Fetches([]);
     setDepth3Fetches([]);
     setDepth3LatencyMs(null);
-    setCustomTokens([]);
+    setCustomTokens(getCustomTokens());
     setCustomTokenTransactions([]);
     setGraphDepth(1);
     setShowCrossEdges(false);
@@ -633,13 +816,22 @@ export function useWallet() {
   // Manual "add token by canister ID" flow. The ICRC API only serves SNS and
   // chain-key tokens, so a user-supplied non-SNS/non-ck token is queried
   // directly against its ledger canister and its transactions are merged into
-  // the graph data.
+  // the graph data. When the ledger exposes an index canister (supplied by the
+  // user or discovered via ICRC-106) history is read from that index instead.
   const addTokenByCanisterId = useCallback(
     async (
       canisterId: string,
+      indexCanisterId?: string,
     ): Promise<
-      | { ok: true; symbol: string; decimals: number; count: number }
-      | { ok: false; error: "invalid" | "empty" | "network" }
+      | {
+          ok: true;
+          symbol: string;
+          decimals: number;
+          count: number;
+          indexCanisterId: string | null;
+          indexDiscovered: boolean;
+        }
+      | { ok: false; error: "invalid" | "empty" | "network" | "index" }
     > => {
       const trimmed = canisterId.trim();
       if (!trimmed || !currentPrincipal) {
@@ -650,45 +842,125 @@ export function useWallet() {
       } catch {
         return { ok: false, error: "invalid" };
       }
-      try {
-        const agent = await HttpAgent.create({ host: "https://ic0.app" });
-        const actor = Actor.createActor(LedgerIdl, {
-          agent,
-          canisterId: trimmed,
-        }) as LedgerActor;
-        const symbol = (await actor.icrc1_symbol()) as string;
-        const decimals = Number(await actor.icrc1_decimals());
-        const txs = await fetchDirectLedgerTransactions(
-          actor,
-          currentPrincipal,
-          symbol,
-          decimals,
-          txLimitRef.current,
-        );
-        if (txs.length === 0) {
-          return { ok: false, error: "empty" };
+
+      const custom = await fetchCustomIcrcToken(
+        trimmed,
+        indexCanisterId,
+        currentPrincipal,
+      );
+      if (!custom.ok) {
+        return {
+          ok: false,
+          error: custom.error === "index" ? "index" : "network",
+        };
+      }
+
+      let txs = custom.transactions;
+      if (txs.length === 0 && custom.indexCanisterId === null) {
+        // No index available — fall back to the direct-ledger path.
+        try {
+          const agent = await HttpAgent.create({ host: "https://ic0.app" });
+          const actor = Actor.createActor(LedgerIdl, {
+            agent,
+            canisterId: trimmed,
+          }) as LedgerActor;
+          txs = await fetchDirectLedgerTransactions(
+            actor,
+            currentPrincipal,
+            custom.symbol,
+            custom.decimals,
+            txLimitRef.current,
+          );
+        } catch (err) {
+          console.error(
+            "[CustomToken] Direct ledger fetch failed for",
+            trimmed,
+            err,
+          );
+          return { ok: false, error: "network" };
         }
-        setCustomTokenTransactions((prev) => [...prev, ...txs]);
-        setCustomTokens((prev) => {
-          if (
-            prev.some(
-              (t) => t.canisterId.toLowerCase() === trimmed.toLowerCase(),
+      }
+
+      if (txs.length === 0) {
+        return { ok: false, error: "empty" };
+      }
+
+      // Tag each transaction with its ledger canister ID so removal can filter
+      // on a field that actually holds the ledger ID (the symbol does not).
+      const taggedTxs = txs.map((tx) => ({
+        ...tx,
+        ledgerCanisterId: trimmed,
+      }));
+      setCustomTokenTransactions((prev) => [...prev, ...taggedTxs]);
+      const entry: CustomTokenEntry = {
+        ledgerCanisterId: trimmed,
+        indexCanisterId: custom.indexCanisterId ?? undefined,
+        symbol: custom.symbol,
+        decimals: custom.decimals,
+      };
+      setCustomTokens((prev) => {
+        const next = prev.some(
+          (t) => t.ledgerCanisterId.toLowerCase() === trimmed.toLowerCase(),
+        )
+          ? prev.map((t) =>
+              t.ledgerCanisterId.toLowerCase() === trimmed.toLowerCase()
+                ? entry
+                : t,
             )
-          ) {
-            return prev;
-          }
-          return [...prev, { canisterId: trimmed, symbol, decimals }];
-        });
-        return { ok: true, symbol, decimals, count: txs.length };
-      } catch (err) {
-        console.error(
-          "[CustomToken] Failed to fetch token by canister ID:",
-          err,
+          : [...prev, entry];
+        saveCustomTokens(next);
+        return next;
+      });
+
+      // Persist to the backend when logged in (best-effort).
+      if (isLoggedIn && actor) {
+        actor
+          .addCustomToken(
+            trimmed,
+            custom.indexCanisterId ?? null,
+            custom.symbol,
+            custom.decimals,
+          )
+          .catch((err) => {
+            console.warn("[CustomToken] backend addCustomToken failed:", err);
+          });
+      }
+
+      return {
+        ok: true,
+        symbol: custom.symbol,
+        decimals: custom.decimals,
+        count: txs.length,
+        indexCanisterId: custom.indexCanisterId,
+        indexDiscovered: custom.indexDiscovered,
+      };
+    },
+    [currentPrincipal, isLoggedIn, actor],
+  );
+
+  /** Remove a custom token and its transactions from the current view. */
+  const removeCustomToken = useCallback(
+    async (ledgerCanisterId: string) => {
+      const key = ledgerCanisterId.toLowerCase();
+      setCustomTokens((prev) => {
+        const next = prev.filter(
+          (t) => t.ledgerCanisterId.toLowerCase() !== key,
         );
-        return { ok: false, error: "network" };
+        saveCustomTokens(next);
+        return next;
+      });
+      setCustomTokenTransactions((prev) =>
+        prev.filter((tx) => (tx.ledgerCanisterId ?? "").toLowerCase() !== key),
+      );
+      if (isLoggedIn && actor) {
+        try {
+          await actor.removeCustomToken(ledgerCanisterId);
+        } catch (err) {
+          console.warn("[CustomToken] backend removeCustomToken failed:", err);
+        }
       }
     },
-    [currentPrincipal],
+    [isLoggedIn, actor],
   );
 
   // Merged view of ICP + ICRC + manually-added custom token transactions for
@@ -1082,6 +1354,7 @@ export function useWallet() {
     depth3LatencyMs,
     customTokens,
     addTokenByCanisterId,
+    removeCustomToken,
     icrcLoading,
     icrcError,
     tokenCoverage,

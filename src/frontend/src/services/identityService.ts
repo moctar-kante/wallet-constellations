@@ -321,10 +321,3 @@ export function getSnsParticipation(
   }
   return [...tokens];
 }
-
-/**
- * Check if an ID is a known canister.
- */
-export function isKnownCanister(id: string): boolean {
-  return CANISTER_MAP.has(id.toLowerCase().trim());
-}

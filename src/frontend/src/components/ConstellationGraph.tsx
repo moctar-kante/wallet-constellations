@@ -58,22 +58,12 @@ export interface ConstellationGraphProps {
   nodes: GraphNode[];
   edges: GraphEdge[];
   transactions?: import("../types").Transaction[];
-  centralNodeId?: string;
   centerPrincipal?: string;
   onNavigate: (principal: string) => void;
-  breadcrumbs?: { id: string; label: string }[];
-  onBreadcrumbClick?: (index: number) => void;
-  isLoading?: boolean;
-  timeRange?: string;
-  labels?: Record<string, string>;
   externalLabels?: Record<string, string>;
-  favorites?: Set<string>;
-  onLabelChange?: (id: string, label: string) => void;
   onSetLabel?: (id: string, label: string) => void;
-  onFavoriteToggle?: (id: string) => void;
   onToggleFavorite?: (id: string) => void;
   isFavorite?: (address: string) => boolean;
-  edgeWeight?: "tx_count" | "total_amount" | string;
   maxCounterparties?: number;
   onMaxCounterpartiesChange?: (v: number) => void;
   graphDepth?: number;
@@ -84,11 +74,6 @@ export interface ConstellationGraphProps {
   icrcLoading?: boolean;
   showCrossEdges?: boolean;
   onShowCrossEdgesChange?: (v: boolean) => void;
-  icpUsdPrice?: number;
-  onPinToggle?: () => void;
-  highlightNodeIds?: string[];
-  highlightColor?: string;
-  accentColor?: string;
   btcUnit?: "btc" | "sats";
   onBtcUnitChange?: (u: "btc" | "sats") => void;
 }
@@ -201,6 +186,18 @@ function edgeStrokeWidth(
   return Math.min(5, Math.max(1.5, 1 + Math.log2(metric) * 0.6));
 }
 
+// Node radius encodes activity: the center wallet is always largest, and
+// counterparties scale with their transaction count relative to the busiest
+// node in the current graph. Radius stays within 12–24px so labels and the
+// legend never collide.
+function nodeRadius(node: Node2D, maxActivity: number): number {
+  if (node.isCenter) return 22;
+  const activity = Math.max(node.txCount ?? 0, 0);
+  if (maxActivity <= 0) return 14;
+  const ratio = Math.min(1, activity / maxActivity);
+  return 12 + Math.sqrt(ratio) * 12;
+}
+
 // quadratic bezier control point — perpendicular to midpoint, alternating
 function bezierControlPoint(
   x1: number,
@@ -250,15 +247,8 @@ export function ConstellationGraph({
   nodes,
   edges,
   onNavigate,
-  breadcrumbs = [],
-  onBreadcrumbClick,
-  isLoading = false,
   externalLabels,
-  labels: _labelsLegacy,
-  favorites: _favoritesLegacy,
-  onLabelChange: _onLabelChange,
   onSetLabel,
-  onFavoriteToggle: _onFavoriteToggle,
   onToggleFavorite,
   isFavorite,
   maxCounterparties,
@@ -272,17 +262,14 @@ export function ConstellationGraph({
   onBtcUnitChange,
 }: ConstellationGraphProps) {
   // ── Merged state helpers ──
-  const labels: Record<string, string> = externalLabels ?? _labelsLegacy ?? {};
-  const favorites: Set<string> = _favoritesLegacy ?? new Set<string>();
-  const checkFavorite = isFavorite ?? ((id: string) => favorites.has(id));
+  const labels: Record<string, string> = externalLabels ?? {};
+  const checkFavorite = isFavorite ?? (() => false);
 
   const handleLabelEditCb = (id: string, lbl: string) => {
-    if (onSetLabel) onSetLabel(id, lbl);
-    else if (_onLabelChange) _onLabelChange(id, lbl);
+    onSetLabel?.(id, lbl);
   };
   const handleFavoriteToggle = (id: string) => {
-    if (onToggleFavorite) onToggleFavorite(id);
-    else if (_onFavoriteToggle) _onFavoriteToggle(id);
+    onToggleFavorite?.(id);
   };
 
   // ── UI state ──
@@ -313,7 +300,6 @@ export function ConstellationGraph({
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
   const [showLabels, setShowLabels] = useState(true);
   const [minEdgeVolume, setMinEdgeVolume] = useState(0);
-  const [_selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [nodeInfo, setNodeInfo] = useState<NodeInfoState | null>(null);
   const [edgeTooltip, setEdgeTooltip] = useState<TooltipState | null>(null);
   const [editingLabel, setEditingLabel] = useState<string | null>(null);
@@ -321,6 +307,7 @@ export function ConstellationGraph({
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [hoveredEdgeKey, setHoveredEdgeKey] = useState<string | null>(null);
   const [colorByLevel, setColorByLevel] = useState(false);
+  const [legendCollapsed, setLegendCollapsed] = useState(false);
   const [edgeWeightMode, setEdgeWeightMode] = useState<"volume" | "count">(
     "volume",
   );
@@ -377,7 +364,6 @@ export function ConstellationGraph({
         if (nodeInfoTimeoutRef.current)
           clearTimeout(nodeInfoTimeoutRef.current);
         setNodeInfo(null);
-        setSelectedNodeId(null);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -575,6 +561,16 @@ export function ConstellationGraph({
     return m;
   }, [simNodes]);
 
+  // Busiest counterparty activity — the reference for node-size scaling.
+  const maxNodeActivity = useMemo(
+    () =>
+      simNodes.reduce(
+        (max, n) => (n.isCenter ? max : Math.max(max, n.txCount ?? 0)),
+        0,
+      ),
+    [simNodes],
+  );
+
   // ── D3 Zoom setup ──
   useEffect(() => {
     if (!svgRef.current) return;
@@ -671,7 +667,6 @@ export function ConstellationGraph({
   const handleNodeClick = useCallback(
     (e: React.MouseEvent | React.TouchEvent, node: Node2D) => {
       e.stopPropagation();
-      setSelectedNodeId(node.id);
       setEdgeTooltip(null);
       if (nodeInfoTimeoutRef.current) clearTimeout(nodeInfoTimeoutRef.current);
 
@@ -697,7 +692,6 @@ export function ConstellationGraph({
     if (isMobile) return;
     nodeInfoTimeoutRef.current = setTimeout(() => {
       setNodeInfo(null);
-      setSelectedNodeId(null);
     }, 3000);
   }, [isMobile]);
 
@@ -961,7 +955,6 @@ export function ConstellationGraph({
         }}
         onClick={() => {
           setNodeInfo(null);
-          setSelectedNodeId(null);
           setEdgeTooltip(null);
         }}
       >
@@ -1104,7 +1097,7 @@ export function ConstellationGraph({
                 : nodeColor(n).fill;
             const { glow } = nodeColor(node);
             const fill = resolvedColor(node);
-            const r = node.isCenter ? 22 : 16;
+            const r = nodeRadius(node, maxNodeActivity);
             const isHovered = hoveredNodeId === node.id;
             const scale = isHovered ? 1.15 : 1;
             const filterId = node.isCenter
@@ -1251,73 +1244,6 @@ export function ConstellationGraph({
           })}
         </g>
       </svg>
-
-      {/* Loading overlay */}
-      {isLoading && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: cssVar("--graph-panel-bg"),
-            zIndex: 50,
-            pointerEvents: "none",
-          }}
-        >
-          <div
-            style={{
-              color: cssVar("--graph-accent"),
-              fontSize: 15,
-              letterSpacing: 1,
-            }}
-          >
-            Loading constellation…
-          </div>
-        </div>
-      )}
-
-      {/* Breadcrumbs */}
-      {breadcrumbs.length > 0 && (
-        <div
-          data-ocid="graph.breadcrumbs"
-          style={{
-            position: "absolute",
-            top: 10,
-            left: 10,
-            display: "flex",
-            gap: 5,
-            flexWrap: "wrap",
-            zIndex: 20,
-            maxWidth: "70%",
-          }}
-        >
-          {breadcrumbs.map((crumb, i) => (
-            <button
-              key={crumb.id}
-              type="button"
-              data-ocid={`graph.breadcrumb.item.${i + 1}`}
-              onClick={() => onBreadcrumbClick?.(i)}
-              style={{
-                background: cssVar("--graph-breadcrumb-bg"),
-                border: `1px solid ${cssVar("--graph-breadcrumb-border")}`,
-                color:
-                  i === breadcrumbs.length - 1
-                    ? cssVar("--graph-breadcrumb-active")
-                    : cssVar("--graph-breadcrumb-inactive"),
-                padding: "3px 8px",
-                borderRadius: 4,
-                fontSize: 11,
-                cursor: "pointer",
-                fontWeight: i === breadcrumbs.length - 1 ? 600 : 400,
-              }}
-            >
-              {crumb.label || truncateAddress(crumb.id)}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* Settings toggle */}
       <button
@@ -1733,7 +1659,6 @@ export function ConstellationGraph({
             data-ocid="graph.node_info.close_button"
             onClick={() => {
               setNodeInfo(null);
-              setSelectedNodeId(null);
             }}
             style={{
               position: "absolute",
@@ -1900,7 +1825,6 @@ export function ConstellationGraph({
             onClick={() => {
               onNavigate(nodeInfo.node.id);
               setNodeInfo(null);
-              setSelectedNodeId(null);
             }}
             style={{
               width: "100%",
@@ -2019,28 +1943,6 @@ export function ConstellationGraph({
                 <button
                   type="button"
                   data-ocid="graph.btc_unit_toggle"
-                  onClick={() => onBtcUnitChange?.("btc")}
-                  style={{
-                    fontSize: 9,
-                    padding: "1px 5px",
-                    borderRadius: 3,
-                    border: "none",
-                    cursor: "pointer",
-                    background:
-                      btcUnit === "btc"
-                        ? cssVar("--graph-accent")
-                        : "transparent",
-                    color:
-                      btcUnit === "btc"
-                        ? "#ffffff"
-                        : cssVar("--graph-overlay-text-dim"),
-                  }}
-                >
-                  BTC
-                </button>
-                <button
-                  type="button"
-                  data-ocid="graph.btc_unit_toggle"
                   onClick={() => onBtcUnitChange?.("sats")}
                   style={{
                     fontSize: 9,
@@ -2060,6 +1962,28 @@ export function ConstellationGraph({
                 >
                   sats
                 </button>
+                <button
+                  type="button"
+                  data-ocid="graph.btc_unit_toggle"
+                  onClick={() => onBtcUnitChange?.("btc")}
+                  style={{
+                    fontSize: 9,
+                    padding: "1px 5px",
+                    borderRadius: 3,
+                    border: "none",
+                    cursor: "pointer",
+                    background:
+                      btcUnit === "btc"
+                        ? cssVar("--graph-accent")
+                        : "transparent",
+                    color:
+                      btcUnit === "btc"
+                        ? "#ffffff"
+                        : cssVar("--graph-overlay-text-dim"),
+                  }}
+                >
+                  btc
+                </button>
               </div>
             )}
           </div>
@@ -2069,10 +1993,14 @@ export function ConstellationGraph({
 
       {/* Legend */}
       <div
+        data-ocid="graph.legend"
         style={{
           position: "absolute",
           bottom: 10,
           left: 10,
+          maxWidth: "min(280px, calc(100% - 20px))",
+          maxHeight: "calc(100% - 20px)",
+          overflowY: "auto",
           background: cssVar("--graph-legend-bg"),
           border: `1px solid ${cssVar("--graph-legend-border")}`,
           borderRadius: 7,
@@ -2080,87 +2008,301 @@ export function ConstellationGraph({
           fontSize: 10,
           color: cssVar("--graph-text"),
           zIndex: 10,
-          lineHeight: 1.7,
+          lineHeight: 1.6,
         }}
       >
-        {colorByLevel
-          ? levelPalette().map((color, i) => (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 8,
+            marginBottom: 6,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: 1,
+              color: cssVar("--graph-overlay-text-dim"),
+            }}
+          >
+            LEGEND
+          </span>
+          <button
+            type="button"
+            data-ocid="graph.legend.toggle"
+            onClick={() => setLegendCollapsed((c) => !c)}
+            aria-expanded={!legendCollapsed}
+            aria-label={legendCollapsed ? "Expand legend" : "Collapse legend"}
+            style={{
+              background: "none",
+              border: "none",
+              color: cssVar("--graph-text"),
+              cursor: "pointer",
+              fontSize: 10,
+              padding: "0 2px",
+              lineHeight: 1,
+            }}
+          >
+            {legendCollapsed ? "▸" : "▾"}
+          </button>
+        </div>
+
+        {!legendCollapsed && (
+          <>
+            {colorByLevel ? (
+              <>
+                <div
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    letterSpacing: 0.6,
+                    color: cssVar("--graph-overlay-text-dim"),
+                    marginBottom: 4,
+                  }}
+                >
+                  COLOR BY DEPTH
+                </div>
+                {levelPalette().map((color, i) => (
+                  <div
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static list with fixed order
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      marginBottom: 2,
+                    }}
+                  >
+                    {/* Circle with depth number visible inside */}
+                    <div
+                      style={{
+                        width: 18,
+                        height: 18,
+                        borderRadius: "50%",
+                        background: color,
+                        flexShrink: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 10,
+                        fontWeight: 700,
+                        color: "#fff",
+                        boxShadow: isDark ? `0 0 5px ${color}80` : "none",
+                        border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
+                      }}
+                    >
+                      {i}
+                    </div>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: cssVar("--graph-text"),
+                        fontWeight: 500,
+                      }}
+                    >
+                      {i === 0 ? "Center" : `Depth ${i}`}
+                    </span>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    letterSpacing: 0.6,
+                    color: cssVar("--graph-overlay-text-dim"),
+                    marginBottom: 4,
+                  }}
+                >
+                  NODE COLOR
+                </div>
+                {LEGEND_ITEMS.map((item) => {
+                  const swatchColor = item.color;
+                  return (
+                    <div
+                      key={item.label}
+                      style={{ display: "flex", alignItems: "center", gap: 6 }}
+                    >
+                      <span
+                        style={{
+                          width: 10,
+                          height: 10,
+                          borderRadius: "50%",
+                          background: swatchColor,
+                          display: "inline-block",
+                          flexShrink: 0,
+                          boxShadow: isDark ? `0 0 6px ${swatchColor}` : "none",
+                          border: isDark
+                            ? "none"
+                            : "1px solid rgba(0,0,0,0.15)",
+                        }}
+                      />
+                      <span style={{ color: cssVar("--graph-text") }}>
+                        {item.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+
+            {/* Node size */}
+            <div
+              style={{
+                marginTop: 6,
+                borderTop: `1px solid ${cssVar("--graph-legend-border")}`,
+                paddingTop: 5,
+              }}
+            >
               <div
-                // biome-ignore lint/suspicious/noArrayIndexKey: static list with fixed order
-                key={i}
+                style={{
+                  fontSize: 9,
+                  fontWeight: 700,
+                  letterSpacing: 0.6,
+                  color: cssVar("--graph-overlay-text-dim"),
+                  marginBottom: 4,
+                }}
+              >
+                NODE SIZE
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span
+                  style={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    background: cssVar("--graph-node-default"),
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: "50%",
+                    background: cssVar("--graph-node-default"),
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ color: cssVar("--graph-text") }}>
+                  Larger = more activity
+                </span>
+              </div>
+            </div>
+
+            {/* Edge color */}
+            <div
+              style={{
+                marginTop: 6,
+                borderTop: `1px solid ${cssVar("--graph-legend-border")}`,
+                paddingTop: 5,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 9,
+                  fontWeight: 700,
+                  letterSpacing: 0.6,
+                  color: cssVar("--graph-overlay-text-dim"),
+                  marginBottom: 4,
+                }}
+              >
+                EDGE COLOR
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span
+                  style={{
+                    width: 16,
+                    height: 2,
+                    background: cssVar("--graph-edge-icp"),
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ color: cssVar("--graph-text") }}>ICP</span>
+              </div>
+              <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: 6,
-                  marginBottom: 2,
+                  marginTop: 2,
                 }}
               >
-                {/* Circle with depth number visible inside */}
-                <div
-                  style={{
-                    width: 18,
-                    height: 18,
-                    borderRadius: "50%",
-                    background: color,
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: "#fff",
-                    boxShadow: isDark ? `0 0 5px ${color}80` : "none",
-                    border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
-                  }}
-                >
-                  {i}
-                </div>
                 <span
                   style={{
-                    fontSize: 11,
-                    color: cssVar("--graph-text"),
-                    fontWeight: 500,
+                    width: 16,
+                    height: 2,
+                    background: cssVar("--graph-token-3"),
+                    flexShrink: 0,
                   }}
-                >
-                  {i === 0 ? "Center" : `Depth ${i}`}
+                />
+                <span style={{ color: cssVar("--graph-text") }}>
+                  Other tokens (each its own color)
                 </span>
               </div>
-            ))
-          : LEGEND_ITEMS.map((item) => {
-              const swatchColor = item.color;
-              return (
-                <div
-                  key={item.label}
-                  style={{ display: "flex", alignItems: "center", gap: 6 }}
-                >
-                  <span
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: "50%",
-                      background: swatchColor,
-                      display: "inline-block",
-                      flexShrink: 0,
-                      boxShadow: isDark ? `0 0 6px ${swatchColor}` : "none",
-                      border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)",
-                    }}
-                  />
-                  <span style={{ color: cssVar("--graph-text") }}>
-                    {item.label}
-                  </span>
-                </div>
-              );
-            })}
-        <div
-          style={{
-            marginTop: 4,
-            borderTop: `1px solid ${cssVar("--graph-legend-border")}`,
-            paddingTop: 4,
-            fontSize: 9,
-          }}
-        >
-          ↓ Inbound&nbsp;&nbsp;↑ Outbound
-        </div>
+            </div>
+
+            {/* Edge thickness */}
+            <div
+              style={{
+                marginTop: 6,
+                borderTop: `1px solid ${cssVar("--graph-legend-border")}`,
+                paddingTop: 5,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 9,
+                  fontWeight: 700,
+                  letterSpacing: 0.6,
+                  color: cssVar("--graph-overlay-text-dim"),
+                  marginBottom: 4,
+                }}
+              >
+                EDGE THICKNESS
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span
+                  style={{
+                    width: 16,
+                    height: 1.5,
+                    background: cssVar("--graph-edge-icp"),
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    width: 16,
+                    height: 4,
+                    background: cssVar("--graph-edge-icp"),
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ color: cssVar("--graph-text") }}>
+                  Thicker = more{" "}
+                  {edgeWeightMode === "count" ? "transactions" : "volume"}
+                </span>
+              </div>
+            </div>
+
+            {/* Direction */}
+            <div
+              style={{
+                marginTop: 6,
+                borderTop: `1px solid ${cssVar("--graph-legend-border")}`,
+                paddingTop: 5,
+                fontSize: 9,
+              }}
+            >
+              ↓ Inbound&nbsp;&nbsp;↑ Outbound
+            </div>
+          </>
+        )}
       </div>
 
       {/* Inline label edit modal (when editing from pencil icon outside info window) */}

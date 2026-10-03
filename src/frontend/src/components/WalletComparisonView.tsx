@@ -14,7 +14,6 @@ import { ConstellationGraph } from "./ConstellationGraph";
 import { SharedCounterpartiesPanel } from "./SharedCounterpartiesPanel";
 
 // Raw hex for SVG rings — allowed per design system rules
-const SHARED_NODE_COLOR = "#00FF88";
 const WALLET2_ACCENT = "#FFB300";
 
 type ComparisonHook = ReturnType<typeof useComparison>;
@@ -70,7 +69,6 @@ export function WalletComparisonView({
   } = comparison;
 
   const hasData = !!data;
-  const sharedNodeArray = hasData ? [...data.sharedNodeIds] : [];
 
   const short1 = shortenAddr(address1);
   const short2 = shortenAddr(address2);
@@ -158,7 +156,6 @@ export function WalletComparisonView({
                   edges={data.wallet1.graph.edges}
                   centerPrincipal={address1}
                   onNavigate={() => {}}
-                  edgeWeight="tx_count"
                   maxCounterparties={20}
                   onMaxCounterpartiesChange={() => {}}
                   graphDepth={1}
@@ -168,8 +165,6 @@ export function WalletComparisonView({
                   showCrossEdges={false}
                   onShowCrossEdgesChange={() => {}}
                   transactions={data.wallet1.transactions}
-                  highlightNodeIds={sharedNodeArray}
-                  highlightColor={SHARED_NODE_COLOR}
                 />
               </div>
             </div>
@@ -195,7 +190,6 @@ export function WalletComparisonView({
                   edges={data.wallet2.graph.edges}
                   centerPrincipal={address2}
                   onNavigate={() => {}}
-                  edgeWeight="tx_count"
                   maxCounterparties={20}
                   onMaxCounterpartiesChange={() => {}}
                   graphDepth={1}
@@ -205,9 +199,6 @@ export function WalletComparisonView({
                   showCrossEdges={false}
                   onShowCrossEdgesChange={() => {}}
                   transactions={data.wallet2.transactions}
-                  highlightNodeIds={sharedNodeArray}
-                  highlightColor={SHARED_NODE_COLOR}
-                  accentColor={WALLET2_ACCENT}
                 />
               </div>
             </div>

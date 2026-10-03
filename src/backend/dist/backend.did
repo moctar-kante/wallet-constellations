@@ -3,18 +3,63 @@ type WalletLabel =
    address: text;
    walletLabel: text;
  };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
 type Favorite = 
  record {
    address: text;
    pinnedAt: int;
  };
+type CustomToken = 
+ record {
+   addedAt: int;
+   decimals: nat8;
+   indexCanisterId: opt text;
+   ledgerCanisterId: text;
+   symbol: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
 service : {
+  /// Add or upsert a custom token for the calling user, deduplicated by ledger canister ID.
+  addCustomToken: (ledgerCanisterId: text, indexCanisterId: opt text, symbol:
+   text, decimals: nat8) -> (CustomToken);
+  /// Add or update a wallet as a favorite for the calling user.
   addFavorite: (address: text) -> ();
+  execute: (qJson: text) -> (Result) query;
+  /// Get all wallet labels for the calling user.
   getAllLabels: () -> (vec WalletLabel) query;
+  /// Static Markdown documentation of this canister's public API.
+  getApiDoc: () -> (text) query;
+  /// Get all favorite wallets for the calling user.
   getFavorites: () -> (vec Favorite) query;
+  /// Get the label for a specific wallet address, or null if not set.
   getLabel: (address: text) -> (opt text) query;
+  /// Get all custom tokens tracked by the calling user.
+  listCustomTokens: () -> (vec CustomToken) query;
   ping: () -> (record {status: text;}) query;
+  /// Remove a custom token by ledger canister ID. Returns true when an entry was removed.
+  removeCustomToken: (ledgerCanisterId: text) -> (bool);
+  /// Remove a wallet from the calling user's favorites.
   removeFavorite: (address: text) -> ();
+  /// Remove the label for a specific wallet address.
   removeLabel: (address: text) -> ();
+  schema: () -> (text) query;
+  /// Set or overwrite a wallet label for the calling user. Label is max 6 chars.
   setLabel: (address: text, lbl: text) -> ();
 }

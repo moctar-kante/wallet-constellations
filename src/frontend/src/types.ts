@@ -6,6 +6,8 @@ export interface Transaction {
   blockIndex: number;
   token?: string; // e.g. 'ICP', 'CHAT', 'ckBTC' — default 'ICP'
   decimals?: number; // default 8
+  /** Ledger canister ID for manually-added custom tokens (absent for ICP/ICRC). */
+  ledgerCanisterId?: string;
 }
 
 export type NodeIdentityType =

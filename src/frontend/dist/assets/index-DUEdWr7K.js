@@ -29100,11 +29100,35 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$u = [
+const __iconNode$w = [
   ["path", { d: "M17 7 7 17", key: "15tmo1" }],
   ["path", { d: "M17 17H7V7", key: "1org7z" }]
 ];
-const ArrowDownLeft = createLucideIcon("arrow-down-left", __iconNode$u);
+const ArrowDownLeft = createLucideIcon("arrow-down-left", __iconNode$w);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$v = [
+  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
+  ["path", { d: "M19 12H5", key: "x3x0zl" }]
+];
+const ArrowLeft = createLucideIcon("arrow-left", __iconNode$v);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$u = [
+  ["path", { d: "m21 16-4 4-4-4", key: "f6ql7i" }],
+  ["path", { d: "M17 20V4", key: "1ejh1v" }],
+  ["path", { d: "m3 8 4-4 4 4", key: "11wl7u" }],
+  ["path", { d: "M7 4v16", key: "1glfcx" }]
+];
+const ArrowUpDown = createLucideIcon("arrow-up-down", __iconNode$u);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29112,10 +29136,10 @@ const ArrowDownLeft = createLucideIcon("arrow-down-left", __iconNode$u);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$t = [
-  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
-  ["path", { d: "M19 12H5", key: "x3x0zl" }]
+  ["path", { d: "M7 7h10v10", key: "1tivn9" }],
+  ["path", { d: "M7 17 17 7", key: "1vkiza" }]
 ];
-const ArrowLeft = createLucideIcon("arrow-left", __iconNode$t);
+const ArrowUpRight = createLucideIcon("arrow-up-right", __iconNode$t);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29123,12 +29147,16 @@ const ArrowLeft = createLucideIcon("arrow-left", __iconNode$t);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$s = [
-  ["path", { d: "m21 16-4 4-4-4", key: "f6ql7i" }],
-  ["path", { d: "M17 20V4", key: "1ejh1v" }],
-  ["path", { d: "m3 8 4-4 4 4", key: "11wl7u" }],
-  ["path", { d: "M7 4v16", key: "1glfcx" }]
+  ["path", { d: "M12 7v14", key: "1akyts" }],
+  [
+    "path",
+    {
+      d: "M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z",
+      key: "ruj8y"
+    }
+  ]
 ];
-const ArrowUpDown = createLucideIcon("arrow-up-down", __iconNode$s);
+const BookOpen = createLucideIcon("book-open", __iconNode$s);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29136,10 +29164,9 @@ const ArrowUpDown = createLucideIcon("arrow-up-down", __iconNode$s);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$r = [
-  ["path", { d: "M7 7h10v10", key: "1tivn9" }],
-  ["path", { d: "M7 17 17 7", key: "1vkiza" }]
+  ["path", { d: "m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z", key: "1fy3hk" }]
 ];
-const ArrowUpRight = createLucideIcon("arrow-up-right", __iconNode$r);
+const Bookmark = createLucideIcon("bookmark", __iconNode$r);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29147,62 +29174,64 @@ const ArrowUpRight = createLucideIcon("arrow-up-right", __iconNode$r);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$q = [
-  ["path", { d: "m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z", key: "1fy3hk" }]
-];
-const Bookmark = createLucideIcon("bookmark", __iconNode$q);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$p = [
   ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
   ["path", { d: "M18 17V9", key: "2bz60n" }],
   ["path", { d: "M13 17V5", key: "1frdt8" }],
   ["path", { d: "M8 17v-3", key: "17ska0" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$p);
+const ChartColumn = createLucideIcon("chart-column", __iconNode$q);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$o = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("check", __iconNode$o);
+const __iconNode$p = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("check", __iconNode$p);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$n = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-const ChevronDown = createLucideIcon("chevron-down", __iconNode$n);
+const __iconNode$o = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+const ChevronDown = createLucideIcon("chevron-down", __iconNode$o);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$m = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("chevron-left", __iconNode$m);
+const __iconNode$n = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("chevron-left", __iconNode$n);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$l = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("chevron-right", __iconNode$l);
+const __iconNode$m = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("chevron-right", __iconNode$m);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$k = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
-const ChevronUp = createLucideIcon("chevron-up", __iconNode$k);
+const __iconNode$l = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
+const ChevronUp = createLucideIcon("chevron-up", __iconNode$l);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$k = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+];
+const CircleAlert = createLucideIcon("circle-alert", __iconNode$k);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29211,10 +29240,9 @@ const ChevronUp = createLucideIcon("chevron-up", __iconNode$k);
  */
 const __iconNode$j = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
-  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
 ];
-const CircleAlert = createLucideIcon("circle-alert", __iconNode$j);
+const Clock = createLucideIcon("clock", __iconNode$j);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29222,10 +29250,12 @@ const CircleAlert = createLucideIcon("circle-alert", __iconNode$j);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$i = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
+  ["circle", { cx: "8", cy: "8", r: "6", key: "3yglwk" }],
+  ["path", { d: "M18.09 10.37A6 6 0 1 1 10.34 18", key: "t5s6rm" }],
+  ["path", { d: "M7 6h1v4", key: "1obek4" }],
+  ["path", { d: "m16.71 13.88.7.71-2.82 2.82", key: "1rbuyh" }]
 ];
-const Clock = createLucideIcon("clock", __iconNode$i);
+const Coins = createLucideIcon("coins", __iconNode$i);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29233,12 +29263,10 @@ const Clock = createLucideIcon("clock", __iconNode$i);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$h = [
-  ["circle", { cx: "8", cy: "8", r: "6", key: "3yglwk" }],
-  ["path", { d: "M18.09 10.37A6 6 0 1 1 10.34 18", key: "t5s6rm" }],
-  ["path", { d: "M7 6h1v4", key: "1obek4" }],
-  ["path", { d: "m16.71 13.88.7.71-2.82 2.82", key: "1rbuyh" }]
+  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
+  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
 ];
-const Coins = createLucideIcon("coins", __iconNode$h);
+const Copy = createLucideIcon("copy", __iconNode$h);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29246,17 +29274,6 @@ const Coins = createLucideIcon("coins", __iconNode$h);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$g = [
-  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
-  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
-];
-const Copy = createLucideIcon("copy", __iconNode$g);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$f = [
   ["circle", { cx: "5", cy: "6", r: "3", key: "1qnov2" }],
   ["path", { d: "M12 6h5a2 2 0 0 1 2 2v7", key: "1yj91y" }],
   ["path", { d: "m15 9-3-3 3-3", key: "1lwv8l" }],
@@ -29264,7 +29281,19 @@ const __iconNode$f = [
   ["path", { d: "M12 18H7a2 2 0 0 1-2-2V9", key: "16sdep" }],
   ["path", { d: "m9 15 3 3-3 3", key: "1m3kbl" }]
 ];
-const GitCompareArrows = createLucideIcon("git-compare-arrows", __iconNode$f);
+const GitCompareArrows = createLucideIcon("git-compare-arrows", __iconNode$g);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$f = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
+  ["path", { d: "M2 12h20", key: "9i4pu4" }]
+];
+const Globe = createLucideIcon("globe", __iconNode$f);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29272,18 +29301,6 @@ const GitCompareArrows = createLucideIcon("git-compare-arrows", __iconNode$f);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$e = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
-  ["path", { d: "M2 12h20", key: "9i4pu4" }]
-];
-const Globe = createLucideIcon("globe", __iconNode$e);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$d = [
   ["path", { d: "M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8", key: "5wwlr5" }],
   [
     "path",
@@ -29293,27 +29310,39 @@ const __iconNode$d = [
     }
   ]
 ];
-const House = createLucideIcon("house", __iconNode$d);
+const House = createLucideIcon("house", __iconNode$e);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$c = [
+const __iconNode$d = [
   ["path", { d: "M9 17H7A5 5 0 0 1 7 7h2", key: "8i5ue5" }],
   ["path", { d: "M15 7h2a5 5 0 1 1 0 10h-2", key: "1b9ql8" }],
   ["line", { x1: "8", x2: "16", y1: "12", y2: "12", key: "1jonct" }]
 ];
-const Link2 = createLucideIcon("link-2", __iconNode$c);
+const Link2 = createLucideIcon("link-2", __iconNode$d);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$b = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
-const LoaderCircle = createLucideIcon("loader-circle", __iconNode$b);
+const __iconNode$c = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
+const LoaderCircle = createLucideIcon("loader-circle", __iconNode$c);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$b = [
+  ["path", { d: "m10 17 5-5-5-5", key: "1bsop3" }],
+  ["path", { d: "M15 12H3", key: "6jk70r" }],
+  ["path", { d: "M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4", key: "u53s6r" }]
+];
+const LogIn = createLucideIcon("log-in", __iconNode$b);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29321,11 +29350,11 @@ const LoaderCircle = createLucideIcon("loader-circle", __iconNode$b);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$a = [
-  ["path", { d: "m10 17 5-5-5-5", key: "1bsop3" }],
-  ["path", { d: "M15 12H3", key: "6jk70r" }],
-  ["path", { d: "M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4", key: "u53s6r" }]
+  ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
+  ["path", { d: "M21 12H9", key: "dn1m92" }],
+  ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
 ];
-const LogIn = createLucideIcon("log-in", __iconNode$a);
+const LogOut = createLucideIcon("log-out", __iconNode$a);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29333,11 +29362,9 @@ const LogIn = createLucideIcon("log-in", __iconNode$a);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$9 = [
-  ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
-  ["path", { d: "M21 12H9", key: "dn1m92" }],
-  ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
+  ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
 ];
-const LogOut = createLucideIcon("log-out", __iconNode$9);
+const Moon = createLucideIcon("moon", __iconNode$9);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29345,9 +29372,10 @@ const LogOut = createLucideIcon("log-out", __iconNode$9);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$8 = [
-  ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
+  ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
+  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
 ];
-const Moon = createLucideIcon("moon", __iconNode$8);
+const Search = createLucideIcon("search", __iconNode$8);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -29355,17 +29383,6 @@ const Moon = createLucideIcon("moon", __iconNode$8);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$7 = [
-  ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
-  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
-];
-const Search = createLucideIcon("search", __iconNode$7);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$6 = [
   [
     "path",
     {
@@ -29374,14 +29391,14 @@ const __iconNode$6 = [
     }
   ]
 ];
-const Star = createLucideIcon("star", __iconNode$6);
+const Star = createLucideIcon("star", __iconNode$7);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$5 = [
+const __iconNode$6 = [
   ["circle", { cx: "12", cy: "12", r: "4", key: "4exip2" }],
   ["path", { d: "M12 2v2", key: "tus03m" }],
   ["path", { d: "M12 20v2", key: "1lh1kg" }],
@@ -29392,7 +29409,21 @@ const __iconNode$5 = [
   ["path", { d: "m6.34 17.66-1.41 1.41", key: "1m8zz5" }],
   ["path", { d: "m19.07 4.93-1.41 1.41", key: "1shlcs" }]
 ];
-const Sun = createLucideIcon("sun", __iconNode$5);
+const Sun = createLucideIcon("sun", __iconNode$6);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$5 = [
+  ["path", { d: "M3 6h18", key: "d0wm0j" }],
+  ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
+  ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
+  ["line", { x1: "10", x2: "10", y1: "11", y2: "17", key: "1uufr5" }],
+  ["line", { x1: "14", x2: "14", y1: "11", y2: "17", key: "xtxkd" }]
+];
+const Trash2 = createLucideIcon("trash-2", __iconNode$5);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -34713,10 +34744,10 @@ var ResponsiveContainer = /* @__PURE__ */ reactExports.forwardRef(function(_ref,
     ref: containerRef
   }, chartContent);
 });
-var Cell = function Cell2(_props) {
+var Cell$1 = function Cell(_props) {
   return null;
 };
-Cell.displayName = "Cell";
+Cell$1.displayName = "Cell";
 function _typeof$B(o2) {
   "@babel/helpers - typeof";
   return _typeof$B = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
@@ -45647,7 +45678,7 @@ _defineProperty$h(Pie, "parseDeltaAngle", function(startAngle, endAngle) {
 _defineProperty$h(Pie, "getRealPieData", function(itemProps) {
   var data = itemProps.data, children2 = itemProps.children;
   var presentationProps = filterProps(itemProps, false);
-  var cells = findAllByType(children2, Cell);
+  var cells = findAllByType(children2, Cell$1);
   if (data && data.length) {
     return data.map(function(entry, index2) {
       return _objectSpread$e(_objectSpread$e(_objectSpread$e({
@@ -47128,7 +47159,7 @@ _defineProperty$d(Bar, "getComposedData", function(_ref2) {
   var baseValue = getBaseValueOfBar({
     numericAxis
   });
-  var cells = findAllByType(children2, Cell);
+  var cells = findAllByType(children2, Cell$1);
   var rects = displayedData.map(function(entry, index2) {
     var value, x3, y2, width, height, background;
     if (stackedData) {
@@ -53448,6 +53479,327 @@ async function fetchIcrcTransactions(canisterId, accountId, limit = 100, symbol 
   }
   return [];
 }
+const IC_HOST = "https://ic0.app";
+const CustomLedgerIdl = ({ IDL: I2 }) => I2.Service({
+  icrc1_symbol: I2.Func([], [I2.Text], ["query"]),
+  icrc1_decimals: I2.Func([], [I2.Nat8], ["query"]),
+  icrc1_fee: I2.Func([], [I2.Nat], ["query"]),
+  icrc1_metadata: I2.Func(
+    [],
+    [
+      I2.Vec(
+        I2.Tuple(
+          I2.Text,
+          I2.Variant({
+            Nat: I2.Nat,
+            Int: I2.Int,
+            Text: I2.Text,
+            Blob: I2.Vec(I2.Nat8)
+          })
+        )
+      )
+    ],
+    ["query"]
+  ),
+  icrc106_get_index_principal: I2.Func(
+    [],
+    [
+      I2.Variant({
+        Ok: I2.Principal,
+        Err: I2.Variant({
+          IndexPrincipalNotSet: I2.Null,
+          GenericError: I2.Record({ error_code: I2.Nat, description: I2.Text })
+        })
+      })
+    ],
+    ["query"]
+  )
+});
+const CustomIndexIdl = ({ IDL: I2 }) => I2.Service({
+  ledger_id: I2.Func([], [I2.Principal], ["query"]),
+  get_account_transactions: I2.Func(
+    [
+      I2.Record({
+        account: I2.Record({
+          owner: I2.Principal,
+          subaccount: I2.Opt(I2.Vec(I2.Nat8))
+        }),
+        start: I2.Opt(I2.Nat),
+        max_results: I2.Nat
+      })
+    ],
+    [
+      I2.Variant({
+        Ok: I2.Record({
+          balance: I2.Nat,
+          transactions: I2.Vec(
+            I2.Record({
+              id: I2.Nat,
+              transaction: I2.Record({
+                kind: I2.Text,
+                timestamp: I2.Nat64,
+                mint: I2.Opt(
+                  I2.Record({
+                    to: I2.Record({
+                      owner: I2.Principal,
+                      subaccount: I2.Opt(I2.Vec(I2.Nat8))
+                    }),
+                    amount: I2.Nat
+                  })
+                ),
+                burn: I2.Opt(
+                  I2.Record({
+                    from: I2.Record({
+                      owner: I2.Principal,
+                      subaccount: I2.Opt(I2.Vec(I2.Nat8))
+                    }),
+                    amount: I2.Nat
+                  })
+                ),
+                transfer: I2.Opt(
+                  I2.Record({
+                    from: I2.Record({
+                      owner: I2.Principal,
+                      subaccount: I2.Opt(I2.Vec(I2.Nat8))
+                    }),
+                    to: I2.Record({
+                      owner: I2.Principal,
+                      subaccount: I2.Opt(I2.Vec(I2.Nat8))
+                    }),
+                    amount: I2.Nat
+                  })
+                )
+              })
+            })
+          ),
+          oldest_tx_id: I2.Opt(I2.Nat)
+        }),
+        Err: I2.Record({ message: I2.Text })
+      })
+    ],
+    ["query"]
+  )
+});
+function accountOwner(account) {
+  if (!account) return "";
+  try {
+    return account.owner.toString();
+  } catch {
+    return "";
+  }
+}
+function normalizeIndexTransaction(entry, decimals, symbol) {
+  var _a3, _b3, _c2;
+  const tx = entry.transaction;
+  if (!tx) return null;
+  const timestamp = new Date(Number(tx.timestamp / 1000000n)).toISOString();
+  const blockIndex = Number(entry.id);
+  if ((_a3 = tx.transfer) == null ? void 0 : _a3[0]) {
+    const t2 = tx.transfer[0];
+    return {
+      timestamp,
+      from: accountOwner(t2.from),
+      to: accountOwner(t2.to),
+      amount: Number(t2.amount) / 10 ** decimals,
+      blockIndex,
+      token: symbol,
+      decimals
+    };
+  }
+  if ((_b3 = tx.mint) == null ? void 0 : _b3[0]) {
+    const m2 = tx.mint[0];
+    return {
+      timestamp,
+      from: "minting-account",
+      to: accountOwner(m2.to),
+      amount: Number(m2.amount) / 10 ** decimals,
+      blockIndex,
+      token: symbol,
+      decimals
+    };
+  }
+  if ((_c2 = tx.burn) == null ? void 0 : _c2[0]) {
+    const b2 = tx.burn[0];
+    return {
+      timestamp,
+      from: accountOwner(b2.from),
+      to: "burn-address",
+      amount: Number(b2.amount) / 10 ** decimals,
+      blockIndex,
+      token: symbol,
+      decimals
+    };
+  }
+  return null;
+}
+async function fetchCustomTokenMetadata(actor) {
+  let symbol = "";
+  let decimals = 8;
+  let fee;
+  try {
+    const metadata = await actor.icrc1_metadata();
+    for (const [key, value] of metadata) {
+      if (key === "icrc1:symbol" && (value == null ? void 0 : value.Text)) symbol = value.Text;
+      if (key === "icrc1:decimals" && (value == null ? void 0 : value.Nat) !== void 0) {
+        decimals = Number(value.Nat);
+      }
+      if (key === "icrc1:fee" && (value == null ? void 0 : value.Nat) !== void 0) {
+        fee = Number(value.Nat);
+      }
+    }
+  } catch {
+  }
+  if (!symbol) {
+    try {
+      symbol = await actor.icrc1_symbol();
+    } catch {
+      symbol = "";
+    }
+  }
+  try {
+    decimals = Number(await actor.icrc1_decimals());
+  } catch {
+  }
+  if (fee === void 0) {
+    try {
+      fee = Number(await actor.icrc1_fee());
+    } catch {
+      fee = void 0;
+    }
+  }
+  return { symbol, decimals, fee };
+}
+async function discoverIndexPrincipal(actor) {
+  try {
+    const result = await actor.icrc106_get_index_principal();
+    if (result && "Ok" in result && result.Ok) {
+      return result.Ok.toString();
+    }
+  } catch {
+  }
+  return null;
+}
+async function fetchIndexAccountTransactions(actor, principal, symbol, decimals, limit) {
+  var _a3;
+  const owner = Principal$1.fromText(principal.trim());
+  const pageSize = Math.min(limit, 100);
+  const txs = [];
+  let start2;
+  while (txs.length < limit) {
+    const remaining = limit - txs.length;
+    const result = await actor.get_account_transactions({
+      account: { owner, subaccount: [] },
+      start: start2 === void 0 ? [] : [start2],
+      max_results: BigInt(Math.min(pageSize, remaining))
+    });
+    if (!("Ok" in result) || !result.Ok) break;
+    const page = result.Ok.transactions ?? [];
+    if (page.length === 0) break;
+    for (const entry of page) {
+      const tx = normalizeIndexTransaction(entry, decimals, symbol);
+      if (tx) txs.push(tx);
+    }
+    const oldest = (_a3 = page[page.length - 1]) == null ? void 0 : _a3.id;
+    if (oldest === void 0 || page.length < pageSize) break;
+    if (start2 !== void 0 && oldest >= start2) break;
+    start2 = oldest;
+  }
+  return txs;
+}
+async function fetchCustomIcrcToken(ledgerId, indexId, principal) {
+  const empty2 = {
+    ok: false,
+    symbol: "",
+    decimals: 8,
+    indexCanisterId: null,
+    indexDiscovered: false,
+    transactions: []
+  };
+  const trimmedLedger = ledgerId.trim();
+  const trimmedPrincipal = principal.trim();
+  if (!trimmedLedger || !trimmedPrincipal) {
+    return { ...empty2, error: "invalid" };
+  }
+  try {
+    Principal$1.fromText(trimmedLedger);
+  } catch {
+    return { ...empty2, error: "invalid" };
+  }
+  if (indexId == null ? void 0 : indexId.trim()) {
+    try {
+      Principal$1.fromText(indexId.trim());
+    } catch {
+      return { ...empty2, error: "invalid" };
+    }
+  }
+  let ledgerActor;
+  try {
+    const agent = await HttpAgent.create({ host: IC_HOST });
+    ledgerActor = Actor.createActor(CustomLedgerIdl, {
+      agent,
+      canisterId: trimmedLedger
+    });
+  } catch {
+    return { ...empty2, error: "ledger" };
+  }
+  let metadata;
+  try {
+    metadata = await fetchCustomTokenMetadata(ledgerActor);
+  } catch {
+    return { ...empty2, error: "ledger" };
+  }
+  if (!metadata.symbol) {
+    return { ...empty2, error: "ledger" };
+  }
+  const suppliedIndex = (indexId == null ? void 0 : indexId.trim()) || null;
+  const discoveredIndex = suppliedIndex ? null : await discoverIndexPrincipal(ledgerActor);
+  const resolvedIndex = suppliedIndex ?? discoveredIndex;
+  if (!resolvedIndex) {
+    return {
+      ok: true,
+      symbol: metadata.symbol,
+      decimals: metadata.decimals,
+      fee: metadata.fee,
+      indexCanisterId: null,
+      indexDiscovered: false,
+      transactions: []
+    };
+  }
+  try {
+    const agent = await HttpAgent.create({ host: IC_HOST });
+    const indexActor = Actor.createActor(CustomIndexIdl, {
+      agent,
+      canisterId: resolvedIndex
+    });
+    const transactions = await fetchIndexAccountTransactions(
+      indexActor,
+      trimmedPrincipal,
+      metadata.symbol,
+      metadata.decimals,
+      DEFAULT_TX_LIMIT
+    );
+    return {
+      ok: true,
+      symbol: metadata.symbol,
+      decimals: metadata.decimals,
+      fee: metadata.fee,
+      indexCanisterId: resolvedIndex,
+      indexDiscovered: discoveredIndex !== null,
+      transactions
+    };
+  } catch {
+    return {
+      ok: false,
+      symbol: metadata.symbol,
+      decimals: metadata.decimals,
+      fee: metadata.fee,
+      indexCanisterId: resolvedIndex,
+      indexDiscovered: discoveredIndex !== null,
+      transactions: [],
+      error: "index"
+    };
+  }
+}
 function filterByTimeRange(transactions, range3) {
   if (range3 === "all") return transactions;
   const now2 = Date.now();
@@ -53483,7 +53835,7 @@ function bucketKey(timestamp, interval2) {
   );
   return `${d2.getUTCFullYear()}-W${String(weekNum).padStart(2, "0")}`;
 }
-function getDailyActivity(transactions, principal, interval2 = "day") {
+function getDailyActivity(transactions, principal, interval2 = "day", token) {
   const principalLower = principal.toLowerCase();
   const accountIdLower = (principalToAccountIdentifier(principal) ?? "").toLowerCase();
   const byBucket = /* @__PURE__ */ new Map();
@@ -53497,12 +53849,17 @@ function getDailyActivity(transactions, principal, interval2 = "day") {
     const fromLower = tx.from.toLowerCase();
     const isIn = toLower === principalLower || accountIdLower !== "" && toLower === accountIdLower;
     const isOut = fromLower === principalLower || accountIdLower !== "" && fromLower === accountIdLower;
+    const matchesToken = !token || (tx.token ?? "ICP") === token;
     if (isIn) {
-      entry.txIn += 1;
-      entry.volIn += tx.amount;
+      if (matchesToken) {
+        entry.txIn += 1;
+        entry.volIn += tx.amount;
+      }
     } else if (isOut) {
-      entry.txOut += 1;
-      entry.volOut += tx.amount;
+      if (matchesToken) {
+        entry.txOut += 1;
+        entry.volOut += tx.amount;
+      }
     }
   }
   return [...byBucket.entries()].sort(([a2], [b2]) => a2.localeCompare(b2)).map(([date2, v2]) => ({ date: date2, ...v2 }));
@@ -53580,21 +53937,13 @@ function isChainKeyBtc$4(token) {
 function hasChainKeyBtc(transactions) {
   return transactions.some((tx) => isChainKeyBtc$4(tx.token ?? "ICP"));
 }
-function dominantToken(transactions) {
-  const vol = /* @__PURE__ */ new Map();
+function tokenOptions(transactions) {
+  const counts = /* @__PURE__ */ new Map();
   for (const tx of transactions) {
     const token = tx.token ?? "ICP";
-    vol.set(token, (vol.get(token) ?? 0) + tx.amount);
+    counts.set(token, (counts.get(token) ?? 0) + 1);
   }
-  let best = "ICP";
-  let bestVol = -1;
-  for (const [token, v2] of vol) {
-    if (v2 > bestVol) {
-      bestVol = v2;
-      best = token;
-    }
-  }
-  return best;
+  return [...counts.entries()].map(([token, count2]) => ({ token, count: count2 })).sort((a2, b2) => b2.count - a2.count || a2.token.localeCompare(b2.token));
 }
 function formatBucketLabel(date2, interval2) {
   if (interval2 === "hour") {
@@ -53611,18 +53960,27 @@ function ActivityChart({
   btcUnit,
   onBtcUnitChange
 }) {
+  var _a3;
   const [mode, setMode] = reactExports.useState("tx");
   const [interval2, setInterval2] = reactExports.useState("day");
-  const daily = getDailyActivity(transactions, principal, interval2);
-  const token = dominantToken(transactions);
-  const isBtc = isChainKeyBtc$4(token);
+  const tokens = tokenOptions(transactions);
+  const defaultToken = ((_a3 = tokens[0]) == null ? void 0 : _a3.token) ?? "ICP";
+  const [selectedToken, setSelectedToken] = reactExports.useState(defaultToken);
+  const activeToken = tokens.some((t2) => t2.token === selectedToken) ? selectedToken : defaultToken;
+  const daily = getDailyActivity(
+    transactions,
+    principal,
+    interval2,
+    activeToken
+  );
+  const isBtc = isChainKeyBtc$4(activeToken);
   const showBtcToggle = hasChainKeyBtc(transactions);
   const chartData = daily.map((d2) => ({
     date: formatBucketLabel(d2.date, interval2),
     in: mode === "tx" ? d2.txIn : isBtc && btcUnit === "sats" ? Math.round(d2.volIn * 1e8) : d2.volIn,
     out: mode === "tx" ? d2.txOut : isBtc && btcUnit === "sats" ? Math.round(d2.volOut * 1e8) : d2.volOut
   }));
-  const volumeUnitLabel = isBtc ? btcUnit === "sats" ? "sats" : "BTC" : "ICP";
+  const volumeUnitLabel = isBtc ? btcUnit === "sats" ? "sats" : "BTC" : activeToken;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-2 items-center", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -53663,17 +54021,18 @@ function ActivityChart({
           ))
         }
       ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "select",
+        {
+          "data-ocid": "wallet.token_select",
+          value: activeToken,
+          onChange: (e3) => setSelectedToken(e3.target.value),
+          "aria-label": "Token",
+          className: "text-xs px-2 py-1 rounded border border-border bg-muted/50 text-foreground transition-colors focus:outline-none focus:border-neon-blue/50",
+          children: tokens.map(({ token }) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: token, children: token }, token))
+        }
+      ),
       mode === "volume" && showBtcToggle && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 rounded-md border border-border p-0.5 ml-auto", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "button",
-            "data-ocid": "wallet.btc_unit_toggle",
-            onClick: () => onBtcUnitChange("btc"),
-            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-            children: "BTC"
-          }
-        ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
@@ -53682,6 +54041,16 @@ function ActivityChart({
             onClick: () => onBtcUnitChange("sats"),
             className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
             children: "sats"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "wallet.btc_unit_toggle",
+            onClick: () => onBtcUnitChange("btc"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "btc"
           }
         )
       ] })
@@ -53831,7 +54200,7 @@ function createSlotClone$1(ownerName) {
       children2 = use(children2._payload);
     }
     if (reactExports.isValidElement(children2)) {
-      const childrenRef = getElementRef$1(children2);
+      const childrenRef = getElementRef$2(children2);
       const props2 = mergeProps$1(slotProps, children2.props);
       if (children2.type !== reactExports.Fragment) {
         props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
@@ -53871,7 +54240,7 @@ function mergeProps$1(slotProps, childProps) {
   }
   return { ...slotProps, ...overrideProps };
 }
-function getElementRef$1(element) {
+function getElementRef$2(element) {
   var _a3, _b3;
   let getter = (_a3 = Object.getOwnPropertyDescriptor(element.props, "ref")) == null ? void 0 : _a3.get;
   let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
@@ -54033,13 +54402,13 @@ var Label$1 = reactExports.forwardRef((props, forwardedRef) => {
   );
 });
 Label$1.displayName = NAME$2;
-var Root$2 = Label$1;
+var Root$3 = Label$1;
 function Label({
   className,
   ...props
 }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Root$2,
+    Root$3,
     {
       "data-slot": "label",
       className: cn(
@@ -54050,13 +54419,21 @@ function Label({
     }
   );
 }
+const CANISTER_ID_PATTERN = /^[a-z0-9-]{5,63}$/;
 function AddTokenModal({ onAddToken, onClose }) {
   const [canisterId, setCanisterId] = reactExports.useState("");
+  const [indexCanisterId, setIndexCanisterId] = reactExports.useState("");
   const [submitting, setSubmitting] = reactExports.useState(false);
   const [error, setError] = reactExports.useState(null);
+  const [result, setResult] = reactExports.useState(null);
   const inputRef = reactExports.useRef(null);
+  const dialogRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
     var _a3;
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.open) {
+      dialog.showModal();
+    }
     (_a3 = inputRef.current) == null ? void 0 : _a3.focus();
   }, []);
   reactExports.useEffect(() => {
@@ -54067,15 +54444,25 @@ function AddTokenModal({ onAddToken, onClose }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
   const trimmed = canisterId.trim();
+  const trimmedIndex = indexCanisterId.trim();
   const canSubmit = trimmed.length > 0 && !submitting;
   const handleSubmit = async (e3) => {
     e3.preventDefault();
     if (!canSubmit) return;
+    if (!CANISTER_ID_PATTERN.test(trimmed)) {
+      setError("That doesn't look like a valid canister ID.");
+      return;
+    }
+    if (trimmedIndex && !CANISTER_ID_PATTERN.test(trimmedIndex)) {
+      setError("The index canister ID is malformed.");
+      return;
+    }
     setSubmitting(true);
     setError(null);
     try {
-      await onAddToken(trimmed);
-      onClose();
+      const added = await onAddToken(trimmed, trimmedIndex || void 0);
+      setResult(added);
+      setSubmitting(false);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Could not add this token."
@@ -54086,17 +54473,19 @@ function AddTokenModal({ onAddToken, onClose }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "dialog",
     {
-      open: true,
+      ref: dialogRef,
       className: "fixed inset-0 z-50 flex items-center justify-center m-0 w-full h-full max-w-none max-h-none bg-transparent border-0",
       "aria-label": "Add token by canister ID",
       "data-ocid": "add_token.dialog",
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
+          "button",
           {
-            className: "absolute inset-0 bg-background/80 backdrop-blur-sm",
+            type: "button",
+            className: "absolute inset-0 bg-background/80 backdrop-blur-sm cursor-default",
             onClick: onClose,
-            onKeyDown: (e3) => e3.key === "Enter" && onClose()
+            "aria-label": "Close add token modal",
+            tabIndex: -1
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 w-full max-w-md bg-card border border-border rounded-xl shadow-2xl p-6", children: [
@@ -54117,7 +54506,42 @@ function AddTokenModal({ onAddToken, onClose }) {
               }
             )
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+          result ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "rounded-md border border-neon-green/40 bg-neon-green/10 px-3 py-2.5 text-xs text-foreground",
+                "data-ocid": "add_token.success_state",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-medium", children: [
+                    "Added ",
+                    result.symbol,
+                    " — ",
+                    result.count,
+                    " transaction",
+                    result.count === 1 ? "" : "s",
+                    " loaded."
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-muted-foreground", children: result.indexCanisterId ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                    "Index canister:",
+                    " ",
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-foreground", children: result.indexCanisterId }),
+                    result.indexDiscovered ? " (discovered via ICRC-106)" : ""
+                  ] }) : "No index canister available — history read directly from the ledger." })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button,
+              {
+                type: "button",
+                onClick: onClose,
+                "data-ocid": "add_token.close_button",
+                className: "w-full bg-neon-blue/20 border border-neon-blue/40 text-neon-blue hover:bg-neon-blue/30 hover:border-neon-blue/60",
+                children: "Done"
+              }
+            )
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1.5", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Label,
@@ -54140,6 +54564,32 @@ function AddTokenModal({ onAddToken, onClose }) {
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-muted-foreground", children: "Add any ICRC-1 ledger by its canister ID. The ICRC API only serves SNS-governed and chain-key tokens automatically — this manual flow covers the rest." })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1.5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                Label,
+                {
+                  htmlFor: "add-token-index",
+                  className: "text-xs font-medium text-muted-foreground",
+                  children: [
+                    "Index Canister ID",
+                    " ",
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-normal", children: "(optional)" })
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Input,
+                {
+                  id: "add-token-index",
+                  "data-ocid": "add_token.index_input",
+                  placeholder: "Leave blank to auto-discover",
+                  value: indexCanisterId,
+                  onChange: (e3) => setIndexCanisterId(e3.target.value),
+                  className: "bg-muted/50 border-border text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-neon-blue/50 focus:border-neon-blue/50 font-mono text-sm"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-muted-foreground", children: "When omitted, the ledger is asked for its index principal (ICRC-106). If none is set, history is read directly from the ledger." })
             ] }),
             error && /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
@@ -57086,6 +57536,13 @@ function edgeStrokeWidth(edge, mode = "volume") {
   const metric = mode === "count" ? edge.tx_count ?? 1 : edge.total_amount ?? edge.tx_count ?? 1;
   return Math.min(5, Math.max(1.5, 1 + Math.log2(metric) * 0.6));
 }
+function nodeRadius(node, maxActivity) {
+  if (node.isCenter) return 22;
+  const activity = Math.max(node.txCount ?? 0, 0);
+  if (maxActivity <= 0) return 14;
+  const ratio = Math.min(1, activity / maxActivity);
+  return 12 + Math.sqrt(ratio) * 12;
+}
 function bezierControlPoint(x1, y1, x22, y2, edgeIndex) {
   const mx = (x1 + x22) / 2;
   const my = (y1 + y2) / 2;
@@ -57116,15 +57573,8 @@ function ConstellationGraph({
   nodes,
   edges,
   onNavigate,
-  breadcrumbs = [],
-  onBreadcrumbClick,
-  isLoading = false,
   externalLabels,
-  labels: _labelsLegacy,
-  favorites: _favoritesLegacy,
-  onLabelChange: _onLabelChange,
   onSetLabel,
-  onFavoriteToggle: _onFavoriteToggle,
   onToggleFavorite,
   isFavorite,
   maxCounterparties,
@@ -57137,16 +57587,13 @@ function ConstellationGraph({
   btcUnit = "sats",
   onBtcUnitChange
 }) {
-  const labels = externalLabels ?? _labelsLegacy ?? {};
-  const favorites = _favoritesLegacy ?? /* @__PURE__ */ new Set();
-  const checkFavorite = isFavorite ?? ((id2) => favorites.has(id2));
+  const labels = externalLabels ?? {};
+  const checkFavorite = isFavorite ?? (() => false);
   const handleLabelEditCb = (id2, lbl) => {
-    if (onSetLabel) onSetLabel(id2, lbl);
-    else if (_onLabelChange) _onLabelChange(id2, lbl);
+    onSetLabel == null ? void 0 : onSetLabel(id2, lbl);
   };
   const handleFavoriteToggle = (id2) => {
-    if (onToggleFavorite) onToggleFavorite(id2);
-    else if (_onFavoriteToggle) _onFavoriteToggle(id2);
+    onToggleFavorite == null ? void 0 : onToggleFavorite(id2);
   };
   const { theme, setTheme } = useTheme();
   reactExports.useEffect(() => {
@@ -57171,7 +57618,6 @@ function ConstellationGraph({
   const [settingsPanelOpen, setSettingsPanelOpen] = reactExports.useState(false);
   const [showLabels, setShowLabels] = reactExports.useState(true);
   const [minEdgeVolume, setMinEdgeVolume] = reactExports.useState(0);
-  const [_selectedNodeId, setSelectedNodeId] = reactExports.useState(null);
   const [nodeInfo, setNodeInfo] = reactExports.useState(null);
   const [edgeTooltip, setEdgeTooltip] = reactExports.useState(null);
   const [editingLabel, setEditingLabel] = reactExports.useState(null);
@@ -57179,6 +57625,7 @@ function ConstellationGraph({
   const [hoveredNodeId, setHoveredNodeId] = reactExports.useState(null);
   const [hoveredEdgeKey, setHoveredEdgeKey] = reactExports.useState(null);
   const [colorByLevel, setColorByLevel] = reactExports.useState(false);
+  const [legendCollapsed, setLegendCollapsed] = reactExports.useState(false);
   const [edgeWeightMode, setEdgeWeightMode] = reactExports.useState(
     "volume"
   );
@@ -57221,7 +57668,6 @@ function ConstellationGraph({
         if (nodeInfoTimeoutRef.current)
           clearTimeout(nodeInfoTimeoutRef.current);
         setNodeInfo(null);
-        setSelectedNodeId(null);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -57352,6 +57798,13 @@ function ConstellationGraph({
     for (const n2 of simNodes) m2.set(n2.id, n2);
     return m2;
   }, [simNodes]);
+  const maxNodeActivity = reactExports.useMemo(
+    () => simNodes.reduce(
+      (max2, n2) => n2.isCenter ? max2 : Math.max(max2, n2.txCount ?? 0),
+      0
+    ),
+    [simNodes]
+  );
   reactExports.useEffect(() => {
     if (!svgRef.current) return;
     const svg = select(
@@ -57414,7 +57867,6 @@ function ConstellationGraph({
   const handleNodeClick = reactExports.useCallback(
     (e3, node) => {
       e3.stopPropagation();
-      setSelectedNodeId(node.id);
       setEdgeTooltip(null);
       if (nodeInfoTimeoutRef.current) clearTimeout(nodeInfoTimeoutRef.current);
       const clientX = "touches" in e3 ? e3.touches[0].clientX : e3.clientX;
@@ -57433,7 +57885,6 @@ function ConstellationGraph({
     if (isMobile) return;
     nodeInfoTimeoutRef.current = setTimeout(() => {
       setNodeInfo(null);
-      setSelectedNodeId(null);
     }, 3e3);
   }, [isMobile]);
   const handleNodeInfoMouseEnter = reactExports.useCallback(() => {
@@ -57703,7 +58154,6 @@ function ConstellationGraph({
             },
             onClick: () => {
               setNodeInfo(null);
-              setSelectedNodeId(null);
               setEdgeTooltip(null);
             },
             children: [
@@ -57825,7 +58275,7 @@ function ConstellationGraph({
                   const resolvedColor = (n2) => colorByLevel ? palette[(n2.depth ?? 0) % palette.length] : nodeColor(n2).fill;
                   const { glow } = nodeColor(node);
                   const fill = resolvedColor(node);
-                  const r2 = node.isCenter ? 22 : 16;
+                  const r2 = nodeRadius(node, maxNodeActivity);
                   const isHovered = hoveredNodeId === node.id;
                   const scale = isHovered ? 1.15 : 1;
                   const filterId = node.isCenter ? "glow-center" : isHovered ? "glow-hover" : node.isWhale ? "glow-whale" : "glow-default";
@@ -57972,68 +58422,6 @@ function ConstellationGraph({
                 })
               ] })
             ]
-          }
-        ),
-        isLoading && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            style: {
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: cssVar$2("--graph-panel-bg"),
-              zIndex: 50,
-              pointerEvents: "none"
-            },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
-              {
-                style: {
-                  color: cssVar$2("--graph-accent"),
-                  fontSize: 15,
-                  letterSpacing: 1
-                },
-                children: "Loading constellation…"
-              }
-            )
-          }
-        ),
-        breadcrumbs.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            "data-ocid": "graph.breadcrumbs",
-            style: {
-              position: "absolute",
-              top: 10,
-              left: 10,
-              display: "flex",
-              gap: 5,
-              flexWrap: "wrap",
-              zIndex: 20,
-              maxWidth: "70%"
-            },
-            children: breadcrumbs.map((crumb, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                "data-ocid": `graph.breadcrumb.item.${i + 1}`,
-                onClick: () => onBreadcrumbClick == null ? void 0 : onBreadcrumbClick(i),
-                style: {
-                  background: cssVar$2("--graph-breadcrumb-bg"),
-                  border: `1px solid ${cssVar$2("--graph-breadcrumb-border")}`,
-                  color: i === breadcrumbs.length - 1 ? cssVar$2("--graph-breadcrumb-active") : cssVar$2("--graph-breadcrumb-inactive"),
-                  padding: "3px 8px",
-                  borderRadius: 4,
-                  fontSize: 11,
-                  cursor: "pointer",
-                  fontWeight: i === breadcrumbs.length - 1 ? 600 : 400
-                },
-                children: crumb.label || truncateAddress(crumb.id)
-              },
-              crumb.id
-            ))
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -58478,7 +58866,6 @@ function ConstellationGraph({
                   "data-ocid": "graph.node_info.close_button",
                   onClick: () => {
                     setNodeInfo(null);
-                    setSelectedNodeId(null);
                   },
                   style: {
                     position: "absolute",
@@ -58642,7 +59029,6 @@ function ConstellationGraph({
                   onClick: () => {
                     onNavigate(nodeInfo.node.id);
                     setNodeInfo(null);
-                    setSelectedNodeId(null);
                   },
                   style: {
                     width: "100%",
@@ -58766,24 +59152,6 @@ function ConstellationGraph({
                             {
                               type: "button",
                               "data-ocid": "graph.btc_unit_toggle",
-                              onClick: () => onBtcUnitChange == null ? void 0 : onBtcUnitChange("btc"),
-                              style: {
-                                fontSize: 9,
-                                padding: "1px 5px",
-                                borderRadius: 3,
-                                border: "none",
-                                cursor: "pointer",
-                                background: btcUnit === "btc" ? cssVar$2("--graph-accent") : "transparent",
-                                color: btcUnit === "btc" ? "#ffffff" : cssVar$2("--graph-overlay-text-dim")
-                              },
-                              children: "BTC"
-                            }
-                          ),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
-                            "button",
-                            {
-                              type: "button",
-                              "data-ocid": "graph.btc_unit_toggle",
                               onClick: () => onBtcUnitChange == null ? void 0 : onBtcUnitChange("sats"),
                               style: {
                                 fontSize: 9,
@@ -58795,6 +59163,24 @@ function ConstellationGraph({
                                 color: btcUnit === "sats" ? "#ffffff" : cssVar$2("--graph-overlay-text-dim")
                               },
                               children: "sats"
+                            }
+                          ),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "button",
+                            {
+                              type: "button",
+                              "data-ocid": "graph.btc_unit_toggle",
+                              onClick: () => onBtcUnitChange == null ? void 0 : onBtcUnitChange("btc"),
+                              style: {
+                                fontSize: 9,
+                                padding: "1px 5px",
+                                borderRadius: 3,
+                                border: "none",
+                                cursor: "pointer",
+                                background: btcUnit === "btc" ? cssVar$2("--graph-accent") : "transparent",
+                                color: btcUnit === "btc" ? "#ffffff" : cssVar$2("--graph-overlay-text-dim")
+                              },
+                              children: "btc"
                             }
                           )
                         ]
@@ -58810,10 +59196,14 @@ function ConstellationGraph({
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
+            "data-ocid": "graph.legend",
             style: {
               position: "absolute",
               bottom: 10,
               left: 10,
+              maxWidth: "min(280px, calc(100% - 20px))",
+              maxHeight: "calc(100% - 20px)",
+              overflowY: "auto",
               background: cssVar$2("--graph-legend-bg"),
               border: `1px solid ${cssVar$2("--graph-legend-border")}`,
               borderRadius: 7,
@@ -58821,94 +59211,342 @@ function ConstellationGraph({
               fontSize: 10,
               color: cssVar$2("--graph-text"),
               zIndex: 10,
-              lineHeight: 1.7
+              lineHeight: 1.6
             },
             children: [
-              colorByLevel ? levelPalette().map((color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "div",
                 {
                   style: {
                     display: "flex",
                     alignItems: "center",
-                    gap: 6,
-                    marginBottom: 2
+                    justifyContent: "space-between",
+                    gap: 8,
+                    marginBottom: 6
                   },
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "div",
-                      {
-                        style: {
-                          width: 18,
-                          height: 18,
-                          borderRadius: "50%",
-                          background: color2,
-                          flexShrink: 0,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: "#fff",
-                          boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
-                          border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
-                        },
-                        children: i
-                      }
-                    ),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "span",
                       {
                         style: {
-                          fontSize: 11,
-                          color: cssVar$2("--graph-text"),
-                          fontWeight: 500
+                          fontSize: 9,
+                          fontWeight: 700,
+                          letterSpacing: 1,
+                          color: cssVar$2("--graph-overlay-text-dim")
                         },
-                        children: i === 0 ? "Center" : `Depth ${i}`
+                        children: "LEGEND"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        "data-ocid": "graph.legend.toggle",
+                        onClick: () => setLegendCollapsed((c2) => !c2),
+                        "aria-expanded": !legendCollapsed,
+                        "aria-label": legendCollapsed ? "Expand legend" : "Collapse legend",
+                        style: {
+                          background: "none",
+                          border: "none",
+                          color: cssVar$2("--graph-text"),
+                          cursor: "pointer",
+                          fontSize: 10,
+                          padding: "0 2px",
+                          lineHeight: 1
+                        },
+                        children: legendCollapsed ? "▸" : "▾"
                       }
                     )
                   ]
-                },
-                i
-              )) : LEGEND_ITEMS.map((item) => {
-                const swatchColor = item.color;
-                return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                }
+              ),
+              !legendCollapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                colorByLevel ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      style: {
+                        fontSize: 9,
+                        fontWeight: 700,
+                        letterSpacing: 0.6,
+                        color: cssVar$2("--graph-overlay-text-dim"),
+                        marginBottom: 4
+                      },
+                      children: "COLOR BY DEPTH"
+                    }
+                  ),
+                  levelPalette().map((color2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "div",
+                    {
+                      style: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
+                        marginBottom: 2
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "div",
+                          {
+                            style: {
+                              width: 18,
+                              height: 18,
+                              borderRadius: "50%",
+                              background: color2,
+                              flexShrink: 0,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 10,
+                              fontWeight: 700,
+                              color: "#fff",
+                              boxShadow: isDark ? `0 0 5px ${color2}80` : "none",
+                              border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
+                            },
+                            children: i
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            style: {
+                              fontSize: 11,
+                              color: cssVar$2("--graph-text"),
+                              fontWeight: 500
+                            },
+                            children: i === 0 ? "Center" : `Depth ${i}`
+                          }
+                        )
+                      ]
+                    },
+                    i
+                  ))
+                ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      style: {
+                        fontSize: 9,
+                        fontWeight: 700,
+                        letterSpacing: 0.6,
+                        color: cssVar$2("--graph-overlay-text-dim"),
+                        marginBottom: 4
+                      },
+                      children: "NODE COLOR"
+                    }
+                  ),
+                  LEGEND_ITEMS.map((item) => {
+                    const swatchColor = item.color;
+                    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "div",
+                      {
+                        style: { display: "flex", alignItems: "center", gap: 6 },
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "span",
+                            {
+                              style: {
+                                width: 10,
+                                height: 10,
+                                borderRadius: "50%",
+                                background: swatchColor,
+                                display: "inline-block",
+                                flexShrink: 0,
+                                boxShadow: isDark ? `0 0 6px ${swatchColor}` : "none",
+                                border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
+                              }
+                            }
+                          ),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: cssVar$2("--graph-text") }, children: item.label })
+                        ]
+                      },
+                      item.label
+                    );
+                  })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
                   "div",
                   {
-                    style: { display: "flex", alignItems: "center", gap: 6 },
+                    style: {
+                      marginTop: 6,
+                      borderTop: `1px solid ${cssVar$2("--graph-legend-border")}`,
+                      paddingTop: 5
+                    },
                     children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "span",
+                        "div",
                         {
                           style: {
-                            width: 10,
-                            height: 10,
-                            borderRadius: "50%",
-                            background: swatchColor,
-                            display: "inline-block",
-                            flexShrink: 0,
-                            boxShadow: isDark ? `0 0 6px ${swatchColor}` : "none",
-                            border: isDark ? "none" : "1px solid rgba(0,0,0,0.15)"
-                          }
+                            fontSize: 9,
+                            fontWeight: 700,
+                            letterSpacing: 0.6,
+                            color: cssVar$2("--graph-overlay-text-dim"),
+                            marginBottom: 4
+                          },
+                          children: "NODE SIZE"
                         }
                       ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: cssVar$2("--graph-text") }, children: item.label })
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            style: {
+                              width: 7,
+                              height: 7,
+                              borderRadius: "50%",
+                              background: cssVar$2("--graph-node-default"),
+                              flexShrink: 0
+                            }
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            style: {
+                              width: 14,
+                              height: 14,
+                              borderRadius: "50%",
+                              background: cssVar$2("--graph-node-default"),
+                              flexShrink: 0
+                            }
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: cssVar$2("--graph-text") }, children: "Larger = more activity" })
+                      ] })
                     ]
-                  },
-                  item.label
-                );
-              }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "div",
-                {
-                  style: {
-                    marginTop: 4,
-                    borderTop: `1px solid ${cssVar$2("--graph-legend-border")}`,
-                    paddingTop: 4,
-                    fontSize: 9
-                  },
-                  children: "↓ Inbound  ↑ Outbound"
-                }
-              )
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "div",
+                  {
+                    style: {
+                      marginTop: 6,
+                      borderTop: `1px solid ${cssVar$2("--graph-legend-border")}`,
+                      paddingTop: 5
+                    },
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "div",
+                        {
+                          style: {
+                            fontSize: 9,
+                            fontWeight: 700,
+                            letterSpacing: 0.6,
+                            color: cssVar$2("--graph-overlay-text-dim"),
+                            marginBottom: 4
+                          },
+                          children: "EDGE COLOR"
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            style: {
+                              width: 16,
+                              height: 2,
+                              background: cssVar$2("--graph-edge-icp"),
+                              flexShrink: 0
+                            }
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: cssVar$2("--graph-text") }, children: "ICP" })
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                        "div",
+                        {
+                          style: {
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 6,
+                            marginTop: 2
+                          },
+                          children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(
+                              "span",
+                              {
+                                style: {
+                                  width: 16,
+                                  height: 2,
+                                  background: cssVar$2("--graph-token-3"),
+                                  flexShrink: 0
+                                }
+                              }
+                            ),
+                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: cssVar$2("--graph-text") }, children: "Other tokens (each its own color)" })
+                          ]
+                        }
+                      )
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "div",
+                  {
+                    style: {
+                      marginTop: 6,
+                      borderTop: `1px solid ${cssVar$2("--graph-legend-border")}`,
+                      paddingTop: 5
+                    },
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "div",
+                        {
+                          style: {
+                            fontSize: 9,
+                            fontWeight: 700,
+                            letterSpacing: 0.6,
+                            color: cssVar$2("--graph-overlay-text-dim"),
+                            marginBottom: 4
+                          },
+                          children: "EDGE THICKNESS"
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            style: {
+                              width: 16,
+                              height: 1.5,
+                              background: cssVar$2("--graph-edge-icp"),
+                              flexShrink: 0
+                            }
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            style: {
+                              width: 16,
+                              height: 4,
+                              background: cssVar$2("--graph-edge-icp"),
+                              flexShrink: 0
+                            }
+                          }
+                        ),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: cssVar$2("--graph-text") }, children: [
+                          "Thicker = more",
+                          " ",
+                          edgeWeightMode === "count" ? "transactions" : "volume"
+                        ] })
+                      ] })
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    style: {
+                      marginTop: 6,
+                      borderTop: `1px solid ${cssVar$2("--graph-legend-border")}`,
+                      paddingTop: 5,
+                      fontSize: 9
+                    },
+                    children: "↓ Inbound  ↑ Outbound"
+                  }
+                )
+              ] })
             ]
           }
         ),
@@ -59298,6 +59936,109 @@ function IcrcDebugPanel({ debugState, onClose }) {
     }
   );
 }
+function ManageTokensSection({
+  tokens,
+  onRemove: onRemove2,
+  onAddToken
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "section",
+    {
+      id: "manage-tokens",
+      "aria-labelledby": "manage-tokens-heading",
+      "data-ocid": "manage_tokens.section",
+      className: "w-full",
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "pb-3 pt-4 px-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              CardTitle,
+              {
+                id: "manage-tokens-heading",
+                className: "text-sm font-semibold flex items-center gap-2",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Coins, { className: "h-4 w-4 text-neon-blue", "aria-hidden": "true" }),
+                  "Manage Added Tokens"
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button,
+              {
+                type: "button",
+                variant: "ghost",
+                size: "sm",
+                "data-ocid": "manage_tokens.add_button",
+                onClick: onAddToken,
+                className: "text-xs text-neon-blue hover:text-neon-blue/80 hover:bg-neon-blue/10",
+                children: "Add Token"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "ICRC-1 tokens you added by ledger canister ID. Removing one drops its transactions from the graph." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: tokens.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-muted/20 py-8 text-center",
+            "data-ocid": "manage_tokens.empty_state",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Coins,
+                {
+                  className: "h-6 w-6 text-muted-foreground",
+                  "aria-hidden": "true"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: "No custom tokens added yet." }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button,
+                {
+                  type: "button",
+                  variant: "ghost",
+                  size: "sm",
+                  "data-ocid": "manage_tokens.empty_add_button",
+                  onClick: onAddToken,
+                  className: "text-xs text-neon-blue hover:text-neon-blue/80 hover:bg-neon-blue/10",
+                  children: "Add your first token"
+                }
+              )
+            ]
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "flex flex-col gap-2", "data-ocid": "manage_tokens.list", children: tokens.map((token, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "li",
+          {
+            "data-ocid": `manage_tokens.item.${index2 + 1}`,
+            className: "flex items-center justify-between gap-3 rounded-lg border border-border bg-muted/20 px-3 py-2",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium text-foreground truncate", children: token.symbol }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-mono text-muted-foreground truncate", children: token.ledgerCanisterId })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                Button,
+                {
+                  type: "button",
+                  variant: "ghost",
+                  size: "sm",
+                  "data-ocid": `manage_tokens.remove_button.${index2 + 1}`,
+                  onClick: () => onRemove2(token.ledgerCanisterId),
+                  "aria-label": `Remove ${token.symbol}`,
+                  className: "shrink-0 text-muted-foreground hover:text-neon-red hover:bg-neon-red/10",
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "h-3.5 w-3.5", "aria-hidden": "true" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sr-only", children: "Remove" })
+                  ]
+                }
+              )
+            ]
+          },
+          token.ledgerCanisterId
+        )) }) })
+      ] })
+    }
+  );
+}
 function createContextScope$1(scopeName, createContextScopeDeps = []) {
   let defaultContexts = [];
   function createContext3(rootComponentName, defaultContext) {
@@ -59442,7 +60183,7 @@ function getInvalidValueError(propValue, componentName) {
 
 Defaulting to \`null\`.`;
 }
-var Root$1 = Progress$1;
+var Root$2 = Progress$1;
 var Indicator = ProgressIndicator;
 function Progress({
   className,
@@ -59450,7 +60191,7 @@ function Progress({
   ...props
 }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Root$1,
+    Root$2,
     {
       "data-slot": "progress",
       className: cn(
@@ -59568,7 +60309,7 @@ function createSlotClone(ownerName) {
   const SlotClone = reactExports.forwardRef((props, forwardedRef) => {
     const { children: children2, ...slotProps } = props;
     if (reactExports.isValidElement(children2)) {
-      const childrenRef = getElementRef(children2);
+      const childrenRef = getElementRef$1(children2);
       const props2 = mergeProps(slotProps, children2.props);
       if (children2.type !== reactExports.Fragment) {
         props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
@@ -59608,7 +60349,7 @@ function mergeProps(slotProps, childProps) {
   }
   return { ...slotProps, ...overrideProps };
 }
-function getElementRef(element) {
+function getElementRef$1(element) {
   var _a3, _b3;
   let getter = (_a3 = Object.getOwnPropertyDescriptor(element.props, "ref")) == null ? void 0 : _a3.get;
   let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
@@ -62115,7 +62856,7 @@ var Arrow$1 = reactExports.forwardRef((props, forwardedRef) => {
   );
 });
 Arrow$1.displayName = NAME$1;
-var Root = Arrow$1;
+var Root$1 = Arrow$1;
 function useSize(element) {
   const [size2, setSize] = reactExports.useState(void 0);
   useLayoutEffect2(() => {
@@ -62178,8 +62919,8 @@ var PopperAnchor = reactExports.forwardRef(
   }
 );
 PopperAnchor.displayName = ANCHOR_NAME;
-var CONTENT_NAME$1 = "PopperContent";
-var [PopperContentProvider, useContentContext] = createPopperContext(CONTENT_NAME$1);
+var CONTENT_NAME$2 = "PopperContent";
+var [PopperContentProvider, useContentContext] = createPopperContext(CONTENT_NAME$2);
 var PopperContent = reactExports.forwardRef(
   (props, forwardedRef) => {
     var _a3, _b3, _c2, _d2, _e2, _f2;
@@ -62199,7 +62940,7 @@ var PopperContent = reactExports.forwardRef(
       onPlaced,
       ...contentProps
     } = props;
-    const context = usePopperContext(CONTENT_NAME$1, __scopePopper);
+    const context = usePopperContext(CONTENT_NAME$2, __scopePopper);
     const [content, setContent] = reactExports.useState(null);
     const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
     const [arrow$12, setArrow] = reactExports.useState(null);
@@ -62322,7 +63063,7 @@ var PopperContent = reactExports.forwardRef(
     );
   }
 );
-PopperContent.displayName = CONTENT_NAME$1;
+PopperContent.displayName = CONTENT_NAME$2;
 var ARROW_NAME$1 = "PopperArrow";
 var OPPOSITE_SIDE = {
   top: "bottom",
@@ -62362,7 +63103,7 @@ var PopperArrow = reactExports.forwardRef(function PopperArrow2(props, forwarded
           visibility: contentContext.shouldHideArrow ? "hidden" : void 0
         },
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Root,
+          Root$1,
           {
             ...arrowProps,
             ref: forwardedRef,
@@ -63423,12 +64164,12 @@ var Select$1 = (props) => {
   ) });
 };
 Select$1.displayName = SELECT_NAME;
-var TRIGGER_NAME = "SelectTrigger";
+var TRIGGER_NAME$1 = "SelectTrigger";
 var SelectTrigger$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
     const { __scopeSelect, disabled = false, ...triggerProps } = props;
     const popperScope = usePopperScope(__scopeSelect);
-    const context = useSelectContext(TRIGGER_NAME, __scopeSelect);
+    const context = useSelectContext(TRIGGER_NAME$1, __scopeSelect);
     const isDisabled = context.disabled || disabled;
     const composedRefs = useComposedRefs(forwardedRef, context.onTriggerChange);
     const getItems = useCollection(__scopeSelect);
@@ -63500,7 +64241,7 @@ var SelectTrigger$1 = reactExports.forwardRef(
     ) });
   }
 );
-SelectTrigger$1.displayName = TRIGGER_NAME;
+SelectTrigger$1.displayName = TRIGGER_NAME$1;
 var VALUE_NAME = "SelectValue";
 var SelectValue$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
@@ -63537,10 +64278,10 @@ var SelectPortal = (props) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal$1, { asChild: true, ...props });
 };
 SelectPortal.displayName = PORTAL_NAME;
-var CONTENT_NAME = "SelectContent";
+var CONTENT_NAME$1 = "SelectContent";
 var SelectContent$1 = reactExports.forwardRef(
   (props, forwardedRef) => {
-    const context = useSelectContext(CONTENT_NAME, props.__scopeSelect);
+    const context = useSelectContext(CONTENT_NAME$1, props.__scopeSelect);
     const [fragment, setFragment] = reactExports.useState();
     useLayoutEffect2(() => {
       setFragment(new DocumentFragment());
@@ -63555,9 +64296,9 @@ var SelectContent$1 = reactExports.forwardRef(
     return /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContentImpl, { ...props, ref: forwardedRef });
   }
 );
-SelectContent$1.displayName = CONTENT_NAME;
+SelectContent$1.displayName = CONTENT_NAME$1;
 var CONTENT_MARGIN = 10;
-var [SelectContentProvider, useSelectContentContext] = createSelectContext(CONTENT_NAME);
+var [SelectContentProvider, useSelectContentContext] = createSelectContext(CONTENT_NAME$1);
 var CONTENT_IMPL_NAME = "SelectContentImpl";
 var Slot = /* @__PURE__ */ createSlot("SelectContent.RemoveScroll");
 var SelectContentImpl = reactExports.forwardRef(
@@ -63583,7 +64324,7 @@ var SelectContentImpl = reactExports.forwardRef(
       //
       ...contentProps
     } = props;
-    const context = useSelectContext(CONTENT_NAME, __scopeSelect);
+    const context = useSelectContext(CONTENT_NAME$1, __scopeSelect);
     const [content, setContent] = reactExports.useState(null);
     const [viewport, setViewport] = reactExports.useState(null);
     const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
@@ -63798,8 +64539,8 @@ SelectContentImpl.displayName = CONTENT_IMPL_NAME;
 var ITEM_ALIGNED_POSITION_NAME = "SelectItemAlignedPosition";
 var SelectItemAlignedPosition = reactExports.forwardRef((props, forwardedRef) => {
   const { __scopeSelect, onPlaced, ...popperProps } = props;
-  const context = useSelectContext(CONTENT_NAME, __scopeSelect);
-  const contentContext = useSelectContentContext(CONTENT_NAME, __scopeSelect);
+  const context = useSelectContext(CONTENT_NAME$1, __scopeSelect);
+  const contentContext = useSelectContentContext(CONTENT_NAME$1, __scopeSelect);
   const [contentWrapper, setContentWrapper] = reactExports.useState(null);
   const [content, setContent] = reactExports.useState(null);
   const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
@@ -63993,7 +64734,7 @@ var SelectPopperPosition = reactExports.forwardRef((props, forwardedRef) => {
   );
 });
 SelectPopperPosition.displayName = POPPER_POSITION_NAME;
-var [SelectViewportProvider, useSelectViewportContext] = createSelectContext(CONTENT_NAME, {});
+var [SelectViewportProvider, useSelectViewportContext] = createSelectContext(CONTENT_NAME$1, {});
 var VIEWPORT_NAME = "SelectViewport";
 var SelectViewport = reactExports.forwardRef(
   (props, forwardedRef) => {
@@ -64442,7 +65183,7 @@ function wrapArray(array2, startIndex) {
 }
 var Root2 = Select$1;
 var Trigger = SelectTrigger$1;
-var Value = SelectValue$1;
+var Value$1 = SelectValue$1;
 var Icon = SelectIcon;
 var Portal = SelectPortal;
 var Content2 = SelectContent$1;
@@ -64460,7 +65201,7 @@ function Select({
 function SelectValue({
   ...props
 }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Value, { "data-slot": "select-value", ...props });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Value$1, { "data-slot": "select-value", ...props });
 }
 function SelectTrigger({
   className,
@@ -65616,9 +66357,9 @@ function OverviewPanel({
             {
               type: "button",
               "data-ocid": "wallet.btc_unit_toggle",
-              onClick: () => onBtcUnitChange("btc"),
-              className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-              children: "BTC"
+              onClick: () => onBtcUnitChange("sats"),
+              className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+              children: "sats"
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -65626,9 +66367,9 @@ function OverviewPanel({
             {
               type: "button",
               "data-ocid": "wallet.btc_unit_toggle",
-              onClick: () => onBtcUnitChange("sats"),
-              className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-              children: "sats"
+              onClick: () => onBtcUnitChange("btc"),
+              className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+              children: "btc"
             }
           )
         ] })
@@ -65762,6 +66503,7 @@ const DEFAULT_MAX_COUNTERPARTIES = 20;
 const HISTORY_KEY = "icpath_search_history";
 const LABELS_KEY$1 = "wallet-labels";
 const SAVED_WALLETS_KEY$1 = "icpath_saved_wallets";
+const CUSTOM_TOKENS_KEY = "icpath_custom_tokens";
 const MAX_HISTORY = 10;
 const MAX_PINS$1 = 20;
 const DEBUG_KEY = "icpath_debug";
@@ -65909,6 +66651,12 @@ function getWalletLabels() {
 function getSavedWallets() {
   return safeGetJSON$1(SAVED_WALLETS_KEY$1, []);
 }
+function getCustomTokens() {
+  return safeGetJSON$1(CUSTOM_TOKENS_KEY, []);
+}
+function saveCustomTokens(tokens) {
+  safeSetJSON$1(CUSTOM_TOKENS_KEY, tokens);
+}
 function clearSearchHistory() {
   safeSetJSON$1(HISTORY_KEY, []);
 }
@@ -65967,7 +66715,7 @@ async function fetchAllIcrcForAddress(principal, limit, cancelledRef, debugEntri
   );
   return allIcrcTxs;
 }
-function useWallet() {
+function useWallet(isLoggedIn = false, actor = null) {
   const [historyStack, setHistoryStack] = reactExports.useState([]);
   const [currentPrincipal, setCurrentPrincipal] = reactExports.useState("");
   const [timeRange, setTimeRange] = reactExports.useState("week");
@@ -65988,7 +66736,9 @@ function useWallet() {
   const [depth2Fetches, setDepth2Fetches] = reactExports.useState([]);
   const [depth3Fetches, setDepth3Fetches] = reactExports.useState([]);
   const [depth3LatencyMs, setDepth3LatencyMs] = reactExports.useState(null);
-  const [customTokens, setCustomTokens] = reactExports.useState([]);
+  const [customTokens, setCustomTokens] = reactExports.useState(
+    () => getCustomTokens()
+  );
   const [customTokenTransactions, setCustomTokenTransactions] = reactExports.useState([]);
   const [icrcLoading, setIcrcLoading] = reactExports.useState(false);
   const [icrcError, setIcrcError] = reactExports.useState(false);
@@ -65999,11 +66749,130 @@ function useWallet() {
   const txLimitRef = reactExports.useRef(txLimit);
   txLimitRef.current = txLimit;
   const icrcCancelledRef = reactExports.useRef(false);
+  const rehydratedCustomTokensRef = reactExports.useRef(/* @__PURE__ */ new Set());
   const [debugMode, setDebugMode] = reactExports.useState(
     () => safeGetJSON$1(DEBUG_KEY, false)
   );
   const debugModeRef = reactExports.useRef(debugMode);
   debugModeRef.current = debugMode;
+  const migratedCustomTokensRef = reactExports.useRef(false);
+  reactExports.useEffect(() => {
+    if (!isLoggedIn || !actor) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const backendTokens = await actor.listCustomTokens().catch(() => []);
+        if (cancelled) return;
+        const local = getCustomTokens();
+        const backendIds = new Set(
+          backendTokens.map((t2) => t2.ledgerCanisterId.toLowerCase())
+        );
+        const merged = [
+          ...backendTokens.map((t2) => ({
+            ledgerCanisterId: t2.ledgerCanisterId,
+            indexCanisterId: t2.indexCanisterId,
+            symbol: t2.symbol,
+            decimals: Number(t2.decimals)
+          })),
+          ...local.filter(
+            (t2) => !backendIds.has(t2.ledgerCanisterId.toLowerCase())
+          )
+        ];
+        setCustomTokens(merged);
+        saveCustomTokens(merged);
+        if (!migratedCustomTokensRef.current) {
+          migratedCustomTokensRef.current = true;
+          const localOnly = local.filter(
+            (t2) => !backendIds.has(t2.ledgerCanisterId.toLowerCase())
+          );
+          await Promise.all(
+            localOnly.map(
+              (t2) => actor.addCustomToken(
+                t2.ledgerCanisterId,
+                t2.indexCanisterId ?? null,
+                t2.symbol,
+                t2.decimals
+              ).catch(() => {
+              })
+            )
+          );
+        }
+      } catch (err) {
+        console.warn("[CustomToken] sync failed:", err);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn, actor]);
+  reactExports.useEffect(() => {
+    if (!currentPrincipal || customTokens.length === 0) return;
+    const address = currentPrincipal.trim();
+    const pending = customTokens.filter(
+      (t2) => !rehydratedCustomTokensRef.current.has(
+        `${t2.ledgerCanisterId.toLowerCase()}:${address.toLowerCase()}`
+      )
+    );
+    if (pending.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      const results = await Promise.all(
+        pending.map(
+          async (token) => {
+            const key = `${token.ledgerCanisterId.toLowerCase()}:${address.toLowerCase()}`;
+            try {
+              const custom = await fetchCustomIcrcToken(
+                token.ledgerCanisterId,
+                token.indexCanisterId,
+                address
+              );
+              if (!custom.ok) return null;
+              return {
+                key,
+                txs: custom.transactions.map((tx) => ({
+                  ...tx,
+                  ledgerCanisterId: token.ledgerCanisterId
+                }))
+              };
+            } catch (err) {
+              console.warn(
+                "[CustomToken] rehydrate failed for",
+                token.ledgerCanisterId,
+                err
+              );
+              return null;
+            }
+          }
+        )
+      );
+      if (cancelled) return;
+      const restored = results.filter(
+        (r2) => r2 !== null
+      );
+      if (restored.length === 0) return;
+      for (const r2 of restored) {
+        rehydratedCustomTokensRef.current.add(r2.key);
+      }
+      const merged = restored.flatMap((r2) => r2.txs);
+      if (merged.length === 0) return;
+      setCustomTokenTransactions((prev) => {
+        const seen = new Set(
+          prev.map(
+            (tx) => `${(tx.ledgerCanisterId ?? "").toLowerCase()}:${tx.blockIndex ?? ""}`
+          )
+        );
+        const additions = merged.filter(
+          (tx) => !seen.has(
+            `${(tx.ledgerCanisterId ?? "").toLowerCase()}:${tx.blockIndex ?? ""}`
+          )
+        );
+        return additions.length > 0 ? [...prev, ...additions] : prev;
+      });
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentPrincipal, customTokens]);
   reactExports.useEffect(() => {
     const handler = (e3) => {
       if (e3.shiftKey && (e3.key === "D" || e3.key === "d")) {
@@ -66027,7 +66896,7 @@ function useWallet() {
     setDepth2Fetches([]);
     setDepth3Fetches([]);
     setDepth3LatencyMs(null);
-    setCustomTokens([]);
+    setCustomTokens(getCustomTokens());
     setCustomTokenTransactions([]);
     setIcrcLoading(false);
     setIcrcError(false);
@@ -66168,6 +67037,7 @@ function useWallet() {
   );
   const reset = reactExports.useCallback(() => {
     icrcCancelledRef.current = true;
+    rehydratedCustomTokensRef.current.clear();
     setHistoryStack([]);
     setCurrentPrincipal("");
     setIcpTransactions([]);
@@ -66179,7 +67049,7 @@ function useWallet() {
     setDepth2Fetches([]);
     setDepth3Fetches([]);
     setDepth3LatencyMs(null);
-    setCustomTokens([]);
+    setCustomTokens(getCustomTokens());
     setCustomTokenTransactions([]);
     setGraphDepth(1);
     setShowCrossEdges(false);
@@ -66215,7 +67085,7 @@ function useWallet() {
     [pinnedVersion]
   );
   const addTokenByCanisterId = reactExports.useCallback(
-    async (canisterId) => {
+    async (canisterId, indexCanisterId) => {
       const trimmed = canisterId.trim();
       if (!trimmed || !currentPrincipal) {
         return { ok: false, error: "invalid" };
@@ -66225,43 +67095,107 @@ function useWallet() {
       } catch {
         return { ok: false, error: "invalid" };
       }
-      try {
-        const agent = await HttpAgent.create({ host: "https://ic0.app" });
-        const actor = Actor.createActor(LedgerIdl, {
-          agent,
-          canisterId: trimmed
-        });
-        const symbol = await actor.icrc1_symbol();
-        const decimals = Number(await actor.icrc1_decimals());
-        const txs = await fetchDirectLedgerTransactions(
-          actor,
-          currentPrincipal,
-          symbol,
-          decimals,
-          txLimitRef.current
-        );
-        if (txs.length === 0) {
-          return { ok: false, error: "empty" };
+      const custom = await fetchCustomIcrcToken(
+        trimmed,
+        indexCanisterId,
+        currentPrincipal
+      );
+      if (!custom.ok) {
+        return {
+          ok: false,
+          error: custom.error === "index" ? "index" : "network"
+        };
+      }
+      let txs = custom.transactions;
+      if (txs.length === 0 && custom.indexCanisterId === null) {
+        try {
+          const agent = await HttpAgent.create({ host: "https://ic0.app" });
+          const actor2 = Actor.createActor(LedgerIdl, {
+            agent,
+            canisterId: trimmed
+          });
+          txs = await fetchDirectLedgerTransactions(
+            actor2,
+            currentPrincipal,
+            custom.symbol,
+            custom.decimals,
+            txLimitRef.current
+          );
+        } catch (err) {
+          console.error(
+            "[CustomToken] Direct ledger fetch failed for",
+            trimmed,
+            err
+          );
+          return { ok: false, error: "network" };
         }
-        setCustomTokenTransactions((prev) => [...prev, ...txs]);
-        setCustomTokens((prev) => {
-          if (prev.some(
-            (t2) => t2.canisterId.toLowerCase() === trimmed.toLowerCase()
-          )) {
-            return prev;
-          }
-          return [...prev, { canisterId: trimmed, symbol, decimals }];
+      }
+      if (txs.length === 0) {
+        return { ok: false, error: "empty" };
+      }
+      const taggedTxs = txs.map((tx) => ({
+        ...tx,
+        ledgerCanisterId: trimmed
+      }));
+      setCustomTokenTransactions((prev) => [...prev, ...taggedTxs]);
+      const entry = {
+        ledgerCanisterId: trimmed,
+        indexCanisterId: custom.indexCanisterId ?? void 0,
+        symbol: custom.symbol,
+        decimals: custom.decimals
+      };
+      setCustomTokens((prev) => {
+        const next = prev.some(
+          (t2) => t2.ledgerCanisterId.toLowerCase() === trimmed.toLowerCase()
+        ) ? prev.map(
+          (t2) => t2.ledgerCanisterId.toLowerCase() === trimmed.toLowerCase() ? entry : t2
+        ) : [...prev, entry];
+        saveCustomTokens(next);
+        return next;
+      });
+      if (isLoggedIn && actor) {
+        actor.addCustomToken(
+          trimmed,
+          custom.indexCanisterId ?? null,
+          custom.symbol,
+          custom.decimals
+        ).catch((err) => {
+          console.warn("[CustomToken] backend addCustomToken failed:", err);
         });
-        return { ok: true, symbol, decimals, count: txs.length };
-      } catch (err) {
-        console.error(
-          "[CustomToken] Failed to fetch token by canister ID:",
-          err
+      }
+      return {
+        ok: true,
+        symbol: custom.symbol,
+        decimals: custom.decimals,
+        count: txs.length,
+        indexCanisterId: custom.indexCanisterId,
+        indexDiscovered: custom.indexDiscovered
+      };
+    },
+    [currentPrincipal, isLoggedIn, actor]
+  );
+  const removeCustomToken = reactExports.useCallback(
+    async (ledgerCanisterId) => {
+      const key = ledgerCanisterId.toLowerCase();
+      setCustomTokens((prev) => {
+        const next = prev.filter(
+          (t2) => t2.ledgerCanisterId.toLowerCase() !== key
         );
-        return { ok: false, error: "network" };
+        saveCustomTokens(next);
+        return next;
+      });
+      setCustomTokenTransactions(
+        (prev) => prev.filter((tx) => (tx.ledgerCanisterId ?? "").toLowerCase() !== key)
+      );
+      if (isLoggedIn && actor) {
+        try {
+          await actor.removeCustomToken(ledgerCanisterId);
+        } catch (err) {
+          console.warn("[CustomToken] backend removeCustomToken failed:", err);
+        }
       }
     },
-    [currentPrincipal]
+    [isLoggedIn, actor]
   );
   const rawTransactions = reactExports.useMemo(
     () => [...icpTransactions, ...icrcTransactions, ...customTokenTransactions],
@@ -66583,6 +67517,7 @@ function useWallet() {
     depth3LatencyMs,
     customTokens,
     addTokenByCanisterId,
+    removeCustomToken,
     icrcLoading,
     icrcError,
     tokenCoverage,
@@ -67333,9 +68268,9 @@ function TransactionTable({
           {
             type: "button",
             "data-ocid": "wallet.btc_unit_toggle",
-            onClick: () => onBtcUnitChange("btc"),
-            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-            children: "BTC"
+            onClick: () => onBtcUnitChange("sats"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "sats"
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -67343,9 +68278,9 @@ function TransactionTable({
           {
             type: "button",
             "data-ocid": "wallet.btc_unit_toggle",
-            onClick: () => onBtcUnitChange("sats"),
-            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-            children: "sats"
+            onClick: () => onBtcUnitChange("btc"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "btc"
           }
         )
       ] })
@@ -67468,6 +68403,398 @@ function TransactionTable({
       ] })
     ] })
   ] });
+}
+function useStateMachine(initialState, machine) {
+  return reactExports.useReducer((state, event) => {
+    const nextState = machine[state][event];
+    return nextState ?? state;
+  }, initialState);
+}
+var Presence = (props) => {
+  const { present, children: children2 } = props;
+  const presence = usePresence(present);
+  const child = typeof children2 === "function" ? children2({ present: presence.isPresent }) : reactExports.Children.only(children2);
+  const ref = useComposedRefs(presence.ref, getElementRef(child));
+  const forceMount = typeof children2 === "function";
+  return forceMount || presence.isPresent ? reactExports.cloneElement(child, { ref }) : null;
+};
+Presence.displayName = "Presence";
+function usePresence(present) {
+  const [node, setNode] = reactExports.useState();
+  const stylesRef = reactExports.useRef(null);
+  const prevPresentRef = reactExports.useRef(present);
+  const prevAnimationNameRef = reactExports.useRef("none");
+  const initialState = present ? "mounted" : "unmounted";
+  const [state, send] = useStateMachine(initialState, {
+    mounted: {
+      UNMOUNT: "unmounted",
+      ANIMATION_OUT: "unmountSuspended"
+    },
+    unmountSuspended: {
+      MOUNT: "mounted",
+      ANIMATION_END: "unmounted"
+    },
+    unmounted: {
+      MOUNT: "mounted"
+    }
+  });
+  reactExports.useEffect(() => {
+    const currentAnimationName = getAnimationName(stylesRef.current);
+    prevAnimationNameRef.current = state === "mounted" ? currentAnimationName : "none";
+  }, [state]);
+  useLayoutEffect2(() => {
+    const styles = stylesRef.current;
+    const wasPresent = prevPresentRef.current;
+    const hasPresentChanged = wasPresent !== present;
+    if (hasPresentChanged) {
+      const prevAnimationName = prevAnimationNameRef.current;
+      const currentAnimationName = getAnimationName(styles);
+      if (present) {
+        send("MOUNT");
+      } else if (currentAnimationName === "none" || (styles == null ? void 0 : styles.display) === "none") {
+        send("UNMOUNT");
+      } else {
+        const isAnimating = prevAnimationName !== currentAnimationName;
+        if (wasPresent && isAnimating) {
+          send("ANIMATION_OUT");
+        } else {
+          send("UNMOUNT");
+        }
+      }
+      prevPresentRef.current = present;
+    }
+  }, [present, send]);
+  useLayoutEffect2(() => {
+    if (node) {
+      let timeoutId;
+      const ownerWindow = node.ownerDocument.defaultView ?? window;
+      const handleAnimationEnd = (event) => {
+        const currentAnimationName = getAnimationName(stylesRef.current);
+        const isCurrentAnimation = currentAnimationName.includes(CSS.escape(event.animationName));
+        if (event.target === node && isCurrentAnimation) {
+          send("ANIMATION_END");
+          if (!prevPresentRef.current) {
+            const currentFillMode = node.style.animationFillMode;
+            node.style.animationFillMode = "forwards";
+            timeoutId = ownerWindow.setTimeout(() => {
+              if (node.style.animationFillMode === "forwards") {
+                node.style.animationFillMode = currentFillMode;
+              }
+            });
+          }
+        }
+      };
+      const handleAnimationStart = (event) => {
+        if (event.target === node) {
+          prevAnimationNameRef.current = getAnimationName(stylesRef.current);
+        }
+      };
+      node.addEventListener("animationstart", handleAnimationStart);
+      node.addEventListener("animationcancel", handleAnimationEnd);
+      node.addEventListener("animationend", handleAnimationEnd);
+      return () => {
+        ownerWindow.clearTimeout(timeoutId);
+        node.removeEventListener("animationstart", handleAnimationStart);
+        node.removeEventListener("animationcancel", handleAnimationEnd);
+        node.removeEventListener("animationend", handleAnimationEnd);
+      };
+    } else {
+      send("ANIMATION_END");
+    }
+  }, [node, send]);
+  return {
+    isPresent: ["mounted", "unmountSuspended"].includes(state),
+    ref: reactExports.useCallback((node2) => {
+      stylesRef.current = node2 ? getComputedStyle(node2) : null;
+      setNode(node2);
+    }, [])
+  };
+}
+function getAnimationName(styles) {
+  return (styles == null ? void 0 : styles.animationName) || "none";
+}
+function getElementRef(element) {
+  var _a3, _b3;
+  let getter = (_a3 = Object.getOwnPropertyDescriptor(element.props, "ref")) == null ? void 0 : _a3.get;
+  let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+  if (mayWarn) {
+    return element.ref;
+  }
+  getter = (_b3 = Object.getOwnPropertyDescriptor(element, "ref")) == null ? void 0 : _b3.get;
+  mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+  if (mayWarn) {
+    return element.props.ref;
+  }
+  return element.props.ref || element.ref;
+}
+var COLLAPSIBLE_NAME = "Collapsible";
+var [createCollapsibleContext] = createContextScope(COLLAPSIBLE_NAME);
+var [CollapsibleProvider, useCollapsibleContext] = createCollapsibleContext(COLLAPSIBLE_NAME);
+var Collapsible$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const {
+      __scopeCollapsible,
+      open: openProp,
+      defaultOpen,
+      disabled,
+      onOpenChange,
+      ...collapsibleProps
+    } = props;
+    const [open, setOpen] = useControllableState({
+      prop: openProp,
+      defaultProp: defaultOpen ?? false,
+      onChange: onOpenChange,
+      caller: COLLAPSIBLE_NAME
+    });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CollapsibleProvider,
+      {
+        scope: __scopeCollapsible,
+        disabled,
+        contentId: useId(),
+        open,
+        onOpenToggle: reactExports.useCallback(() => setOpen((prevOpen) => !prevOpen), [setOpen]),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Primitive.div,
+          {
+            "data-state": getState(open),
+            "data-disabled": disabled ? "" : void 0,
+            ...collapsibleProps,
+            ref: forwardedRef
+          }
+        )
+      }
+    );
+  }
+);
+Collapsible$1.displayName = COLLAPSIBLE_NAME;
+var TRIGGER_NAME = "CollapsibleTrigger";
+var CollapsibleTrigger$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { __scopeCollapsible, ...triggerProps } = props;
+    const context = useCollapsibleContext(TRIGGER_NAME, __scopeCollapsible);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Primitive.button,
+      {
+        type: "button",
+        "aria-controls": context.contentId,
+        "aria-expanded": context.open || false,
+        "data-state": getState(context.open),
+        "data-disabled": context.disabled ? "" : void 0,
+        disabled: context.disabled,
+        ...triggerProps,
+        ref: forwardedRef,
+        onClick: composeEventHandlers(props.onClick, context.onOpenToggle)
+      }
+    );
+  }
+);
+CollapsibleTrigger$1.displayName = TRIGGER_NAME;
+var CONTENT_NAME = "CollapsibleContent";
+var CollapsibleContent$1 = reactExports.forwardRef(
+  (props, forwardedRef) => {
+    const { forceMount, ...contentProps } = props;
+    const context = useCollapsibleContext(CONTENT_NAME, props.__scopeCollapsible);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Presence, { present: forceMount || context.open, children: ({ present }) => /* @__PURE__ */ jsxRuntimeExports.jsx(CollapsibleContentImpl, { ...contentProps, ref: forwardedRef, present }) });
+  }
+);
+CollapsibleContent$1.displayName = CONTENT_NAME;
+var CollapsibleContentImpl = reactExports.forwardRef((props, forwardedRef) => {
+  const { __scopeCollapsible, present, children: children2, ...contentProps } = props;
+  const context = useCollapsibleContext(CONTENT_NAME, __scopeCollapsible);
+  const [isPresent, setIsPresent] = reactExports.useState(present);
+  const ref = reactExports.useRef(null);
+  const composedRefs = useComposedRefs(forwardedRef, ref);
+  const heightRef = reactExports.useRef(0);
+  const height = heightRef.current;
+  const widthRef = reactExports.useRef(0);
+  const width = widthRef.current;
+  const isOpen = context.open || isPresent;
+  const isMountAnimationPreventedRef = reactExports.useRef(isOpen);
+  const originalStylesRef = reactExports.useRef(void 0);
+  reactExports.useEffect(() => {
+    const rAF = requestAnimationFrame(() => isMountAnimationPreventedRef.current = false);
+    return () => cancelAnimationFrame(rAF);
+  }, []);
+  useLayoutEffect2(() => {
+    const node = ref.current;
+    if (node) {
+      originalStylesRef.current = originalStylesRef.current || {
+        transitionDuration: node.style.transitionDuration,
+        animationName: node.style.animationName
+      };
+      node.style.transitionDuration = "0s";
+      node.style.animationName = "none";
+      const rect = node.getBoundingClientRect();
+      heightRef.current = rect.height;
+      widthRef.current = rect.width;
+      if (!isMountAnimationPreventedRef.current) {
+        node.style.transitionDuration = originalStylesRef.current.transitionDuration;
+        node.style.animationName = originalStylesRef.current.animationName;
+      }
+      setIsPresent(present);
+    }
+  }, [context.open, present]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Primitive.div,
+    {
+      "data-state": getState(context.open),
+      "data-disabled": context.disabled ? "" : void 0,
+      id: context.contentId,
+      hidden: !isOpen,
+      ...contentProps,
+      ref: composedRefs,
+      style: {
+        [`--radix-collapsible-content-height`]: height ? `${height}px` : void 0,
+        [`--radix-collapsible-content-width`]: width ? `${width}px` : void 0,
+        ...props.style
+      },
+      children: isOpen && children2
+    }
+  );
+});
+function getState(open) {
+  return open ? "open" : "closed";
+}
+var Root = Collapsible$1;
+function Collapsible({
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, { "data-slot": "collapsible", ...props });
+}
+function CollapsibleTrigger({
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CollapsibleTrigger$1,
+    {
+      "data-slot": "collapsible-trigger",
+      ...props
+    }
+  );
+}
+function CollapsibleContent({
+  ...props
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CollapsibleContent$1,
+    {
+      "data-slot": "collapsible-content",
+      ...props
+    }
+  );
+}
+const SECTIONS = [
+  {
+    id: "reading-the-graph",
+    title: "Reading the constellation",
+    body: "Each dot is a wallet or canister. The bright center dot is the wallet you searched; every other dot is a counterparty it has transacted with. Lines are transfers between two parties, and the layout pulls connected wallets together — clusters mean those wallets trade with each other often."
+  },
+  {
+    id: "node-colors-sizes",
+    title: "Node colors and sizes",
+    body: "Color marks what a node is: blue is the center wallet, grey-blue is an ordinary counterparty, orange is a whale (over 10k ICP moved), green is an SNS or project, amber is a DEX or exchange, indigo is a neuron, and purple is NNS infrastructure. Larger dots have more activity — more transactions and volume — so the biggest dots are the busiest counterparties."
+  },
+  {
+    id: "edge-colors-thickness",
+    title: "Edge colors, thickness, and arrows",
+    body: "Blue lines carry ICP; other colors are ICRC tokens, each token getting its own color. A thicker line means a larger transaction count or amount, depending on the active weight control. Arrows show direction: down-arrow is inbound (into the center wallet), up-arrow is outbound (out of it)."
+  },
+  {
+    id: "searching-a-wallet",
+    title: "Searching a wallet",
+    body: "Paste a principal ID or account ID into the search bar and press Enter. The graph, charts, and transaction table all reload for that wallet. Clicking any node re-centers the graph on that wallet and adds it to the breadcrumb trail so you can walk back."
+  },
+  {
+    id: "time-range",
+    title: "Time range",
+    body: "The time-range control in the wallet panel filters every view — graph, charts, and table — to the selected window (day through all time). It does not re-fetch data; it narrows what is already loaded, so switching ranges is instant."
+  },
+  {
+    id: "edge-weight",
+    title: "Edge weight",
+    body: "The weight control switches what line thickness encodes: transaction count or total amount. Use count to find frequent trading partners and amount to find high-value ones. The legend's thickness note always reflects the active mode."
+  },
+  {
+    id: "comparison-mode",
+    title: "Comparison mode",
+    body: "Open Compare from the top bar and enter two wallet addresses. The two constellations render side by side with shared counterparties highlighted, plus a stats panel. Exit with the back control to return to the single-wallet view."
+  },
+  {
+    id: "adding-a-token",
+    title: "Adding a token",
+    body: "The ICRC API only serves SNS-governed and chain-key tokens automatically. To track any other ICRC-1 token, open Add Token and enter its ledger canister ID; the index canister ID is optional and is auto-discovered when left blank. Its transactions merge into the graph immediately and the token appears under Manage Added Tokens."
+  },
+  {
+    id: "connected-state",
+    title: "Connected vs. not connected",
+    body: "Signing in with Internet Identity connects your account: saved wallets, labels, and added tokens sync to your profile and follow you across devices. Without signing in, the explorer still works fully, but those preferences stay only in this browser."
+  },
+  {
+    id: "data-coverage",
+    title: "How much of the graph is loaded",
+    body: "Every level is sampled, never complete. The center wallet (level 0) covers ICP and ICRC tokens; level 1 covers ICP and ICRC for its top 5 counterparties only; level 2 covers the top 3 counterparties of each level-1 wallet; level 3 covers the top 2 counterparties of each level-2 wallet. Addresses already seen are skipped, and each address is capped at 100 transactions per token. Deeper levels are therefore truncated subsets, not a full picture."
+  },
+  {
+    id: "what-the-numbers-cover",
+    title: "What the numbers cover",
+    body: "The summary numbers — Total Txs, Total In/Out, Counterparties, Daily Transaction Activity, token holdings, and highlights — are computed from the full time-filtered transaction list, meaning everything inside the selected time range, not just the subset drawn on the graph. The graph's top-counterparty cuts and depth limits only change what is drawn, never the numbers. Numbers are capped at 100 transactions per address and show as '100+' once that cap is reached. Network Breakdown is the one panel based on the plotted graph and its top-5 cut rather than the full set."
+  }
+];
+function UserManual() {
+  const [open, setOpen] = reactExports.useState(false);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "section",
+    {
+      id: "user-manual",
+      "aria-labelledby": "user-manual-heading",
+      "data-ocid": "manual.section",
+      className: "w-full",
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Collapsible, { open, onOpenChange: setOpen, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          CollapsibleTrigger,
+          {
+            "data-ocid": "manual.toggle",
+            "aria-expanded": open,
+            className: "group flex w-full items-center justify-between gap-3 rounded-md text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  CardTitle,
+                  {
+                    id: "user-manual-heading",
+                    className: "text-sm font-semibold flex items-center gap-2",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        BookOpen,
+                        {
+                          className: "h-4 w-4 text-neon-blue",
+                          "aria-hidden": "true"
+                        }
+                      ),
+                      "User Manual"
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block text-xs text-muted-foreground mt-1", children: "How to read the constellation and use the explorer." })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ChevronDown,
+                {
+                  className: `h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:text-foreground ${open ? "rotate-180" : ""}`,
+                  "aria-hidden": "true"
+                }
+              )
+            ]
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CollapsibleContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5", children: SECTIONS.map((section) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-ocid": `manual.item.${section.id}`, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xs font-semibold text-foreground mb-1.5", children: section.title }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs leading-relaxed text-muted-foreground", children: section.body })
+        ] }, section.id)) }) }) })
+      ] }) })
+    }
+  );
 }
 function cssVar$1(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -67639,9 +68966,9 @@ function ComparisonStatsPanel({
           {
             type: "button",
             "data-ocid": "compare.btc_unit_toggle",
-            onClick: () => onBtcUnitChange("btc"),
-            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-            children: "BTC"
+            onClick: () => onBtcUnitChange("sats"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "sats"
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -67649,9 +68976,9 @@ function ComparisonStatsPanel({
           {
             type: "button",
             "data-ocid": "compare.btc_unit_toggle",
-            onClick: () => onBtcUnitChange("sats"),
-            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "sats" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
-            children: "sats"
+            onClick: () => onBtcUnitChange("btc"),
+            className: `text-[10px] px-1.5 py-0.5 rounded transition-colors ${btcUnit === "btc" ? "bg-neon-blue/20 text-neon-blue" : "text-muted-foreground hover:text-foreground"}`,
+            children: "btc"
           }
         )
       ] })
@@ -67864,7 +69191,6 @@ function SharedCounterpartiesPanel({
     ] }) })
   ] });
 }
-const SHARED_NODE_COLOR = "#00FF88";
 const WALLET2_ACCENT = "#FFB300";
 function shortenAddr(addr) {
   if (!addr || addr.length <= 14) return addr;
@@ -67905,7 +69231,6 @@ function WalletComparisonView({
     setTimeRange
   } = comparison;
   const hasData = !!data;
-  const sharedNodeArray = hasData ? [...data.sharedNodeIds] : [];
   const short1 = shortenAddr(address1);
   const short2 = shortenAddr(address2);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-4 p-4 max-w-screen-2xl mx-auto w-full", children: [
@@ -67986,7 +69311,6 @@ function WalletComparisonView({
             centerPrincipal: address1,
             onNavigate: () => {
             },
-            edgeWeight: "tx_count",
             maxCounterparties: 20,
             onMaxCounterpartiesChange: () => {
             },
@@ -67999,9 +69323,7 @@ function WalletComparisonView({
             showCrossEdges: false,
             onShowCrossEdgesChange: () => {
             },
-            transactions: data.wallet1.transactions,
-            highlightNodeIds: sharedNodeArray,
-            highlightColor: SHARED_NODE_COLOR
+            transactions: data.wallet1.transactions
           }
         ) })
       ] }),
@@ -68033,7 +69355,6 @@ function WalletComparisonView({
             centerPrincipal: address2,
             onNavigate: () => {
             },
-            edgeWeight: "tx_count",
             maxCounterparties: 20,
             onMaxCounterpartiesChange: () => {
             },
@@ -68046,10 +69367,7 @@ function WalletComparisonView({
             showCrossEdges: false,
             onShowCrossEdgesChange: () => {
             },
-            transactions: data.wallet2.transactions,
-            highlightNodeIds: sharedNodeArray,
-            highlightColor: SHARED_NODE_COLOR,
-            accentColor: WALLET2_ACCENT
+            transactions: data.wallet2.transactions
           }
         ) })
       ] })
@@ -68075,6 +69393,26 @@ function WalletComparisonView({
     ) })
   ] });
 }
+const CustomToken = Record({
+  "decimals": Nat8,
+  "ledgerCanisterId": Text$1,
+  "indexCanisterId": Opt(Text$1),
+  "addedAt": Int,
+  "symbol": Text$1
+});
+const Value = Variant({
+  "int": Int,
+  "nat": Nat,
+  "float": Float64,
+  "bool": Bool,
+  "null": Null,
+  "text": Text$1
+});
+const Cell2 = Record({ "value": Value, "name": Text$1 });
+const Result = Record({
+  "hasMore": Bool,
+  "rows": Vec(Vec(Cell2))
+});
 const WalletLabel = Record({
   "address": Text$1,
   "walletLabel": Text$1
@@ -68084,29 +69422,69 @@ const Favorite = Record({
   "pinnedAt": Int
 });
 Service({
+  "addCustomToken": Func(
+    [Text$1, Opt(Text$1), Text$1, Nat8],
+    [CustomToken],
+    []
+  ),
   "addFavorite": Func([Text$1], [], []),
+  "execute": Func([Text$1], [Result], ["query"]),
   "getAllLabels": Func([], [Vec(WalletLabel)], ["query"]),
+  "getApiDoc": Func([], [Text$1], ["query"]),
   "getFavorites": Func([], [Vec(Favorite)], ["query"]),
   "getLabel": Func([Text$1], [Opt(Text$1)], ["query"]),
+  "listCustomTokens": Func([], [Vec(CustomToken)], ["query"]),
   "ping": Func([], [Record({ "status": Text$1 })], ["query"]),
+  "removeCustomToken": Func([Text$1], [Bool], []),
   "removeFavorite": Func([Text$1], [], []),
   "removeLabel": Func([Text$1], [], []),
+  "schema": Func([], [Text$1], ["query"]),
   "setLabel": Func([Text$1, Text$1], [], [])
 });
 const idlFactory = ({ IDL: IDL2 }) => {
+  const CustomToken2 = IDL2.Record({
+    "decimals": IDL2.Nat8,
+    "ledgerCanisterId": IDL2.Text,
+    "indexCanisterId": IDL2.Opt(IDL2.Text),
+    "addedAt": IDL2.Int,
+    "symbol": IDL2.Text
+  });
+  const Value2 = IDL2.Variant({
+    "int": IDL2.Int,
+    "nat": IDL2.Nat,
+    "float": IDL2.Float64,
+    "bool": IDL2.Bool,
+    "null": IDL2.Null,
+    "text": IDL2.Text
+  });
+  const Cell3 = IDL2.Record({ "value": Value2, "name": IDL2.Text });
+  const Result2 = IDL2.Record({
+    "hasMore": IDL2.Bool,
+    "rows": IDL2.Vec(IDL2.Vec(Cell3))
+  });
   const WalletLabel2 = IDL2.Record({
     "address": IDL2.Text,
     "walletLabel": IDL2.Text
   });
   const Favorite2 = IDL2.Record({ "address": IDL2.Text, "pinnedAt": IDL2.Int });
   return IDL2.Service({
+    "addCustomToken": IDL2.Func(
+      [IDL2.Text, IDL2.Opt(IDL2.Text), IDL2.Text, IDL2.Nat8],
+      [CustomToken2],
+      []
+    ),
     "addFavorite": IDL2.Func([IDL2.Text], [], []),
+    "execute": IDL2.Func([IDL2.Text], [Result2], ["query"]),
     "getAllLabels": IDL2.Func([], [IDL2.Vec(WalletLabel2)], ["query"]),
+    "getApiDoc": IDL2.Func([], [IDL2.Text], ["query"]),
     "getFavorites": IDL2.Func([], [IDL2.Vec(Favorite2)], ["query"]),
     "getLabel": IDL2.Func([IDL2.Text], [IDL2.Opt(IDL2.Text)], ["query"]),
+    "listCustomTokens": IDL2.Func([], [IDL2.Vec(CustomToken2)], ["query"]),
     "ping": IDL2.Func([], [IDL2.Record({ "status": IDL2.Text })], ["query"]),
+    "removeCustomToken": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
     "removeFavorite": IDL2.Func([IDL2.Text], [], []),
     "removeLabel": IDL2.Func([IDL2.Text], [], []),
+    "schema": IDL2.Func([], [IDL2.Text], ["query"]),
     "setLabel": IDL2.Func([IDL2.Text, IDL2.Text], [], [])
   });
 };
@@ -68158,12 +69536,37 @@ class ExternalBlob {
 new TextEncoder().encode("icfs-chunk/");
 new TextEncoder().encode("icfs-metadata/");
 new TextEncoder().encode("ynode/");
+function candid_some(value) {
+  return [
+    value
+  ];
+}
+function candid_none() {
+  return [];
+}
+function record_opt_to_undefined(arg) {
+  return arg == null ? void 0 : arg;
+}
 class Backend {
   constructor(actor, _uploadFile, _downloadFile, processError) {
     this.actor = actor;
     this._uploadFile = _uploadFile;
     this._downloadFile = _downloadFile;
     this.processError = processError;
+  }
+  async addCustomToken(arg0, arg1, arg2, arg3) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.addCustomToken(arg0, to_candid_opt_n1(this._uploadFile, this._downloadFile, arg1), arg2, arg3);
+        return from_candid_CustomToken_n2(this._uploadFile, this._downloadFile, result);
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.addCustomToken(arg0, to_candid_opt_n1(this._uploadFile, this._downloadFile, arg1), arg2, arg3);
+      return from_candid_CustomToken_n2(this._uploadFile, this._downloadFile, result);
+    }
   }
   async addFavorite(arg0) {
     if (this.processError) {
@@ -68179,6 +69582,20 @@ class Backend {
       return result;
     }
   }
+  async execute(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.execute(arg0);
+        return from_candid_Result_n5(this._uploadFile, this._downloadFile, result);
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.execute(arg0);
+      return from_candid_Result_n5(this._uploadFile, this._downloadFile, result);
+    }
+  }
   async getAllLabels() {
     if (this.processError) {
       try {
@@ -68190,6 +69607,20 @@ class Backend {
       }
     } else {
       const result = await this.actor.getAllLabels();
+      return result;
+    }
+  }
+  async getApiDoc() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getApiDoc();
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getApiDoc();
       return result;
     }
   }
@@ -68211,14 +69642,28 @@ class Backend {
     if (this.processError) {
       try {
         const result = await this.actor.getLabel(arg0);
-        return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
+        return from_candid_opt_n4(this._uploadFile, this._downloadFile, result);
       } catch (e3) {
         this.processError(e3);
         throw new Error("unreachable");
       }
     } else {
       const result = await this.actor.getLabel(arg0);
-      return from_candid_opt_n1(this._uploadFile, this._downloadFile, result);
+      return from_candid_opt_n4(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async listCustomTokens() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.listCustomTokens();
+        return from_candid_vec_n13(this._uploadFile, this._downloadFile, result);
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.listCustomTokens();
+      return from_candid_vec_n13(this._uploadFile, this._downloadFile, result);
     }
   }
   async ping() {
@@ -68232,6 +69677,20 @@ class Backend {
       }
     } else {
       const result = await this.actor.ping();
+      return result;
+    }
+  }
+  async removeCustomToken(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.removeCustomToken(arg0);
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.removeCustomToken(arg0);
       return result;
     }
   }
@@ -68263,6 +69722,20 @@ class Backend {
       return result;
     }
   }
+  async schema() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.schema();
+        return result;
+      } catch (e3) {
+        this.processError(e3);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.schema();
+      return result;
+    }
+  }
   async setLabel(arg0, arg1) {
     if (this.processError) {
       try {
@@ -68278,8 +69751,74 @@ class Backend {
     }
   }
 }
-function from_candid_opt_n1(_uploadFile, _downloadFile, value) {
+function from_candid_Cell_n9(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n10(_uploadFile, _downloadFile, value);
+}
+function from_candid_CustomToken_n2(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n3(_uploadFile, _downloadFile, value);
+}
+function from_candid_Result_n5(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n6(_uploadFile, _downloadFile, value);
+}
+function from_candid_Value_n11(_uploadFile, _downloadFile, value) {
+  return from_candid_variant_n12(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n4(_uploadFile, _downloadFile, value) {
   return value.length === 0 ? null : value[0];
+}
+function from_candid_record_n10(_uploadFile, _downloadFile, value) {
+  return {
+    value: from_candid_Value_n11(_uploadFile, _downloadFile, value.value),
+    name: value.name
+  };
+}
+function from_candid_record_n3(_uploadFile, _downloadFile, value) {
+  return {
+    decimals: value.decimals,
+    ledgerCanisterId: value.ledgerCanisterId,
+    indexCanisterId: record_opt_to_undefined(from_candid_opt_n4(_uploadFile, _downloadFile, value.indexCanisterId)),
+    addedAt: value.addedAt,
+    symbol: value.symbol
+  };
+}
+function from_candid_record_n6(_uploadFile, _downloadFile, value) {
+  return {
+    hasMore: value.hasMore,
+    rows: from_candid_vec_n7(_uploadFile, _downloadFile, value.rows)
+  };
+}
+function from_candid_variant_n12(_uploadFile, _downloadFile, value) {
+  return "int" in value ? {
+    __kind__: "int",
+    int: value.int
+  } : "nat" in value ? {
+    __kind__: "nat",
+    nat: value.nat
+  } : "float" in value ? {
+    __kind__: "float",
+    float: value.float
+  } : "bool" in value ? {
+    __kind__: "bool",
+    bool: value.bool
+  } : "null" in value ? {
+    __kind__: "null",
+    null: value.null
+  } : "text" in value ? {
+    __kind__: "text",
+    text: value.text
+  } : value;
+}
+function from_candid_vec_n13(_uploadFile, _downloadFile, value) {
+  return value.map((x3) => from_candid_CustomToken_n2(_uploadFile, _downloadFile, x3));
+}
+function from_candid_vec_n7(_uploadFile, _downloadFile, value) {
+  return value.map((x3) => from_candid_vec_n8(_uploadFile, _downloadFile, x3));
+}
+function from_candid_vec_n8(_uploadFile, _downloadFile, value) {
+  return value.map((x3) => from_candid_Cell_n9(_uploadFile, _downloadFile, x3));
+}
+function to_candid_opt_n1(_uploadFile, _downloadFile, value) {
+  return value === null ? candid_none() : candid_some(value);
 }
 function createActor(canisterId, _uploadFile, _downloadFile, options = {}) {
   const agent = options.agent || HttpAgent.createSync({
@@ -68826,7 +70365,7 @@ function NetworkBreakdown({
           paddingAngle: 3,
           dataKey: "value",
           children: data.map((entry, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Cell,
+            Cell$1,
             {
               fill: cssVar(`--chart-donut-${i % 6 + 1}`),
               opacity: 0.85
@@ -68844,7 +70383,9 @@ function NetworkBreakdown({
             borderRadius: "6px",
             fontSize: "11px",
             color: cssVar("--chart-tooltip-text")
-          }
+          },
+          labelStyle: { color: cssVar("--chart-tooltip-text") },
+          itemStyle: { color: cssVar("--chart-tooltip-text") }
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -68877,21 +70418,23 @@ function formatShortDate(ts) {
   }
 }
 function TokenHoldings({
-  edges,
+  summary,
   btcUnit
 }) {
   const rows = reactExports.useMemo(() => {
-    const map2 = /* @__PURE__ */ new Map();
-    for (const e3 of edges) {
-      for (const [token, amt] of Object.entries(e3.inAmountByToken ?? {})) {
-        map2.set(token, (map2.get(token) ?? 0) + amt);
-      }
-      for (const [token, amt] of Object.entries(e3.outAmountByToken ?? {})) {
-        map2.set(token, (map2.get(token) ?? 0) + amt);
-      }
+    const inByToken = summary.totalInByToken ?? {};
+    const outByToken = summary.totalOutByToken ?? {};
+    const tokens = /* @__PURE__ */ new Set([
+      ...Object.keys(inByToken),
+      ...Object.keys(outByToken)
+    ]);
+    const net = /* @__PURE__ */ new Map();
+    for (const token of tokens) {
+      const balance = (inByToken[token] ?? 0) - (outByToken[token] ?? 0);
+      if (balance !== 0) net.set(token, balance);
     }
-    return [...map2.entries()].sort((a2, b2) => b2[1] - a2[1]);
-  }, [edges]);
+    return [...net.entries()].sort((a2, b2) => b2[1] - a2[1]);
+  }, [summary]);
   if (rows.length === 0) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
@@ -68997,8 +70540,10 @@ function App() {
     togglePin,
     debugMode,
     addTokenByCanisterId,
+    removeCustomToken,
+    customTokens,
     depth3LatencyMs
-  } = useWallet();
+  } = useWallet(isLoggedIn, actor);
   const comparison = useComparison();
   const handleStartComparison = (addr1, addr2) => {
     comparison.startComparison(addr1, addr2);
@@ -69008,11 +70553,11 @@ function App() {
     setComparisonActive(false);
     comparison.reset();
   };
-  const handleAddToken = async (canisterId) => {
+  const handleAddToken = async (canisterId, indexCanisterId) => {
     if (!currentPrincipal) {
       throw new Error("Load a wallet first to add a token.");
     }
-    const result = await addTokenByCanisterId(canisterId);
+    const result = await addTokenByCanisterId(canisterId, indexCanisterId);
     if (!result.ok) {
       if (result.error === "invalid") {
         throw new Error("Invalid canister ID or no wallet loaded.");
@@ -69020,16 +70565,27 @@ function App() {
       if (result.error === "empty") {
         throw new Error("No transactions found for this token and wallet.");
       }
+      if (result.error === "index") {
+        throw new Error(
+          "Reached the ledger but its index canister did not respond. Check the index canister ID."
+        );
+      }
       throw new Error(
         "Could not reach the ledger canister. Check the ID and try again."
       );
     }
+    return {
+      symbol: result.symbol,
+      decimals: result.decimals,
+      count: result.count,
+      indexCanisterId: result.indexCanisterId,
+      indexDiscovered: result.indexDiscovered
+    };
   };
   const [edgeWeight, setEdgeWeight] = reactExports.useState(
     "tx_count"
   );
   const [btcUnit, setBtcUnit] = reactExports.useState("sats");
-  const [icpUsdPrice, setIcpUsdPrice] = reactExports.useState(void 0);
   const [savedPanelOpen, setSavedPanelOpen] = reactExports.useState(false);
   const [compareModalOpen, setCompareModalOpen] = reactExports.useState(false);
   const [comparisonActive, setComparisonActive] = reactExports.useState(false);
@@ -69041,19 +70597,6 @@ function App() {
   navigateRef.current = navigate;
   const searchRef = reactExports.useRef(search);
   searchRef.current = search;
-  reactExports.useEffect(() => {
-    let cancelled = false;
-    const fetchPrice = async () => {
-      const price = await fetchIcpUsdPrice();
-      if (!cancelled && price !== null) setIcpUsdPrice(price);
-    };
-    fetchPrice();
-    const interval2 = setInterval(fetchPrice, 5 * 60 * 1e3);
-    return () => {
-      cancelled = true;
-      clearInterval(interval2);
-    };
-  }, []);
   reactExports.useEffect(() => {
     if (currentPrincipalRef.current) {
       navigateRef.current(currentPrincipalRef.current);
@@ -69175,6 +70718,39 @@ function App() {
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatusPanel, {})
       ] }),
+      hasData && customTokens.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: "flex flex-wrap items-center gap-1.5",
+          "data-ocid": "wallet.custom_tokens",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] text-muted-foreground", children: "Tracked tokens:" }),
+            customTokens.map((token) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "span",
+              {
+                "data-ocid": "wallet.custom_token_item",
+                className: "flex items-center gap-1 rounded-full border border-border bg-card px-2 py-0.5 text-[11px] text-foreground",
+                title: token.ledgerCanisterId,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium", children: token.symbol }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      type: "button",
+                      "data-ocid": "wallet.custom_token_remove",
+                      onClick: () => removeCustomToken(token.ledgerCanisterId),
+                      "aria-label": `Remove ${token.symbol}`,
+                      className: "flex items-center justify-center rounded-full text-muted-foreground hover:text-neon-red transition-colors",
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-3 w-3" })
+                    }
+                  )
+                ]
+              },
+              token.ledgerCanisterId
+            ))
+          ]
+        }
+      ),
       depth3LatencyMs !== null && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", "data-ocid": "wallet.depth3_latency", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "span",
         {
@@ -69224,7 +70800,6 @@ function App() {
                   edges: graphEdges,
                   centerPrincipal: currentPrincipal,
                   onNavigate: navigate,
-                  edgeWeight,
                   onMaxCounterpartiesChange: setMaxCounterparties,
                   maxCounterparties,
                   graphDepth,
@@ -69236,8 +70811,6 @@ function App() {
                   showCrossEdges,
                   onShowCrossEdgesChange: setShowCrossEdges,
                   transactions: walletData == null ? void 0 : walletData.transactions,
-                  icpUsdPrice,
-                  onPinToggle: () => setPinTrigger((n2) => n2 + 1),
                   externalLabels: userData.labels,
                   onSetLabel: userData.setLabel,
                   onToggleFavorite: (address) => {
@@ -69288,7 +70861,13 @@ function App() {
           hasData && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Token Holdings" }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TokenHoldings, { edges: graphEdges, btcUnit }) })
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "px-4 pb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                TokenHoldings,
+                {
+                  summary: walletData.summary,
+                  btcUnit
+                }
+              ) })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "bg-card border-border", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 pt-4 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "text-sm font-semibold", children: "Highlights" }) }),
@@ -69323,7 +70902,16 @@ function App() {
             onBtcUnitChange: setBtcUnit
           }
         ) })
-      ] })
+      ] }),
+      hasData && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ManageTokensSection,
+        {
+          tokens: customTokens,
+          onRemove: removeCustomToken,
+          onAddToken: () => setAddTokenOpen(true)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(UserManual, {})
     ] }),
     !comparisonActive && /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {}),
     debugMode && /* @__PURE__ */ jsxRuntimeExports.jsx(

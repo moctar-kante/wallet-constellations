@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/sonner";
-import { Coins, Loader2 } from "lucide-react";
+import { Coins, Loader2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Cell,
@@ -11,18 +11,20 @@ import {
   Tooltip,
 } from "recharts";
 import { ActivityChart } from "./components/ActivityChart";
-import { AddTokenModal } from "./components/AddTokenModal";
+import { AddTokenModal, type AddTokenResult } from "./components/AddTokenModal";
 import { BreadcrumbNav } from "./components/Breadcrumb";
 import { ComparisonModeModal } from "./components/ComparisonModeModal";
 import { ConstellationGraph } from "./components/ConstellationGraph";
 import { EmptyState } from "./components/EmptyState";
 import { Footer } from "./components/Footer";
 import { IcrcDebugPanel } from "./components/IcrcDebugPanel";
+import { ManageTokensSection } from "./components/ManageTokensSection";
 import { OverviewPanel } from "./components/OverviewPanel";
 import { SavedWalletsPanel } from "./components/SavedWalletsPanel";
 import { StatusPanel } from "./components/StatusPanel";
 import { TopBar } from "./components/TopBar";
 import { TransactionTable } from "./components/TransactionTable";
+import { UserManual } from "./components/UserManual";
 import { WalletComparisonView } from "./components/WalletComparisonView";
 import { useAuth } from "./hooks/useAuth";
 import { useComparison } from "./hooks/useComparison";
@@ -30,8 +32,13 @@ import { useTheme } from "./hooks/useTheme";
 import { useUserData } from "./hooks/useUserData";
 import { useWallet } from "./hooks/useWallet";
 import { getDailyActivity } from "./services/filters";
-import { fetchIcpUsdPrice } from "./services/priceService";
-import type { ExplorerError, GraphEdge, GraphNode, Transaction } from "./types";
+import type {
+  ExplorerError,
+  GraphEdge,
+  GraphNode,
+  Transaction,
+  WalletSummary,
+} from "./types";
 
 // Theme-aware chart colors — read from the semantic CSS variables in index.css
 function cssVar(name: string): string {
@@ -128,6 +135,8 @@ function NetworkBreakdown({
                 fontSize: "11px",
                 color: cssVar("--chart-tooltip-text"),
               }}
+              labelStyle={{ color: cssVar("--chart-tooltip-text") }}
+              itemStyle={{ color: cssVar("--chart-tooltip-text") }}
             />
             <Legend
               wrapperStyle={{ fontSize: "10px", color: cssVar("--chart-text") }}
@@ -167,27 +176,32 @@ function formatShortDate(ts: string): string {
   }
 }
 
-// Token-holdings breakdown derived from per-token amounts already on each
-// GraphEdge (inAmountByToken / outAmountByToken). No new API calls.
+// Token-holdings breakdown for the CURRENT wallet only. Net holdings are
+// derived from the wallet summary's per-token in/out totals (totalInByToken -
+// totalOutByToken), which are computed from the wallet's own transactions —
+// not from graph edges, which aggregate gross volume across every
+// counterparty edge. Tokens with a zero net balance are omitted.
 function TokenHoldings({
-  edges,
+  summary,
   btcUnit,
 }: {
-  edges: GraphEdge[];
+  summary: WalletSummary;
   btcUnit: "btc" | "sats";
 }) {
   const rows = useMemo(() => {
-    const map = new Map<string, number>();
-    for (const e of edges) {
-      for (const [token, amt] of Object.entries(e.inAmountByToken ?? {})) {
-        map.set(token, (map.get(token) ?? 0) + amt);
-      }
-      for (const [token, amt] of Object.entries(e.outAmountByToken ?? {})) {
-        map.set(token, (map.get(token) ?? 0) + amt);
-      }
+    const inByToken = summary.totalInByToken ?? {};
+    const outByToken = summary.totalOutByToken ?? {};
+    const tokens = new Set([
+      ...Object.keys(inByToken),
+      ...Object.keys(outByToken),
+    ]);
+    const net = new Map<string, number>();
+    for (const token of tokens) {
+      const balance = (inByToken[token] ?? 0) - (outByToken[token] ?? 0);
+      if (balance !== 0) net.set(token, balance);
     }
-    return [...map.entries()].sort((a, b) => b[1] - a[1]);
-  }, [edges]);
+    return [...net.entries()].sort((a, b) => b[1] - a[1]);
+  }, [summary]);
 
   if (rows.length === 0) {
     return (
@@ -333,8 +347,10 @@ export default function App() {
     togglePin,
     debugMode,
     addTokenByCanisterId,
+    removeCustomToken,
+    customTokens,
     depth3LatencyMs,
-  } = useWallet();
+  } = useWallet(isLoggedIn, actor);
 
   const comparison = useComparison();
 
@@ -351,12 +367,17 @@ export default function App() {
   // Manual "add token by canister ID" flow. The ICRC API only serves
   // SNS-governed and chain-key tokens automatically, so this queries the
   // user-supplied ledger canister directly (via HttpAgent to ic0.app) and
-  // merges its transactions into the graph.
-  const handleAddToken = async (canisterId: string) => {
+  // merges its transactions into the graph. When the ledger exposes an index
+  // canister — supplied by the user or discovered via ICRC-106 — history is
+  // read from that index instead.
+  const handleAddToken = async (
+    canisterId: string,
+    indexCanisterId?: string,
+  ): Promise<AddTokenResult> => {
     if (!currentPrincipal) {
       throw new Error("Load a wallet first to add a token.");
     }
-    const result = await addTokenByCanisterId(canisterId);
+    const result = await addTokenByCanisterId(canisterId, indexCanisterId);
     if (!result.ok) {
       if (result.error === "invalid") {
         throw new Error("Invalid canister ID or no wallet loaded.");
@@ -364,10 +385,22 @@ export default function App() {
       if (result.error === "empty") {
         throw new Error("No transactions found for this token and wallet.");
       }
+      if (result.error === "index") {
+        throw new Error(
+          "Reached the ledger but its index canister did not respond. Check the index canister ID.",
+        );
+      }
       throw new Error(
         "Could not reach the ledger canister. Check the ID and try again.",
       );
     }
+    return {
+      symbol: result.symbol,
+      decimals: result.decimals,
+      count: result.count,
+      indexCanisterId: result.indexCanisterId,
+      indexDiscovered: result.indexDiscovered,
+    };
   };
 
   const [edgeWeight, setEdgeWeight] = useState<"tx_count" | "total_amount">(
@@ -376,7 +409,6 @@ export default function App() {
   // Shared BTC/sats unit — lifted here so every amount display (table,
   // overview, graph, charts, and the App formatter) stays consistent.
   const [btcUnit, setBtcUnit] = useState<"btc" | "sats">("sats");
-  const [icpUsdPrice, setIcpUsdPrice] = useState<number | undefined>(undefined);
   const [savedPanelOpen, setSavedPanelOpen] = useState(false);
   const [compareModalOpen, setCompareModalOpen] = useState(false);
   const [comparisonActive, setComparisonActive] = useState(false);
@@ -390,21 +422,6 @@ export default function App() {
   navigateRef.current = navigate;
   const searchRef = useRef(search);
   searchRef.current = search;
-
-  // Fetch ICP/USD price on mount and every 5 minutes
-  useEffect(() => {
-    let cancelled = false;
-    const fetchPrice = async () => {
-      const price = await fetchIcpUsdPrice();
-      if (!cancelled && price !== null) setIcpUsdPrice(price);
-    };
-    fetchPrice();
-    const interval = setInterval(fetchPrice, 5 * 60 * 1000);
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-    };
-  }, []);
 
   // Re-fetch when txLimit changes (if a principal is already loaded)
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally only triggers on txLimit change
@@ -553,6 +570,37 @@ export default function App() {
             <StatusPanel />
           </div>
 
+          {/* Tracked custom tokens — persisted per user, removable inline */}
+          {hasData && customTokens.length > 0 && (
+            <div
+              className="flex flex-wrap items-center gap-1.5"
+              data-ocid="wallet.custom_tokens"
+            >
+              <span className="text-[11px] text-muted-foreground">
+                Tracked tokens:
+              </span>
+              {customTokens.map((token) => (
+                <span
+                  key={token.ledgerCanisterId}
+                  data-ocid="wallet.custom_token_item"
+                  className="flex items-center gap-1 rounded-full border border-border bg-card px-2 py-0.5 text-[11px] text-foreground"
+                  title={token.ledgerCanisterId}
+                >
+                  <span className="font-medium">{token.symbol}</span>
+                  <button
+                    type="button"
+                    data-ocid="wallet.custom_token_remove"
+                    onClick={() => removeCustomToken(token.ledgerCanisterId)}
+                    aria-label={`Remove ${token.symbol}`}
+                    className="flex items-center justify-center rounded-full text-muted-foreground hover:text-neon-red transition-colors"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* Depth-3 fetch latency — reports whether the third fetch wave
               meaningfully increases load latency */}
           {depth3LatencyMs !== null && (
@@ -607,7 +655,6 @@ export default function App() {
                       edges={graphEdges}
                       centerPrincipal={currentPrincipal}
                       onNavigate={navigate}
-                      edgeWeight={edgeWeight}
                       onMaxCounterpartiesChange={setMaxCounterparties}
                       maxCounterparties={maxCounterparties}
                       graphDepth={graphDepth}
@@ -619,8 +666,6 @@ export default function App() {
                       showCrossEdges={showCrossEdges}
                       onShowCrossEdgesChange={setShowCrossEdges}
                       transactions={walletData?.transactions}
-                      icpUsdPrice={icpUsdPrice}
-                      onPinToggle={() => setPinTrigger((n) => n + 1)}
                       externalLabels={userData.labels}
                       onSetLabel={userData.setLabel}
                       onToggleFavorite={(address) => {
@@ -691,7 +736,10 @@ export default function App() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 pb-4">
-                      <TokenHoldings edges={graphEdges} btcUnit={btcUnit} />
+                      <TokenHoldings
+                        summary={walletData.summary}
+                        btcUnit={btcUnit}
+                      />
                     </CardContent>
                   </Card>
 
@@ -736,6 +784,19 @@ export default function App() {
               </CardContent>
             </Card>
           )}
+
+          {/* Manage Added Tokens — lists user-supplied ICRC tokens with removal */}
+          {hasData && (
+            <ManageTokensSection
+              tokens={customTokens}
+              onRemove={removeCustomToken}
+              onAddToken={() => setAddTokenOpen(true)}
+            />
+          )}
+
+          {/* User Manual — page-bottom documentation, above the footer.
+              Available upfront on the home view as well as the results view. */}
+          <UserManual />
         </main>
       )}
 

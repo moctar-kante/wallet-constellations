@@ -1,34 +1,75 @@
-// Version: 1.0.0
-type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
-type Favorite__923089860 = {address : Text; pinnedAt : Int};
-type Internal__161573640<K, V> =
-  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
-type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
-type List__1004628775<T> =
+// Version: 4.0.0
+type CustomToken__1069600744 =
   {
-    var blockIndex : Nat__58649523;
-    var blocks : [var [var ?T]];
-    var elementIndex : Nat__58649523
+    addedAt : Int;
+    decimals : Nat8;
+    indexCanisterId : ?Text;
+    ledgerCanisterId : Text;
+    symbol : Text
   };
-type List__89170296<T> = List__1004628775<T>;
-type Map__13625999<K, V> =
-  {var root : Node__430031793<K, V>; var size : Nat__58649523};
-type Map__386906547<K, V> = Map__670138087<K, V>;
-type Map__670138087<K, V> = Map__13625999<K, V>;
-type Nat__58649523 = Nat__920180692;
+type CustomToken__465753483 =
+  {
+    addedAt : Int;
+    decimals : Nat8;
+    indexCanisterId : ?Text;
+    ledgerCanisterId : Text;
+    symbol : Text
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type Favorite__294687802 = {address : Text; pinnedAt : Int};
+type Favorite__923089860 = {address : Text; pinnedAt : Int};
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type List__355132335<T> =
+  {
+    var blockIndex : Nat__227979830;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__227979830
+  };
+type List__836382695<T> = List__355132335<T>;
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
 type Nat__920180692 = Nat;
-type Node__430031793<K, V> =
-  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
-actor {
+type NewActor__426998186 =
+  {
+    customTokenStore :
+      Map__230067015<Principal, Map__230067015<Text, CustomToken__465753483>>;
+    favoriteStore :
+      Map__230067015<Principal, List__836382695<Favorite__294687802>>;
+    labelStore : Map__230067015<Principal, Map__230067015<Text, Text>>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__241283283 =
+  {
+    favoriteStore :
+      Map__230067015<Principal, List__836382695<Favorite__294687802>>;
+    labelStore : Map__230067015<Principal, Map__230067015<Text, Text>>
+  };
+{
+  "20260921_000000" : (old : OldActor__241283283) -> NewActor__426998186
+}
+actor  {
+  stable customTokenStore :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<Text, CustomToken__1069600744>>;
+      var size : Nat__227979830
+    };
   stable favoriteStore :
     {
       var root :
-        Node__430031793<Principal, List__89170296<Favorite__923089860>>;
-      var size : Nat__58649523
+        Node__204828119<Principal, List__836382695<Favorite__923089860>>;
+      var size : Nat__227979830
     };
   stable labelStore :
     {
-      var root : Node__430031793<Principal, Map__386906547<Text, Text>>;
-      var size : Nat__58649523
+      var root : Node__204828119<Principal, Map__230067015<Text, Text>>;
+      var size : Nat__227979830
     }
 };

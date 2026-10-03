@@ -1,3 +1,10 @@
+import {
+  Actor,
+  type ActorMethod,
+  type ActorSubclass,
+  HttpAgent,
+} from "@dfinity/agent";
+import type { IDL } from "@dfinity/candid";
 import { Principal } from "@dfinity/principal";
 import type { ExplorerError, Transaction } from "../types";
 
@@ -885,4 +892,439 @@ export async function fetchIcrcTransactions(
   }
 
   return [];
+}
+
+// ── Custom ICRC token support (ledger + optional index canister) ──────────────
+// The public ICRC API only serves SNS-governed and chain-key tokens. To include
+// a user-supplied ledger we query the ledger canister directly over the IC
+// gateway (CORS-safe) for metadata, then read account history from its index
+// canister when one is available — either supplied by the user or discovered
+// through ICRC-106 (icrc106_get_index_principal). When no index exists we fall
+// back to the direct-ledger path with no error surfaced.
+
+const IC_HOST = "https://ic0.app";
+
+/** Minimal ICRC-1 metadata surface used to describe a custom token. */
+const CustomLedgerIdl: IDL.InterfaceFactory = ({ IDL: I }) =>
+  I.Service({
+    icrc1_symbol: I.Func([], [I.Text], ["query"]),
+    icrc1_decimals: I.Func([], [I.Nat8], ["query"]),
+    icrc1_fee: I.Func([], [I.Nat], ["query"]),
+    icrc1_metadata: I.Func(
+      [],
+      [
+        I.Vec(
+          I.Tuple(
+            I.Text,
+            I.Variant({
+              Nat: I.Nat,
+              Int: I.Int,
+              Text: I.Text,
+              Blob: I.Vec(I.Nat8),
+            }),
+          ),
+        ),
+      ],
+      ["query"],
+    ),
+    icrc106_get_index_principal: I.Func(
+      [],
+      [
+        I.Variant({
+          Ok: I.Principal,
+          Err: I.Variant({
+            IndexPrincipalNotSet: I.Null,
+            GenericError: I.Record({ error_code: I.Nat, description: I.Text }),
+          }),
+        }),
+      ],
+      ["query"],
+    ),
+  });
+
+/** ICRC-4 index canister surface used to page an account's history. */
+const CustomIndexIdl: IDL.InterfaceFactory = ({ IDL: I }) =>
+  I.Service({
+    ledger_id: I.Func([], [I.Principal], ["query"]),
+    get_account_transactions: I.Func(
+      [
+        I.Record({
+          account: I.Record({
+            owner: I.Principal,
+            subaccount: I.Opt(I.Vec(I.Nat8)),
+          }),
+          start: I.Opt(I.Nat),
+          max_results: I.Nat,
+        }),
+      ],
+      [
+        I.Variant({
+          Ok: I.Record({
+            balance: I.Nat,
+            transactions: I.Vec(
+              I.Record({
+                id: I.Nat,
+                transaction: I.Record({
+                  kind: I.Text,
+                  timestamp: I.Nat64,
+                  mint: I.Opt(
+                    I.Record({
+                      to: I.Record({
+                        owner: I.Principal,
+                        subaccount: I.Opt(I.Vec(I.Nat8)),
+                      }),
+                      amount: I.Nat,
+                    }),
+                  ),
+                  burn: I.Opt(
+                    I.Record({
+                      from: I.Record({
+                        owner: I.Principal,
+                        subaccount: I.Opt(I.Vec(I.Nat8)),
+                      }),
+                      amount: I.Nat,
+                    }),
+                  ),
+                  transfer: I.Opt(
+                    I.Record({
+                      from: I.Record({
+                        owner: I.Principal,
+                        subaccount: I.Opt(I.Vec(I.Nat8)),
+                      }),
+                      to: I.Record({
+                        owner: I.Principal,
+                        subaccount: I.Opt(I.Vec(I.Nat8)),
+                      }),
+                      amount: I.Nat,
+                    }),
+                  ),
+                }),
+              }),
+            ),
+            oldest_tx_id: I.Opt(I.Nat),
+          }),
+          Err: I.Record({ message: I.Text }),
+        }),
+      ],
+      ["query"],
+    ),
+  });
+
+type CustomLedgerActor = ActorSubclass<Record<string, ActorMethod>>;
+type CustomIndexActor = ActorSubclass<Record<string, ActorMethod>>;
+
+interface IndexAccount {
+  owner: Principal;
+  subaccount?: Uint8Array[];
+}
+
+interface IndexTransaction {
+  id: bigint;
+  transaction: {
+    kind: string;
+    timestamp: bigint;
+    mint?: [{ to: IndexAccount; amount: bigint }];
+    burn?: [{ from: IndexAccount; amount: bigint }];
+    transfer?: [{ from: IndexAccount; to: IndexAccount; amount: bigint }];
+  };
+}
+
+export interface CustomIcrcTokenResult {
+  ok: boolean;
+  symbol: string;
+  decimals: number;
+  fee?: number;
+  /** Index canister actually used, or null when the direct-ledger path was taken. */
+  indexCanisterId: string | null;
+  /** True when the index was discovered via ICRC-106 rather than supplied. */
+  indexDiscovered: boolean;
+  transactions: Transaction[];
+  /** Set when the ledger itself could not be reached or is not an ICRC-1 ledger. */
+  error?: "invalid" | "ledger" | "index";
+}
+
+function accountOwner(account: IndexAccount | undefined): string {
+  if (!account) return "";
+  try {
+    return account.owner.toString();
+  } catch {
+    return "";
+  }
+}
+
+function normalizeIndexTransaction(
+  entry: IndexTransaction,
+  decimals: number,
+  symbol: string,
+): Transaction | null {
+  const tx = entry.transaction;
+  if (!tx) return null;
+  const timestamp = new Date(Number(tx.timestamp / 1_000_000n)).toISOString();
+  const blockIndex = Number(entry.id);
+
+  if (tx.transfer?.[0]) {
+    const t = tx.transfer[0];
+    return {
+      timestamp,
+      from: accountOwner(t.from),
+      to: accountOwner(t.to),
+      amount: Number(t.amount) / 10 ** decimals,
+      blockIndex,
+      token: symbol,
+      decimals,
+    };
+  }
+  if (tx.mint?.[0]) {
+    const m = tx.mint[0];
+    return {
+      timestamp,
+      from: "minting-account",
+      to: accountOwner(m.to),
+      amount: Number(m.amount) / 10 ** decimals,
+      blockIndex,
+      token: symbol,
+      decimals,
+    };
+  }
+  if (tx.burn?.[0]) {
+    const b = tx.burn[0];
+    return {
+      timestamp,
+      from: accountOwner(b.from),
+      to: "burn-address",
+      amount: Number(b.amount) / 10 ** decimals,
+      blockIndex,
+      token: symbol,
+      decimals,
+    };
+  }
+  return null;
+}
+
+/** Read symbol/decimals/fee from the ledger canister's ICRC-1 metadata. */
+async function fetchCustomTokenMetadata(
+  actor: CustomLedgerActor,
+): Promise<{ symbol: string; decimals: number; fee?: number }> {
+  let symbol = "";
+  let decimals = 8;
+  let fee: number | undefined;
+
+  try {
+    const metadata = (await actor.icrc1_metadata()) as Array<
+      [string, { Nat?: bigint; Int?: bigint; Text?: string }]
+    >;
+    for (const [key, value] of metadata) {
+      if (key === "icrc1:symbol" && value?.Text) symbol = value.Text;
+      if (key === "icrc1:decimals" && value?.Nat !== undefined) {
+        decimals = Number(value.Nat);
+      }
+      if (key === "icrc1:fee" && value?.Nat !== undefined) {
+        fee = Number(value.Nat);
+      }
+    }
+  } catch {
+    // metadata is optional — fall through to the dedicated getters
+  }
+
+  if (!symbol) {
+    try {
+      symbol = (await actor.icrc1_symbol()) as string;
+    } catch {
+      symbol = "";
+    }
+  }
+  try {
+    decimals = Number(await actor.icrc1_decimals());
+  } catch {
+    // keep the metadata/default value
+  }
+  if (fee === undefined) {
+    try {
+      fee = Number(await actor.icrc1_fee());
+    } catch {
+      fee = undefined;
+    }
+  }
+
+  return { symbol, decimals, fee };
+}
+
+/** Discover the ledger's index canister via ICRC-106, or null when unset. */
+async function discoverIndexPrincipal(
+  actor: CustomLedgerActor,
+): Promise<string | null> {
+  try {
+    const result = (await actor.icrc106_get_index_principal()) as
+      | { Ok: Principal }
+      | { Err: unknown };
+    if (result && "Ok" in result && result.Ok) {
+      return result.Ok.toString();
+    }
+  } catch {
+    // Older ledgers predate ICRC-106 — treat as "no index available".
+  }
+  return null;
+}
+
+/** Page an account's history from the index canister via ICRC-4. */
+async function fetchIndexAccountTransactions(
+  actor: CustomIndexActor,
+  principal: string,
+  symbol: string,
+  decimals: number,
+  limit: number,
+): Promise<Transaction[]> {
+  const owner = Principal.fromText(principal.trim());
+  const pageSize = Math.min(limit, 100);
+  const txs: Transaction[] = [];
+  let start: bigint | undefined;
+
+  while (txs.length < limit) {
+    const remaining = limit - txs.length;
+    const result = (await actor.get_account_transactions({
+      account: { owner, subaccount: [] },
+      start: start === undefined ? [] : [start],
+      max_results: BigInt(Math.min(pageSize, remaining)),
+    })) as
+      | {
+          Ok: { transactions: IndexTransaction[]; oldest_tx_id: [] | [bigint] };
+        }
+      | { Err: { message: string } };
+
+    if (!("Ok" in result) || !result.Ok) break;
+    const page = result.Ok.transactions ?? [];
+    if (page.length === 0) break;
+
+    for (const entry of page) {
+      const tx = normalizeIndexTransaction(entry, decimals, symbol);
+      if (tx) txs.push(tx);
+    }
+
+    // The index returns newest-first; `start` continues from the oldest id seen.
+    const oldest = page[page.length - 1]?.id;
+    if (oldest === undefined || page.length < pageSize) break;
+    // Guard against a non-conforming index that treats `start` as inclusive:
+    // if the oldest id does not advance, the same page would repeat forever.
+    if (start !== undefined && oldest >= start) break;
+    start = oldest;
+  }
+
+  return txs;
+}
+
+/**
+ * Fetch a user-supplied ICRC-1 token: metadata from the ledger canister and
+ * account history from its index canister when one is available.
+ *
+ * Index resolution order:
+ *  1. the user-supplied `indexId`, when provided;
+ *  2. the ledger's ICRC-106 `icrc106_get_index_principal`, when set;
+ *  3. otherwise no index — the caller falls back to the direct-ledger path.
+ */
+export async function fetchCustomIcrcToken(
+  ledgerId: string,
+  indexId: string | undefined,
+  principal: string,
+): Promise<CustomIcrcTokenResult> {
+  const empty: CustomIcrcTokenResult = {
+    ok: false,
+    symbol: "",
+    decimals: 8,
+    indexCanisterId: null,
+    indexDiscovered: false,
+    transactions: [],
+  };
+
+  const trimmedLedger = ledgerId.trim();
+  const trimmedPrincipal = principal.trim();
+  if (!trimmedLedger || !trimmedPrincipal) {
+    return { ...empty, error: "invalid" };
+  }
+  try {
+    Principal.fromText(trimmedLedger);
+  } catch {
+    return { ...empty, error: "invalid" };
+  }
+  if (indexId?.trim()) {
+    try {
+      Principal.fromText(indexId.trim());
+    } catch {
+      return { ...empty, error: "invalid" };
+    }
+  }
+
+  let ledgerActor: CustomLedgerActor;
+  try {
+    const agent = await HttpAgent.create({ host: IC_HOST });
+    ledgerActor = Actor.createActor(CustomLedgerIdl, {
+      agent,
+      canisterId: trimmedLedger,
+    }) as CustomLedgerActor;
+  } catch {
+    return { ...empty, error: "ledger" };
+  }
+
+  let metadata: { symbol: string; decimals: number; fee?: number };
+  try {
+    metadata = await fetchCustomTokenMetadata(ledgerActor);
+  } catch {
+    return { ...empty, error: "ledger" };
+  }
+  if (!metadata.symbol) {
+    return { ...empty, error: "ledger" };
+  }
+
+  const suppliedIndex = indexId?.trim() || null;
+  const discoveredIndex = suppliedIndex
+    ? null
+    : await discoverIndexPrincipal(ledgerActor);
+  const resolvedIndex = suppliedIndex ?? discoveredIndex;
+
+  if (!resolvedIndex) {
+    // No index available — the caller uses the direct-ledger path.
+    return {
+      ok: true,
+      symbol: metadata.symbol,
+      decimals: metadata.decimals,
+      fee: metadata.fee,
+      indexCanisterId: null,
+      indexDiscovered: false,
+      transactions: [],
+    };
+  }
+
+  try {
+    const agent = await HttpAgent.create({ host: IC_HOST });
+    const indexActor = Actor.createActor(CustomIndexIdl, {
+      agent,
+      canisterId: resolvedIndex,
+    }) as CustomIndexActor;
+    const transactions = await fetchIndexAccountTransactions(
+      indexActor,
+      trimmedPrincipal,
+      metadata.symbol,
+      metadata.decimals,
+      DEFAULT_TX_LIMIT,
+    );
+    return {
+      ok: true,
+      symbol: metadata.symbol,
+      decimals: metadata.decimals,
+      fee: metadata.fee,
+      indexCanisterId: resolvedIndex,
+      indexDiscovered: discoveredIndex !== null,
+      transactions,
+    };
+  } catch {
+    return {
+      ok: false,
+      symbol: metadata.symbol,
+      decimals: metadata.decimals,
+      fee: metadata.fee,
+      indexCanisterId: resolvedIndex,
+      indexDiscovered: discoveredIndex !== null,
+      transactions: [],
+      error: "index",
+    };
+  }
 }

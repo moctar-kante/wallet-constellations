@@ -58,6 +58,7 @@ export function getDailyActivity(
   transactions: Transaction[],
   principal: string,
   interval: ActivityInterval = "day",
+  token?: string,
 ): Array<{
   date: string;
   txIn: number;
@@ -91,12 +92,17 @@ export function getDailyActivity(
     const isOut =
       fromLower === principalLower ||
       (accountIdLower !== "" && fromLower === accountIdLower);
+    const matchesToken = !token || (tx.token ?? "ICP") === token;
     if (isIn) {
-      entry.txIn += 1;
-      entry.volIn += tx.amount;
+      if (matchesToken) {
+        entry.txIn += 1;
+        entry.volIn += tx.amount;
+      }
     } else if (isOut) {
-      entry.txOut += 1;
-      entry.volOut += tx.amount;
+      if (matchesToken) {
+        entry.txOut += 1;
+        entry.volOut += tx.amount;
+      }
     }
   }
 

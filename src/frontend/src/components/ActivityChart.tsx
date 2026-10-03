@@ -48,23 +48,19 @@ function hasChainKeyBtc(transactions: Transaction[]): boolean {
   return transactions.some((tx) => isChainKeyBtc(tx.token ?? "ICP"));
 }
 
-// The daily volume series aggregates amounts across all tokens, so pick the
-// dominant token (by total volume) to drive satoshi vs decimal formatting.
-function dominantToken(transactions: Transaction[]): string {
-  const vol = new Map<string, number>();
+// Tokens that actually appear in the transaction set, ordered by transaction
+// count (descending) so the first entry is the natural default selection.
+function tokenOptions(
+  transactions: Transaction[],
+): Array<{ token: string; count: number }> {
+  const counts = new Map<string, number>();
   for (const tx of transactions) {
     const token = tx.token ?? "ICP";
-    vol.set(token, (vol.get(token) ?? 0) + tx.amount);
+    counts.set(token, (counts.get(token) ?? 0) + 1);
   }
-  let best = "ICP";
-  let bestVol = -1;
-  for (const [token, v] of vol) {
-    if (v > bestVol) {
-      bestVol = v;
-      best = token;
-    }
-  }
-  return best;
+  return [...counts.entries()]
+    .map(([token, count]) => ({ token, count }))
+    .sort((a, b) => b.count - a.count || a.token.localeCompare(b.token));
 }
 
 // Human-readable x-axis label for a bucket key at the chosen interval:
@@ -95,9 +91,22 @@ export function ActivityChart({
   const [mode, setMode] = useState<ChartMode>("tx");
   const [interval, setInterval] = useState<ActivityInterval>("day");
 
-  const daily = getDailyActivity(transactions, principal, interval);
-  const token = dominantToken(transactions);
-  const isBtc = isChainKeyBtc(token);
+  const tokens = tokenOptions(transactions);
+  const defaultToken = tokens[0]?.token ?? "ICP";
+  const [selectedToken, setSelectedToken] = useState<string>(defaultToken);
+  // Fall back to the default when the current selection is no longer present
+  // in the transaction set (e.g. the wallet data changed).
+  const activeToken = tokens.some((t) => t.token === selectedToken)
+    ? selectedToken
+    : defaultToken;
+
+  const daily = getDailyActivity(
+    transactions,
+    principal,
+    interval,
+    activeToken,
+  );
+  const isBtc = isChainKeyBtc(activeToken);
   const showBtcToggle = hasChainKeyBtc(transactions);
 
   const chartData = daily.map((d) => ({
@@ -116,7 +125,11 @@ export function ActivityChart({
           : d.volOut,
   }));
 
-  const volumeUnitLabel = isBtc ? (btcUnit === "sats" ? "sats" : "BTC") : "ICP";
+  const volumeUnitLabel = isBtc
+    ? btcUnit === "sats"
+      ? "sats"
+      : "BTC"
+    : activeToken;
 
   return (
     <div className="space-y-3">
@@ -168,20 +181,22 @@ export function ActivityChart({
           ))}
         </div>
 
+        <select
+          data-ocid="wallet.token_select"
+          value={activeToken}
+          onChange={(e) => setSelectedToken(e.target.value)}
+          aria-label="Token"
+          className="text-xs px-2 py-1 rounded border border-border bg-muted/50 text-foreground transition-colors focus:outline-none focus:border-neon-blue/50"
+        >
+          {tokens.map(({ token }) => (
+            <option key={token} value={token}>
+              {token}
+            </option>
+          ))}
+        </select>
+
         {mode === "volume" && showBtcToggle && (
           <div className="flex items-center gap-1 rounded-md border border-border p-0.5 ml-auto">
-            <button
-              type="button"
-              data-ocid="wallet.btc_unit_toggle"
-              onClick={() => onBtcUnitChange("btc")}
-              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
-                btcUnit === "btc"
-                  ? "bg-neon-blue/20 text-neon-blue"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              BTC
-            </button>
             <button
               type="button"
               data-ocid="wallet.btc_unit_toggle"
@@ -193,6 +208,18 @@ export function ActivityChart({
               }`}
             >
               sats
+            </button>
+            <button
+              type="button"
+              data-ocid="wallet.btc_unit_toggle"
+              onClick={() => onBtcUnitChange("btc")}
+              className={`text-[10px] px-1.5 py-0.5 rounded transition-colors ${
+                btcUnit === "btc"
+                  ? "bg-neon-blue/20 text-neon-blue"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              btc
             </button>
           </div>
         )}
